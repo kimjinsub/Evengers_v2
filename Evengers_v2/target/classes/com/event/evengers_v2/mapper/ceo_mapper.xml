@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.CeoDao">
+		
+	<insert id="ceoInsert">
+		INSERT INTO C VALUES(#{c_id},#{c_pw},#{c_name},#{c_tel},#{c_rn},#{c_email})
+	</insert>
+	
+	<select id="ceoDoubleChk" resultType="integer">
+		SELECT COUNT(*) FROM C WHERE C_ID = #{m_id}
+	</select>
+	
+	<select id="ceoCheckNumber" resultType="integer">
+		SELECT COUNT(*) FROM C WHERE C_RN = #{c_rn}
+	</select>
+	
+</mapper>

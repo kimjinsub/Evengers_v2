@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.EventDao">
+	<insert id="addCategory" parameterType="String">
+      INSERT INTO EC VALUES(#{ec_name})
+   </insert>
+   <select id="getCategories" resultType="eventcategory">
+      SELECT * FROM EC
+   </select>
+   <delete id="deleteCategory" parameterType="String">
+      DELETE FROM EC WHERE EC_NAME=#{ec_name}
+   </delete>
+   
+   <insert id="evtInsert" parameterType="event">
+      INSERT INTO E VALUES('E'||LPAD(E_SEQ.NEXTVAL,4,0),#{e_name},#{c_id},#{e_price},#{e_category},#{e_reservedate},#{e_refunddate},#{e_contents},#{e_orifilename},#{e_sysfilename})
+   </insert>
+   
+   <select id="getEvtCode" resultType="String" parameterType="String">
+      SELECT MAX(E_CODE) FROM E WHERE C_ID=#{c_id}
+   </select>
+   
+   <insert id="evtOptionInsert" parameterType="eventoption">
+         INSERT INTO EO VALUES('EO'||LPAD(EO_SEQ.NEXTVAL,4,0),#{eo_name},#{eo_price},#{e_code})
+   </insert>
+   
+   <select id="getEvtList" parameterType="String" resultType="event">
+        SELECT * FROM E WHERE E_CATEGORY=#{ec_name}
+   </select>
+	
+	<insert id="evtImageInsert" parameterType="eventimage">
+         INSERT INTO EI VALUES('EI'||LPAD(EI_SEQ.NEXTVAL,4,0),#{ei_orifilename},#{ei_sysfilename},#{e_code})
+   	</insert>
+   	<select id="getEvtInfo" parameterType="String" resultType="event">
+   		SELECT * FROM E WHERE E_CODE=#{e_code}
+   </select>
+   <select id="getOption" resultType="eventoption">
+   		SELECT * FROM EO WHERE E_CODE=#{e_code}
+   </select>
+</mapper>

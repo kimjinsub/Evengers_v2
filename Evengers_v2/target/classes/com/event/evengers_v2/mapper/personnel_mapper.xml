@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.PersonnelDao">
+	<insert id="addPosition" parameterType="position">
+		INSERT INTO P VALUES('P'||LPAD(P_SEQ.NEXTVAL,4,0),#{p_name},#{c_id},#{p_salary})
+	</insert>
+	<select id="getPositionList" parameterType="String" resultType="position">
+		SELECT * FROM P WHERE C_ID=#{c_id}
+	</select>
+	<insert id="addDept" parameterType="department">
+		INSERT INTO DEPT VALUES('DEPT'||LPAD(P_SEQ.NEXTVAL,4,0),#{dept_name},#{c_id})
+	</insert>
+	<select id="getDeptList" parameterType="String" resultType="department">
+		SELECT * FROM DEPT WHERE C_ID=#{c_id}
+	</select>
+</mapper>

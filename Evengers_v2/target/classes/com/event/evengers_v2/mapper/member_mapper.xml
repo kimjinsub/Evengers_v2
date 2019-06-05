@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.MemberDao">
+
+	 <resultMap type="member" id="member">
+	
+		<result property="m_id" column="m_id"/>
+		<result property="m_pw" column="m_pw"/>
+		<result property="m_name" column="m_name"/>
+		<result property="m_tel" column="m_tel"/>
+		<result property="m_rrn" column="m_rrn"/>
+		<result property="m_email" column="m_email"/>
+		<result property="m_area" column="m_area"/>
+		
+	</resultMap> 
+	<resultMap type="ceo" id="ceo">
+	<result property="c_id" column="c_id"/>
+		<result property="c_pw" column="c_pw"/>
+		<result property="c_name" column="c_name"/>
+		<result property="c_tel" column="c_tel"/>
+		<result property="c_rn" column="c_rn"/>
+		<result property="c_email" column="c_email"/>
+	
+	</resultMap> 
+	<select id="mAccess" parameterType="String" resultType="String">
+		SELECT M_PW FROM M WHERE M_ID=#{m_id}
+	</select>
+	<select id="cAccess" parameterType="String" resultType="String">
+		SELECT C_PW FROM C WHERE C_ID=#{c_id}
+	</select>
+	
+	<select id="sendMId" parameterType="String" resultType="String">
+		SELECT M_ID FROM M WHERE M_EMAIL=#{m_email}
+	</select>
+	<select id="sendCId" parameterType="String" resultType="String">
+		SELECT C_ID FROM C WHERE C_EMAIL=#{c_email}
+	</select>
+	<select id="findEmail" parameterType="String" resultType="String">
+		SELECT M_EMAIL FROM M WHERE M_ID=#{m_id}
+	</select>
+	<select id="findCeoEmail" parameterType="String" resultType="String">
+		SELECT C_EMAIL FROM C WHERE C_ID=#{c_id}
+	</select>
+	<select id="sendNumber" parameterType="String" resultType="String">
+		SELECT M_PW FROM M WHERE M_ID=#{m_id}
+	</select>
+	<select id="sendCeoNumber" parameterType="String" resultType="String">
+		SELECT C_PW FROM C WHERE C_ID=#{c_id}
+	</select>
+	<update id="pwChange" parameterType="String" >
+		UPDATE M SET M_PW = #{m_pw} WHERE M_ID=#{m_id}
+	</update>
+	<update id="pwCeoChange" parameterType="String" >
+		UPDATE C SET C_PW = #{c_pw} WHERE C_ID=#{c_id}
+	</update>
+
+	
+	<insert id="memberInsert">
+		INSERT INTO M VALUES(#{m_id},#{m_pw},#{m_name},#{m_tel},#{m_rrn},#{m_email},#{m_area})
+	</insert>
+	
+
+	<select id="memberDoubleChk" resultType="integer">
+		SELECT COUNT(*) FROM M WHERE M_ID = #{m_id}
+	</select>
+
+	<select id="testDao" resultType="String">
+	    SELECT M_ID FROM MEMBER WHERE M_ID=#{testcode}
+	</select>
+	<select id="mInfo" parameterType="String" resultType="Member">
+	    SELECT * FROM M WHERE M_ID=#{m_id}
+	</select>
+	<select id="mModifyMainSee" parameterType="String" resultType="String">
+	    SELECT M_PW FROM M WHERE M_ID=#{m_id}
+	</select>
+	<select id="mModifyList" resultType="Member">
+     	SELECT * FROM M WHERE M_id=#{m_id}
+   </select>
+	<update id="modifyMemInfo">
+		UPDATE M SET M_PW=#{m_pw},M_NAME=#{m_name},M_TEL=#{m_tel},M_EMAIL=#{m_email},M_AREA=#{m_area} WHERE M_ID = #{m_id}
+	</update>
+	<select id="ceoInfo" parameterType="String" resultType="Ceo">
+	    SELECT * FROM C WHERE C_ID=#{c_id}
+	</select>
+	<select id="ceoModifyMainSee" parameterType="String" resultType="String">
+	    SELECT C_PW FROM C WHERE C_ID=#{c_id}
+	</select>
+	<select id="ceoModifyList" resultType="Ceo">
+     	SELECT * from C WHERE C_id=#{c_id}
+   </select>
+   <update id="ceoModifyInfo">
+		UPDATE C SET C_PW=#{c_pw},C_NAME=#{c_name},C_TEL=#{c_tel},C_EMAIL=#{c_email} WHERE C_ID = #{c_id}
+	</update>
+	<select id="ceoMyPageChk" parameterType="String"
+		resultType="String">
+		SELECT C_ID from C WHERE C_ID=#{c_id, jdbcType=VARCHAR}
+	</select>
+	<select id="memberMyPageChk" parameterType="String"
+		resultType="String">
+		SELECT M_ID from M WHERE M_ID=#{m_id, jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

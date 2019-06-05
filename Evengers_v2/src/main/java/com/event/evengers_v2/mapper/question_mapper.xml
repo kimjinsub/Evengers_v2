@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.QuestionDao">
+	<insert id="questionInsert" parameterType="question">
+	INSERT INTO Q VALUES ('Q'||LPAD(Q_SEQ.NEXTVAL,4,0),#{m_id},#{q_title},#{q_contents},DEFAULT)
+		</insert>
+	<select id="getQuestionList" parameterType="string" resultType="question">
+	SELECT * FROM Q WHERE M_ID=#{id} ORDER BY Q_DATE DESC
+	</select>
+	<select id="getQcode" parameterType="string" resultType="string">
+	 SELECT MAX(Q_CODE) FROM Q WHERE M_ID=#{m_id}
+	</select>
+	 <insert id="questionImageInsert" parameterType="questionimage">
+	INSERT INTO QI VALUES ('QI'||LPAD(QI_SEQ.NEXTVAL,4,0),#{q_orifilename},#{q_sysfilename},#{q_code})
+	</insert>
+	<select id="getDetailQuestion" parameterType="string" resultType="question">
+	SELECT * FROM Q WHERE Q_CODE=#{q_code}
+	</select>
+</mapper>
