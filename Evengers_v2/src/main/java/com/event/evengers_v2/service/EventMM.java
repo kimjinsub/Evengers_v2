@@ -49,7 +49,7 @@ public class EventMM {
 	}
 
 	public String deleteCategory(String ec_name) {
-		boolean result=eDao.deleteCategory(ec_name);
+		boolean result=eDao.deleteCategory(ec_name); 
 		String msg="";
 		if(result) {
 			msg="성공";
@@ -126,7 +126,7 @@ public class EventMM {
 				}
 			}
 			if(cnt1==eo_names.length && cnt2==fileList.size()) {
-				view = "home";
+				view = "index";
 			}
 		} else {
 			view = "evtInsertFrm";
