@@ -1,5 +1,6 @@
 package com.event.evengers_v2.service;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Locale.Category;
 import java.util.Map;
@@ -167,5 +168,17 @@ public class EventMM {
 		Gson gson = new Gson();
 		json_option=gson.toJson(optionList);
 		return json_option;
+	}
+	
+	public int getTotalPrice(String[] options, String def) {
+		System.out.println("def="+Integer.valueOf(def));
+		int totalPrice=Integer.valueOf(def);
+		if(options!=null) {
+			for(String eo_code:options) {
+				System.out.println(eo_code);
+				totalPrice += eDao.getEoPrice(eo_code);
+			}
+		}
+		return totalPrice;
 	}
 }

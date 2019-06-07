@@ -38,4 +38,10 @@
    <select id="getOption" resultType="eventoption">
    		SELECT * FROM EO WHERE E_CODE=#{e_code}
    </select>
+   <select id="getEoPrice" parameterType="String" resultType="Integer">
+   		SELECT EO_PRICE FROM EO WHERE EO_CODE=#{eo_code}
+   </select>
+   <select id="getEoInfo" parameterType="String" resultType="eventoption">
+   		SELECT * FROM EO WHERE EO_CODE=#{eo_code}
+   </select>
 </mapper>
