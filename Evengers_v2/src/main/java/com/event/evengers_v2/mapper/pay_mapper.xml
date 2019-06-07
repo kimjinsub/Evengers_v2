@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.PayDao">
+	<insert id="ebInsert" parameterType="eventbuy">
+		INSERT INTO EB VALUES('EB'||LPAD(EB_SEQ.NEXTVAL,4,0),#{e_code},#{m_id},#{eb_total},#{eb_dday})
+	</insert>
+	<select id="getEb_code" parameterType="eventbuy" resultType="String">
+		SELECT MAX(EB_CODE) FROM EB WHERE M_ID=#{m_id} AND E_CODE=#{e_code}
+	</select>
+	<insert id="evtBuyOptionInsert" parameterType="buyselectedoption">
+		INSERT INTO BS VALUES('BS'||LPAD(BS_SEQ.NEXTVAL,4,0),#{eo_code},#{eb_code})
+	</insert>
+	<select id="getEvtBuyInfo" parameterType="String" resultType="eventbuy">
+		SELECT * FROM EB WHERE EB_CODE=#{eb_code}
+	</select>
+	<select id="getEvtBuyOptions" parameterType="String" resultType="buyselectedoption">
+		SELECT * FROM BS WHERE EB_CODE=#{eb_code}
+	</select>
+	<select id="getEvtBuyOptionCount" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM BS WHERE EB_CODE=#{eb_code}
+	</select>
+</mapper>

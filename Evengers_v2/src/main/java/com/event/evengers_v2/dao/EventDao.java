@@ -28,4 +28,8 @@ public interface EventDao {
 
 	public ArrayList<EventOption> getOption(String e_code);
 
+	public int getEoPrice(String eo_code);
+
+	public EventOption getEoInfo(String eo_code);
+	
 }

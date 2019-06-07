@@ -1,6 +1,9 @@
 package com.event.evengers_v2;
 
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +20,7 @@ import com.event.evengers_v2.bean.Position;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
+import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.PersonnelMM;
 
 @Controller
@@ -34,6 +38,8 @@ public class Controller_Jinsub {
 	EventMM em;
 	@Autowired
 	PersonnelMM pm;
+	@Autowired
+	PayMM paym;
 	
 	@RequestMapping(value = "/jinsub", method = RequestMethod.GET)
 	public String home() {
@@ -142,5 +148,22 @@ public class Controller_Jinsub {
 			iam="none";
 		}
 		return iam;
+	}
+	@RequestMapping(value = "/getTotalPrice", 
+			produces = "application/json; charset=utf-8;")
+	public @ResponseBody int getTotalPrice(String[] options,String def) {
+		System.out.println(options);
+		System.out.println(def);
+		return em.getTotalPrice(options,def);
+	}
+	@RequestMapping(value = "/evtBuy", method = RequestMethod.POST
+			,produces = "application/json;charset=utf-8")
+	public @ResponseBody String evtBuy(HttpServletRequest request) {
+		return paym.evtBuy(request);
+	}
+	@RequestMapping(value = "/getEvtBuyInfo", method = RequestMethod.POST)
+	public ModelAndView getEvtBuyInfo(String eb_code) {
+		mav=paym.getEvtBuyInfo(eb_code);
+		return mav;
 	}
 }
