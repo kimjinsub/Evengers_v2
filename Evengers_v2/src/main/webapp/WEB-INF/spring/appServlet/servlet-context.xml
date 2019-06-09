@@ -104,4 +104,36 @@
 		<beans:property name="maxInMemorySize" value="10000000"/>
 	</beans:bean>
 	
+	<!-- 트랜잭션처리 -->
+	<beans:bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">	
+		<beans:property name="dataSource" ref="dataSource"/>
+	</beans:bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- Session Interceptor(가로채기) -->
+	<!-- <interceptors>
+		<interceptor>
+			mapping의 모든 요청은 Controller에 도착하기 전에 가로챈다
+			<mapping path="/*"/>
+			exclude-mapping의 요청은 가로채지 않는다
+			
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/getSessionId"/>
+			<exclude-mapping path="/whoRU"/>
+			<exclude-mapping path="/getEvtList"/>
+			<exclude-mapping path="/getCategoryList"/>
+			<exclude-mapping path="/loginFrm"/>
+			<exclude-mapping path="/joinFrm"/>
+			<exclude-mapping path="/memberJoin"/>
+			<exclude-mapping path="/ceoJoin"/>
+			<exclude-mapping path="/ceoCheckNumber"/>
+			<exclude-mapping path="/ceoDoubleChk"/>
+			<exclude-mapping path="/memberDoubleChk"/>
+			<exclude-mapping path="/ceoInsert"/>
+			<exclude-mapping path="/memberInsert"/>
+			<beans:bean class="com.event.evengers_v2.userClass.SessionInterceptor"/>
+		</interceptor>
+	</interceptors> -->
+	
 </beans:beans>

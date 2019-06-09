@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,6 +58,7 @@ public class EventMM {
 		}
 		return msg;
 	}
+	@Transactional(rollbackFor = Exception.class)
 	public ModelAndView evtInsert(MultipartHttpServletRequest multi) {
 		mav = new ModelAndView();
 		
@@ -69,18 +71,6 @@ public class EventMM {
 		String e_contents = multi.getParameter("e_contents");
 		String eo_name = multi.getParameter("eo_name");
 		String eo_price = multi.getParameter("eo_price");
-		
-		System.out.println("e_name="+e_name);
-		System.out.println("c_id="+c_id);
-		System.out.println("e_price="+e_price);
-		System.out.println("e_category="+e_category);
-		System.out.println("e_reservedate="+e_reservedate);
-		System.out.println("e_refunddate="+e_refunddate);
-		System.out.println("e_contents="+e_contents);
-		System.out.println("eo_name="+eo_name);
-		System.out.println("eo_price="+eo_price);
-		
-		
 		
 		Map<String, String> fileMap = file.singleFileUp(multi, 1);
 		Event eb = new Event();
@@ -96,13 +86,9 @@ public class EventMM {
 		
 		String view = null;
 		if (eDao.evtInsert(eb)) {
-			
 			String e_code = eDao.getEvtCode(eb.getC_id()); //이벤트 코드 값 가져오기
-			
 			String[] eo_names = eo_name.split(",");
-			System.out.println(eo_names);
 			String[] eo_prices = eo_price.split(",");
-			System.out.println(eo_prices[0]);
 			int cnt1=0;
 			for(int i=0;i<eo_names.length;i++) {
 				EventOption eob = new EventOption();
@@ -119,8 +105,6 @@ public class EventMM {
 				EventImage ei = new EventImage();
 				ei.setEi_orifilename(fileList.get(i)[0]);
 				ei.setEi_sysfilename(fileList.get(i)[1]);
-				System.out.println("ei_ori="+ei.getEi_orifilename());
-				System.out.println("ei_sys="+ei.getEi_sysfilename());
 				ei.setE_code(e_code);
 				if(eDao.evtImageInsert(ei)) {
 					cnt2++;

@@ -68,8 +68,8 @@ function evtBuy(){
 	evtBuy.append("e_code","${eb.e_code}");
 	evtBuy.append("eb_total",$("#totalPrice").val());
 	evtBuy.append("eb_dday",$("input[type=datetime-local]").val());
-	if(getSelectedOptions()!=[]){
-		console.log("hihihi");
+	if(!jQuery.isEmptyObject(getSelectedOptions())){
+		//옵션을 선택하지 않았다면(배열이 비었으면) true지만 !라서 false,,
 		evtBuy.append("eo_code",getSelectedOptions());
 	}
 	$.ajax({
@@ -80,7 +80,6 @@ function evtBuy(){
 		contentType:false,
 		dataType:"text",
 		success: function(result){
-			console.log(result);
 			getEvtBuyInfo(result);
 		},
 		error: function(error){
@@ -108,9 +107,7 @@ function getSelectedOptions(){
 	var selectedOptions=new Array();
 	$(".option:checked").each(function(){
 		selectedOptions.push($(this).val());
-		console.log("18u6923i4190");
 	})
-	console.log(selectedOptions);
 	getTotalPrice(selectedOptions);
 	return selectedOptions;
 };
