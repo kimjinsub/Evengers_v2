@@ -18,7 +18,6 @@ import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
 import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.PersonnelMM;
-import com.event.evengers_v2.userClass.SessionCheck;
 
 @Controller
 public class Controller_Jinsub {
@@ -157,11 +156,11 @@ public class Controller_Jinsub {
 		mav=paym.getEvtBuyInfo(eb_code);
 		return mav;
 	}
-	@RequestMapping(value = "/sessionChk", 
+	/*@RequestMapping(value = "/sessionChk", 
 			produces = "application/json; charset=utf-8;")
 	public @ResponseBody String sessionChk(HttpServletRequest req) {
 		SessionCheck sc= new SessionCheck(); 
 		String kind=sc.getSessionId(req);
 		return kind;
-	}
+	}*/
 }
