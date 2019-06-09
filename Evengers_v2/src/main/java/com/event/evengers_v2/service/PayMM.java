@@ -3,23 +3,20 @@ package com.event.evengers_v2.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.BuySelectedOption;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventBuy;
-import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.PayDao;
-import com.google.gson.Gson;
 
 @Service
 public class PayMM {
@@ -30,7 +27,8 @@ public class PayMM {
 	PayDao payDao;
 	@Autowired
 	EventDao eDao;
-
+	
+	@Transactional
 	public String evtBuy(HttpServletRequest request) {
 		String msg=null;
 		EventBuy eb=new EventBuy();
@@ -47,13 +45,10 @@ public class PayMM {
 		boolean buy=payDao.ebInsert(eb);
 		String eb_code=payDao.getEb_code(eb);
 		
-		if(request.getParameter("eo_code")!="") {
-			System.out.println(request.getParameter("eo_code"));
-			System.out.println("ereinjfosjdf");
+		if(request.getParameter("eo_code")!=null) {
 			BuySelectedOption bs=new BuySelectedOption();
 			String[] eo_codes=request.getParameter("eo_code").split(",");
 			bs.setEb_code(eb_code);
-			System.out.println(eo_codes);
 			int cnt=0;
 			for(String eo_code:eo_codes) {
 				bs.setEo_code(eo_code);
@@ -63,7 +58,6 @@ public class PayMM {
 			}
 			if(buy&&cnt==eo_codes.length) {
 				msg=eb_code;
-			//예외처리해야함...트랜잭션
 			}
 		}else if(buy) {
 			msg=eb_code;

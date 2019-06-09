@@ -1,9 +1,5 @@
 package com.event.evengers_v2;
 
-
-import java.sql.Array;
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +18,7 @@ import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
 import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.PersonnelMM;
+import com.event.evengers_v2.userClass.SessionCheck;
 
 @Controller
 public class Controller_Jinsub {
@@ -131,22 +128,16 @@ public class Controller_Jinsub {
 		String json_pList=pm.getDeptList();
 		return json_pList;
 	}
-	@RequestMapping(value = "/whoRU", 
-			produces = "application/json; charset=utf-8;")
-	public @ResponseBody String whoRU(String id) {
-		String iam=mm.whoRU(id);
-		return iam;
-	}
 	@RequestMapping(value = "/getSessionId", 
 			produces = "application/json; charset=utf-8;")
 	public @ResponseBody String getSessionId() {
 		String iam="";
 		if(session.getAttribute("id")!=null) {
 			iam=session.getAttribute("id").toString();
-			System.out.println("iam="+iam);
 		}else {
 			iam="none";
 		}
+		iam=mm.whoRU(iam);
 		return iam;
 	}
 	@RequestMapping(value = "/getTotalPrice", 
@@ -165,5 +156,12 @@ public class Controller_Jinsub {
 	public ModelAndView getEvtBuyInfo(String eb_code) {
 		mav=paym.getEvtBuyInfo(eb_code);
 		return mav;
+	}
+	@RequestMapping(value = "/sessionChk", 
+			produces = "application/json; charset=utf-8;")
+	public @ResponseBody String sessionChk(HttpServletRequest req) {
+		SessionCheck sc= new SessionCheck(); 
+		String kind=sc.getSessionId(req);
+		return kind;
 	}
 }
