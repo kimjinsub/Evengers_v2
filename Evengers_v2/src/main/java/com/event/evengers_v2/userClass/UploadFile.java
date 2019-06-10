@@ -142,5 +142,38 @@ public class UploadFile {
 		os.close();
 		is.close();
 	}
+	public Map<String, String> FileUp(MultipartHttpServletRequest multi, int param) {
+		Map<String,String> fileMap = new HashMap<String, String>();
+		String emp_orifilename = null;
+		String emp_sysfilename = null;
+		switch (param) {
+		case 1:
+			root = multi.getSession().getServletContext().getRealPath("/");
+			System.out.println("root=" + root);
+			path = root + "upload/performimage/";
+			dir = new File(path);
+			if (!dir.isDirectory()) { // upload폴더 없다면
+				dir.mkdirs(); // upload폴더 생성
+			}
+			System.out.println("File="+multi.getFiles("emp_orifilename"));
+			List<MultipartFile> files=multi.getFiles("emp_orifilename");//비동기 2개이상 파일전송
+			for(MultipartFile file : files) {
+				String multiRepName=file.getOriginalFilename();
+				emp_orifilename=multiRepName;
+				System.out.println("multiRepName="+multiRepName);
+				emp_sysfilename = System.currentTimeMillis() + "."// 현재 시간
+						+ emp_orifilename.substring(emp_orifilename.lastIndexOf(".") + 1);
+				try {
+					file.transferTo(new File(path + emp_sysfilename));
+				} catch (Exception e) {
+				}
+			}
+			fileMap.put("emp_orifilename", emp_orifilename);
+			fileMap.put("emp_sysfilename", emp_sysfilename);
+			System.out.println("orifilename="+emp_orifilename);
+			System.out.println("sysfilename="+emp_sysfilename);
+		}
+		return fileMap;
+	}
 }
 

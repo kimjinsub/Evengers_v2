@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
+import com.event.evengers_v2.service.PersonnelMM;
 
 @Controller
 public class Controller_Eunseo {
@@ -27,6 +29,8 @@ public class Controller_Eunseo {
 	CeoMM cm;
 	@Autowired
 	EventMM em;
+	@Autowired
+	PersonnelMM pm;
 	
 	@RequestMapping(value = "/eunseo", method = RequestMethod.GET)
 	public String home() {
@@ -49,6 +53,21 @@ public class Controller_Eunseo {
 	public ModelAndView evtInsertFrm() {
 		mav=new ModelAndView();
 		mav.setViewName("ceoViews/evtInsertFrm");
+		return mav;
+	}
+	@RequestMapping(value = "/selectPosition", produces = "application/json; charset=utf-8")
+	public @ResponseBody String selectPosition() {
+		String json_option = cm.getPositionList();
+		return json_option;
+	}
+	@RequestMapping(value = "/selectDept", produces = "application/json; charset=utf-8")
+	public @ResponseBody String selectDept() {
+		String json_option = cm.getDeptList();
+		return json_option;
+	}
+	@RequestMapping(value = "/performInsert", method = RequestMethod.POST)
+	public ModelAndView performInsert(MultipartHttpServletRequest multi) {
+		mav = pm.performInsert(multi);
 		return mav;
 	}
 }

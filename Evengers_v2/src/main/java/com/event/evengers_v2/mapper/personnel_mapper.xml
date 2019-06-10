@@ -15,4 +15,14 @@
 	<select id="getDeptList" parameterType="String" resultType="department">
 		SELECT * FROM DEPT WHERE C_ID=#{c_id}
 	</select>
+	
+	<select id="getPCode" parameterType="String" resultType="String">
+		SELECT P_CODE FROM P WHERE C_ID=#{c_id} AND P_NAME=#{p_name}
+	</select>
+	<select id="getDeptCode" parameterType="String" resultType="String">
+		SELECT DEPT_CODE FROM DEPT WHERE C_ID=#{c_id} AND DEPT_NAME=#{dept_name} 
+	</select>
+	<insert id="performInsert" parameterType="employee">
+		INSERT INTO EMP VALUES('EMP'||LPAD(EMP_SEQ.NEXTVAL,4,0),#{emp_name},#{c_id},#{p_code},#{dept_code},#{emp_rrn},#{emp_enterdate},#{emp_tel},#{emp_addr},#{emp_email},#{emp_bank},#{emp_acnumber},#{emp_orifilename},#{emp_sysfilename})	
+	</insert>
 </mapper>
