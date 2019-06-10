@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.Ceo;
@@ -16,6 +17,7 @@ import com.event.evengers_v2.bean.Member;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
+import com.event.evengers_v2.service.RequestMM;
 
 @Controller
 public class Controller_Sung {
@@ -30,6 +32,8 @@ public class Controller_Sung {
 	CeoMM cm;
 	@Autowired
 	EventMM em;
+	@Autowired
+	RequestMM rm;
 	
 	@RequestMapping(value = "/sung", method = RequestMethod.GET)
 	public String home() {
@@ -114,6 +118,19 @@ public class Controller_Sung {
 	public ModelAndView evtReqFrm() {
 		mav=new ModelAndView();
 		mav.setViewName("memberViews/evtReqFrm");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/evtReqInsert")
+	public ModelAndView evtReqInsert(MultipartHttpServletRequest multi) {
+		mav = rm.evtReqInsert(multi);
+		return mav;
+	}
+	
+	
+	@RequestMapping(value = "/evtReqList")
+	public ModelAndView evtReqList(MultipartHttpServletRequest multi) {
+		mav = rm.evtReqList();
 		return mav;
 	}
 }

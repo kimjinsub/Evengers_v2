@@ -97,6 +97,8 @@ public class PersonnelMM {
 		
 		Map<String,String> fileMap = file.FileUp(multi,1);
 		
+		
+		
 		Employee emp = new Employee();
 		emp.setEmp_name(emp_name);
 		emp.setC_id(c_id);

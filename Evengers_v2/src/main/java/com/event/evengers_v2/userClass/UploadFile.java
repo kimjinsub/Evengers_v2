@@ -27,6 +27,8 @@ public class UploadFile {
 		Map<String,String> fileMap = new HashMap<String, String>();
 		String e_orifilename = null;
 		String e_sysfilename = null;
+		String reqi_orifilename = null;
+		String reqi_sysfilename = null;
 		switch (param) {
 		case 1: // 썸네일 사진
 			/*C:\Users\22\work\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\Evengers*/
@@ -53,6 +55,29 @@ public class UploadFile {
 			fileMap.put("e_sysfilename", e_sysfilename);
 			System.out.println("orifilename="+e_orifilename);
 			System.out.println("sysfilename="+e_sysfilename);
+			
+		case 2:	//의뢰 첨부사진
+			root = multi.getSession().getServletContext().getRealPath("/");
+			System.out.println("root=" + root);
+			path = root + "resources/upload/evtReqImage/";
+			System.out.println("path" + path);
+			
+			dir = new File(path);
+			if (!dir.isDirectory()) { // upload폴더 없다면
+				dir.mkdirs(); // upload폴더 생성
+			}
+			
+			List<MultipartFile> files1 = multi.getFiles("reqi_orifilename");
+			for (MultipartFile file : files1) {
+				reqi_orifilename=file.getOriginalFilename();
+				System.out.println("reqi_orifilename: " + reqi_orifilename);
+				
+				reqi_sysfilename = System.currentTimeMillis() + "."
+						+ reqi_orifilename.substring(reqi_orifilename.lastIndexOf(".") + 1);
+				System.out.println("reqi_sysfilename:"+reqi_sysfilename);
+			}
+			fileMap.put("reqi_orifilename", reqi_orifilename);
+			fileMap.put("reqi_sysfilename", reqi_sysfilename);
 		}
 		return fileMap;
 	}
@@ -117,63 +142,62 @@ public class UploadFile {
 		}
 		return fileList;
 	}
-
 	public void download(String fullPath, String oriFileName, HttpServletResponse resp) throws Exception {
 
-		// 한글파일 깨짐 방지
-		String downFile = URLEncoder.encode(oriFileName, "UTF-8");
-		// 파일 객체 생성
-		File file = new File(fullPath);
-		// 다운로드 경로 파일을 읽어 들임
-		InputStream is = new FileInputStream(file);
-		// 반환객체설정
-		resp.setContentType("application/octet-stream");
-		resp.setHeader("content-Disposition", "attachment; filename=\"" + downFile + "\"");
-		// 반환객체에 스트림 연결
-		OutputStream os = resp.getOutputStream();
+	      // 한글파일 깨짐 방지
+	      String downFile = URLEncoder.encode(oriFileName, "UTF-8");
+	      // 파일 객체 생성
+	      File file = new File(fullPath);
+	      // 다운로드 경로 파일을 읽어 들임
+	      InputStream is = new FileInputStream(file);
+	      // 반환객체설정
+	      resp.setContentType("application/octet-stream");
+	      resp.setHeader("content-Disposition", "attachment; filename=\"" + downFile + "\"");
+	      // 반환객체에 스트림 연결
+	      OutputStream os = resp.getOutputStream();
 
-		// 파일쓰기
-		byte[] buffer = new byte[1024];
-		int length;
-		while ((length = is.read(buffer)) != -1) {
-			os.write(buffer, 0, length);
-		}
-		os.flush();
-		os.close();
-		is.close();
-	}
+	      // 파일쓰기
+	      byte[] buffer = new byte[1024];
+	      int length;
+	      while ((length = is.read(buffer)) != -1) {
+	         os.write(buffer, 0, length);
+	      }
+	      os.flush();
+	      os.close();
+	      is.close();
+	   }
 	public Map<String, String> FileUp(MultipartHttpServletRequest multi, int param) {
-		Map<String,String> fileMap = new HashMap<String, String>();
-		String emp_orifilename = null;
-		String emp_sysfilename = null;
-		switch (param) {
-		case 1:
-			root = multi.getSession().getServletContext().getRealPath("/");
-			System.out.println("root=" + root);
-			path = root + "upload/performimage/";
-			dir = new File(path);
-			if (!dir.isDirectory()) { // upload폴더 없다면
-				dir.mkdirs(); // upload폴더 생성
-			}
-			System.out.println("File="+multi.getFiles("emp_orifilename"));
-			List<MultipartFile> files=multi.getFiles("emp_orifilename");//비동기 2개이상 파일전송
-			for(MultipartFile file : files) {
-				String multiRepName=file.getOriginalFilename();
-				emp_orifilename=multiRepName;
-				System.out.println("multiRepName="+multiRepName);
-				emp_sysfilename = System.currentTimeMillis() + "."// 현재 시간
-						+ emp_orifilename.substring(emp_orifilename.lastIndexOf(".") + 1);
-				try {
-					file.transferTo(new File(path + emp_sysfilename));
-				} catch (Exception e) {
-				}
-			}
-			fileMap.put("emp_orifilename", emp_orifilename);
-			fileMap.put("emp_sysfilename", emp_sysfilename);
-			System.out.println("orifilename="+emp_orifilename);
-			System.out.println("sysfilename="+emp_sysfilename);
-		}
-		return fileMap;
-	}
+	      Map<String,String> fileMap = new HashMap<String, String>();
+	      String emp_orifilename = null;
+	      String emp_sysfilename = null;
+	      switch (param) {
+	      case 1:
+	         root = multi.getSession().getServletContext().getRealPath("/");
+	         System.out.println("root=" + root);
+	         path = root + "upload/performimage/";
+	         dir = new File(path);
+	         if (!dir.isDirectory()) { // upload폴더 없다면
+	            dir.mkdirs(); // upload폴더 생성
+	         }
+	         System.out.println("File="+multi.getFiles("emp_orifilename"));
+	         List<MultipartFile> files=multi.getFiles("emp_orifilename");//비동기 2개이상 파일전송
+	         for(MultipartFile file : files) {
+	            String multiRepName=file.getOriginalFilename();
+	            emp_orifilename=multiRepName;
+	            System.out.println("multiRepName="+multiRepName);
+	            emp_sysfilename = System.currentTimeMillis() + "."// 현재 시간
+	                  + emp_orifilename.substring(emp_orifilename.lastIndexOf(".") + 1);
+	            try {
+	               file.transferTo(new File(path + emp_sysfilename));
+	            } catch (Exception e) {
+	            }
+	         }
+	         fileMap.put("emp_orifilename", emp_orifilename);
+	         fileMap.put("emp_sysfilename", emp_sysfilename);
+	         System.out.println("orifilename="+emp_orifilename);
+	         System.out.println("sysfilename="+emp_sysfilename);
+	      }
+	      return fileMap;
+	   }
 }
 

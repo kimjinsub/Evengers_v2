@@ -95,6 +95,13 @@
 		<beans:property name="mapperInterface"
 						value="com.event.evengers_v2.dao.PayDao"/>
 	</beans:bean>
+	<beans:bean id="rDao"
+				class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+						ref="sqlSessionFactory"/>
+		<beans:property name="mapperInterface"
+						value="com.event.evengers_v2.dao.RequestDao"/>
+	</beans:bean>
 	
 		<!-- 파일 업로드 설정 -->
 	<beans:bean id="multipartResolver"
