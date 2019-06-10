@@ -23,6 +23,8 @@
 	
 }
 #ebInfoZone.show{visibility: visible;}
+#impossible{color: red;}
+#possible{color: green;}
 </style>
 </head>
 <body>
@@ -47,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>이벤트날짜</td>
-			<td><input type="datetime-local"/></td>
+			<td><input type="datetime-local"/><span id="dateMsg"></span></td>
 			<!-- 2019-12-31T12:59 형식으로 받아짐-->
 		</tr>
 		<tr>
@@ -63,6 +65,44 @@ $(document).ready(function(){
 });
 //1.세션검사로 member만 구매가능하게
 //2.이벤트 날짜...유효성검사ㅋ
+$("input[type=datetime-local]").change(function(){
+	effectiveness();
+})
+function effectiveness(){
+	var dday=$("input[type=datetime-local]").val();
+	console.log("dday=",dday);
+	console.log("e_code","${eb.e_code}");
+	$.ajax({
+		url:"effectiveness",
+		data:{dday:dday,e_code:"${eb.e_code}"},
+		dataType:"text",
+		success:function(result){
+			$("#dateMsg").html(result);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
+$("input[type=datetime-local]").change(function(){
+	effectiveness();
+})
+function effectiveness(){
+	var dday=$("input[type=datetime-local]").val();
+	console.log("dday=",dday);
+	console.log("e_code","${eb.e_code}");
+	$.ajax({
+		url:"effectiveness",
+		data:{dday:dday,e_code:"${eb.e_code}"},
+		dataType:"text",
+		success:function(result){
+			$("#dateMsg").html(result);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
 function evtBuy(){
 	var evtBuy = new FormData;
 	evtBuy.append("e_code","${eb.e_code}");
@@ -86,22 +126,26 @@ function evtBuy(){
 			console.log(error);
 		}
 	})
-	
 };
 function getEvtBuyInfo(eb_code){
-	$.ajax({
-		method: "post",
-		url:"getEvtBuyInfo",
-		data:{eb_code:eb_code},
-		dataType:"html",
-		success: function(result){
-			$("#ebInfoZone").html(result);
-			$("#ebInfoZone").addClass("show");
-		},
-		error: function(error){
-			console.log(error);
-		}
-	})
+	if(eb_code=="구매실패"){
+		alert("구매에 실패하였습니다");
+	}else{
+		$.ajax({
+			method: "post",
+			url:"getEvtBuyInfo",
+			data:{eb_code:eb_code},
+			dataType:"html",
+			success: function(result){
+				alert("구매에 성공하였습니다");
+				$("#ebInfoZone").html(result);
+				$("#ebInfoZone").addClass("show");
+			},
+			error: function(error){
+				console.log(error);
+			}
+		})
+	}
 }
 function getSelectedOptions(){
 	var selectedOptions=new Array();

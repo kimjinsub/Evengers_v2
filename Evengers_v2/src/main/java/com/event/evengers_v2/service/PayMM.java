@@ -3,6 +3,8 @@ package com.event.evengers_v2.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -37,14 +39,26 @@ public class PayMM {
 		eb.setM_id(m_id);
 		eb.setEb_total(Integer.parseInt(request.getParameter("eb_total")));
 		String dday=request.getParameter("eb_dday").replace("T", " ");
+		boolean buy=false;
 		try {
 			eb.setEb_dday(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dday));
+			Event e=eDao.getEvtInfo(request.getParameter("e_code"));
+			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+			Date selected_dday= format1.parse(request.getParameter("eb_dday")
+					.substring(0, request.getParameter("eb_dday").indexOf("T")));
+			Date today = new Date();
+			today=format1.parse(format1.format(today));
+			long diff=selected_dday.getTime()-today.getTime();
+			long diffDays=diff/(24*60*60*1000);
+			if(selected_dday.compareTo(today)>=1) {
+				if(diffDays>=e.getE_reservedate()) {
+					buy=payDao.ebInsert(eb);
+				}
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		boolean buy=payDao.ebInsert(eb);
 		String eb_code=payDao.getEb_code(eb);
-		
 		if(request.getParameter("eo_code")!=null) {
 			BuySelectedOption bs=new BuySelectedOption();
 			String[] eo_codes=request.getParameter("eo_code").split(",");

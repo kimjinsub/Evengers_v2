@@ -1,7 +1,11 @@
 package com.event.evengers_v2.service;
 
 import java.sql.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale.Category;
 import java.util.Map;
 
@@ -164,5 +168,33 @@ public class EventMM {
 			}
 		}
 		return totalPrice;
+	}
+	public String effectiveness(String dday, String e_code) {
+		String msg="";
+		try {
+			Event e=eDao.getEvtInfo(e_code);
+			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+			Date selected_dday= format1.parse(dday.substring(0, dday.indexOf("T")));
+			Date today = new Date();
+			today=format1.parse(format1.format(today));
+			long diff=selected_dday.getTime()-today.getTime();
+			long diffDays=diff/(24*60*60*1000);
+			System.out.println("날짜차이:"+diffDays+"일");
+			System.out.println("누가먼저?:"+selected_dday.compareTo(today));
+			if(selected_dday.compareTo(today)>=1) {
+				//입력날짜가 현재보다 미래면 +1 과거면 -1 같으면0
+				if(diffDays>=e.getE_reservedate()) {
+					msg="<p id='possible'>가능한 날짜입니다</p>";
+				}
+				else {
+					msg="<p id='impossible'>불가능한 날짜입니다</p>";
+				}
+			}else {
+				msg="<p id='impossible'>불가능한 날짜입니다</p>";
+			}
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		return msg;
 	}
 }

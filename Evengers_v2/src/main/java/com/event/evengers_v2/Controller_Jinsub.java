@@ -163,4 +163,10 @@ public class Controller_Jinsub {
 		String kind=sc.getSessionId(req);
 		return kind;
 	}*/
+	@RequestMapping(value = "/effectiveness", 
+			produces = "application/json; charset=utf-8;")
+	public @ResponseBody String effectiveness(String dday, String e_code) {
+		System.out.println("e_code="+e_code);
+		return em.effectiveness(dday,e_code);
+	}
 }
