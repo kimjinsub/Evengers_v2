@@ -1,16 +1,26 @@
 package com.event.evengers_v2;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.evengers_v2.userClass.DBException;
+import com.event.evengers_v2.bean.QuestionReply;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
@@ -71,9 +81,6 @@ public class Controller_Bin {
 	@RequestMapping(value = "/questionInsert", produces = "application/json; charset=utf8")
 	public ModelAndView questionInsert(MultipartHttpServletRequest multi) {
 		mav = new ModelAndView();
-		System.out.println("홈 문의제목" + multi.getParameter("q_title"));
-		System.out.println("홈 문의내용" + multi.getParameter("q_contents"));
-		System.out.println("홈 문의첨부파일" + multi.getParameter("q_files"));
 		mav = qm.questionInsert(multi);
 		return mav;
 	}
@@ -86,18 +93,42 @@ public class Controller_Bin {
 	}
 
 	@RequestMapping(value = "/getQuestionList", produces = "application/json; charset=utf8")
-	public @ResponseBody String getQuestionList() {
+	public @ResponseBody Map<String, Object> getQuestionList(Integer pageNum) {
 		String id = session.getAttribute("id").toString();
-		String jsonStr = qm.getQuestionList(id);
-		return jsonStr;
+		Map<String, Object> map1 = qm.getQuestionList(id,pageNum);
+		return map1;
 	}
 
 	@RequestMapping(value = "/showQuestion", produces = "application/json; charset=utf8")
 	public ModelAndView showQuestion(String q_Code) {
 		mav=new ModelAndView();
-		System.out.println("q_code=" + q_Code);
 		String q_code=q_Code;
         mav = qm.showQuestion(q_code);
 		return mav;
 	}
+	@RequestMapping(value = "/replyInsert", produces = "application/json; charset=utf8")
+	public @ResponseBody String replyInsert(QuestionReply qr) {
+		String m_id=session.getAttribute("id").toString();
+		qr.setM_id(m_id);
+		return qm.replyInsert(qr);
+	}
+	
+	@RequestMapping(value = "/questionDelete", method = RequestMethod.GET) // get,post 모두 가능
+	public ModelAndView questionDelete(String q_code) throws DBException{
+		mav = qm.questionDelete(q_code);
+		System.out.println("q_code="+q_code);
+		return mav;
+	} 
+	@RequestMapping(value = "/download", method = RequestMethod.GET) // get,post 모두 가능
+	public void download(
+			@RequestParam Map<String,Object> params,
+			HttpServletResponse response ,HttpServletRequest req) throws Exception { // int를 쓰면 null값이 올 수 없기 때문에
+		System.out.println("of = " + params.get("oriFileName"));
+		System.out.println("sf = " + params.get("sysFileName"));
+		
+		params.put("root", req.getSession().getServletContext().getRealPath("/"));
+		params.put("response",response);
+		qm.download(params);
+	}
+	
 }

@@ -6,8 +6,10 @@
 	<insert id="questionInsert" parameterType="question">
 	INSERT INTO Q VALUES ('Q'||LPAD(Q_SEQ.NEXTVAL,4,0),#{m_id},#{q_title},#{q_contents},DEFAULT)
 		</insert>
-	<select id="getQuestionList" parameterType="string" resultType="question">
-	SELECT * FROM Q WHERE M_ID=#{id} ORDER BY Q_DATE DESC
+	<select id="getQuestionList" parameterType="map" resultType="question">
+	<![CDATA[
+	SELECT * FROM QLIST_1 WHERE M_ID=#{id} AND RONUM>=#{num}*10-9 AND RONUM<=#{num}*10 ORDER BY Q_DATE DESC
+	]]>
 	</select>
 	<select id="getQcode" parameterType="string" resultType="string">
 	 SELECT MAX(Q_CODE) FROM Q WHERE M_ID=#{m_id}
@@ -18,4 +20,30 @@
 	<select id="getDetailQuestion" parameterType="string" resultType="question">
 	SELECT * FROM Q WHERE Q_CODE=#{q_code}
 	</select>
-</mapper>
+	<select id="getQuestionFileList" parameterType="string" resultType="questionimage">
+	SELECT * FROM QI WHERE Q_CODE=#{q_code}
+	</select>
+	<insert id="replyInsert" parameterType="questionreply">
+	INSERT INTO QR VALUES ('QR'||LPAD(QR_SEQ.NEXTVAL,4,0),#{q_code},#{m_id},DEFAULT,#{qr_contents})
+	</insert>
+	<select id="getReplyList" parameterType="string" resultType="questionreply">
+	SELECT * FROM QR WHERE Q_CODE=#{q_code} ORDER BY QR_CODE DESC
+	</select>
+	<delete id="qfDelete" parameterType="string">
+	DELETE FROM QI WHERE Q_CODE=#{q_code}
+	</delete>
+	<delete id="replyDelete" parameterType="string">
+	DELETE FROM QR WHERE Q_CODE=#{q_code}
+	</delete>
+	<delete id="questionDelete" parameterType="string">
+	DELETE FROM Q WHERE Q_CODE=#{q_code}
+	</delete>
+	<select id="getQuestionCount" resultType="int">
+	SELECT COUNT(*) FROM Q
+	</select>
+	<select id="getAllQuestionList" resultType="question">
+	<![CDATA[
+	SELECT * FROM QLIST_1 WHERE RONUM>=#{num}*10-9 AND RONUM<=#{num}*10 ORDER BY Q_DATE DESC
+	]]>
+	</select>
+	</mapper>

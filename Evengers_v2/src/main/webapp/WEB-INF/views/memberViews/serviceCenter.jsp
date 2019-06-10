@@ -14,15 +14,16 @@ font-size: xx-large;
 .question{
 display:block;
 width:200px;
-height:150px;
+height:100px;
 margin:15px;
 background-color:gray;
 position: absolute; 
 }
 .question1{
-display:block;
+float:left;
+display:inline-block;
 width:200px;
-height:150px;
+height:100px;
 margin:15px;
 background-color:gray;
 position: absolute; 
@@ -37,7 +38,6 @@ margin-left: 300px;
   <div class="question" id="questioninsert" onclick="location.href='serviceCenter';"> 문의 하기 </div>
   
   <div class="question1" id="questionList" onclick="location.href='questionList';"> 문의 내역 </div>
-  <a href="questionList">문의내역</a>
   
   <form action="/" name="qFrm" id="qFrm" method="post" enctype="multipart/form-data" onsubmit="return qq()">
   <div id="qt">
@@ -93,7 +93,7 @@ function formData(){
 		success:function(data){
 			alert("성공");
 			console.log(data);
-			//location.href="./questionList";
+			location.href="./questionList";
 		},
 		error:function(error){
 			alert("에러");
