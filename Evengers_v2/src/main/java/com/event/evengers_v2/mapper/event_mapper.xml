@@ -44,4 +44,55 @@
    <select id="getEoInfo" parameterType="String" resultType="eventoption">
    		SELECT * FROM EO WHERE EO_CODE=#{eo_code}
    </select>
+   
+   
+   
+   
+   
+   
+   <insert id="review">
+	INSERT INTO RE VALUES(#{e_code},#{m_id},SYSDATE,#{re_contents},#{re_stars})
+</insert>
+
+
+	<select id="getReview" parameterType="String"
+		resultType="review">
+		SELECT * FROM RE WHERE E_CODE=#{e_code}
+	</select>
+	
+	
+	<select id="reviewCheck" parameterType="String"
+		resultType="review">
+		SELECT * FROM RE WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</select>
+
+	<select id="reviewMemberCheck" parameterType="String"
+		resultType="review">
+		SELECT * FROM M WHERE M_ID=#{m_id}
+	</select>
+
+	<update id="reviewModifyBtn" parameterType="review">
+		UPDATE RE
+		SET
+		RE_CONTENTS =#{re_contents}, RE_WRITEDATE = SYSDATE,
+		RE_STARS=#{re_stars} WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</update>
+	<delete id="reviewDelete">
+		DELETE FROM RE WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</delete>
+
+	<select id="getStarAverage" parameterType="String"
+		resultType="float">
+		SELECT AVG(RE_STARS) FROM REVIEW WHERE E_CODE=#{e_code}
+	</select>
+	<insert id="choice">
+		INSERT INTO CH VALUES(#{m_id},#{e_code})
+	</insert>
+	<delete id="choiceDelete">
+		DELETE FROM CH WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</delete>
+	<select id="getChoiceChk" parameterType="String"
+		resultType="String">
+		SELECT * FROM CH WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</select>
 </mapper>

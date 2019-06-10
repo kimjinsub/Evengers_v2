@@ -1,11 +1,13 @@
 package com.event.evengers_v2.service;
 
 import java.sql.Array;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale.Category;
 import java.util.Map;
 
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
+import com.event.evengers_v2.bean.Review;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.userClass.UploadFile;
 import com.google.gson.Gson;
@@ -140,11 +143,25 @@ public class EventMM {
 
 	public ModelAndView getEvtInfo(String e_code) {
 		mav = new ModelAndView();
+		String id=(String) session.getAttribute("id");
 		String view = null;
+		float starAverage;
+		String choiceChk;
 		Event eb=new Event();
+		List<Review> rList=null;
 		eb=eDao.getEvtInfo(e_code);
-		 
+		rList=eDao.getReview(e_code);
+		choiceChk=eDao.getChoiceChk(e_code,id);
+		starAverage=eDao.getStarAverage(e_code);
+		DecimalFormat format = new DecimalFormat(".#");
+		String str =format.format(starAverage);
+		System.out.println("starAverage:"+str);
 		mav.addObject("eb", eb);
+		mav.addObject("id", id);
+		mav.addObject("rList", rList);
+		mav.addObject("starAverage", str);
+		mav.addObject("choiceChk", choiceChk);
+		
 		view = "commonViews/evtInfo";
 		mav.setViewName(view);
 		return mav;
@@ -157,7 +174,92 @@ public class EventMM {
 		json_option=gson.toJson(optionList);
 		return json_option;
 	}
-	
+	public String review(String e_code, int star, String r_contents) {
+		String str="";
+		String id=(String) session.getAttribute("id");
+		System.out.println(id);
+		System.out.println("ecode11111111"+e_code);
+		Review review=new Review();
+		review.setE_code(e_code);
+		review.setM_id(id);
+		review.setRe_contents(r_contents);
+		review.setRe_stars(star);
+		/*if (eDao.reviewMemberCheck(id) != null) {*/
+			if (eDao.reviewCheck(id, e_code) == null) {
+				if (eDao.review(review)) {
+					str = "리뷰가 등록 되었습니다.";
+					return str;
+				}
+			} else {
+				str = "이미 등록된 리뷰가 있습니다.";
+			}
+		/* } else { str = "개인 회원만 작성 가능합니다."; } */
+		return str;
+	}
+
+	public String reviewModifyBtn(String e_code, int star, String r_contents) {
+		String str="";
+		String id=(String) session.getAttribute("id");
+		Review review=new Review();
+		review.setE_code(e_code);
+		review.setM_id(id);
+		review.setRe_contents(r_contents);
+		review.setRe_stars(star);
+		if (eDao.reviewModifyBtn(review)) {
+			str = "리뷰가 수정 되었습니다.";
+			return str;
+		}else {
+			str = "수정안됨.";
+		}
+		return str;
+	}
+
+	public String reviewDelete(String e_code) {
+		String str="";
+		String id=(String) session.getAttribute("id");
+		Review review=new Review();
+		review.setE_code(e_code);
+		review.setM_id(id);
+		if (eDao.reviewDelete(review)) {
+			str = "리뷰가 삭제 되었습니다.";
+			return str;
+		}else {
+			str = "삭제 안됨.";
+		}
+		return str;
+	}
+
+	public String choice(String e_code) {
+		String str="";
+		String id=(String) session.getAttribute("id");
+		if (id != null) {
+			if (eDao.choice(e_code, id)) {
+				str = "찜 추가됨";
+				return str;
+			} else {
+				str = "찜 안됨.";
+			}
+		} else {
+			str = "로그인 해주세요";
+		}
+		return str;
+	}
+
+	public String choiceDelete(String e_code) {
+		String str="";
+		String id=(String) session.getAttribute("id");
+		if (id != null) {
+			if (eDao.choiceDelete(e_code, id)) {
+				str = "찜 삭제 됨";
+				return str;
+			} else {
+				str = "찜 삭제 안됨.";
+			}
+		} else {
+			str = "로그인 해주세요";
+		}
+		return str;
+	}
 	public int getTotalPrice(String[] options, String def) {
 		System.out.println("def="+Integer.valueOf(def));
 		int totalPrice=Integer.valueOf(def);

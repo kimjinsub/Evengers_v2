@@ -98,8 +98,9 @@
 					str += "<div id='d_m_area2'><input type='text' id='m_area2' name='m_area2'></div></td>"
 					str += "<td> <button onclick='m_areachk()'>지역 수정</button></td></tr>"
 	
-					str += "<tr><td colspan='3'><button onclick='modifyMemInfo()'>저장하기</button></td></tr>"
 					str += "</table>"
+					str += "<button onclick='modifyMemInfo()'>저장하기</button><button onclick='location=\"./\"'>탈퇴하기</button>"
+
 					str += "</div>"
 					str += "<input type='text' id='m_pw3' name='m_pw3' value='"+result[0]['m_pw'] +"' readonly></div>"
 					$("#mModifyMain").html(str);

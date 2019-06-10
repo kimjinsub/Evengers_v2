@@ -158,7 +158,7 @@
               </div>
             </li>
 
-			<li class="nav-item"><a class="nav-link" href="./home"><span class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로가기</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="./"><span class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로가기</span></a></li>
             <div class="topbar-divider d-none d-sm-block"></div>
                <li class="nav-item"><a class="nav-link" href="#"><span class="mr-2 d-none d-lg-inline text-gray-800 ">견적의뢰</span></a></li>
             <div class="topbar-divider d-none d-sm-block"></div>

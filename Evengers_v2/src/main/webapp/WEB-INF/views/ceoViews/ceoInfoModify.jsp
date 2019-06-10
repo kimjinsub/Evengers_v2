@@ -93,8 +93,8 @@
 					str += "<div id='d_ceo_email2'><input type='text' id='ceo_email2' name='ceo_email2'></div></td>"
 					str += "<td> <button onclick='ceo_emailchk()'>이메일 수정</button></td></tr>"
 
-					str += "<tr><td colspan='3'><button onclick='ceoModifyInfo()'>저장하기</button></td></tr>"
 					str += "</table>"
+					str += "<button onclick='ceoModifyInfo()'>저장하기</button> <button onclick='location=\"./\"'>탈퇴하기</button>"
 					str += "</div>"
 					str += "<input type='text' id='ceo_pw3' name='ceo_pw3' value='"+result[0]['c_pw'] +"' readonly></div>"
 					$("#ceoModifyMain").html(str);

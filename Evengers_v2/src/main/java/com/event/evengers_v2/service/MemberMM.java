@@ -106,10 +106,10 @@ public String memberTest(String testcode) {
 				mav.setViewName(view);
 				return mav;
 			} else {
-				view = "loginFrm";
+				view = "commonViews/loginFrm";
 			}
 		} else {
-			view = "loginFrm";
+			view = "commonViews/loginFrm";
 			System.out.println("안됨1");
 		}
 		if (cPwdEncode != null) {
@@ -120,10 +120,10 @@ public String memberTest(String testcode) {
 				mav.setViewName(view);
 				return mav;
 			} else {
-				view = "loginFrm";
+				view = "commonViews/loginFrm";
 			}
 		} else {
-			view = "loginFrm";
+			view = "commonViews/loginFrm";
 			System.out.println("안됨2");
 		}
 		mav.setViewName(view);

@@ -155,7 +155,7 @@ public class Controller_Chun {
 			if(id2==null) {
 				view="commonViews/loginFrm";
 			}else {
-				view="home";
+				view="index";
 			}
 		}else {
 		view="memberViews/memberMyPage";
@@ -233,7 +233,7 @@ public class Controller_Chun {
 			if (id2 == null) {
 				view = "commonViews/loginFrm";
 			} else {
-				view = "home";
+				view = "index";
 			}
 		}else {
 		view="ceoViews/ceoMyPage";
@@ -308,5 +308,63 @@ public class Controller_Chun {
 	public String logout() {
 		session.invalidate();
 		return "index";	
+	}
+	@RequestMapping(value = "/review",  produces = "application/json; charset=utf8")
+	public @ResponseBody String review(String e_code, int star, String r_contents) {
+		String str="";
+		String id=(String) session.getAttribute("id");
+		if (id != null) {
+			if (e_code != null) {
+				str = em.review(e_code, star, r_contents);
+				return str;
+			}
+		}else {
+			str="로그인을 해주세요.";
+		}
+		return str;
+	}
+
+	@RequestMapping(value = "/reviewModifyBtn", produces = "application/json; charset=utf8")
+	public @ResponseBody String reviewModifyBtn(String e_code, int star, String r_contents) {
+		String str = "";
+		System.out.println("E_CODE:"+e_code);
+		System.out.println("STAR:"+star);
+		System.out.println("CONTENTS:"+r_contents);
+		if (e_code != null) {
+			str = em.reviewModifyBtn(e_code, star, r_contents);
+			return str;
+		}
+
+		return str;
+	}
+	@RequestMapping(value = "/reviewDelete", produces = "application/json; charset=utf8")
+	public @ResponseBody String reviewDelete(String e_code) {
+		String str = "";
+		System.out.println("E_CODE222222:"+e_code);
+		if (e_code != null) {
+			str = em.reviewDelete(e_code);
+			return str;
+		}
+		return str;
+	}
+	
+	@RequestMapping(value = "/choice", produces = "application/json; charset=utf8")
+	public @ResponseBody String choice(String e_code) {
+		String str = "";
+		if (e_code != null) {
+			str = em.choice(e_code);
+			return str;
+		}
+		return str;
+	}
+	
+	@RequestMapping(value = "/choiceDelete", produces = "application/json; charset=utf8")
+	public @ResponseBody String choiceDelete(String e_code) {
+		String str = "";
+		if (e_code != null) {
+			str = em.choiceDelete(e_code);
+			return str;
+		}
+		return str;
 	}
 }
