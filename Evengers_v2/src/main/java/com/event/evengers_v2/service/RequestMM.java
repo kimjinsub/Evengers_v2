@@ -160,7 +160,7 @@ public class RequestMM {
 			System.out.println("띨패");
 		}
 
-		mav.setViewName("redirect:/myReqList");
+		mav.setViewName("redirect:/memberMyPage");
 
 		return mav;
 	}
