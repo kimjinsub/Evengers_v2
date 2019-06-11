@@ -111,19 +111,18 @@ public class RequestMM {
 
 		return map1;
 	}
-
 	public ModelAndView evtReqInfo(String req_code1) {
-		mav=new ModelAndView();
-		System.out.println("해당되는 아이디 : " + req_code1);
-		Request request = rDao.getReqInfo(req_code1);	//리퀘스트 빈의 자료 
-		mav.addObject("request", request);
-		
-		List<RequestImage> rfList = rDao.getReqImageInfo(req_code1);	//리퀘스트 이미지 빈의 자료
-		mav.addObject("rfList",rfList);
-		
-		mav.setViewName("memberViews/myReqInfo");
-		return mav;
-	}
+	      mav=new ModelAndView();
+	      System.out.println("해당되는 아이디 : " + req_code1);
+	      Request request = rDao.getReqInfo(req_code1);   //리퀘스트 빈의 자료 
+	      mav.addObject("request", request);
+	      
+	      List<RequestImage> rfList = rDao.getReqImageInfo(req_code1);   //리퀘스트 이미지 빈의 자료
+	      mav.addObject("rfList",rfList);
+	      
+	      mav.setViewName("memberViews/myReqInfo");
+	      return mav;
+	   }
 
 	
 }

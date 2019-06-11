@@ -3,34 +3,34 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.event.evengers_v2.dao.RequestDao">
-	<insert id="evtReqInsert" parameterType="request">
-		INSERT INTO REQ VALUES('REQ'||LPAD(R_SEQ.NEXTVAL,4,0),#{m_id},#{ec_name},
-      		#{req_title},#{req_contents},TO_DATE(#{req_hopedate},'YYYY-MM-DDHH24:MI:SS'),#{req_hopearea},#{req_hopeaddr})
+   <insert id="evtReqInsert" parameterType="request">
+      INSERT INTO REQ VALUES('REQ'||LPAD(REQ_SEQ.NEXTVAL,4,0),#{m_id},#{ec_name},
+            #{req_title},#{req_contents},TO_DATE(#{req_hopedate},'YYYY-MM-DDHH24:MI:SS'),#{req_hopearea},#{req_hopeaddr})
    </insert>
    
    <select id="getReqCode" parameterType="String" resultType="String">
-   		SELECT MAX(REQ_CODE) FROM REQ
+         SELECT MAX(REQ_CODE) FROM REQ
    </select>
    
    <insert id="evtReqImageInsert" parameterType="requestimage">
-		INSERT INTO REQI VALUES('REQI'||LPAD(R_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})   		
+      INSERT INTO REQI VALUES('REQI'||LPAD(REQI_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})         
    </insert>
    
    <select id="AllReqList" parameterType="map" resultType="request">
-   		SELECT * FROM REQ
+         SELECT * FROM REQ
    </select>
    
    <select id="myReqList" parameterType="map" resultType="request">
-   		SELECT * FROM REQ WHERE M_ID=#{id}
+         SELECT * FROM REQ WHERE M_ID=#{id}
    </select>
    
    <select id="getReqInfo" parameterType="string" resultType="request">
-		SELECT * FROM REQ WHERE REQ_CODE=#{req_code1}
+      SELECT * FROM REQ WHERE REQ_CODE=#{req_code1}
    </select>
-	
+   
    <select id="getReqImageInfo" parameterType="string" resultType="requestimage">
-		SELECT * FROM REQI WHERE REQ_CODE=#{req_code1}
+      SELECT * FROM REQI WHERE REQ_CODE=#{req_code1}
    </select>
-	
-	 
+   
+    
 </mapper>

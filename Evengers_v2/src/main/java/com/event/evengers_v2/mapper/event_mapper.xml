@@ -83,7 +83,7 @@
 
 	<select id="getStarAverage" parameterType="String"
 		resultType="float">
-		SELECT AVG(RE_STARS) FROM REVIEW WHERE E_CODE=#{e_code}
+		SELECT AVG(RE_STARS) FROM REVIEW WHERE E_CODE=#{e_code, jdbcType=VARCHAR}
 	</select>
 	<insert id="choice">
 		INSERT INTO CH VALUES(#{m_id},#{e_code})
@@ -94,5 +94,18 @@
 	<select id="getChoiceChk" parameterType="String"
 		resultType="String">
 		SELECT * FROM CH WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</select>
+	
+	<select id="choiceList" parameterType="String"
+		resultType="choice">
+		SELECT * FROM CH WHERE M_ID=#{m_id}
+	</select>
+	<select id="reviewChk" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM REVIEW WHERE E_CODE=#{e_code}
+	</select>
+	<select id="choiceList2" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EVENT WHERE E_CODE=#{e_code}
 	</select>
 </mapper>
