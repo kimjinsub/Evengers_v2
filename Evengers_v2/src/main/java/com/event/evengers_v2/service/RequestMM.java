@@ -1,5 +1,8 @@
 package com.event.evengers_v2.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.evengers_v2.bean.Question;
+import com.event.evengers_v2.bean.QuestionImage;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
@@ -89,13 +94,36 @@ public class RequestMM {
 		
 	}
 
-	public ModelAndView evtReqList() {
-		String m_id=session.getAttribute("id").toString();
-		Request rq = new Request();
-		rq.setM_id(m_id);
-		//rDao.evtReqList
+	public Map<String, Object> myReqList(String id, Integer pageNum) {
+		ArrayList<Request> rList = new ArrayList<Request>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map1 = new HashMap<String, Object>();
 		
+		if(id.equals("admin")) {
+			System.out.println("관리자 계정 모든리스트 출력");
+			rList=rDao.AllReqList(map);
+		}else {
+			System.out.println("개인 계정 개별 리스트 출력");
+			map.put("id",id);
+			rList = rDao.myReqList(map);
+		}
+		map1.put("rList", rList);
+
+		return map1;
+	}
+
+	public ModelAndView evtReqInfo(String req_code1) {
+		mav=new ModelAndView();
+		System.out.println("해당되는 아이디 : " + req_code1);
+		Request request = rDao.getReqInfo(req_code1);	//리퀘스트 빈의 자료 
+		mav.addObject("request", request);
+		
+		List<RequestImage> rfList = rDao.getReqImageInfo(req_code1);	//리퀘스트 이미지 빈의 자료
+		mav.addObject("rfList",rfList);
+		
+		mav.setViewName("memberViews/myReqInfo");
 		return mav;
 	}
 
+	
 }

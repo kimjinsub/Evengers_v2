@@ -16,5 +16,21 @@
 		INSERT INTO REQI VALUES('REQI'||LPAD(R_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})   		
    </insert>
    
+   <select id="AllReqList" parameterType="map" resultType="request">
+   		SELECT * FROM REQ
+   </select>
    
+   <select id="myReqList" parameterType="map" resultType="request">
+   		SELECT * FROM REQ WHERE M_ID=#{id}
+   </select>
+   
+   <select id="getReqInfo" parameterType="string" resultType="request">
+		SELECT * FROM REQ WHERE REQ_CODE=#{req_code1}
+   </select>
+	
+   <select id="getReqImageInfo" parameterType="string" resultType="requestimage">
+		SELECT * FROM REQI WHERE REQ_CODE=#{req_code1}
+   </select>
+	
+	 
 </mapper>

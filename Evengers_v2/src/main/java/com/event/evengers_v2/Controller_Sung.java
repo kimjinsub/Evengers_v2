@@ -1,6 +1,8 @@
 package com.event.evengers_v2;
 
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -128,9 +130,19 @@ public class Controller_Sung {
 	}
 	
 	
-	@RequestMapping(value = "/evtReqList")
-	public ModelAndView evtReqList(MultipartHttpServletRequest multi) {
-		mav = rm.evtReqList();
+	@RequestMapping(value = "/myReqList",produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> evtReqList(Integer pageNum) {
+		String id =session.getAttribute("id").toString();
+		Map<String, Object> map = rm.myReqList(id,pageNum);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/evtReqInfo", produces = "application/json; charset=utf8")
+	public ModelAndView evtReqInfo(String req_code) {
+		mav=new ModelAndView();
+		String req_code1=req_code;
+        mav = rm.evtReqInfo(req_code1);
 		return mav;
 	}
 }

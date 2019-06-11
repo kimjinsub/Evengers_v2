@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	
+</script>
+
+<title>Insert title here</title>
+</head>
+<body>
+	<a href="requestDelete?req_code=${request.req_code}">삭제</a>
+	<h3>요청 내용 상세보기</h3>
+	<table border='1'>
+		<tr height="40">
+			<td bgcolor="blue" align="center">요청코드</td>
+			<td colspan="5">${request.req_code}</td>
+		</tr>
+		<tr height="40">
+			<td bgcolor="blue" align="center">작성자</td>
+			<td width="200">${request.m_id}</td>
+			<td bgcolor="blue" align="center">희망날짜</td>
+			<td width="200">${request.req_hopedate}</td>
+		</tr>
+		<tr height="40">
+			<td bgcolor="blue" align="center">희망지역</td>
+			<td width="200">${request.req_hopearea}</td>
+			<td bgcolor="blue" align="center">상세주소</td>
+			<td width="200">${request.req_hopeaddr}</td>
+		</tr>
+		<tr height="40">
+			<td bgcolor="blue" align="center">제목</td>
+			<td colspan="5">${request.req_title}</td>
+		</tr>
+		<tr height="230">
+			<td bgcolor="blue" align="center">내용</td>
+			<td colspan="5">${request.req_contents}</td>
+		</tr>
+		
+		<tr>
+			<th>첨부파일</th>
+			<td><c:set var="file" value="${rfList}" /> 
+				<c:if test="${empty file}">
+					첨부된 파일이 없습니다.
+				</c:if> 
+				<c:if test="${!empty file}">
+					<c:forEach var="file" items="${rfList}">
+						<a href="download?oriFileName=${file.reqi_orifilename}
+										&sysFileName=${file.reqi_sysfilename}">
+							${file.reqi_orifilename} </a>
+					</c:forEach>
+				</c:if>
+			</td>
+		</tr>
+		
+		
+	</table>
+
+</body>
+</html>

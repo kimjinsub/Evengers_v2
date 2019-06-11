@@ -59,8 +59,8 @@ public class UploadFile {
 		case 2:	//의뢰 첨부사진
 			root = multi.getSession().getServletContext().getRealPath("/");
 			System.out.println("root=" + root);
-			path = root + "resources/upload/evtReqImage/";
-			System.out.println("path" + path);
+			path = root + "upload/evtReqImage/";
+			System.out.println("path = " + path);
 			
 			dir = new File(path);
 			if (!dir.isDirectory()) { // upload폴더 없다면
@@ -75,6 +75,10 @@ public class UploadFile {
 				reqi_sysfilename = System.currentTimeMillis() + "."
 						+ reqi_orifilename.substring(reqi_orifilename.lastIndexOf(".") + 1);
 				System.out.println("reqi_sysfilename:"+reqi_sysfilename);
+				try {
+					file.transferTo(new File(path + reqi_sysfilename));
+				} catch (Exception e) {
+				}
 			}
 			fileMap.put("reqi_orifilename", reqi_orifilename);
 			fileMap.put("reqi_sysfilename", reqi_sysfilename);
