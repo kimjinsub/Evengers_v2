@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
+import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.PersonnelMM;
+import com.event.evengers_v2.userClass.DBException;
 
 @Controller
 public class Controller_Eunseo {
@@ -31,6 +33,8 @@ public class Controller_Eunseo {
 	EventMM em;
 	@Autowired
 	PersonnelMM pm;
+	@Autowired
+	PayMM paym;
 	
 	@RequestMapping(value = "/eunseo", method = RequestMethod.GET)
 	public String home() {
@@ -68,6 +72,19 @@ public class Controller_Eunseo {
 	@RequestMapping(value = "/performInsert", method = RequestMethod.POST)
 	public ModelAndView performInsert(MultipartHttpServletRequest multi) {
 		mav = pm.performInsert(multi);
+		return mav;
+	}
+	@RequestMapping(value = "/rejectBuy", method = RequestMethod.POST)
+	public ModelAndView rejectBuy(String eb_code) throws DBException {
+		mav = paym.rejectBuy(eb_code);
+		System.out.println("eb_code="+eb_code);
+		return mav;
+	}
+	@RequestMapping(value = "/performManage")
+	public ModelAndView performManage() {
+		String c_id = (String) session.getAttribute("id");
+		System.out.println("c_id2="+c_id);
+		mav = pm.getPerformList(c_id);
 		return mav;
 	}
 }

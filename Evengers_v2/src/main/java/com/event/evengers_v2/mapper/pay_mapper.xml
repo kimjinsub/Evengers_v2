@@ -39,4 +39,10 @@
 	<select id="memberPayList" parameterType="String" resultType="eventpay">
 		SELECT * FROM EP WHERE M_ID=#{m_id} ORDER BY EP_PAYDAY DESC
 	</select>
+	<delete id="bsDelete" parameterType="String">
+		DELETE FROM BS WHERE EB_CODE=#{eb_code}
+	</delete>
+	<delete id="ebDelete" parameterType="String">
+   		DELETE FROM EB WHERE EB_CODE=#{eb_code}
+   </delete>
 </mapper>
