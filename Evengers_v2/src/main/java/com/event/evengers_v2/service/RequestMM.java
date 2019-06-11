@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +20,7 @@ import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.RequestDao;
+import com.event.evengers_v2.userClass.DBException;
 import com.event.evengers_v2.userClass.UploadFile;
 
 
@@ -124,6 +127,42 @@ public class RequestMM {
 		mav.setViewName("memberViews/myReqInfo");
 		return mav;
 	}
+	
+	public void download(Map<String, Object> params) throws Exception {
+		String root = (String) params.get("root");
+		String sysFileName = (String) params.get("sysFileName");
+		String oriFileName = (String) params.get("oriFileName");
+		String fullPath = root + "upload/evtReqImage/" + sysFileName;
 
+		HttpServletResponse resp = (HttpServletResponse) params.get("response");
+		// 실제 다운로드
+		file.download(fullPath, oriFileName, resp);
+
+	}
+	
+	@Transactional
+	public ModelAndView myReqDelete(String req_code) throws DBException{
+		mav = new ModelAndView();
+		
+		boolean imgDel = rDao.reqImageDelete(req_code);
+		boolean reqDel = rDao.reqDelete(req_code);
+		
+		System.out.println(imgDel);
+		System.out.println(reqDel);
+		
+		if (reqDel == false) {
+			throw new DBException();
+		}
+
+		if (imgDel && reqDel) {
+			System.out.println("삭제 트랜잭션 성공");
+		} else {
+			System.out.println("띨패");
+		}
+
+		mav.setViewName("redirect:/myReqList");
+
+		return mav;
+	}
 	
 }

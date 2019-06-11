@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.event.evengers_v2.bean.QuestionImage;
+import org.apache.ibatis.annotations.Param;
+
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 
@@ -17,12 +18,16 @@ public interface RequestDao {
 	public String getReqCode();
 
 	public ArrayList<Request> AllReqList(Map<String, Object> map);
-	
+
 	public ArrayList<Request> myReqList(Map<String, Object> map);
 
 	public Request getReqInfo(String req_code1);
 
 	public List<RequestImage> getReqImageInfo(String req_code1);
+
+	public boolean reqImageDelete(String req_code);
+
+	public boolean reqDelete(String req_code);
 
 	
 	

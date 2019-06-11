@@ -4,12 +4,14 @@ package com.event.evengers_v2;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +22,7 @@ import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
 import com.event.evengers_v2.service.RequestMM;
+import com.event.evengers_v2.userClass.DBException;
 
 @Controller
 public class Controller_Sung {
@@ -145,4 +148,23 @@ public class Controller_Sung {
         mav = rm.evtReqInfo(req_code1);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/download1", method = RequestMethod.GET) // get,post 모두 가능
+	public void download(
+			@RequestParam Map<String,Object> params,
+			HttpServletResponse response ,HttpServletRequest req) throws Exception { // int를 쓰면 null값이 올 수 없기 때문에
+		System.out.println("of = " + params.get("oriFileName"));
+		System.out.println("sf = " + params.get("sysFileName"));
+		
+		params.put("root", req.getSession().getServletContext().getRealPath("/"));
+		params.put("response",response);
+		rm.download(params);
+	}  
+	
+	@RequestMapping(value = "/myReqDelete", method = RequestMethod.GET) // get,post 모두 가능
+	public ModelAndView evtReqDelete(String req_code) throws DBException{
+		mav = rm.myReqDelete(req_code);
+		System.out.println("req_code="+req_code);
+		return mav;
+	} 
 }
