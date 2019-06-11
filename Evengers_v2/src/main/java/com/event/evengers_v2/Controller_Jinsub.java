@@ -169,4 +169,18 @@ public class Controller_Jinsub {
 		System.out.println("e_code="+e_code);
 		return em.effectiveness(dday,e_code);
 	}
+	@RequestMapping(value = "/evtPay",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String evtPay(String eb_code) {
+		return paym.evtPay(eb_code);
+	}
+	@RequestMapping(value = "/memberEvtPay", method = RequestMethod.POST)
+	public ModelAndView memberEvtPay(String ep_code) {
+		mav=paym.memberEvtPay(ep_code);
+		return mav;
+	}
+	@RequestMapping(value = "/memberPayList")
+	public ModelAndView memberPayList() {
+		mav=paym.memberPayList();
+		return mav;
+	}
 }

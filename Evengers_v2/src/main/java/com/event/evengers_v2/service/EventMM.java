@@ -300,7 +300,7 @@ public class EventMM {
 			System.out.println("날짜차이:"+diffDays+"일");
 			System.out.println("누가먼저?:"+selected_dday.compareTo(today));
 			if(selected_dday.compareTo(today)>=1) {
-				//입력날짜가 현재보다 미래면 +1 과거면 -1 같으면0
+				//입력날짜(selected_dday)가 현재(today)보다 미래면 +1 과거면 -1 같으면0
 				if(diffDays>=e.getE_reservedate()) {
 					msg="<p id='possible'>가능한 날짜입니다</p>";
 				}

@@ -294,7 +294,7 @@
 	});
 	$('#payList').click(function() {
 		$.ajax({
-			url : "payList",
+			url : "memberPayList",
 			dataType : "html",
 			success : function(result) {
 				$("#mMain").html(result);
