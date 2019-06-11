@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.evengers_v2.bean.Choice;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
@@ -143,25 +144,40 @@ public class EventMM {
 
 	public ModelAndView getEvtInfo(String e_code) {
 		mav = new ModelAndView();
-		String id=(String) session.getAttribute("id");
+		String id = (String) session.getAttribute("id");
 		String view = null;
-		float starAverage;
+		String str = null;
+		float starAverage = 0;
 		String choiceChk;
-		Event eb=new Event();
-		List<Review> rList=null;
-		eb=eDao.getEvtInfo(e_code);
-		rList=eDao.getReview(e_code);
-		choiceChk=eDao.getChoiceChk(e_code,id);
-		starAverage=eDao.getStarAverage(e_code);
-		DecimalFormat format = new DecimalFormat(".#");
-		String str =format.format(starAverage);
-		System.out.println("starAverage:"+str);
+		Event eb = new Event();
+		List<Review> rList = null;
+		eb = eDao.getEvtInfo(e_code);
+		rList = eDao.getReview(e_code);
+		choiceChk = eDao.getChoiceChk(e_code, id);
+		if (eDao.reviewChk(e_code) != 0) {
+
+			starAverage = eDao.getStarAverage(e_code);
+			System.out.println(starAverage);
+
+			DecimalFormat format = new DecimalFormat(".#");
+			str = format.format(starAverage);
+			System.out.println("str" + str);
+			if (str == null) {
+				str = 0 + "";
+				System.out.println("str" + str);
+
+			}
+			System.out.println("starAverage:" + str);
+
+		} else {
+			str = "0";
+		}
 		mav.addObject("eb", eb);
 		mav.addObject("id", id);
 		mav.addObject("rList", rList);
-		mav.addObject("starAverage", str);
 		mav.addObject("choiceChk", choiceChk);
-		
+		mav.addObject("starAverage", str);
+
 		view = "commonViews/evtInfo";
 		mav.setViewName(view);
 		return mav;
@@ -284,7 +300,7 @@ public class EventMM {
 			System.out.println("날짜차이:"+diffDays+"일");
 			System.out.println("누가먼저?:"+selected_dday.compareTo(today));
 			if(selected_dday.compareTo(today)>=1) {
-				//입력날짜가 현재보다 미래면 +1 과거면 -1 같으면0
+				//입력날짜(selected_dday)가 현재(today)보다 미래면 +1 과거면 -1 같으면0
 				if(diffDays>=e.getE_reservedate()) {
 					msg="<p id='possible'>가능한 날짜입니다</p>";
 				}
@@ -298,5 +314,22 @@ public class EventMM {
 			e1.printStackTrace();
 		}
 		return msg;
+	}
+
+	public ModelAndView choiceList(String id) {
+		List<Choice> cList=null;
+		mav = new ModelAndView();
+		String view = null;
+		ArrayList<Event> choiceList=new ArrayList<Event>();
+		cList=eDao.choiceList(id);
+		for(int i=0;i<cList.size();i++) {
+			Choice str=	cList.get(i);
+			String e_code=str.getE_code();
+			choiceList.add(eDao.getEvtInfo(e_code));
+		}
+		mav.addObject("choiceList",choiceList );
+		view = "memberViews/choiceList";
+		mav.setViewName(view);
+		return mav;
 	}
 }

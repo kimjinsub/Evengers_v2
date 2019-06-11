@@ -114,8 +114,8 @@ public class RequestMM {
 
 		return map1;
 	}
-
 	public ModelAndView evtReqInfo(String req_code1) {
+
 		mav=new ModelAndView();
 		System.out.println("해당되는 아이디 : " + req_code1);
 		Request request = rDao.getReqInfo(req_code1);	//리퀘스트 빈의 자료 

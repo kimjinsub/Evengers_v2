@@ -29,8 +29,6 @@ public interface RequestDao {
 
 	public boolean reqDelete(String req_code);
 
-	
-	
-	
 
+	
 }

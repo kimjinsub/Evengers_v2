@@ -32,7 +32,7 @@
 						<span class="sr-only">(current)</span>
 				</a></li>
 			 	<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+				<li class="nav-item"><a class="nav-link" href="./memberMyPage">마이페이지</a></li>
 				<li class="nav-item"><a class="nav-link" href="./evtReqFrm">의뢰요청</a></li>
 				<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
