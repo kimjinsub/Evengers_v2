@@ -39,5 +39,12 @@ public interface PayDao {
 
 	boolean ebDelete(String eb_code);
 
+	ArrayList<EventPay> ceoAllEvtPayList(String c_id);
+
+	ArrayList<String> ceoEvtPayList(String e_code);
+
+	EventPay getEpInfo(String ep_code);
+
+	ArrayList<String> ceoEvtPayList2(@Param("e_codes1")ArrayList<String> e_codes);
 
 }

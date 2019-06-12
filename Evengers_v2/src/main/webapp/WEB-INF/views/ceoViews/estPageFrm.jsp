@@ -64,6 +64,7 @@ function formData(){
 	formData.append("est_total",$("#est_total").val());//0,1
 	formData.append("est_okDate",$("#est_okDate").val());//0,1
 	formData.append("est_refundDate",$("#est_refundDate").val());//0,1
+	formData.append("req_code","${req_code}");
 	var files=$obj[0].files;//배열로 파일정보를 반환
 	for(var i=0;i<files.length;i++){
 		formData.append("est_files",files[i]);

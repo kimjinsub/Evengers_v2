@@ -33,6 +33,8 @@ public class Controller_Bin {
 	ModelAndView mav;
 	@Autowired
 	private HttpSession session;
+	HttpServletRequest request;
+	HttpServletRequest response;
 	
 	@Autowired
 	MemberMM mm;
@@ -133,10 +135,13 @@ public class Controller_Bin {
 		rm.download1(params);
 	}
 	@RequestMapping(value = "/estPageFrm", produces = "application/json; charset=utf8")
-	public ModelAndView estPageFrm() {
+	public ModelAndView estPageFrm(HttpServletRequest req) {
+		String req_code=req.getParameter("req_code");
+		System.out.println(req_code);
 		mav = new ModelAndView();
+		mav.addObject("req_code",req_code);
 		mav.setViewName("ceoViews/estPageFrm");
-		return mav;
+		return mav; 
 	}
 	
 	@RequestMapping(value = "/estInsert", produces = "application/json; charset=utf8")

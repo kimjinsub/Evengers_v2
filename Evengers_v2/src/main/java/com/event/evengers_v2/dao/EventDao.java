@@ -79,4 +79,6 @@ public interface EventDao {
 	public boolean evtImageDelete(EventImage ei);
 
 	public boolean evtOptionDelete(String e_code);
+	
+	public ArrayList<String> getEvtCodeList(String c_id);
 }

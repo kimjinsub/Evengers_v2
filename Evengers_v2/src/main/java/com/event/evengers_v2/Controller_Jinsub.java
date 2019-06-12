@@ -12,12 +12,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.Department;
+import com.event.evengers_v2.bean.EventSchedule;
 import com.event.evengers_v2.bean.Position;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
 import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.PersonnelMM;
+import com.event.evengers_v2.service.ScheduleMM;
 
 @Controller
 public class Controller_Jinsub {
@@ -36,10 +38,12 @@ public class Controller_Jinsub {
 	PersonnelMM pm;
 	@Autowired
 	PayMM paym;
+	@Autowired
+	ScheduleMM sm;
 	
-	@RequestMapping(value = "/jinsub", method = RequestMethod.GET)
-	public String home() {
-		return "home";
+	@RequestMapping(value = "/erpIndex", method = RequestMethod.GET)
+	public String erpIndex() {
+		return "ceoViews/erpIndex";
 	}
 	
 	@RequestMapping(value = "/categoryFrm", method = RequestMethod.GET)
@@ -182,5 +186,14 @@ public class Controller_Jinsub {
 	public ModelAndView memberPayList() {
 		mav=paym.memberPayList();
 		return mav;
+	}
+	@RequestMapping(value = "/scheduleManage")
+	public ModelAndView scheduleManage() {
+		mav=sm.scheduleManage();
+		return mav;
+	}
+	@RequestMapping(value = "/insertEvtSchedule",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String insertEvtSchedule(EventSchedule es) {
+		return sm.insertEvtSchedule(es);
 	}
 }
