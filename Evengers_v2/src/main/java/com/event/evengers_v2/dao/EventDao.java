@@ -6,6 +6,7 @@ import java.util.Locale.Category;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.event.evengers_v2.bean.Choice;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
@@ -37,7 +38,6 @@ public interface EventDao {
 	public EventOption getEoInfo(String eo_code);
 	
 	
-	
 	public boolean review(Review review);
 
 	public List<Review> getReview(String e_code);
@@ -57,4 +57,10 @@ public interface EventDao {
 	public boolean choiceDelete(@Param("e_code")String e_code, @Param("m_id")String id);
 
 	public String getChoiceChk(@Param("e_code")String e_code, @Param("m_id")String id);
+
+	public int reviewChk(String e_code);
+
+	public List<Choice> choiceList(@Param("m_id")String id);
+
+
 }

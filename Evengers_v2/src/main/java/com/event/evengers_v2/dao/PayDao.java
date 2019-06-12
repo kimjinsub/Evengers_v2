@@ -2,10 +2,12 @@ package com.event.evengers_v2.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.event.evengers_v2.bean.BuySelectedOption;
-import com.event.evengers_v2.bean.Department;
 import com.event.evengers_v2.bean.EventBuy;
-import com.event.evengers_v2.bean.Position;
+import com.event.evengers_v2.bean.EventPay;
+import com.event.evengers_v2.bean.EventPaySelectedOption;
 
 public interface PayDao {
 
@@ -21,5 +23,21 @@ public interface PayDao {
 
 	int getEvtBuyOptionCount(String eb_code);
 
+	boolean evtPay(EventPay ep);
+
+	String getEpCode(@Param("m_id")String m_id, @Param("e_code")String e_code);
+
+	boolean epsInsert(EventPaySelectedOption eps);
+
+	EventPay memberEvtPay(EventPay ep);
+
+	ArrayList<EventPaySelectedOption> memberEps(String ep_code);
+
+	ArrayList<EventPay> memberPayList(String m_id);
 	
+	boolean bsDelete(String eb_code);
+
+	boolean ebDelete(String eb_code);
+
+
 }

@@ -3,8 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.event.evengers_v2.dao.RequestDao">
+
 	<insert id="evtReqInsert" parameterType="request">
-		INSERT INTO REQ VALUES('REQ'||LPAD(R_SEQ.NEXTVAL,4,0),#{m_id},#{ec_name},
+		INSERT INTO REQ VALUES('REQ'||LPAD(REQ_SEQ.NEXTVAL,4,0),#{m_id},#{ec_name},
       		#{req_title},#{req_contents},TO_DATE(#{req_hopedate},'YYYY-MM-DDHH24:MI:SS'),#{req_hopearea},#{req_hopeaddr})
    </insert>
    
@@ -13,8 +14,65 @@
    </select>
    
    <insert id="evtReqImageInsert" parameterType="requestimage">
-		INSERT INTO REQI VALUES('REQI'||LPAD(R_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})   		
+		INSERT INTO REQI VALUES('REQI'||LPAD(REQI_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})   		
    </insert>
+   <insert id="estInsert" parameterType="estimate">
+       INSERT INTO EST VALUES('EST'||LPAD(EST_SEQ.NEXTVAL,4,0),#{req_code},#{c_id},#{est_contents},#{est_total},#{est_okdate},#{est_refunddate})
+   </insert>
+   <select id="getEstCode" parameterType="String" resultType="String">
+   		SELECT MAX(EST_CODE) FROM EST WHERE C_ID=#{c_id}
+   </select>
+   <insert id="estImageInsert" parameterType="estimateimage">
+       INSERT INTO ESTI VALUES('ESTI'||LPAD(ESTI_SEQ.NEXTVAL,4,0),#{esti_orifilename},#{esti_sysfilename},#{est_code})
+   </insert>
+   <select id="getEstList" parameterType="map" resultType="estimate">
+      SELECT * FROM EST WHERE C_ID=#{id}
+   </select>
+   	<select id="getEstCount" resultType="int">
+	SELECT COUNT(*) FROM EST
+	</select>
+	<select id="getReqList" resultType="request">
+	 SELECT * FROM REQEST
+	</select>
+	<select id="showEstimate" parameterType="string" resultType="estimate">
+	 SELECT * FROM EST WHERE EST_CODE=#{est_code}
+	</select>
+	<select id="getEstimateImage" parameterType="string" resultType="estimateimage">
+	SELECT * FROM ESTI WHERE EST_CODE=#{est_code}
+	</select>
+	<select id="getIdTitle" parameterType="string" resultType="request">
+	SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
+	</select>
+	<delete id="estiDelete" parameterType="string">
+	DELETE FROM ESTI WHERE EST_CODE=#{est_code}
+	</delete>
+	<delete id="estDelete" parameterType="string">
+	DELETE FROM EST WHERE EST_CODE=#{est_code}
+	</delete>
    
+   <select id="AllReqList" parameterType="map" resultType="request">
+         SELECT * FROM REQ
+   </select>
    
+   <select id="myReqList" parameterType="map" resultType="request">
+         SELECT * FROM REQ WHERE M_ID=#{id}
+   </select>
+   
+   <select id="getReqInfo" parameterType="string" resultType="request">
+      SELECT * FROM REQ WHERE REQ_CODE=#{req_code1}
+   </select>
+   
+   <select id="getReqImageInfo" parameterType="string" resultType="requestimage">
+      SELECT * FROM REQI WHERE REQ_CODE=#{req_code1}
+   </select>
+   
+   <delete id="reqImageDelete" parameterType="string">
+		DELETE FROM REQI WHERE REQ_CODE=#{req_code}
+   </delete>
+   
+    <delete id="reqDelete" parameterType="string">
+		DELETE FROM REQ WHERE REQ_CODE=#{req_code}
+   </delete>
+	
+	 
 </mapper>

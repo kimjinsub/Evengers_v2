@@ -22,4 +22,14 @@ public interface PersonnelDao {
 	String getDeptCode(@Param("c_id") String c_id,@Param("dept_name") String dept_name);
 
 	boolean performInsert(Employee emp);
+
+	ArrayList<Employee> getEmpList(String c_id);
+
+	void getEmp_code(String c_id);
+
+	Position getPositionInfo(String p_code);
+
+	Department getDeptInfo(String dept_code);
+
+
 }

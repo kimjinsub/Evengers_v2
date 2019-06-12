@@ -21,4 +21,28 @@
 	<select id="getEvtBuyOptionCount" parameterType="String" resultType="Integer">
 		SELECT COUNT(*) FROM BS WHERE EB_CODE=#{eb_code}
 	</select>
+	<insert id="evtPay" parameterType="eventpay">
+		INSERT INTO EP VALUES('EP'||LPAD(EP_SEQ.NEXTVAL,4,0),#{e_code},#{m_id},#{ep_total},#{ep_dday},DEFAULT,0)
+	</insert>
+	<select id="getEpCode" parameterType="String" resultType="String">
+		SELECT MAX(EP_CODE) FROM EP WHERE M_ID=#{m_id} AND E_CODE=#{e_code}
+	</select>
+	<insert id="epsInsert" parameterType="eventpayselectedoption">
+		INSERT INTO EPS VALUES('EPS'||LPAD(EPS_SEQ.NEXTVAL,4,0),#{eo_code},#{ep_code})
+	</insert>
+	<select id="memberEvtPay" parameterType="String" resultType="eventpay">
+		SELECT * FROM EP WHERE M_ID=#{m_id} AND EP_CODE=#{ep_code} 
+	</select>
+	<select id="memberEps" parameterType="String" resultType="eventpayselectedoption">
+		SELECT * FROM EPS WHERE EP_CODE=#{ep_code}
+	</select>
+	<select id="memberPayList" parameterType="String" resultType="eventpay">
+		SELECT * FROM EP WHERE M_ID=#{m_id} ORDER BY EP_PAYDAY DESC
+	</select>
+	<delete id="bsDelete" parameterType="String">
+		DELETE FROM BS WHERE EB_CODE=#{eb_code}
+	</delete>
+	<delete id="ebDelete" parameterType="String">
+   		DELETE FROM EB WHERE EB_CODE=#{eb_code}
+   </delete>
 </mapper>
