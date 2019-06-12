@@ -104,15 +104,6 @@ public class RequestMM {
 
 	}
 
-	public ModelAndView evtReqList() {
-		String m_id = session.getAttribute("id").toString();
-		Request rq = new Request();
-		rq.setM_id(m_id);
-		// rDao.evtReqList
-
-		return mav;
-	}
-
 	public ModelAndView estInsert(MultipartHttpServletRequest multi) {
 		mav = new ModelAndView();
 		String c_id = session.getAttribute("id").toString();
@@ -238,9 +229,13 @@ public class RequestMM {
 		ArrayList<Request> rList = new ArrayList<Request>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> map1 = new HashMap<String, Object>();
+		boolean ceoChk=false;
+		if(rDao.ceoChk(id)>0) {
+			ceoChk=true;
+		}
 		
-		if(id.equals("admin")) {
-			System.out.println("관리자 계정 모든리스트 출력");
+		if(id.equals("admin") || ceoChk) {
+			System.out.println("관리자 계정 or 기업계정 모든리스트 출력");
 			rList=rDao.AllReqList(map);
 		}else {
 			System.out.println("개인 계정 개별 리스트 출력");

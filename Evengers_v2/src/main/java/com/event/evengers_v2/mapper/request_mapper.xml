@@ -73,6 +73,10 @@
     <delete id="reqDelete" parameterType="string">
 		DELETE FROM REQ WHERE REQ_CODE=#{req_code}
    </delete>
+   
+   <select id="ceoChk" resultType="integer"> 
+   		SELECT COUNT(*) FROM C WHERE C_ID = #{id} 
+   </select>
 	
 	 
 </mapper>

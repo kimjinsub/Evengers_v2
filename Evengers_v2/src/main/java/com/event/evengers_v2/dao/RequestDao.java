@@ -54,6 +54,8 @@ public interface RequestDao {
 
 	public boolean reqDelete(String req_code);
 
+	public int ceoChk(String id);
+
 
 
 }
