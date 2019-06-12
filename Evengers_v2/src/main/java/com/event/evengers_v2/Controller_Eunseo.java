@@ -39,7 +39,7 @@ public class Controller_Eunseo {
 	PayMM paym;
 	@Autowired
 	FinancialMM fm;
-	
+
 	@RequestMapping(value = "/eunseo", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -91,6 +91,7 @@ public class Controller_Eunseo {
 		mav = pm.getPerformList(c_id);
 		return mav;
 	}
+
 	@RequestMapping(value = "/accountingManage")
 	public ModelAndView accountingManage() {
 		mav = new ModelAndView();

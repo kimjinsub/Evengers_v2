@@ -52,7 +52,7 @@ table {
 				첨부된 파일이 없습니다.
 			</c:if> <c:if test="${!empty file}">
 						<a
-							href="download1?oriFileName=${file.esti_orifilename}
+							href="download2?oriFileName=${file.esti_orifilename}
 										&sysFileName=${file.esti_sysfilename}">
 							${file.esti_orifilename}</a>
 				</c:if></td>
