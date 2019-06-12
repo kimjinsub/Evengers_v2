@@ -62,5 +62,21 @@ public interface EventDao {
 
 	public List<Choice> choiceList(@Param("m_id")String id);
 
+	public List<Event> myEvtManagement(@Param("c_id")String id);
 
+	public Event myEvtModify(String e_code);
+
+	public String ei_sysFileName(String e_code);
+
+	public boolean noFiNoOpModify(Event eb);
+
+	public boolean okFiNoOpModify(Event eb);
+
+	public boolean noFiOkOpModify(Event eb);
+
+	public boolean okFiOkOpModify(Event eb);
+
+	public boolean evtImageDelete(EventImage ei);
+
+	public boolean evtOptionDelete(String e_code);
 }

@@ -44,4 +44,116 @@
    <select id="getEoInfo" parameterType="String" resultType="eventoption">
    		SELECT * FROM EO WHERE EO_CODE=#{eo_code}
    </select>
+   
+   
+   
+   
+   
+   
+   <insert id="review">
+	INSERT INTO RE VALUES(#{e_code},#{m_id},SYSDATE,#{re_contents},#{re_stars})
+</insert>
+
+
+	<select id="getReview" parameterType="String"
+		resultType="review">
+		SELECT * FROM RE WHERE E_CODE=#{e_code}
+	</select>
+	
+	
+	<select id="reviewCheck" parameterType="String"
+		resultType="review">
+		SELECT * FROM RE WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</select>
+
+	<select id="reviewMemberCheck" parameterType="String"
+		resultType="review">
+		SELECT * FROM M WHERE M_ID=#{m_id}
+	</select>
+
+	<update id="reviewModifyBtn" parameterType="review">
+		UPDATE RE
+		SET
+		RE_CONTENTS =#{re_contents}, RE_WRITEDATE = SYSDATE,
+		RE_STARS=#{re_stars} WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</update>
+	<delete id="reviewDelete">
+		DELETE FROM RE WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</delete>
+
+	<select id="getStarAverage" parameterType="String"
+		resultType="float">
+		SELECT AVG(RE_STARS) FROM REVIEW WHERE E_CODE=#{e_code, jdbcType=VARCHAR}
+	</select>
+	<insert id="choice">
+		INSERT INTO CH VALUES(#{m_id},#{e_code})
+	</insert>
+	<delete id="choiceDelete">
+		DELETE FROM CH WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</delete>
+	<select id="getChoiceChk" parameterType="String"
+		resultType="String">
+		SELECT * FROM CH WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
+	</select>
+	
+	<select id="choiceList" parameterType="String"
+		resultType="choice">
+		SELECT * FROM CH WHERE M_ID=#{m_id}
+	</select>
+	<select id="reviewChk" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM REVIEW WHERE E_CODE=#{e_code}
+	</select>
+	<select id="choiceList2" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EVENT WHERE E_CODE=#{e_code}
+	</select>
+	<select id="myEvtManagement" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EVENT WHERE C_ID=#{c_id}
+	</select>
+	
+	<select id="myEvtModify" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EVENT WHERE E_CODE=#{e_code}
+	</select>
+	<select id="ei_sysFileName" parameterType="String"
+		resultType="String">
+		SELECT EI_SYSFILENAME FROM EI WHERE E_CODE=#{e_code}
+	</select>
+	
+	<update id="noFiNoOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	
+	<update id="okFiNoOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents},E_ORIFILENAME=#{e_orifilename},E_SYSFILENAME=#{e_sysfilename} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	
+	<update id="noFiOkOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	
+	<update id="okFiOkOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents},E_ORIFILENAME=#{e_orifilename},E_SYSFILENAME=#{e_sysfilename} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	 
+	  <delete id="evtOptionDelete" parameterType="String">
+      DELETE FROM EO WHERE E_CODE=#{e_code}
+   </delete>
+   <delete id="evtImageDelete" parameterType="EventImage">
+      DELETE FROM EI WHERE E_CODE=#{e_code}
+   </delete>
 </mapper>

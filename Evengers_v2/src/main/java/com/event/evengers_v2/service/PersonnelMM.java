@@ -126,4 +126,48 @@ public class PersonnelMM {
 		mav.setViewName(view);
 		return mav;
 	}
+	public ModelAndView getPerformList(String c_id) {
+		mav = new ModelAndView();
+		ArrayList<Employee> empList = new ArrayList<Employee>();
+		System.out.println("c_id2=" + c_id);
+		empList = pDao.getEmpList(c_id);
+
+		ArrayList<Position> pList = new ArrayList<Position>();
+
+		mav.addObject("empList", empList);
+		mav.addObject("makeHtml_getPerformList", makeHtml_getPerformList(empList));
+		mav.setViewName("ceoViews/performManage");
+
+		return mav;
+	}
+
+	private Object makeHtml_getPerformList(ArrayList<Employee> empList) {
+		StringBuilder sb = new StringBuilder();
+		
+		
+		sb.append("<div align='center'>");
+		sb.append("사원목록 <br>");
+		sb.append("<table border='1'><tr><th>사번</th><th>성명</th><th>주민번호</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th>");
+		for(Employee emp:empList) {
+			Date enterdate = emp.getEmp_enterdate();
+			String emp_enterdate = new SimpleDateFormat("yyyy-MM-dd").format(enterdate);
+			
+			Position p = new Position();
+			p = pDao.getPositionInfo(emp.getP_code());
+			String p_name = p.getP_name();
+			Department dept = new Department();
+			dept = pDao.getDeptInfo(emp.getDept_code());
+			String dept_name = dept.getDept_name();
+			sb.append("<tr><td>"+emp.getEmp_code()+"</td>"
+					+ "<td>"+emp.getEmp_name()+"</td>"
+					+ "<td>"+emp.getEmp_addr()+"</td>"
+					+ "<td>"+emp_enterdate+"</td>"
+					 + "<td>"+emp.getEmp_email()+"</td>" 
+					+ "<td>"+p_name+"</td>"
+					+ "<td>"+dept_name+"</td></tr>");
+		}
+		sb.append("</table></div>");
+		
+		return sb.toString();
+	}
 }

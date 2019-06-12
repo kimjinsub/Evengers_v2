@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import com.event.evengers_v2.bean.Estimate;
+import com.event.evengers_v2.bean.EstimateImage;
+
 
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
@@ -16,6 +19,28 @@ public interface RequestDao {
 	public boolean evtReqImageInsert(RequestImage ri);
 	
 	public String getReqCode();
+
+	public boolean estInsert(Estimate est);
+
+	public String getEstCode(String c_id);
+
+	public boolean estImageInsert(EstimateImage ei);
+
+	public ArrayList<Estimate> getEstList(Map<String, Object> map);
+
+	public int getEstCount();
+
+	public ArrayList<Request> getReqList();
+
+	public Estimate showEstimate(String est_code);
+
+	public EstimateImage getEstimateImage(String est_code);
+
+	public Request getIdTitle(String req_code);
+
+	public boolean estiDelete(String est_code);
+
+	public boolean estDelete(String est_code);
 
 	public ArrayList<Request> AllReqList(Map<String, Object> map);
 
@@ -30,5 +55,5 @@ public interface RequestDao {
 	public boolean reqDelete(String req_code);
 
 
-	
+
 }

@@ -44,5 +44,28 @@ function memberEvtPay(ep_code){
 		}
 	})
 }
+
+$("#rejectBtn").click(function(){
+	/* 	var e = "${e}";
+		var eb = "${eb}"; 
+		var bs = "${bs}"; */
+		
+		$.ajax({
+			type:"post",
+			url:"rejectBuy",
+			data:{eb_code:"${eb.eb_code}"},
+			dataType:"html",
+			success:function(data){
+				alert("취소 성공")
+				console.log(data);
+				location.href="./";
+			},
+			error:function(error){
+				alert("취소 실패");
+				console.log(error);
+			}
+		})
+		
+	});
 </script>
 </html>

@@ -23,5 +23,13 @@ public interface PersonnelDao {
 
 	boolean performInsert(Employee emp);
 
+	ArrayList<Employee> getEmpList(String c_id);
+
+	void getEmp_code(String c_id);
+
+	Position getPositionInfo(String p_code);
+
+	Department getDeptInfo(String dept_code);
+
 
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +23,7 @@ import com.event.evengers_v2.bean.EventPaySelectedOption;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.PayDao;
 import com.google.gson.Gson;
+import com.event.evengers_v2.userClass.DBException;
 
 @Service
 public class PayMM {
@@ -126,6 +128,27 @@ public class PayMM {
 				+ "<button id='payBtn'>결제하기</button>"
 				+ "<button id='rejectBtn'>구매취소</button>");
 		return sb.toString();
+	}
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public ModelAndView rejectBuy(String eb_code) throws DBException {
+		mav = new ModelAndView();
+
+		System.out.println("eb_code2=" + eb_code);
+		boolean b = payDao.bsDelete(eb_code);
+		boolean e = payDao.ebDelete(eb_code);
+
+		if (e) {
+			System.out.println("구매 삭제 성공");
+		} else {
+			System.out.println("구매 삭제 실패");
+		}
+
+		if (b == false) {
+			throw new DBException();
+		}
+
+		mav.setViewName("index");
+		return mav;
 	}
 	@Transactional(rollbackFor = Exception.class)
 	public String evtPay(String eb_code) {

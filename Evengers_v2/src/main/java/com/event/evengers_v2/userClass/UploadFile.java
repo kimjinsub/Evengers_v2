@@ -143,6 +143,34 @@ public class UploadFile {
 				
 				fileList.add(names);
 			}
+		case 3:
+			String esti_orifilename = null;
+			String esti_sysfilename = null;
+			root = multi.getSession().getServletContext().getRealPath("/");
+			System.out.println("root=" + root);
+			path = root + "upload/estimateImage/"; // 클린하면 폴더가 사라질수도 있어서 2번 실행
+			dir = new File(path);
+			if (!dir.isDirectory()) { // upload폴더 없다면
+				dir.mkdirs(); // upload폴더 생성
+			}
+			List<MultipartFile> est_files = multi.getFiles("est_files");// 비동기 2개이상 파일전송
+			for (MultipartFile est_file : est_files) {
+				String multiRepName = est_file.getOriginalFilename();
+				esti_orifilename = multiRepName;
+				System.out.println("multiRepName=" + multiRepName);
+				esti_sysfilename = System.currentTimeMillis() + "."// 현재 시간
+						+ esti_orifilename.substring(esti_orifilename.lastIndexOf(".") + 1);
+				try {
+					est_file.transferTo(new File(path + esti_sysfilename));
+				} catch (Exception e) {
+				}
+				System.out.println("orifilename=" + esti_orifilename);
+				System.out.println("sysfilename=" + esti_sysfilename);
+				String[] names = { esti_orifilename, esti_sysfilename };
+				
+				
+				fileList.add(names);
+			}
 		}
 		return fileList;
 	}

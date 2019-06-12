@@ -34,5 +34,10 @@ public interface PayDao {
 	ArrayList<EventPaySelectedOption> memberEps(String ep_code);
 
 	ArrayList<EventPay> memberPayList(String m_id);
+	
+	boolean bsDelete(String eb_code);
+
+	boolean ebDelete(String eb_code);
+
 
 }

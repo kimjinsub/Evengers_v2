@@ -10,12 +10,45 @@
    </insert>
    
    <select id="getReqCode" parameterType="String" resultType="String">
-         SELECT MAX(REQ_CODE) FROM REQ
+   		SELECT MAX(REQ_CODE) FROM REQ
    </select>
    
    <insert id="evtReqImageInsert" parameterType="requestimage">
-      INSERT INTO REQI VALUES('REQI'||LPAD(REQI_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})         
+		INSERT INTO REQI VALUES('REQI'||LPAD(REQI_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})   		
    </insert>
+   <insert id="estInsert" parameterType="estimate">
+       INSERT INTO EST VALUES('EST'||LPAD(EST_SEQ.NEXTVAL,4,0),#{req_code},#{c_id},#{est_contents},#{est_total},#{est_okdate},#{est_refunddate})
+   </insert>
+   <select id="getEstCode" parameterType="String" resultType="String">
+   		SELECT MAX(EST_CODE) FROM EST WHERE C_ID=#{c_id}
+   </select>
+   <insert id="estImageInsert" parameterType="estimateimage">
+       INSERT INTO ESTI VALUES('ESTI'||LPAD(ESTI_SEQ.NEXTVAL,4,0),#{esti_orifilename},#{esti_sysfilename},#{est_code})
+   </insert>
+   <select id="getEstList" parameterType="map" resultType="estimate">
+      SELECT * FROM EST WHERE C_ID=#{id}
+   </select>
+   	<select id="getEstCount" resultType="int">
+	SELECT COUNT(*) FROM EST
+	</select>
+	<select id="getReqList" resultType="request">
+	 SELECT * FROM REQEST
+	</select>
+	<select id="showEstimate" parameterType="string" resultType="estimate">
+	 SELECT * FROM EST WHERE EST_CODE=#{est_code}
+	</select>
+	<select id="getEstimateImage" parameterType="string" resultType="estimateimage">
+	SELECT * FROM ESTI WHERE EST_CODE=#{est_code}
+	</select>
+	<select id="getIdTitle" parameterType="string" resultType="request">
+	SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
+	</select>
+	<delete id="estiDelete" parameterType="string">
+	DELETE FROM ESTI WHERE EST_CODE=#{est_code}
+	</delete>
+	<delete id="estDelete" parameterType="string">
+	DELETE FROM EST WHERE EST_CODE=#{est_code}
+	</delete>
    
    <select id="AllReqList" parameterType="map" resultType="request">
          SELECT * FROM REQ

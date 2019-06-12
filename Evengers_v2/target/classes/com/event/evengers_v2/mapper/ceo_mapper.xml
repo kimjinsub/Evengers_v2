@@ -15,5 +15,11 @@
 	<select id="ceoCheckNumber" resultType="integer">
 		SELECT COUNT(*) FROM C WHERE C_RN = #{c_rn}
 	</select>
+	<select id="getPosition" resultType="position">
+		SELECT * FROM P WHERE C_ID = #{c_id}
+	</select>
+	<select id="getDept" resultType="department">
+		SELECT * FROM DEPT WHERE C_ID = #{c_id}
+	</select>
 	
 </mapper>

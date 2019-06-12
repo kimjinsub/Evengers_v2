@@ -3,6 +3,12 @@ package com.event.evengers_v2.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,13 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.event.evengers_v2.bean.Question;
-import com.event.evengers_v2.bean.QuestionImage;
+import com.event.evengers_v2.bean.Estimate;
+import com.event.evengers_v2.bean.EstimateImage;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.RequestDao;
 import com.event.evengers_v2.userClass.DBException;
+import com.event.evengers_v2.userClass.Paging;
 import com.event.evengers_v2.userClass.UploadFile;
 
 
@@ -40,7 +47,7 @@ public class RequestMM {
 	
 	@Autowired
 	private HttpSession session;
-	
+
 	public ModelAndView evtReqInsert(MultipartHttpServletRequest multi) {
 		 mav = new ModelAndView(); 
 		 String view = null;
@@ -94,9 +101,139 @@ public class RequestMM {
 		 mav.setViewName(view);
 		 
 		return mav;
-		
+
 	}
 
+	public ModelAndView evtReqList() {
+		String m_id = session.getAttribute("id").toString();
+		Request rq = new Request();
+		rq.setM_id(m_id);
+		// rDao.evtReqList
+
+		return mav;
+	}
+
+	public ModelAndView estInsert(MultipartHttpServletRequest multi) {
+		mav = new ModelAndView();
+		String c_id = session.getAttribute("id").toString();
+		Estimate est = new Estimate();
+		String contents = multi.getParameter("est_contents");
+		String total = multi.getParameter("est_total");
+		String okDate = multi.getParameter("est_okDate");
+		String refundDate = multi.getParameter("est_refundDate");
+		String req_code = "REQ0001";
+		System.out.println("contents:" + contents);
+		System.out.println("total:" + total);
+		System.out.println("okDate=" + okDate);
+		est.setC_id(c_id);
+		est.setReq_code(req_code);
+		est.setEst_contents(contents);
+		est.setEst_total(Integer.parseInt(total));
+		est.setEst_okdate(Integer.parseInt(okDate));
+		est.setEst_refunddate(Integer.parseInt(refundDate));
+		String view = null;
+		boolean e = rDao.estInsert(est);
+		String est_code = rDao.getEstCode(c_id);
+		ArrayList<String[]> estfileList = file.multiFileUp(multi, 3);
+		int cnt2 = 0;
+		EstimateImage ei = new EstimateImage();
+		for (int i = 0; i < estfileList.size(); i++) {
+			ei.setEsti_orifilename(estfileList.get(i)[0]);
+			ei.setEsti_sysfilename(estfileList.get(i)[1]);
+			System.out.println("ei_ori=" + ei.getEsti_orifilename());
+			System.out.println("ei_sys=" + ei.getEsti_sysfilename());
+			ei.setEst_code(est_code);
+			if (rDao.estImageInsert(ei)) {
+				cnt2++;
+			}
+		}
+		if (cnt2 == estfileList.size()) {
+			view = "ceoViews/sentEstList";
+
+		} else {
+			view = "ceoViews/estPageFrm";
+		}
+		mav.setViewName(view);
+		return mav;
+
+	}
+
+	public Map<String, Object> getEstList(String id, Integer pageNum) {
+		ArrayList<Estimate> estList = new ArrayList<Estimate>();
+		ArrayList<Request> reqList = new ArrayList<Request>();
+		int num = (pageNum == null) ? 1 : pageNum;
+		System.out.println("아이디:" + id);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("num", num);
+		estList = rDao.getEstList(map);
+		System.out.println("estList:" + estList);
+		reqList = rDao.getReqList();
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("estList", estList);
+		map1.put("reqList", reqList);
+		map1.put("paging", getPaging(num));
+		// System.out.println("jsonStr=" + jsonStr);
+		return map1;
+	}
+
+	private Object getPaging(int pageNum) {
+		int maxNum = rDao.getEstCount(); // 전체 글의 갯수
+		System.out.println("전페" + maxNum);
+
+		int listCount = 5; // 페이지당 글의 수
+		int pageCount = 2; // 그룹당 페이지 수
+		String boardName = "ceoViews/sentEstList"; // 게시판이 여러개 일떄
+
+		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
+
+		return paging.makeHtmlPaging();
+	}
+
+	public ModelAndView showEstimate(String est_code){
+		mav = new ModelAndView();
+		Estimate est = new Estimate();
+		est = rDao.showEstimate(est_code);
+		EstimateImage esti = new EstimateImage();
+		esti = rDao.getEstimateImage(est_code);
+		String req_code = est.getReq_code();
+		Request req = new Request();
+		req = rDao.getIdTitle(req_code);
+		try {
+		int okdate = est.getEst_okdate();
+		int refunddate=est.getEst_refunddate();
+		String hopedate=req.getReq_hopedate(); //2018-12-30
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+		Date hopedate1;
+			hopedate1 = format1.parse(hopedate);
+			format1.format(hopedate1);
+			System.out.println("hopedate1:"+format1.format(hopedate1));
+		Date today = new Date(); 
+		today=format1.parse(format1.format(today));
+		long refundAble=hopedate1.getTime()-refunddate*(24*60*60*1000);
+		String refundable1=format1.format(new Date(refundAble));
+		System.out.println("kkk"+refundable1+"일 Rkwl");
+		System.out.println("누가먼저?:"+hopedate1.compareTo(today));
+		mav.addObject("refundable",refundable1);
+		long okAble=hopedate1.getTime()-okdate*(24*60*60*1000);
+		String okAble1=format1.format(new Date(okAble));
+		mav.addObject("ok",okAble1);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mav.addObject("estimate", est);
+		mav.addObject("estimateImage", esti);
+		mav.addObject("request", req);
+		mav.setViewName("ceoViews/detailEstimate");
+		return mav;
+	}
+		/*
+		 * if(selected_dday.compareTo(today)>=1) { //입력날짜가 현재보다 미래면 +1 과거면 -1 같으면0
+		 * if(diffDays>=e.getE_reservedate()) { msg="<p id='possible'>가능한 날짜입니다</p>"; }
+		 * else { msg="<p id='impossible'>불가능한 날짜입니다</p>"; } }else {
+		 * msg="<p id='impossible'>불가능한 날짜입니다</p>"; }
+		 */
 	public Map<String, Object> myReqList(String id, Integer pageNum) {
 		ArrayList<Request> rList = new ArrayList<Request>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -153,7 +290,6 @@ public class RequestMM {
 		if (reqDel == false) {
 			throw new DBException();
 		}
-
 		if (imgDel && reqDel) {
 			System.out.println("삭제 트랜잭션 성공");
 		} else {
@@ -164,5 +300,39 @@ public class RequestMM {
 
 		return mav;
 	}
+
+	public ModelAndView estimateDelete(String est_code) throws DBException {
+		mav = new ModelAndView();
+		boolean b = rDao.estiDelete(est_code);
+		boolean r = rDao.estDelete(est_code); // 댓글
+
+		if (r == false) {
+			throw new DBException();
+		}
+
+		if (r) {
+			System.out.println("삭제 트랜잭션 성공");
+		} else {
+			System.out.println("삭제 트랜잭션 실패");
+		}
+
+		mav.setViewName("redirect:/sentEstList");
+
+		return mav;
+	}
 	
+	public void download1(Map<String, Object> params) throws Exception {
+		String root = (String) params.get("root");
+		String sysFileName = (String) params.get("sysFileName");
+		String oriFileName = (String) params.get("oriFileName");
+		String fullPath = root + "upload/estimateImage/" + sysFileName;
+
+		HttpServletResponse resp = (HttpServletResponse) params.get("response");
+		// 실제 다운로드
+		file.download(fullPath, oriFileName, resp);
+
+	}
 }
+		
+	
+
