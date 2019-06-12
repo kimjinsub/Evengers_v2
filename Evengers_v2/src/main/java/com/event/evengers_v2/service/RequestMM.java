@@ -104,15 +104,6 @@ public class RequestMM {
 
 	}
 
-	public ModelAndView evtReqList() {
-		String m_id = session.getAttribute("id").toString();
-		Request rq = new Request();
-		rq.setM_id(m_id);
-		// rDao.evtReqList
-
-		return mav;
-	}
-
 	public ModelAndView estInsert(MultipartHttpServletRequest multi) {
 		mav = new ModelAndView();
 		String c_id = session.getAttribute("id").toString();
@@ -121,7 +112,7 @@ public class RequestMM {
 		String total = multi.getParameter("est_total");
 		String okDate = multi.getParameter("est_okDate");
 		String refundDate = multi.getParameter("est_refundDate");
-		String req_code = "REQ0001";
+		String req_code = "REQ0002";
 		System.out.println("contents:" + contents);
 		System.out.println("total:" + total);
 		System.out.println("okDate=" + okDate);
@@ -238,9 +229,13 @@ public class RequestMM {
 		ArrayList<Request> rList = new ArrayList<Request>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> map1 = new HashMap<String, Object>();
+		boolean ceoChk=false;
+		if(rDao.ceoChk(id)>0) {
+			ceoChk=true;
+		}
 		
-		if(id.equals("admin")) {
-			System.out.println("관리자 계정 모든리스트 출력");
+		if(id.equals("admin") || ceoChk) {
+			System.out.println("관리자 계정 or 기업계정 모든리스트 출력");
 			rList=rDao.AllReqList(map);
 		}else {
 			System.out.println("개인 계정 개별 리스트 출력");
@@ -331,6 +326,32 @@ public class RequestMM {
 		// 실제 다운로드
 		file.download(fullPath, oriFileName, resp);
 
+	}
+
+	public Map<String, Object> getRecivedEstList(String id, Integer pageNum) {
+		ArrayList<Estimate> estList = new ArrayList<Estimate>();
+		ArrayList<Request> reqList = new ArrayList<Request>();
+		int num = (pageNum == null) ? 1 : pageNum;
+		System.out.println("아이디:" + id);
+		//Map<String, Object> map = new HashMap<String, Object>
+		//map.put("id", id);
+		//map.put("num", num);
+		reqList = rDao.getRecivedEstList(id);
+		for(int i=0;i<reqList.size();i++) {
+			Request req=new Request();
+			req=reqList.get(i);
+			System.out.println("Req="+req);
+			estList.addAll(rDao.getRecivedEstList1(req));
+			
+		}
+		System.out.println("estList="+estList);
+		//reqList = rDao.getReqList();
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("estList", estList);
+		map1.put("reqList", reqList);
+		//map1.put("paging", getPaging(num));
+		// System.out.println("jsonStr=" + jsonStr);
+		return map1;
 	}
 }
 		

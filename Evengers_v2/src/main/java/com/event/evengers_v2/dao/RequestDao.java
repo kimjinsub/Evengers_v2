@@ -54,6 +54,12 @@ public interface RequestDao {
 
 	public boolean reqDelete(String req_code);
 
+	public int ceoChk(String id);
+	
+	public ArrayList<Request> getRecivedEstList(String id);
+
+	public ArrayList<Estimate> getRecivedEstList1(Request req);
+
 
 
 }

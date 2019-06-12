@@ -162,4 +162,10 @@ public class Controller_Bin {
 		mav = rm.estimateDelete(est_code);
 		return mav;
 	} 
+	@RequestMapping(value = "/getRecivedEstList", produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> getRecivedEstList(Integer pageNum) {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map1 = rm.getRecivedEstList(id,pageNum);
+		return map1;
+	}
 }

@@ -39,12 +39,6 @@ align-content: center;
 <body>
 
 	<div id="estList">
-	
-		<table border="1">
-			<tr>
-				<th>제목</th>
-				<th>의뢰인</th>
-		</table>
 	</div>
 	<div id="detail"></div>
 </body>
