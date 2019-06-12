@@ -332,4 +332,225 @@ public class EventMM {
 		mav.setViewName(view);
 		return mav;
 	}
+	public ModelAndView myEvtModify(String e_code) {
+		mav = new ModelAndView();
+		String view = null;
+		Event event = eDao.myEvtModify(e_code);
+		String ei_sysFileName =eDao.ei_sysFileName(e_code);
+		System.out.println("ei_sysFileName"+ei_sysFileName);
+		List<EventOption> evtOption=new ArrayList<EventOption>();
+		evtOption= eDao.getOption(e_code);
+		mav.addObject("event", event);
+		mav.addObject("ei_sysFileName", ei_sysFileName);
+		mav.addObject("evtOption", makeHtml_evtOption(evtOption));
+		mav.addObject("evtOption2", evtOption );
+		view="ceoViews/myEvtModify";
+		mav.setViewName(view);
+		return mav;
+	}
+
+	private String makeHtml_evtOption(List<EventOption> evtOption) {
+		StringBuilder sb = new StringBuilder();
+		for(EventOption eo:evtOption) {
+			sb.append("옵션명:"+eo.getEo_name()+"<br>");
+			sb.append("옵션가격"+eo.getEo_price()+"<br>");
+		}
+		return sb.toString();
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public String myEvtModifyBtn(MultipartHttpServletRequest multi) {
+		mav = new ModelAndView();
+		String str="";
+		String e_name = multi.getParameter("e_name");
+		String id = session.getAttribute("id").toString(); // 기업
+		int e_price = Integer.parseInt(multi.getParameter("e_price"));
+		int e_reservedate = Integer.parseInt(multi.getParameter("e_reservedate"));
+		int e_refunddate = Integer.parseInt(multi.getParameter("e_refunddate"));
+		String e_contents = multi.getParameter("e_contents");
+		String e_category = multi.getParameter("e_category");
+		String e_code = multi.getParameter("e_code");
+		String eo_name = multi.getParameter("eo_name");
+		String eo_price = multi.getParameter("eo_price");
+		if (eo_name.equals(",") || eo_price.equals(",")) {// 옵션 수정안함(가져가지말자)
+
+			Map<String, String> fileMap = file.singleFileUp(multi, 1);
+			Event eb = new Event();
+			eb.setE_code(e_code);
+			eb.setE_name(e_name);
+			eb.setC_id(id);
+			eb.setE_price(e_price);
+			eb.setE_category(e_category);
+			eb.setE_reservedate(e_reservedate);
+			eb.setE_refunddate(e_refunddate);
+			eb.setE_contents(e_contents);
+			eb.setE_orifilename(fileMap.get("e_orifilename"));
+			eb.setE_sysfilename(fileMap.get("e_sysfilename"));
+			String eo = eb.getE_orifilename();
+			String es = eb.getE_sysfilename();
+			if (eo == null || es == null) {// 사진 수정 ㄴ
+				System.out.println("사진 수정 없음");
+				if (eDao.noFiNoOpModify(eb)) {// 사진 수정 ㄴ,옵션 수정 ㄴ
+					ArrayList<String[]> fileList = file.multiFileUp(multi, 1);
+					int cnt2 = 0;
+					for (int i = 0; i < fileList.size(); i++) {
+						EventImage ei = new EventImage();
+						ei.setEi_orifilename(fileList.get(i)[0]);
+						ei.setEi_sysfilename(fileList.get(i)[1]);
+						ei.setE_code(e_code);
+						String eio = ei.getEi_orifilename();
+						String eis = ei.getEi_sysfilename();
+						if (eio == null || eis == null) {
+							
+						} else {
+							if (eDao.evtImageDelete(ei)) {
+								if (eDao.evtImageInsert(ei)) {
+									cnt2++;
+								}
+							}
+						}
+						
+					}
+					str="사진 수정 ㄴ,옵션 수정 ㄴ";
+				} else {
+					str="사진 수정ㅇ,옵션 수정 ㄴ(안됨)";
+				}
+			} else {// 사진 수정 ㅇ
+				if (eDao.okFiNoOpModify(eb)) {// 사진 수정ㅇ,옵션 수정 ㄴ
+					str="사진 수정ㅇ,옵션 수정 ㄴ";
+					ArrayList<String[]> fileList = file.multiFileUp(multi, 1);
+					int cnt2 = 0;
+					for (int i = 0; i < fileList.size(); i++) {
+						EventImage ei = new EventImage();
+						ei.setEi_orifilename(fileList.get(i)[0]);
+						ei.setEi_sysfilename(fileList.get(i)[1]);
+						ei.setE_code(e_code);
+						String eio = ei.getEi_orifilename();
+						String eis = ei.getEi_sysfilename();
+						if (eio == null || eis == null) {
+							
+						} else {
+							if (eDao.evtImageDelete(ei)) {
+								if (eDao.evtImageInsert(ei)) {
+									cnt2++;
+								}
+							}
+						}
+						
+					}
+				} else {
+					str="사진 수정ㅇ,옵션 수정 ㄴ(안됨)";
+				}
+			}
+		} else {// 옵션 수정
+			Map<String, String> fileMap = file.singleFileUp(multi, 1);
+			Event eb = new Event();
+			eb.setE_code(e_code);
+			eb.setE_name(e_name);
+			eb.setC_id(id);
+			eb.setE_price(e_price);
+			eb.setE_category(e_category);
+			eb.setE_reservedate(e_reservedate);
+			eb.setE_refunddate(e_refunddate);
+			eb.setE_contents(e_contents);
+			eb.setE_orifilename(fileMap.get("e_orifilename"));
+			eb.setE_sysfilename(fileMap.get("e_sysfilename"));
+			String eo = eb.getE_orifilename();
+			String es = eb.getE_sysfilename();
+			if (eo == null || es == null) {// 옵션 수정 ㅇ,사진 ㄴ
+				System.out.println("사진 수정 없음");
+				if (eDao.noFiOkOpModify(eb)) {
+					String[] eo_names = eo_name.split(",");
+					String[] eo_prices = eo_price.split(",");
+					System.out.println("eo_names" + eo_names);
+					System.out.println("eo_prices" + eo_prices);
+					int cnt1 = 0;
+					if (eDao.evtOptionDelete(e_code)) {
+						for (int i = 0; i < eo_names.length; i++) {
+							EventOption eob = new EventOption();
+							eob.setEo_name(eo_names[i]);
+							eob.setEo_price(Integer.parseInt(eo_prices[i]));
+							eob.setE_code(e_code);
+
+							if (eDao.evtOptionInsert(eob)) {
+								cnt1++;
+							}
+						}
+					}
+					ArrayList<String[]> fileList = file.multiFileUp(multi, 1);
+					int cnt2 = 0;
+					for (int i = 0; i < fileList.size(); i++) {
+						EventImage ei = new EventImage();
+						ei.setEi_orifilename(fileList.get(i)[0]);
+						ei.setEi_sysfilename(fileList.get(i)[1]);
+						ei.setE_code(e_code);
+						String eio = ei.getEi_orifilename();
+						String eis = ei.getEi_sysfilename();
+						if (eio == null || eis == null) {
+
+						} else {
+							if (eDao.evtImageDelete(ei)) {
+								if (eDao.evtImageInsert(ei)) {
+									cnt2++;
+								}
+							}
+						}
+
+					}
+					if (cnt1 == eo_names.length && cnt2 == fileList.size()) {
+						str = "옵션 수정 ㅇ,사진 ㄴ";
+					}
+				} else {
+					str = "옵션 수정 ㅇ,사진 ㄴ(안됨)";
+				}
+			} else {
+				if (eDao.okFiOkOpModify(eb)) {// 옵션 수정 ㅇ,사진 ㅇ
+					String[] eo_names = eo_name.split(",");
+					String[] eo_prices = eo_price.split(",");
+
+					int cnt1 = 0;
+					if (eDao.evtOptionDelete(e_code)) {
+						for (int i = 0; i < eo_names.length; i++) {
+							EventOption eob = new EventOption();
+							eob.setEo_name(eo_names[i]);
+							eob.setEo_price(Integer.parseInt(eo_prices[i]));
+							eob.setE_code(e_code);
+
+							if (eDao.evtOptionInsert(eob)) {
+								cnt1++;
+							}
+
+						}
+					}
+					ArrayList<String[]> fileList = file.multiFileUp(multi, 1);
+					int cnt2 = 0;
+					for (int i = 0; i < fileList.size(); i++) {
+						EventImage ei = new EventImage();
+						ei.setEi_orifilename(fileList.get(i)[0]);
+						ei.setEi_sysfilename(fileList.get(i)[1]);
+						ei.setE_code(e_code);
+						String eio = ei.getEi_orifilename();
+						String eis = ei.getEi_sysfilename();
+						if (eio == null || eis == null) {
+
+						} else {
+							if (eDao.evtImageDelete(ei)) {
+								if (eDao.evtImageInsert(ei)) {
+									cnt2++;
+								}
+							}
+						}
+
+					}
+					if (cnt1 == eo_names.length && cnt2 == fileList.size()) {
+						str = "옵션 수정 ㅇ,사진 ㅇ";
+					}
+				} else {
+					str = "옵션 수정 ㅇ,사진 ㅇ(안됨)";
+				}
+			}
+
+		}
+		return str;
+	}
 }

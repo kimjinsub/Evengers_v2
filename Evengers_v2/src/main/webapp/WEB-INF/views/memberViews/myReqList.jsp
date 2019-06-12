@@ -19,7 +19,7 @@
 	display: none;
 	overflow: auto;
 	overflow: scroll;
-	background-color: #B2CCFF;
+	background-color: #FFFFFF;
 	}
 
 
@@ -36,7 +36,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 align="center">내 의뢰요청 페이지</h1>
+	<h1 align="center">의뢰요청 목록</h1>
 	<div id="list"></div>
 	<div id="detail"></div>
 </body>
@@ -62,7 +62,7 @@ function getReqList() {
 						+ rList[i].req_hopedate + "</td><td>"
 						+ rList[i].req_hopearea + "</td></tr>"
 			}
-			str += "</table>"
+			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
 			$("#list").html(str);
 			},
 		error : function(error) {
