@@ -67,8 +67,6 @@
 						<a class="dropdown-item" href="#">인사관리</a> 
 						<a class="dropdown-item" href="#">회계관리</a> 
 						<a class="dropdown-item" href="#">일정관리</a>
-						<!-- <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a> -->
 					</div>
 				</li> -->
 				<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>

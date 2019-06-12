@@ -112,10 +112,11 @@ public class RequestMM {
 		String total = multi.getParameter("est_total");
 		String okDate = multi.getParameter("est_okDate");
 		String refundDate = multi.getParameter("est_refundDate");
-		String req_code = "REQ0002";
+		String req_code = multi.getParameter("req_code");
 		System.out.println("contents:" + contents);
 		System.out.println("total:" + total);
 		System.out.println("okDate=" + okDate);
+		System.out.println("멀티req_code:"+req_code);
 		est.setC_id(c_id);
 		est.setReq_code(req_code);
 		est.setEst_contents(contents);
@@ -256,7 +257,17 @@ public class RequestMM {
 		List<RequestImage> rfList = rDao.getReqImageInfo(req_code1);	//리퀘스트 이미지 빈의 자료
 		mav.addObject("rfList",rfList);
 		
-		mav.setViewName("memberViews/myReqInfo");
+		String id=session.getAttribute("id").toString();
+		boolean ceoChk=false;
+		if(rDao.ceoChk(id)>0) {
+			ceoChk=true;
+		}
+		if(id.equals("admin") || ceoChk) {
+			mav.setViewName("ceoViews/allReqInfo");
+		}else {
+			mav.setViewName("memberViews/myReqInfo");
+		}
+		
 		return mav;
 	}
 	

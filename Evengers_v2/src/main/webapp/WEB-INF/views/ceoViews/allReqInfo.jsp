@@ -55,6 +55,7 @@
 				</c:if></td>
 		</tr> 
 	</table>
+	  <a href="estPageFrm?req_code=${request.req_code}">견적작성</a>
 
 </body>
 </html>

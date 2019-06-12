@@ -45,4 +45,20 @@
 	<delete id="ebDelete" parameterType="String">
    		DELETE FROM EB WHERE EB_CODE=#{eb_code}
    </delete>
+   		<select id="ceoEvtPayList" parameterType="String" resultType="String">
+		SELECT EP_CODE FROM EP WHERE E_CODE=#{e_code} ORDER BY EP_DDAY ASC, EP_PAYDAY DESC
+	</select>
+	<select id="getEpInfo" parameterType="String" resultType="eventpay">
+		SELECT * FROM EP WHERE EP_CODE=#{ep_code}
+	</select>
+	<select id="ceoAllEvtPayList" parameterType="String" resultType="eventpay">
+		SELECT * FROM EP WHERE C_ID=#{m_id} ORDER BY EP_PAYDAY DESC
+	</select>
+	<select id="ceoEvtPayList2" parameterType="list" resultType="String">
+		SELECT EP_CODE FROM EP WHERE E_CODE IN 
+		<foreach collection="e_codes1" item="e_code" open="(" separator="," close=")">
+			#{e_code}
+		</foreach>
+		ORDER BY EP_DDAY ASC, EP_PAYDAY DESC
+	</select>
 </mapper>
