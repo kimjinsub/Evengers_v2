@@ -7,8 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
-
-
+import com.event.evengers_v2.bean.EstimatePay;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 
@@ -59,6 +58,12 @@ public interface RequestDao {
 	public ArrayList<Request> getRecivedEstList(String id);
 
 	public ArrayList<Estimate> getRecivedEstList1(Request req);
+
+	public Estimate getEstInfo(String est_code);
+
+	public boolean estPay(EstimatePay estimatepay);
+
+	
 
 
 

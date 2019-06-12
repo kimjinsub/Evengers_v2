@@ -167,4 +167,11 @@ public class Controller_Sung {
 		System.out.println("req_code="+req_code);
 		return mav;
 	} 
+	
+	
+	@RequestMapping(value = "/estPay", method = RequestMethod.GET) // get,post 모두 가능
+	public ModelAndView estPay(String est_code) throws DBException{
+		mav = rm.estPay(est_code);
+		return mav;
+	} 
 }

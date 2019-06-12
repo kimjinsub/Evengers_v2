@@ -45,7 +45,7 @@
 		<table border="1" align="center">
 			<tr>
 				<td>제목</td>
-				<td><input type="text" name="req_title" id="req_title"></td>	
+				<td><input type="text" name="req_title" id="req_title" placeholder="제목"></td>	
 			</tr>
 			
 			<tr>
@@ -60,12 +60,30 @@
       		
 			<tr>
 				<td>희망지역</td>
-				<td><input type="text" name="req_hopearea" id="req_hopearea"></td>
+				<td><select name="req_hopearea" id="req_hopearea">
+						<option selected="selected">선택하세요</option>
+						<option value="서울">서울</option>
+						<option value="인천">인천</option>
+						<option value="대전">대전</option>
+						<option value="대구">대구</option>
+						<option value="부산">부산</option>
+						<option value="광주">광주</option>
+						<option value="울산">울산</option>
+						<option value="경기">경기</option>
+						<option value="강원">강원</option>
+						<option value="충남">충남</option>
+						<option value="충북">충북</option>
+						<option value="전남">전남</option>
+						<option value="전북">전북</option>
+						<option value="경남">경남</option>
+						<option value="경북">경북</option>
+						<option value="제주">제주</option>
+				</select></td>
 			</tr>
 			
 			<tr>
 				<td>상세주소</td>
-				<td><input type="text" name="req_hopeaddr" id="req_hopeaddr"></td>
+				<td><input type="text" name="req_hopeaddr" id="req_hopeaddr" placeholder="직접입력"></td>
 			</tr>
 			
 			<tr>
@@ -86,9 +104,6 @@
 		</table>
 	</form>
 	
-	<!-- <div id="insertchk" > 
-	</div>
-	 -->
 	<div id="articleView_layer"></div>
 	
 </body>

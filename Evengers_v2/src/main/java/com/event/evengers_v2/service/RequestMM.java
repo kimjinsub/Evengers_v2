@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
+import com.event.evengers_v2.bean.EstimatePay;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
@@ -112,10 +113,11 @@ public class RequestMM {
 		String total = multi.getParameter("est_total");
 		String okDate = multi.getParameter("est_okDate");
 		String refundDate = multi.getParameter("est_refundDate");
-		String req_code = "REQ0002";
+		String req_code = multi.getParameter("req_code");
 		System.out.println("contents:" + contents);
 		System.out.println("total:" + total);
 		System.out.println("okDate=" + okDate);
+		System.out.println("멀티req_code:"+req_code);
 		est.setC_id(c_id);
 		est.setReq_code(req_code);
 		est.setEst_contents(contents);
@@ -256,7 +258,17 @@ public class RequestMM {
 		List<RequestImage> rfList = rDao.getReqImageInfo(req_code1);	//리퀘스트 이미지 빈의 자료
 		mav.addObject("rfList",rfList);
 		
-		mav.setViewName("memberViews/myReqInfo");
+		String id=session.getAttribute("id").toString();
+		boolean ceoChk=false;
+		if(rDao.ceoChk(id)>0) {
+			ceoChk=true;
+		}
+		if(id.equals("admin") || ceoChk) {
+			mav.setViewName("ceoViews/allReqInfo");
+		}else {
+			mav.setViewName("memberViews/myReqInfo");
+		}
+		
 		return mav;
 	}
 	
@@ -352,6 +364,39 @@ public class RequestMM {
 		//map1.put("paging", getPaging(num));
 		// System.out.println("jsonStr=" + jsonStr);
 		return map1;
+	}
+
+	public ModelAndView estPay(String est_code) {
+		mav = new ModelAndView();
+		Estimate estimate =new Estimate();
+		EstimatePay estimatepay =new EstimatePay();
+		
+		estimate = rDao.getEstInfo(est_code);
+		
+		String estp_code = estimate.getEst_code();
+		String estp_contents = estimate.getEst_contents();
+		int estp_total = estimate.getEst_total();
+		int estp_refunddate = estimate.getEst_refunddate();
+		
+		System.out.println("받아온 코드!" + estp_code);
+		System.out.println("받아온 내용!" + estp_contents);
+		System.out.println("받아온 총가격!" + estp_total);
+		System.out.println("받아온 환불가능일!" + estp_refunddate);
+		
+		estimatepay.setEst_code(estp_code);
+		estimatepay.setEstp_contents(estp_contents);
+		estimatepay.setEstp_total(estp_total);
+		estimatepay.setEstp_refunddate(estp_refunddate);
+		
+		if(rDao.estPay(estimatepay)) {
+			System.out.println("결제가 완료 되었습니다.");
+		}else {
+			System.out.println("띨패");
+		}
+		
+		mav.setViewName("memberViews/memberMyPage");
+		
+		return mav;
 	}
 }
 		

@@ -57,7 +57,12 @@ table {
 							${file.esti_orifilename}</a>
 				</c:if></td>
 		</tr>
+		<tr>
+			<td><a href="estPay?est_code=${estimate.est_code}">승인</a></td>
+		</tr>
 	</table>
+	
+	
 
 </body>
 </html>
