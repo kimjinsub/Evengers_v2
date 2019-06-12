@@ -56,19 +56,18 @@
 				<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
 				<li class="nav-item"><a class="nav-link" href="./evtInsertFrm">이벤트등록</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">의뢰목록</a></li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> ERP자원관리 </a> <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
+				<li class="nav-item"><a class="nav-link" href="./erpIndex">ERP자원관리</a></li>
+				<!-- <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="./erpIndex" id="navbarDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> ERP자원관리 </a>
 					<div class="dropdown-menu dropdown-menu-right animate slideIn"
 						aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="#">인사관리</a> 
 						<a class="dropdown-item" href="#">회계관리</a> 
 						<a class="dropdown-item" href="#">일정관리</a>
-						<!-- <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a> -->
 					</div>
-				</li>
+				</li> -->
 				<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>

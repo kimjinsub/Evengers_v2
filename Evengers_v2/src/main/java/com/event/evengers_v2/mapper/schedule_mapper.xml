@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.event.evengers_v2.dao.ScheduleDao">
+	<select id="isAssigned" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM ES WHERE EP_CODE=#{ep_code}
+	</select>
+	<select id="getEvtScheduleList" parameterType="String" resultType="eventschedule">
+		SELECT * FROM ES WHERE EP_CODE=#{ep_code}
+	</select>
+	<insert id="insertEvtSchedule" parameterType="eventschedule">
+		INSERT INTO ES VALUES('ES'||LPAD(ES_SEQ.NEXTVAL,4,0),#{ep_code},#{dept_code})
+	</insert>
+</mapper>

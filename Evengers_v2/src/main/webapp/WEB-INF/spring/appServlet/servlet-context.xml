@@ -109,7 +109,13 @@
 		<beans:property name="mapperInterface"
 						value="com.event.evengers_v2.dao.FinancialDao"/>
 	</beans:bean>
-	
+	<beans:bean id="sDao"
+				class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+						ref="sqlSessionFactory"/>
+		<beans:property name="mapperInterface"
+						value="com.event.evengers_v2.dao.ScheduleDao"/>
+	</beans:bean>
 		<!-- 파일 업로드 설정 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

@@ -31,5 +31,4 @@ public interface PersonnelDao {
 
 	Department getDeptInfo(String dept_code);
 
-
 }

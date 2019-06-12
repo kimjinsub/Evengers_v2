@@ -15,7 +15,6 @@
 	<select id="getDeptList" parameterType="String" resultType="department">
 		SELECT * FROM DEPT WHERE C_ID=#{c_id}
 	</select>
-	
 	<select id="getPCode" parameterType="String" resultType="String">
 		SELECT P_CODE FROM P WHERE C_ID=#{c_id} AND P_NAME=#{p_name}
 	</select>
