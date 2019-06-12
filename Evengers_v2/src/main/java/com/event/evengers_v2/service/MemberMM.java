@@ -1,7 +1,7 @@
 package com.event.evengers_v2.service;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.Ceo;
+import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.Member;
 import com.event.evengers_v2.dao.CeoDao;
+import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.MemberDao;
 import com.google.gson.Gson;
 
@@ -24,7 +26,8 @@ public class MemberMM {
 	private MemberDao mDao;
 	@Autowired
 	private CeoDao cDao;
-
+	@Autowired
+	private EventDao eDao;
 	@Autowired
 	private HttpSession session;
 
@@ -320,5 +323,12 @@ public String memberTest(String testcode) {
 			iam="ceo";
 		}
 		return iam;
+	}
+
+	public ModelAndView myEvtManagement(String id) {
+		List<Event> eList = eDao.myEvtManagement(id);  
+		mav.addObject("eList", eList);
+		mav.setViewName("ceoViews/myEvtManagement");
+		return mav;
 	}
 }

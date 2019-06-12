@@ -108,4 +108,52 @@
 		resultType="Event">
 		SELECT * FROM EVENT WHERE E_CODE=#{e_code}
 	</select>
+	<select id="myEvtManagement" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EVENT WHERE C_ID=#{c_id}
+	</select>
+	
+	<select id="myEvtModify" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EVENT WHERE E_CODE=#{e_code}
+	</select>
+	<select id="ei_sysFileName" parameterType="String"
+		resultType="String">
+		SELECT EI_SYSFILENAME FROM EI WHERE E_CODE=#{e_code}
+	</select>
+	
+	<update id="noFiNoOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	
+	<update id="okFiNoOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents},E_ORIFILENAME=#{e_orifilename},E_SYSFILENAME=#{e_sysfilename} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	
+	<update id="noFiOkOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	
+	<update id="okFiOkOpModify" parameterType="event">
+		UPDATE e
+		SET
+		E_NAME =#{e_name}, E_PRICE = #{e_price},
+		E_CATEGORY=#{e_category},E_RESERVEDATE=#{e_reservedate},E_REFUNDDATE=#{e_refunddate},E_CONTENTS=#{e_contents},E_ORIFILENAME=#{e_orifilename},E_SYSFILENAME=#{e_sysfilename} WHERE E_CODE=#{e_code} AND C_ID=#{c_id} 
+	</update>
+	 
+	  <delete id="evtOptionDelete" parameterType="String">
+      DELETE FROM EO WHERE E_CODE=#{e_code}
+   </delete>
+   <delete id="evtImageDelete" parameterType="EventImage">
+      DELETE FROM EI WHERE E_CODE=#{e_code}
+   </delete>
 </mapper>

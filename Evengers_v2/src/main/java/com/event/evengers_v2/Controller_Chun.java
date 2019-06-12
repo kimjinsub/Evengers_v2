@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.Email;
@@ -286,7 +287,8 @@ public class Controller_Chun {
 	@RequestMapping(value = "/myEvtManagement", method = RequestMethod.GET)
 	public ModelAndView myEvtManagement() {
 		mav = new ModelAndView();
-		mav.setViewName("ceoViews/myEvtManagement");
+		String id =(String) session.getAttribute("id");
+		mav = mm.myEvtManagement(id);
 		return mav;
 	}
 	@RequestMapping(value = "/sentEstList", method = RequestMethod.GET)
@@ -371,6 +373,19 @@ public class Controller_Chun {
 		return str;
 	}
 	
+	@RequestMapping(value = "/myEvtModify",produces = "application/json; charset=utf8")
+	public ModelAndView myEvtModify(String e_code) {
+		
+		mav=em.myEvtModify(e_code);
+		
+		return mav;
+	}
 	
-	
+	@RequestMapping(value = "/myEvtModifyBtn",produces = "application/json; charset=utf8")
+	public @ResponseBody String myEvtModifyBtn(MultipartHttpServletRequest formData,String e_code) {
+		String str = "";
+		System.out.println("formData : "+formData);
+		str = em.myEvtModifyBtn(formData);
+		return str;
+	}
 }
