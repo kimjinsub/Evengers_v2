@@ -25,6 +25,7 @@ import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
 import com.event.evengers_v2.service.QuestionMM;
+import com.event.evengers_v2.service.RequestMM;
 
 @Controller
 public class Controller_Bin {
@@ -41,7 +42,8 @@ public class Controller_Bin {
 	EventMM em;
 	@Autowired
 	QuestionMM qm;
-	
+	@Autowired
+	RequestMM rm;
 	@RequestMapping(value = "/bin", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -119,7 +121,7 @@ public class Controller_Bin {
 		System.out.println("q_code="+q_code);
 		return mav;
 	} 
-	@RequestMapping(value = "/download", method = RequestMethod.GET) // get,post 모두 가능
+	@RequestMapping(value = "/download2", method = RequestMethod.GET) // get,post 모두 가능
 	public void download(
 			@RequestParam Map<String,Object> params,
 			HttpServletResponse response ,HttpServletRequest req) throws Exception { // int를 쓰면 null값이 올 수 없기 때문에
@@ -128,7 +130,36 @@ public class Controller_Bin {
 		
 		params.put("root", req.getSession().getServletContext().getRealPath("/"));
 		params.put("response",response);
-		qm.download(params);
+		rm.download1(params);
+	}
+	@RequestMapping(value = "/estPageFrm", produces = "application/json; charset=utf8")
+	public ModelAndView estPageFrm() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/estPageFrm");
+		return mav;
 	}
 	
+	@RequestMapping(value = "/estInsert", produces = "application/json; charset=utf8")
+	public ModelAndView estInsert(MultipartHttpServletRequest multi) {
+		mav = new ModelAndView();
+		mav = rm.estInsert(multi);
+		return mav;
+	}
+	@RequestMapping(value = "/getEstList", produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> getEstList(Integer pageNum) {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map1 = rm.getEstList(id,pageNum);
+		return map1;
+	}
+	@RequestMapping(value = "/showEstimate", produces = "application/json; charset=utf8")
+	public ModelAndView showEstimate(String est_code) {
+		mav=new ModelAndView();
+        mav = rm.showEstimate(est_code);
+		return mav;
+	}
+	@RequestMapping(value = "/EstimateDelete", method = RequestMethod.GET) // get,post 모두 가능
+	public ModelAndView EstimateDelete(String est_code) throws DBException{
+		mav = rm.estimateDelete(est_code);
+		return mav;
+	} 
 }

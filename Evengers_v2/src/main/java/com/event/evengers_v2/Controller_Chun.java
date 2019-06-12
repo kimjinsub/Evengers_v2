@@ -18,6 +18,7 @@ import com.event.evengers_v2.bean.Email;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
+import com.event.evengers_v2.service.RequestMM;
 import com.event.evengers_v2.userClass.EmailSender;
 import com.event.evengers_v2.userClass.TempKey;
 
@@ -35,7 +36,8 @@ public class Controller_Chun {
 
 	@Autowired
 	EventMM em;
-
+	@Autowired
+	RequestMM rm;
 	@RequestMapping(value = "/loginFrm", method = RequestMethod.GET)
 	public ModelAndView loginFrm() {
 		mav = new ModelAndView();
@@ -194,7 +196,8 @@ public class Controller_Chun {
 	@RequestMapping(value = "/choiceList", method = RequestMethod.GET)
 	public ModelAndView choiceList() {
 		mav = new ModelAndView();
-		mav.setViewName("memberViews/choiceList");
+		String id= (String) session.getAttribute("id");
+		mav = em.choiceList(id);
 		return mav;
 	}
 	@RequestMapping(value = "/receivedList", method = RequestMethod.GET)
@@ -203,16 +206,16 @@ public class Controller_Chun {
 		mav.setViewName("memberViews/receivedList");
 		return mav;
 	}
-	@RequestMapping(value = "/receivedEstList", method = RequestMethod.GET)
-	public ModelAndView receivedEstList() {
-		mav = new ModelAndView();
-		mav.setViewName("memberViews/receivedEstList");
-		return mav;
-	}
 	@RequestMapping(value = "/myReqList", method = RequestMethod.GET)
 	public ModelAndView myReqList() {
 		mav = new ModelAndView();
 		mav.setViewName("memberViews/myReqList");
+		return mav;
+	}
+	@RequestMapping(value = "/receivedEstList", method = RequestMethod.GET)
+	public ModelAndView receivedEstList() {
+		mav = new ModelAndView();
+		mav.setViewName("memberViews/receivedEstList");
 		return mav;
 	}
 	@RequestMapping(value = "/modifyMemInfo", method = RequestMethod.GET)
@@ -367,4 +370,7 @@ public class Controller_Chun {
 		}
 		return str;
 	}
+	
+	
+	
 }
