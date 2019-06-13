@@ -1,6 +1,7 @@
 package com.event.evengers_v2.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
 import com.event.evengers_v2.bean.EstimatePay;
+import com.event.evengers_v2.bean.EstimatePayImage;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 
@@ -65,7 +67,15 @@ public interface RequestDao {
 
 	public ArrayList<Request> getReqCodes(String id);
 
-	public EstimatePay getEstPayList(Request req);
+	public Collection<? extends EstimatePay> getEstPayList(Request req);
+
+	public EstimatePay getEstpDetail(String estp_code);
+
+	public String getEstpCode();
+
+	public boolean insertEstpi(EstimatePayImage estpi);
+
+	public EstimatePayImage getEstpiImage(String estp_code);
 
 	
 

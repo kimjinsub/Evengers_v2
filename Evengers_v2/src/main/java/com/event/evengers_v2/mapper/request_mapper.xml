@@ -101,5 +101,18 @@
    <select id='getEstPayList' parameterType="request" resultType="estimatepay">
    SELECT * FROM ESTP WHERE REQ_CODE=#{req_code}
    </select>
-	 
+   <select id="getEstpDetail" parameterType="string" resultType="estimatepay">
+   SELECT * FROM ESTP WHERE ESTP_CODE=#{estp_code}
+   </select>
+   
+   <select id="getEstpCode" resultType="string">
+   SELECT MAX(ESTP_CODE) FROM ESTP
+   </select>
+   <insert id="insertEstpi" parameterType="estimatepayimage">
+   INSERT INTO ESTPI VALUES('ESTPI'||LPAD(ESTPI_SEQ.NEXTVAL,4,0),#{estp_code},#{estpi_orifilename},#{estpi_sysfilename})
+   </insert>
+   
+   <select id="getEstpiImage" parameterType="string" resultType="estimatepayimage">
+   SELECT * FROM ESTPI WHERE ESTP_CODE=#{estp_code}
+   </select>
 </mapper>

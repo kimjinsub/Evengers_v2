@@ -174,10 +174,26 @@ public class Controller_Bin {
 		return map1;
 	}
 
+	@RequestMapping(value = "/estimatePayList")
+	public ModelAndView estimatePayList() {
+		mav = new ModelAndView();
+		mav.setViewName("memberViews/estimatePayList");
+		return mav;
+	}
+	
 	@RequestMapping(value = "/getEstPayList", produces = "application/json; charset=utf8")
 	public @ResponseBody Map<String, Object> getEstPayList(Integer pageNum) {
 		String id = session.getAttribute("id").toString();
 		Map<String, Object> map1 = rm.getEstPayList(id,pageNum);
 		return map1;
 	}
+	
+	@RequestMapping(value = "/showEstpDetail", produces = "application/json; charset=utf8")
+	public ModelAndView showEstpDetail(String estp_code) {
+		mav=new ModelAndView();
+		System.out.println("estp_code="+estp_code);
+        mav = rm.showEstpDetail(estp_code);
+		return mav;
+	}
+	
 }

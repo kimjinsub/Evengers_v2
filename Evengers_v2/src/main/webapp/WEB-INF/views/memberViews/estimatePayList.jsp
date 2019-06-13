@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
 #detail {
 	position: fixed;
@@ -34,7 +35,7 @@
 }
 </style>
 <body>
-
+  <h3 align="center"> 견적 결제 구매 내역</h3>
 	<div id="estPayList"></div>
 	<div id="detail"></div>
 
@@ -49,16 +50,17 @@
 					dataType : 'json',
 					success : function(data) {
 						console.log(data);
-						var estList = data['estPayList'];
+						var estpList = data['estpList'];
 						var str = "<table id='et' border='1'><th>구매코드</th><th>상품제목</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th>";
 
-						for ( var i in estPayList) {
-							str += "<tr><td>" + estPayList[i].estp_code + "</td><td>"
-									+ "<a href='#' onclick=getDetailE('"
-									+ estList[i].est_code + "')>"
-									+ estList[i].est_contents + "</a></td><td>"
-									+ estList[i].est_total + '원 ' 
-									+ "</td></tr>"
+						for ( var i in estpList) {
+							str += "<tr><td>" + estpList[i].estp_code + "</td><td>"
+									+ "<a href='#' onclick=getDetailEstp('"
+									+ estpList[i].estp_code + "')>"
+									+ estpList[i].estp_contents + "</a></td><td>"
+									+ estpList[i].estp_total + '원 '+"</td><td>"
+									+ estpList[i].c_id+"</td><td>"
+									+ estpList[i].estp_payday+"</td><tr>"
 
 						}
 						str += "</table>"
@@ -71,17 +73,17 @@
 				})
 	}
 
-	function getDetailE(est_code) {
+	function getDetailEstp(estp_code) {
 		$("#detail").addClass("open");
 		//$("#detail").click('#goCart',function(){
 		//(라이트박스), MODAL BOX : 떠있는동안 모든 제어권을 통제하는 박스, 모달리스
 		//$('#detail').css('top', $(window).scrollTop() + -100 + 'px');
 		$('#detail').show();
 		$.ajax({
-			url : 'showEstimate', //'ajaxDetail?p_code='+pCode (쿼리스트링)
+			url : 'showEstpDetail', //'ajaxDetail?p_code='+pCode (쿼리스트링)
 			type : 'get',
 			data : {
-				est_code : est_code
+				estp_code : estp_code
 			},
 			dataType : 'html',
 			success : function(data) {
@@ -106,6 +108,6 @@
 		if ($layerWindows.hasClass('open')) { //open이라는 클래스를 가지고 있는지 hasClass로 따짐.
 			$layerWindows.removeClass('open');
 		}
-	});
+	}); 
 </script>
 </html>
