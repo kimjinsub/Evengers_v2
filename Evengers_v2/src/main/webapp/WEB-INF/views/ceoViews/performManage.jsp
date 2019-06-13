@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	
 	${makeHtml_getPerformList}
 </body>
 <script>

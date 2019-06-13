@@ -39,7 +39,7 @@ public class Controller_Eunseo {
 	PayMM paym;
 	@Autowired
 	FinancialMM fm;
-
+	
 	@RequestMapping(value = "/eunseo", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -91,17 +91,21 @@ public class Controller_Eunseo {
 		mav = pm.getPerformList(c_id);
 		return mav;
 	}
-
 	@RequestMapping(value = "/accountingManage")
 	public ModelAndView accountingManage() {
 		mav = new ModelAndView();
 		mav.setViewName("ceoViews/accountingManage");
 		return mav;
 	}
-	@RequestMapping(value = "/calInsert", method = RequestMethod.POST)
+	@RequestMapping(value = "/calInsert")
 	public ModelAndView calculateInsert(Calculate calb) {
 		mav = new ModelAndView();
 		mav = fm.calInsert(calb);
 		return mav;
+	}
+	@RequestMapping(value = "/validation",produces = "application/json; charset=utf-8;")
+	public @ResponseBody String validation(String day) {
+		System.out.println("day2="+day);
+		return fm.validation(day);
 	}
 }
