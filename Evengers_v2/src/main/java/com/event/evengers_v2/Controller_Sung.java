@@ -173,5 +173,13 @@ public class Controller_Sung {
 	public ModelAndView estPay(String est_code) throws DBException{
 		mav = rm.estPay(est_code);
 		return mav;
-	} 
+	}
+	
+	
+	@RequestMapping(value = "/receivedEstDenial", method = RequestMethod.GET) // get,post 모두 가능
+	public ModelAndView receivedEstDenial(String est_code) throws DBException{
+		mav = rm.receivedEstDenial(est_code);
+		return mav;
+	}
+	
 }
