@@ -16,6 +16,8 @@ table {
 	float: left;
 }
 </style>
+
+
 <body>
 	<a href="EstimateDelete?est_code=${estimate.est_code}">삭제</a>
 	<h3>상세 견적서</h3>
@@ -58,11 +60,15 @@ table {
 				</c:if></td>
 		</tr>
 		<tr>
-			<td><a href="estPay?est_code=${estimate.est_code}">승인</a></td>
+			<td><input type="button" value="승인" 
+				onclick="location.href='estPay?est_code=${estimate.est_code}'"></td>
+			<td><input type="button" value="거절" 
+				onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'"></td>
+			
 		</tr>
 	</table>
 	
-	
 
 </body>
+
 </html>

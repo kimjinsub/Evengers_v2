@@ -10,8 +10,9 @@ import lombok.Data;
 @Data
 public class EstimatePay {
 	private String estp_code;
-	private String est_code;
+	private String req_code;
 	private String estp_contents;
+	private String c_id;
 	private int estp_total;
 	private Date estp_payday;
 	private int estp_refunddate;
