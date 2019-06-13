@@ -89,7 +89,7 @@ public class RequestMM {
 			 
 			 if(rDao.evtReqImageInsert(ri)) {
 				 System.out.println("삽입 검색 삽입 완료!");
-				 view = "memberViews/evtReqContents";		
+				 view = "memberViews/evtReqContents";
 			 }else {
 				 System.out.println("띨패");
 			 	 view = "memberViews/evtReqFrm";
@@ -366,30 +366,52 @@ public class RequestMM {
 		return map1;
 	}
 
-	public ModelAndView estPay(String est_code) {
+	
+	public ModelAndView estPay(String est_code) throws DBException {
 		mav = new ModelAndView();
 		Estimate estimate =new Estimate();
 		EstimatePay estimatepay =new EstimatePay();
 		
 		estimate = rDao.getEstInfo(est_code);
 		
-		String estp_code = estimate.getEst_code();
+		String req_code = estimate.getReq_code();
 		String estp_contents = estimate.getEst_contents();
+		String c_id = session.getAttribute("id").toString();
 		int estp_total = estimate.getEst_total();
 		int estp_refunddate = estimate.getEst_refunddate();
 		
-		System.out.println("받아온 코드!" + estp_code);
+		
+		System.out.println("받아온 req 코드!" + req_code);
 		System.out.println("받아온 내용!" + estp_contents);
 		System.out.println("받아온 총가격!" + estp_total);
 		System.out.println("받아온 환불가능일!" + estp_refunddate);
+		System.out.println("받아온 세션아이디!!" + c_id);
 		
-		estimatepay.setEst_code(estp_code);
+		
+		estimatepay.setReq_code(req_code);
 		estimatepay.setEstp_contents(estp_contents);
+		estimatepay.setC_id(c_id);
 		estimatepay.setEstp_total(estp_total);
 		estimatepay.setEstp_refunddate(estp_refunddate);
 		
 		if(rDao.estPay(estimatepay)) {
 			System.out.println("결제가 완료 되었습니다.");
+			
+			boolean b = rDao.estiDelete(est_code);		//견적 이미지 삭제
+			boolean r = rDao.estDelete(est_code); // 견적 삭제
+						
+			
+			if (r == false) {
+				throw new DBException();
+			}
+
+			if (b && r) {
+				System.out.println("삭제 트랜잭션 성공");
+			} else {
+				System.out.println("삭제 트랜잭션 실패");
+			}
+			
+			mav.addObject("check", 1);
 		}else {
 			System.out.println("띨패");
 		}
@@ -398,6 +420,36 @@ public class RequestMM {
 		
 		return mav;
 	}
+
+		public ModelAndView receivedEstDenial(String est_code) {
+		boolean b = rDao.estiDelete(est_code);		
+		boolean r = rDao.estDelete(est_code);
+		
+		if(b && r) {
+			System.out.println("견적거부삭제 완료우");
+		}else {
+			System.out.println("실패");
+		}
+		mav.setViewName("memberViews/memberMyPage");
+		return mav;
+	}
+		public Map<String, Object> getEstPayList(String id, Integer pageNum) {
+			ArrayList<Request> reqList=new ArrayList<Request>();
+			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();
+			reqList=rDao.getReqCodes(id);
+			System.out.println("ReqList="+reqList);
+			for(int i=0;i<reqList.size();i++) {
+				Request req=new Request();
+				req=reqList.get(i);
+		        estpList.add(rDao.getEstPayList(req));
+			}
+			System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			map1.put("estpList", estpList);
+			return map1;
+			
+		}
+
 }
 		
 	

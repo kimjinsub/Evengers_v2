@@ -91,7 +91,15 @@
    	</select>
 	
 	<insert id="estPay" parameterType="estimatepay">
-       INSERT INTO ESTP VALUES('ESTP'||LPAD(ESTP_SEQ.NEXTVAL,4,0),#{est_code},#{estp_contents},#{estp_total},DEFAULT,#{estp_refunddate},DEFAULT)
+       INSERT INTO ESTP VALUES('ESTP'||LPAD(ESTP_SEQ.NEXTVAL,4,0),#{req_code},#{estp_contents},#{estp_total},DEFAULT,#{c_id},#{estp_refunddate},DEFAULT)
    </insert>
+   
+   <select id="getReqCodes" parameterType="string" resultType="request">
+   SELECT * FROM REQ WHERE M_ID=#{m_id} 
+   </select>
+   
+   <select id='getEstPayList' parameterType="request" resultType="estimatepay">
+   SELECT * FROM ESTP WHERE REQ_CODE=#{req_code}
+   </select>
 	 
 </mapper>

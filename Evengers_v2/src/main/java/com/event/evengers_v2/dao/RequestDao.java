@@ -63,6 +63,10 @@ public interface RequestDao {
 
 	public boolean estPay(EstimatePay estimatepay);
 
+	public ArrayList<Request> getReqCodes(String id);
+
+	public EstimatePay getEstPayList(Request req);
+
 	
 
 

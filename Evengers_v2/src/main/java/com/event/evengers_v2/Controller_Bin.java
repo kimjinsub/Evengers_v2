@@ -173,4 +173,11 @@ public class Controller_Bin {
 		Map<String, Object> map1 = rm.getRecivedEstList(id,pageNum);
 		return map1;
 	}
+
+	@RequestMapping(value = "/getEstPayList", produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> getEstPayList(Integer pageNum) {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map1 = rm.getEstPayList(id,pageNum);
+		return map1;
+	}
 }
