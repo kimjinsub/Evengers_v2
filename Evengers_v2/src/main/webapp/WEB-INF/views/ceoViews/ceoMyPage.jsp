@@ -220,11 +220,11 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/vendor/chart.js/Chart.min.js"></script>
+  <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/admin/vendor/chart.js/Chart.min.js"></script> --%>
 
   <!-- Page level custom scripts -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/demo/chart-area-demo.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/demo/chart-pie-demo.js"></script>
+  <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/demo/chart-area-demo.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/demo/chart-pie-demo.js"></script> --%>
 
 </body>
 
@@ -241,7 +241,7 @@
 			success:function(result){
 				$(position).html(result);
 			},
-			error:function(result){
+			error:function(error){
 				console.log(error);
 			}
 		})
@@ -253,7 +253,7 @@
 			success:function(result){
 				$("#cMain").html(result);
 			},
-			error:function(result){
+			error:function(error){
 				console.log(error);
 			}
 		})
@@ -265,7 +265,7 @@
 			success:function(result){
 				$("#cMain").html(result);
 			},
-			error:function(result){
+			error:function(error){
 				console.log(error);
 			}
 		})
@@ -277,7 +277,7 @@
 			success : function(result) {
 				$("#cMain").html(result);
 			},
-			error : function(result) {
+			error : function(error) {
 				console.log(error);
 			}
 		})
@@ -289,7 +289,7 @@
 			success : function(result) {
 				$("#cMain").html(result);
 			},
-			error : function(result) {
+			error : function(error) {
 				console.log(error);
 			}
 		})
@@ -301,7 +301,7 @@
 			success : function(result) {
 				$("#cMain").html(result);
 			},
-			error : function(result) {
+			error : function(error) {
 				console.log(error);
 			}
 		})
@@ -313,7 +313,7 @@
 			success : function(result) {
 				$("#cMain").html(result);
 			},
-			error : function(result) {
+			error : function(error) {
 				console.log(error);
 			}
 		})
@@ -325,7 +325,7 @@
 			success : function(result) {
 				$("#cMain").html(result);
 			},
-			error : function(result) {
+			error : function(error) {
 				console.log(error);
 			}
 		})
