@@ -91,18 +91,7 @@
 		
 		</div>
 
-		<div id="content-wrapper">
-			<div class="container-fluid">
-				<!-- Sticky Footer -->
-				<footer class="sticky-footer">
-					<div class="container my-auto">
-						<div class="copyright text-center my-auto">
-							<span>Evengers ERP관리 페이지 푸터</span>
-						</div>
-					</div>
-				</footer>
-			</div><!-- container-fluid -->
-		</div><!-- /.content-wrapper -->
+		
 	</div><!-- /#wrapper -->
 	<!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -149,6 +138,9 @@
 
 </body>
 <script>
+$(document).ready(function(){
+	Ajax_forward('performManage')
+})
 function Ajax_forward(url){
 	$.ajax({
 		url:url,

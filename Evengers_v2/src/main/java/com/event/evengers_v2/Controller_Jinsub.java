@@ -1,5 +1,7 @@
 package com.event.evengers_v2;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -195,5 +197,14 @@ public class Controller_Jinsub {
 	@RequestMapping(value = "/insertEvtSchedule",produces = "application/json;charset=utf-8;")
 	public @ResponseBody String insertEvtSchedule(EventSchedule es) {
 		return sm.insertEvtSchedule(es);
+	}
+	@RequestMapping(value = "/calendar")
+	public ModelAndView calendar(Date date) {
+		mav=sm.calendar(date);
+		return mav;
+	}
+	@RequestMapping(value = "/calendarExample")
+	public String calendarExample() {
+		return "calendarExample";
 	}
 }

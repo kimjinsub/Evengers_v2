@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
+#schedule, #calendar{display: inline-block;}
 #insertEsFrm{
 	border: 1px solid black;
 	width: 300px; height: 300px;
@@ -19,21 +20,25 @@
 <title>일정관리</title>
 </head>
 <body>
+<div id='schedule'>
 ${makeHtml_EpList}
 <div id="insertEsFrm">
 <p id="epInfo"></p>
 부서 선택:<select id="selectDept"></select>
 <button onclick="confirmDept()">선택완료</button>
 <button onclick="rejectEvtPay()">이벤트 거절(100%환불)</button>
+<p onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;">닫기</p>
 </div>
-
-<div id="calendar">
-	
 </div>
+<div id="calendar"></div>
 </body>
 <script>
+function hideInsertEsFrm(){
+	$("#insertEsFrm").removeClass("show");
+}
 $(document).ready(function(){
 	selectDept();
+	getCalendar();
 })
 var epAllList="${epAllList}";
 var ep_codes="${ep_codes}";
@@ -81,6 +86,20 @@ function selectDept(){
 			console.log(error);
 		}
 	});
-} 
+}
+function getCalendar(){
+	var date = new Date;
+	$.ajax({
+		url:"calendar",
+		data:{date:date},
+		dataType:"html",
+		success:function(page){
+			$("#calendar").html(page);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
 </script>
 </html>
