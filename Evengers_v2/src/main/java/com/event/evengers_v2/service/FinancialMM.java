@@ -81,20 +81,23 @@ public class FinancialMM {
 		mav = new ModelAndView();
 		ArrayList<String> calList = new ArrayList<>();
 		String choice = null;
+		String Total = null;
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
 		choice = format.format(choicedate);
-		System.out.println("choice2=" + choice);
 		calList = fDao.getCalList(choice, c_id);
+		Total = fDao.getTotalPrice(choice,c_id);
+		System.out.println("Total="+Total);
+		mav.addObject("Total", Total);
 		mav.addObject("calList", calList);
-		mav.addObject("makeHtml_getCalList", makeHtml_getCalList(calList,choice));
+		mav.addObject("makeHtml_getCalList", makeHtml_getCalList(calList,choice,Total));
 		mav.setViewName("ceoViews/calList");
 		return mav;
 	}
 
-	private String makeHtml_getCalList(ArrayList<String> calList,String choice) {
+	private String makeHtml_getCalList(ArrayList<String> calList,String choice,String Total) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(choice+"<br>정산 금액<br>");
-		sb.append("<table border='1'>");
+		sb.append("<br>정산 금액  (총 금액="+Total+")<br>");
+		sb.append("<table border='1' id='getCal'>");
 		sb.append("<tr>");
 		sb.append("<td>금액</td><td>사용</td></tr>");
 		for (int i = 0; i < calList.size(); i++) {
@@ -105,20 +108,34 @@ public class FinancialMM {
 				sb.append("</tr>");
 	}
 		sb.append("</table>");
-		/* sb.append("<button onclick='allShowCal()'>상세보기</button>"); */
 		return sb.toString();
 	}
 
 	public String allShowCal(Date choicedate, String c_id) {
-		String json_calList = "";
+		StringBuilder sb = new StringBuilder();
+		System.out.println("여기?choice="+choicedate);
 		ArrayList<Calculate> allCalList = new ArrayList<>();
 		String choice = null;
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
 		choice = format.format(choicedate);
 		allCalList = fDao.getAllCal(choice,c_id);
-		json_calList = new Gson().toJson(allCalList);
-		System.out.println("allcalList="+json_calList);
-		return json_calList;
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy년MM월");
+		sb.append("<h1>"+format1.format(choicedate)+"</h1>");
+		sb.append("<input type='button' onclick='reset()' value='닫기'>");
+		sb.append("<table border='1' id='calTable'><tr><th>날짜</th><th>카테고리</th><th>내용</th><th>가격</th>");
+		
+		for(Calculate cal : allCalList) {
+			Date receipt = cal.getCal_receiptdate();
+			String cal_receiptdate = new SimpleDateFormat("yyyy-MM-dd").format(receipt);
+			
+			sb.append("<tr><td>"+cal_receiptdate+"</td>"
+					+ "<td>"+cal.getCal_category()+"</td>"
+					+ "<td>"+cal.getCal_contents()+"</td>"
+					+ "<td>"+cal.getCal_price()+"</td></tr>");
+		}
+		sb.append("</table>");
+		
+		return sb.toString();
 	}
 
 }

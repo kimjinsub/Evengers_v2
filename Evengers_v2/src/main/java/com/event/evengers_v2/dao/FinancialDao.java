@@ -15,5 +15,7 @@ public interface FinancialDao {
 
 	ArrayList<Calculate> getAllCal(@Param("choice") String choice,@Param("c_id") String c_id);
 
+	String getTotalPrice(@Param("choice")String choice, @Param("c_id") String c_id);
+
 
 }

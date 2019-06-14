@@ -14,6 +14,9 @@
 		SELECT SUM(CAL_PRICE) || ','|| CAL_CATEGORY FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} GROUP BY CAL_CATEGORY 
 	</select>
 	<select id="getAllCal" resultType="calculate">
-	SELECT * FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id}
+	SELECT * FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} ORDER BY CAL_RECEIPTDATE
+	</select>
+	<select id="getTotalPrice" resultType="String">
+		SELECT SUM(CAL_PRICE) FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} 
 	</select>
 </mapper>

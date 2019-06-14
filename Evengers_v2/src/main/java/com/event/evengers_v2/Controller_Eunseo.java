@@ -130,8 +130,7 @@ public class Controller_Eunseo {
 		String c_id = session.getAttribute("id").toString();
 		System.out.println("c_id2="+c_id);
 		System.out.println("choicedate2="+choicedate);
-		String json_calList = fm.allShowCal(choicedate,c_id);
-		return json_calList;
+		return fm.allShowCal(choicedate,c_id);
 	}
 	@RequestMapping(value = "/validation", produces = "application/json; charset=utf-8;")
 	public @ResponseBody String validation(String day) {

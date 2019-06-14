@@ -15,6 +15,22 @@
 #noinput {
 	color: red;
 }
+#allshow{
+	position:relative;
+	display: none;
+}
+#getCal{
+	width: 13%;
+	float: left;
+}
+#calTable{
+	width: 35%;
+	float: inherit;
+
+}
+#allshow.open {
+	display: block;
+}
 </style>
 </head>
 <body>
@@ -61,11 +77,12 @@
 			<input type="month" id="choicedate" name="choicedate">
 			<div id="calList">
 			</div>
-			<div id="allshow"><button onclick="allShowCal()">상세보기</button></div>
+			<button onclick="allShowCal()">상세보기</button>
+			<div id="allshow">${allShowCal}</div>
 		</div>
 </div>
 </body>
-<script>
+<script type="text/javascript">
 /* 현재 달 기본 값 입력 */
 document.getElementById('choicedate').value= new Date().toISOString().slice(0, 7);
 
@@ -74,11 +91,12 @@ $(document).ready(function(){
 }) 
 $("input[type=month]").change(function() {
 	getCalList();
+	
 })
 function getCalList() {
 	var choicedate = $("input[type=month]").val();
+	
 	choicedate = new Date(choicedate);
-	console.log("choicedate=" + choicedate);
 		$.ajax({
 			url : "getCalList",
 			data : {choicedate : choicedate},
@@ -92,23 +110,21 @@ function getCalList() {
 	})
 }//end getCalList
 function allShowCal(){
+	$("#allshow").addClass("open");
+	$('#allshow').show();
+	$('#allshow-shadow').show();
+	
 	var choicedate = $("input[type=month]").val();
 	choicedate = new Date(choicedate);
-	console.log("choicedate=" + choicedate);
+	
+	console.log("여기choicedate2=" + choicedate);
 		$.ajax({
 			url:"allShowCal",
 			data:{choicedate:choicedate},
-			dataType:"json",
+			dataType:"html",
 			success:function(result){
 				console.log(result);
-				var str = "<tr><td>날짜</td><td>카테고리</td><td>내용</td><td>가격</td></tr>";
-				for(var i in result){
-					str += "<tr><td>"+result[i].cal_receiptdate+"</td>"
-							+"<td>"+result[i].cal_category+"</td>"
-							+"<td>"+result[i].cal_contents+"</td>"
-							+"<td>"+result[i].cal_price+"</td></tr>";
-				}
-				$("#allshow").html(str);
+				$("#allshow").html(result);
 			},
 			error:function(error){
 				console.log(error);
@@ -116,11 +132,15 @@ function allShowCal(){
 	})
 } //end allshowcal
 var $layerWindows = $('#allshow');
-$layerWindows.find('#allShowCal').on('mousedown',function(event){
-	console.log(event);
+$layerWindows.find('#allshow-shadow').on('mousedown',function(event){
+	console.log("event="+event);
 	$layerWindows.removeClass('open');
-})
-
+});
+function reset(){
+	if($layerWindows.hasClass('open')){
+		$layerWindows.removeClass('open');
+	}
+}
 function calculate() {
 	var receiptdate = $("#cal_receiptdate").val();
 	var cal_category = $("#cal_category").val();
@@ -144,6 +164,7 @@ function calculate() {
 		success : function(data) {
 			alert("정산 등록 성공");
 			getCalList();
+			allShowCal();
 			$("#wrap").html(data);
 		},
 		error : function(error) {
