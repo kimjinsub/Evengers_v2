@@ -59,6 +59,6 @@
 		<foreach collection="e_codes1" item="e_code" open="(" separator="," close=")">
 			#{e_code}
 		</foreach>
-		ORDER BY EP_DDAY ASC, EP_PAYDAY DESC
+		ORDER BY EP_DDAY ASC, EP_PAYDAY ASC
 	</select>
 </mapper>

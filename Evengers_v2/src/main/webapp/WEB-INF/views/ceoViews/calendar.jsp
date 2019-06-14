@@ -10,78 +10,44 @@
 <meta charset="UTF-8">
 <title>캘린더 폼</title>
 <style>
-#dayWrap,#deptWrap{display: inline-block;}
-#dayWrap *{display: inline-block;}
-#year{background: white;}
-#past,#future{cursor: pointer;}
 #calendar_table td{width: 200px; height: 100px;}
 #calendar_table th{width: 200px; height: 50px;background-color: #96a9aa;text-align: center;}
+#scheduleToday{
+	border: 2px solid black; position: fixed;
+	top:50%; left: 20%;
+	width: 60%; height: 40%; text-align: center;
+	display: none; background-color: white;
+}
+#scheduleToday.show{display: inline;}
+#schedule_table td{width: 200px; height: 100px;}
+#schedule_table th{width: 200px; height: 50px;background-color: #96a9aa;text-align: center;}
 </style>
 </head>
 <body>
-<div id="Wrap">
-<div id="dayWrap">
-	${year} 
-	${month}
-</div>
-<div id="deptWrap"></div>
-<div id="calendar">${calendar}</div>
-</div>
+${calendar}
+<div id="scheduleToday"></div>
 </body>
 <script>
-$(document).ready(function(){
-	getDeptList();
-})
-function getDeptList(){
+function Ajax_showScheduleToday(esList,calDate){
+	console.log("esList",esList);//json형식의 json_esList로 넘겼지만 jsp가 배열로 받음
+	console.log("calDate",calDate);
+	var json_esList=JSON.stringify(esList);//다시 json형식으로 바꾼 후 ajax에 넘김
+	console.log("json_esList",json_esList);
 	$.ajax({
-		url:"getDeptList",
-		dataType:"json",
-		success:function(result){
-			console.log(result);
-			var str="<select>";
-			for(var i in result){
-				str+="<option value='"+result[i].dept_code+"'>"+result[i].dept_name+"</option>"
-			}
-			str+="</select>"
-			$("#deptWrap").html(str);
-		},
-		error:function(error){
-			console.log(error);
-		}
-	})
-};
-$("#past").click(function(){
-	var y=$("#year").val();
-	var year=Number(y)-Number(1);
-	$("#year").val(year);
-	showCalendar();
-})
-$("#future").click(function(){
-	var y=$("#year").val();
-	var year=Number(y)+Number(1);
-	$("#year").val(year);
-	showCalendar();
-})
-$("#month").change(function(){
-	showCalendar();
-})
-function showCalendar(){
-	var year=$("#year").val();
-	console.log("year=",year);
-	var month=$("#month").val();
-	var str_date=year+"-"+month;
-	var date=new Date(str_date);
-	$.ajax({
-		url:"calendar",
-		data:{date:date},
+		url:"showScheduleToday",
+		data:{json_esList:json_esList,calDate:calDate},
 		dataType:"html",
-		success:function(page){
-			$("#Wrap").html(page);
+		success:function(result){
+			$("#scheduleToday").html(result);
+			$("#scheduleToday").addClass("show");
 		},
 		error:function(error){
 			console.log(error);
 		}
 	})
+}
+function hideScheduleToday(){
+	$("#scheduleToday").removeClass("show");
 }
 </script>
 </html>

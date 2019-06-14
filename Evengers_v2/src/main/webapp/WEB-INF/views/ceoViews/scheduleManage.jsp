@@ -6,16 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link type="text/css" rel="stylesheet" 
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <style>
 #schedule, #calendar{display: inline-block;}
 #insertEsFrm{
-	border: 1px solid black;
+	border: 2px solid black;
 	width: 300px; height: 300px;
 	margin: auto; visibility: hidden;
+	position: fixed; top:10%; left: 40%;
+	background-color: white;
 }
 #insertEsFrm.show{
 	visibility: visible;
 }
+#dayWrap,#deptWrap{display: inline-block;}
+#dayWrap *{display: inline-block;}
+#year{background: white;}
+#past,#future{cursor: pointer;}
 </style>
 <title>일정관리</title>
 </head>
@@ -30,15 +38,25 @@ ${makeHtml_EpList}
 <p onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;">닫기</p>
 </div>
 </div>
+<div id="Wrap">
+<div id="dayWrap">
+	${year} 
+	${month}
+</div>
+<div id="deptWrap">
+	<select id='dept'></select>
+</div>
+</div>
 <div id="calendar"></div>
 </body>
 <script>
 function hideInsertEsFrm(){
 	$("#insertEsFrm").removeClass("show");
 }
+
 $(document).ready(function(){
+	getDeptList();
 	selectDept();
-	getCalendar();
 })
 var epAllList="${epAllList}";
 var ep_codes="${ep_codes}";
@@ -87,11 +105,36 @@ function selectDept(){
 		}
 	});
 }
-function getCalendar(){
-	var date = new Date;
+$("#past").click(function(){
+	var y=$("#year").val();
+	var year=Number(y)-Number(1);
+	$("#year").val(year);
+	showCalendar();
+})
+$("#future").click(function(){
+	var y=$("#year").val();
+	var year=Number(y)+Number(1);
+	$("#year").val(year);
+	showCalendar();
+})
+$("#month").change(function(){
+	showCalendar();
+})
+$("#dept").change(function(){
+	showCalendar();
+})
+function showCalendar(){
+	var year=$("#year").val();
+	console.log("year=",year);
+	var month=$("#month").val();
+	console.log("month=",month);
+	var str_date=year+"-"+month;
+	var date=new Date(str_date);
+	var dept=$("#dept").val();
+	console.log("dept_code=",dept);
 	$.ajax({
 		url:"calendar",
-		data:{date:date},
+		data:{date:date,dept_code:dept},
 		dataType:"html",
 		success:function(page){
 			$("#calendar").html(page);
@@ -101,5 +144,25 @@ function getCalendar(){
 		}
 	})
 }
+function getDeptList(){
+	$.ajax({
+		url:"getDeptList",
+		dataType:"json",
+		success:function(result){
+			console.log(result);
+			var str="";
+			for(var i in result){
+				str+="<option class='deptOption' "
+					+"value='"+result[i].dept_code+"'>"+result[i].dept_name+"</option>"
+			}
+			$("#dept").html(str);
+			$("#dept option:last").attr("selected","selected");
+			showCalendar();
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+};
 </script>
 </html>

@@ -49,9 +49,10 @@
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">홈</a>
-          <a class="dropdown-item" href="#">마이페이지</a>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">로그아웃</a>
+          <a class="dropdown-item" href="./">홈</a>
+          <a class="dropdown-item" href="./ceoMyPage">마이페이지</a>
+          <a class="dropdown-item" href="./logout">로그아웃</a>
+          <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">로그아웃</a> -->
         </div>
       </li>
     </ul>

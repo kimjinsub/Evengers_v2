@@ -12,13 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.evengers_v2.bean.BuySelectedOption;
+import com.event.evengers_v2.bean.Department;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventPay;
+import com.event.evengers_v2.bean.EventPaySelectedOption;
 import com.event.evengers_v2.bean.EventSchedule;
+import com.event.evengers_v2.bean.Member;
 import com.event.evengers_v2.dao.EventDao;
+import com.event.evengers_v2.dao.MemberDao;
 import com.event.evengers_v2.dao.PayDao;
 import com.event.evengers_v2.dao.PersonnelDao;
 import com.event.evengers_v2.dao.ScheduleDao;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @Service
 public class ScheduleMM {
@@ -33,14 +40,46 @@ public class ScheduleMM {
 	EventDao eDao;
 	@Autowired
 	PersonnelDao pDao;
+	@Autowired
+	MemberDao mDao;
 	
-	public ModelAndView scheduleManage() {
+	public ModelAndView scheduleManage(Date date) {
+		if(date==null) {date=new Date();}
 		mav=new ModelAndView();
 		//c_id에 해당하는 ep_code를 전부 가져옴
 		ArrayList<String> ep_codes=getEpCodeListByCeo();//**처음사용자면 null일수 있다
+		//일정에 있는 (수락된) 결제코드들을 뽑음
+		ArrayList<String> assigned_codes=getAssigned_codes(ep_codes);
+		
+		//전부가져온 ep코드들중 일정에 있는 (수락된) ep코드들을 뺌
+		for(String assigned_code:assigned_codes) {
+			ep_codes.remove(assigned_code);//제외시키기
+		}
+		//일정에 없는(미수락된) 결제코드들의 eventpay들을 모음 -> epAllList
+		ArrayList<EventPay> epAllList=new ArrayList<>();
+			for(String ep_code:ep_codes) {
+				EventPay ep = payDao.getEpInfo(ep_code);
+				epAllList.add(ep);
+			}
+		//일정에 있는 (수락된) 결제코드들로 일정리스트를 뽑음 -> esList
+		ArrayList<EventSchedule> esList=new ArrayList<>();
+		if(assigned_codes!=null) {
+			for(String ep_code:assigned_codes) {
+				EventSchedule es=sDao.getEvtScheduleList(ep_code);
+				esList.add(es);
+			}
+		}
 		mav.addObject("ep_codes", ep_codes);
+		mav.addObject("epAllList", epAllList);
+		mav.addObject("year", makeHtml_year(date));
+		mav.addObject("month", makeHtml_month(date));
+		mav.addObject("makeHtml_EpList", makeHtml_EpList(epAllList,esList));
+		mav.setViewName("ceoViews/scheduleManage");
+		return mav;
+	}
+
+	private ArrayList<String> getAssigned_codes(ArrayList<String> ep_codes) {
 		ArrayList<String> assigned_codes=new ArrayList<>();
-		//일정에 있는 (수락된) 결제코드들은 제외함
 		for(String ep_code:ep_codes) {
 			int assigned = sDao.isAssigned(ep_code);//0:미수락 1:수락
 			if(assigned==1) {//수락된것이라면
@@ -52,27 +91,7 @@ public class ScheduleMM {
 				assigned_codes.add(ep_code);//수락된 일정리스트에 추가한다
 			}
 		}
-		for(String assigned_code:assigned_codes) {
-			ep_codes.remove(assigned_code);//제외시키기
-		}
-		//일정에 없는(미수락된) 결제코드들의 eventpay들을 모음 -> epAllList
-		ArrayList<EventPay> epAllList=new ArrayList<>();
-			for(String ep_code:ep_codes) {
-				EventPay ep = payDao.getEpInfo(ep_code);
-				epAllList.add(ep);
-			}
-		mav.addObject("epAllList", epAllList);
-		//일정에 있는 (수락된) 결제코드들로 일정리스트를 뽑음 -> esList
-		ArrayList<EventSchedule> esList=new ArrayList<>();
-		if(assigned_codes!=null) {
-			for(String ep_code:assigned_codes) {
-				EventSchedule es=sDao.getEvtScheduleList(ep_code);
-				esList.add(es);
-			}
-		}
-		mav.addObject("makeHtml_EpList", makeHtml_EpList(epAllList,esList));
-		mav.setViewName("ceoViews/scheduleManage");
-		return mav;
+		return assigned_codes;
 	}
 
 	private String makeHtml_EpList(ArrayList<EventPay> epAllList,ArrayList<EventSchedule> esList) {
@@ -130,7 +149,7 @@ public class ScheduleMM {
 		return msg;
 	}
 
-	public ModelAndView calendar(Date date) {
+	public ModelAndView calendar(Date date, String dept_code) {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		if(date==null) {
 			try {
@@ -141,9 +160,7 @@ public class ScheduleMM {
 			}
 		}
 		mav=new ModelAndView();
-		mav.addObject("year", makeHtml_year(date));
-		mav.addObject("month", makeHtml_month(date));
-		mav.addObject("calendar", makeHtml_calendar(date));
+		mav.addObject("calendar", makeHtml_calendar(date,dept_code));
 		mav.setViewName("ceoViews/calendar");
 		return mav;
 	}
@@ -173,7 +190,12 @@ public class ScheduleMM {
 		sb.append("</select>");
 		return sb.toString();
 	}
-	private String makeHtml_calendar(Date date) {
+	private String makeHtml_calendar(Date date, String dept_code) {
+		//c_id에 해당하는 ep_code를 전부 가져옴
+		ArrayList<String> ep_codes=getEpCodeListByCeo();//**처음사용자면 null일수 있다
+		//일정에 있는 (수락된) 결제코드들을 뽑음
+		ArrayList<String> assigned_codes=getAssigned_codes(ep_codes);
+		
 		//그 날짜의 첫번째 달 firstDay 구하기
 		SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM");
 		Date firstDay = null;
@@ -190,6 +212,17 @@ public class ScheduleMM {
 		//그 날짜가 해당하는 달의 정보 구하기
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);//Thu Jun 13 00:00:00 KST 2019
+		System.out.println("getTime="+c.getTime());
+		
+		int int_year=c.get(Calendar.YEAR);
+		System.out.println("int_year="+int_year);
+		String str_year=String.valueOf(int_year);
+		System.out.println("str_year="+str_year);
+		
+		int int_month=c.get(Calendar.MONTH)+1;//0:1월 11:12월이라 1씩 더해준다
+		System.out.println("month="+int_month);
+		String str_month=String.format("%02d", int_month);
+		System.out.println("str_month="+str_month);
 		
 		int int_startDay = c.getActualMinimum(Calendar.DAY_OF_MONTH);
 		System.out.println("int_startDay="+int_startDay);//1
@@ -208,6 +241,7 @@ public class ScheduleMM {
 		
 		//구한 정보들로 달력 출력하기
 		StringBuilder sb= new StringBuilder();
+		sb.append("<h2>"+int_year+"년"+int_month+"월</h2>");
 		sb.append("<table border='1' id='calendar_table'>");
 		sb.append("<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>");
 		sb.append("<tr>");
@@ -222,7 +256,30 @@ public class ScheduleMM {
 			dayNum++;
 		}
 		for(int i=int_startDay;i<int_endDay+1;i++) {
-			sb.append("<td>"+i+"</td>");
+			//날짜형식 불러오기
+			String calDate=str_year+str_month+String.format("%02d", i);
+			
+			//부서정보 가져오기
+			
+			//일정에 있는 (수락된) 결제코드들로 일정리스트를 뽑음 -> esList
+			ArrayList<EventSchedule> esList=new ArrayList<>();
+			if(assigned_codes!=null) {
+				ArrayList<String> checked_assigned_codes=sDao.dateCheck(assigned_codes,calDate);
+				for(String ep_code:checked_assigned_codes) {
+					EventSchedule es=sDao.howManyEvtSchedule(dept_code,ep_code);
+					if(es!=null) {
+						esList.add(es);
+					}
+				}
+			}
+			String json_esList=new Gson().toJson(esList);//json으로 넘겨도 jsp에서 배열로 받음 
+			if(esList.size()>0) {
+				sb.append("<td id='"+calDate+"'>"+i+"<br/>"
+						+ "<a href='javascript:Ajax_showScheduleToday("+json_esList+","+calDate+")' "
+						+ "id='esCount'>"+esList.size()+"건</a></td>");
+			}else {
+				sb.append("<td id='"+calDate+"'>"+i+"</td>");
+			}
 			if(dayNum>=7) {
 				sb.append("</tr>");
 				dayNum=1;
@@ -237,6 +294,42 @@ public class ScheduleMM {
 			}
 		}
 		sb.append("</table>");
+		return sb.toString();
+	}
+
+	public String showScheduleToday(String json_esList, String calDate) {
+		System.out.println("json_esList");
+		System.out.println(json_esList);
+		ArrayList<EventSchedule> esList=new Gson().fromJson(json_esList
+				, new TypeToken<ArrayList<EventSchedule>>(){}.getType());
+		System.out.println("esList");
+		System.out.println(esList);
+		System.out.println("calDate="+calDate);
+		StringBuilder sb=new StringBuilder();
+		sb.append("<table border='1' id='schedule_table'>"
+				+ "<tr><th>시간</th><th>이벤트명</th><th>옵션</th><th>의뢰자</th><th>핸드폰번호</th></tr>");
+		for(EventSchedule es:esList) {
+			EventPay ep=payDao.getEpInfo(es.getEp_code());
+			Calendar c=Calendar.getInstance();
+			c.setTime(ep.getEp_dday());
+			int hour=c.get(Calendar.HOUR);
+			int minute=c.get(Calendar.MINUTE);
+			
+			ArrayList<EventPaySelectedOption> epsList = payDao.memberEps(es.getEp_code());
+			Member mb=mDao.mInfo(ep.getM_id());
+			Event e=eDao.getEvtInfo(ep.getE_code());
+			sb.append("<tr>"
+					+ "		<td>"+hour+"시"+minute+"분</td>"
+					+ "		<td>"+e.getE_name()+"</td>");
+			for(EventPaySelectedOption eps:epsList) {
+				sb.append("	<td>"+eDao.getEoInfo(eps.getEo_code()).getEo_name() +"</td>");
+			}
+			sb.append("		<td>"+mb.getM_name()+"</td>"
+					+ "		<td>"+mb.getM_tel()+"</td>"
+					+ "</tr>");
+		}
+		sb.append("</table>");
+		sb.append("<p style='color:red; text-align:left;' onclick='hideScheduleToday()'>닫기</p>");
 		return sb.toString();
 	}
 }

@@ -12,4 +12,15 @@
 	<insert id="insertEvtSchedule" parameterType="eventschedule">
 		INSERT INTO ES VALUES('ES'||LPAD(ES_SEQ.NEXTVAL,4,0),#{ep_code},#{dept_code})
 	</insert>
+	<select id="dateCheck" parameterType="list" resultType="String">
+		SELECT EP_CODE FROM EP 
+		WHERE TO_CHAR(EP_DDAY,'YYYYMMDD')=#{calDate}
+		AND EP_CODE IN 
+		<foreach collection="assigned_codes" item="assigned_code" open="(" separator="," close=")">
+			#{assigned_code}
+		</foreach>
+	</select>
+	<select id="howManyEvtSchedule" parameterType="String" resultType="eventschedule">
+		SELECT * FROM ES WHERE DEPT_CODE=#{dept_code} AND EP_CODE=#{ep_code}
+	</select>
 </mapper>

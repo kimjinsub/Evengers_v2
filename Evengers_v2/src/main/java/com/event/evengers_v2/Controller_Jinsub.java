@@ -1,5 +1,6 @@
 package com.event.evengers_v2;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -190,8 +191,8 @@ public class Controller_Jinsub {
 		return mav;
 	}
 	@RequestMapping(value = "/scheduleManage")
-	public ModelAndView scheduleManage() {
-		mav=sm.scheduleManage();
+	public ModelAndView scheduleManage(Date date) {
+		mav=sm.scheduleManage(date);
 		return mav;
 	}
 	@RequestMapping(value = "/insertEvtSchedule",produces = "application/json;charset=utf-8;")
@@ -199,12 +200,12 @@ public class Controller_Jinsub {
 		return sm.insertEvtSchedule(es);
 	}
 	@RequestMapping(value = "/calendar")
-	public ModelAndView calendar(Date date) {
-		mav=sm.calendar(date);
+	public ModelAndView calendar(Date date,String dept_code) {
+		mav=sm.calendar(date,dept_code);
 		return mav;
 	}
-	@RequestMapping(value = "/calendarExample")
-	public String calendarExample() {
-		return "calendarExample";
+	@RequestMapping(value = "/showScheduleToday",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String showScheduleToday(String json_esList,String calDate) {
+		return sm.showScheduleToday(json_esList,calDate);
 	}
 }
