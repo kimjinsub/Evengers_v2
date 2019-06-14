@@ -109,7 +109,7 @@ function getCategories(){
 		success:function(result){
 			var str="";
 			for(var i in result){
-				str+='<li class="nav-item">'
+				str+='<li class="nav-item active" style="font-size:20px;">'
 						+'<a class="nav-link" id="'+result[i].ec_name
 						+'" onclick="getEvtList(this.id)">'
 						+result[i].ec_name+'</a></li>';

@@ -5,6 +5,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <meta charset="UTF-8">
 <style>
 .deleteCategory{
@@ -15,6 +17,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="../header.jsp"/>
 	<h2>카테고리 설정</h2>
 	<div id="categories"></div>
 	

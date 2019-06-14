@@ -326,8 +326,12 @@ public String memberTest(String testcode) {
 	}
 
 	public ModelAndView myEvtManagement(String id) {
-		List<Event> eList = eDao.myEvtManagement(id);  
-		mav.addObject("eList", eList);
+		if(eDao.myEvtManagement(id)!=null) {
+			List<Event> eList = eDao.myEvtManagement(id);  
+			mav.addObject("eList", eList);
+		}else {
+			mav.addObject("eList", "등록한 상품이 없습니다");
+		}
 		mav.setViewName("ceoViews/myEvtManagement");
 		return mav;
 	}

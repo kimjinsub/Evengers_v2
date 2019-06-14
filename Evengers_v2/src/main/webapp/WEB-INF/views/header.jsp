@@ -5,6 +5,12 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/all.css">
+<%-- <link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css"> --%>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -28,14 +34,14 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">홈
+				<li class="nav-item active"><a class="nav-link" href="./">홈
 						<span class="sr-only">(current)</span>
 				</a></li>
-			 	<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="./memberMyPage">마이페이지</a></li>
-				<li class="nav-item"><a class="nav-link" href="./evtReqFrm">의뢰요청</a></li>
-				<li class="nav-item"><a class="nav-link" href="./serviceCenter">문의하기</a></li>
-				<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
+			 	<li class="nav-item active"><a class="nav-link" href="#">소개</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./memberMyPage">마이페이지</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./evtReqFrm">의뢰요청</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./serviceCenter">문의하기</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
 	</div>
@@ -50,14 +56,14 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">홈
+				<li class="nav-item active"><a class="nav-link" href="./">홈
 						<span class="sr-only">(current)</span>
 				</a></li>
-			 	<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="./ceoMyPage">마이페이지</a></li>
-				<li class="nav-item"><a class="nav-link" href="./evtInsertFrm">이벤트등록</a></li>
-				<li class="nav-item"><a class="nav-link" href="./myReqList">의뢰목록</a></li>
-				<li class="nav-item"><a class="nav-link" href="./erpIndex">ERP자원관리</a></li>
+			 	<li class="nav-item active"><a class="nav-link" href="#">소개</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./ceoMyPage">마이페이지</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./evtInsertFrm">이벤트등록</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./myReqList">의뢰목록</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./erpIndex">ERP자원관리</a></li>
 				<!-- <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="./erpIndex" id="navbarDropdown"
 						role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -84,13 +90,13 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">홈
+				<li class="nav-item active"><a class="nav-link" href="./">홈
 						<span class="sr-only">(current)</span>
 				</a></li>
-			 	<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-			 	<li class="nav-item"><a class="nav-link" href="./categoryFrm">카테고리 관리</a></li>
-			 	<li class="nav-item"><a class="nav-link" href="./questionList">문의 보기</a></li>
-				<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
+			 	<li class="nav-item active"><a class="nav-link" href="#">소개</a></li>
+			 	<li class="nav-item active"><a class="nav-link" href="./categoryFrm">카테고리 관리</a></li>
+			 	<li class="nav-item active"><a class="nav-link" href="./questionList">문의 보기</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
 	</div>
@@ -105,13 +111,13 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">홈
+				<li class="nav-item active"><a class="nav-link" href="./">홈
 						<span class="sr-only">(current)</span>
 				</a></li>
-			 	<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="./loginFrm">로그인</a>
+			 	<li class="nav-item active"><a class="nav-link" href="#">소개</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./loginFrm">로그인</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="./joinFrm">회원가입</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./joinFrm">회원가입</a></li>
 			</ul>
 		</div>
 	</div>

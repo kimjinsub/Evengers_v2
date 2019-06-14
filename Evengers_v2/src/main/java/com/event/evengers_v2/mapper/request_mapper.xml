@@ -32,7 +32,7 @@
 	SELECT COUNT(*) FROM EST
 	</select>
 	<select id="getReqList" resultType="request">
-	 SELECT * FROM REQEST
+	 SELECT * FROM REQUEST
 	</select>
 	<select id="showEstimate" parameterType="string" resultType="estimate">
 	 SELECT * FROM EST WHERE EST_CODE=#{est_code}
