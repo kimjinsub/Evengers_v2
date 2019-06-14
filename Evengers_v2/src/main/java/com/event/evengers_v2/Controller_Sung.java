@@ -149,7 +149,7 @@ public class Controller_Sung {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/download1", method = RequestMethod.GET) // get,post 모두 가능
+	@RequestMapping(value = "/download1", method = RequestMethod.GET) 
 	public void download(
 			@RequestParam Map<String,Object> params,
 			HttpServletResponse response ,HttpServletRequest req) throws Exception { // int를 쓰면 null값이 올 수 없기 때문에
@@ -161,7 +161,7 @@ public class Controller_Sung {
 		rm.download(params);
 	}  
 	
-	@RequestMapping(value = "/myReqDelete", method = RequestMethod.GET) // get,post 모두 가능
+	@RequestMapping(value = "/myReqDelete", method = RequestMethod.GET) 
 	public ModelAndView evtReqDelete(String req_code) throws DBException{
 		mav = rm.myReqDelete(req_code);
 		System.out.println("req_code="+req_code);
@@ -169,17 +169,32 @@ public class Controller_Sung {
 	} 
 	
 	
-	@RequestMapping(value = "/estPay", method = RequestMethod.GET) // get,post 모두 가능
+	@RequestMapping(value = "/estPay", method = RequestMethod.GET) 
 	public ModelAndView estPay(String est_code) throws DBException{
 		mav = rm.estPay(est_code);
 		return mav;
 	}
 	
 	
-	@RequestMapping(value = "/receivedEstDenial", method = RequestMethod.GET) // get,post 모두 가능
+	@RequestMapping(value = "/receivedEstDenial", method = RequestMethod.GET) 
 	public ModelAndView receivedEstDenial(String est_code) throws DBException{
 		mav = rm.receivedEstDenial(est_code);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/estSell", produces = "application/json; charset=utf8") 
+	public @ResponseBody Map<String, Object> estSell() {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map = rm.estSell(id);
+		return map;
+	}
+	
+	@RequestMapping(value = "/estSellPage", method = RequestMethod.GET)
+	public ModelAndView evtSellPage() {
+		mav=new ModelAndView();
+		mav.setViewName("ceoViews/estSellPage");
+		return mav;
+	}
+	
 	
 }

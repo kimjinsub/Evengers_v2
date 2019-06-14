@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
 import com.event.evengers_v2.bean.EstimatePay;
+import com.event.evengers_v2.bean.EstimatePayImage;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
@@ -376,7 +377,7 @@ public class RequestMM {
 		
 		String req_code = estimate.getReq_code();
 		String estp_contents = estimate.getEst_contents();
-		String c_id = session.getAttribute("id").toString();
+		String c_id = estimate.getC_id();
 		int estp_total = estimate.getEst_total();
 		int estp_refunddate = estimate.getEst_refunddate();
 		
@@ -385,7 +386,7 @@ public class RequestMM {
 		System.out.println("받아온 내용!" + estp_contents);
 		System.out.println("받아온 총가격!" + estp_total);
 		System.out.println("받아온 환불가능일!" + estp_refunddate);
-		System.out.println("받아온 세션아이디!!" + c_id);
+		System.out.println("받아온 기업아이디!!" + c_id);
 		
 		
 		estimatepay.setReq_code(req_code);
@@ -394,9 +395,20 @@ public class RequestMM {
 		estimatepay.setEstp_total(estp_total);
 		estimatepay.setEstp_refunddate(estp_refunddate);
 		
+		
+		
 		if(rDao.estPay(estimatepay)) {
 			System.out.println("결제가 완료 되었습니다.");
-			
+			String estp_code=rDao.getEstpCode();
+			System.out.println("estp_code="+estp_code);
+			EstimateImage esti=new EstimateImage();
+            esti=rDao.getEstimateImage(est_code);
+            EstimatePayImage estpi=new EstimatePayImage();
+            estpi.setEstp_code(estp_code);
+            estpi.setEstpi_orifilename(esti.getEsti_orifilename());
+            estpi.setEstpi_sysfilename(esti.getEsti_sysfilename());
+            System.out.println(estpi);
+            boolean e = rDao.insertEstpi(estpi);
 			boolean b = rDao.estiDelete(est_code);		//견적 이미지 삭제
 			boolean r = rDao.estDelete(est_code); // 견적 삭제
 						
@@ -433,6 +445,74 @@ public class RequestMM {
 		mav.setViewName("memberViews/memberMyPage");
 		return mav;
 	}
+		public Map<String, Object> getEstPayList(String id, Integer pageNum) {
+			ArrayList<Request> reqList=new ArrayList<Request>();
+			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();
+			reqList=rDao.getReqCodes(id);
+			System.out.println("ReqList="+reqList);
+			for(int i=0;i<reqList.size();i++) {
+				Request req=new Request();
+				req=reqList.get(i);
+		        estpList.addAll(rDao.getEstPayList(req));
+			}
+			  while (estpList.remove(null));
+			System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			map1.put("estpList", estpList);
+			
+			return map1;
+			
+		}
+
+		public ModelAndView showEstpDetail(String estp_code) {
+			mav=new ModelAndView();
+			EstimatePay estp = new EstimatePay();
+			estp=rDao.getEstpDetail(estp_code);
+			String req_code1=estp.getReq_code();
+			Request req=new Request();
+			req=rDao.getReqInfo(req_code1);
+			Estimate est=new Estimate();
+			System.out.println("req:"+req);
+			EstimatePayImage estpi=new EstimatePayImage();
+			  estpi=rDao.getEstpiImage(estp_code);
+			  System.out.println(estpi);
+			  mav.addObject("estpi",estpi);
+			mav.addObject("req", req);
+			mav.addObject("estp",estp);
+			mav.setViewName("memberViews/showEstimateDetail");
+			
+			return mav;
+		}
+
+		public Map<String, Object> estSell(String id) {
+			ArrayList<EstimatePay> esList = new ArrayList<EstimatePay>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+			
+			esList = rDao.getEstSell(id);	//세션 id와 일치하는 판매내역을 뽑아옴
+			
+				try {
+					for(int i=0;i<esList.size();i++) {
+						EstimatePay estp = new EstimatePay();
+						
+						Date a = esList.get(i).getEstp_payday();
+						String b = format1.format(a);
+						
+						System.out.println("bbb:" + b);
+						
+						esList.get(i).setEstp_payday(format1.parse(b));
+						
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+			map.put("esList", esList);	//맵에 저장해서 턴
+			
+			return map;
+		}
 }
 		
 	
