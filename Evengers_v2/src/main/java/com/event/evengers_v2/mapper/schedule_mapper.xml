@@ -19,6 +19,7 @@
 		<foreach collection="assigned_codes" item="assigned_code" open="(" separator="," close=")">
 			#{assigned_code}
 		</foreach>
+		ORDER BY EP_DDAY ASC, EP_PAYDAY ASC
 	</select>
 	<select id="howManyEvtSchedule" parameterType="String" resultType="eventschedule">
 		SELECT * FROM ES WHERE DEPT_CODE=#{dept_code} AND EP_CODE=#{ep_code}

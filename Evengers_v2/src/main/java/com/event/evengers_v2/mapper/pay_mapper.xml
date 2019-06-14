@@ -44,9 +44,9 @@
 	</delete>
 	<delete id="ebDelete" parameterType="String">
    		DELETE FROM EB WHERE EB_CODE=#{eb_code}
-   </delete>
-   		<select id="ceoEvtPayList" parameterType="String" resultType="String">
-		SELECT EP_CODE FROM EP WHERE E_CODE=#{e_code} ORDER BY EP_DDAY ASC, EP_PAYDAY DESC
+    </delete>
+   	<select id="ceoEvtPayList" parameterType="String" resultType="String">
+		SELECT EP_CODE FROM EP WHERE E_CODE=#{e_code} ORDER BY EP_DDAY ASC, EP_PAYDAY ASC
 	</select>
 	<select id="getEpInfo" parameterType="String" resultType="eventpay">
 		SELECT * FROM EP WHERE EP_CODE=#{ep_code}

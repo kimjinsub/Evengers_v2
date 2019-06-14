@@ -320,13 +320,13 @@ public class ScheduleMM {
 			Event e=eDao.getEvtInfo(ep.getE_code());
 			sb.append("<tr>"
 					+ "		<td>"+hour+"시"+minute+"분</td>"
-					+ "		<td>"+e.getE_name()+"</td>");
+					+ "		<td>"+e.getE_name()+"</td><td>");
 			for(EventPaySelectedOption eps:epsList) {
-				sb.append("	<td>"+eDao.getEoInfo(eps.getEo_code()).getEo_name() +"</td>");
+				sb.append(eDao.getEoInfo(eps.getEo_code()).getEo_name() +"<br/>");
 			}
-			sb.append("		<td>"+mb.getM_name()+"</td>"
+			sb.append("</td><td>"+mb.getM_name()+"<br/>"
 					+ "		<td>"+mb.getM_tel()+"</td>"
-					+ "</tr>");
+					+ "</td></tr>");
 		}
 		sb.append("</table>");
 		sb.append("<p style='color:red; text-align:left;' onclick='hideScheduleToday()'>닫기</p>");

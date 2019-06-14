@@ -156,7 +156,7 @@ function getDeptList(){
 					+"value='"+result[i].dept_code+"'>"+result[i].dept_name+"</option>"
 			}
 			$("#dept").html(str);
-			$("#dept option:last").attr("selected","selected");
+			$("#dept option:first").attr("selected","selected");
 			showCalendar();
 		},
 		error:function(error){
