@@ -208,4 +208,8 @@ public class Controller_Jinsub {
 	public @ResponseBody String showScheduleToday(String json_esList,String calDate) {
 		return sm.showScheduleToday(json_esList,calDate);
 	}
+	@RequestMapping(value = "/rejectEvtPay",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String rejectEvtPay(String ep_code) {
+		return paym.rejectEvtPay(ep_code);
+	}
 }

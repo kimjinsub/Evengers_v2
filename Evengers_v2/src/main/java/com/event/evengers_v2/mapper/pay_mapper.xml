@@ -101,4 +101,10 @@
 	<select id="rBtnChk3" parameterType="String" resultType="int">
 		SELECT ER_PENALTY FROM ER WHERE EP_CODE=#{ep_code} 
 	</select>
+	<select id="isRefundedEp" parameterType="list" resultType="String">
+		SELECT EP_CODE FROM ER WHERE EP_CODE IN
+		<foreach collection="ep_codes" item="ep_code" open="(" separator="," close=")">
+			#{ep_code}
+		</foreach>
+	</select>
 </mapper>

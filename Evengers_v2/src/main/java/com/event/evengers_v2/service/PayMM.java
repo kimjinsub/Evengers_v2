@@ -309,7 +309,7 @@ public class PayMM {
 				Event e = eList.get(i);
 				String e_code = e.getE_code();
 				if (payDao.ceoEvtpayList(e_code) != null) {
-					epList.add(payDao.ceoEvtpayList(e_code));
+					epList.addAll(payDao.ceoEvtpayList(e_code));
 				}
 
 			}
@@ -384,7 +384,7 @@ public class PayMM {
 				Event e = eList.get(i);
 				String e_code = e.getE_code();
 				if (payDao.ceoEvtpayList(e_code) != null) {
-					epList.add(payDao.ceoEvtpayList(e_code));
+					epList.addAll(payDao.ceoEvtpayList(e_code));
 				}
 
 			}
@@ -467,5 +467,19 @@ public class PayMM {
 			str = "등록 안됨";
 		}
 		return str;
+	}
+	public String rejectEvtPay(String ep_code) {
+		String msg="";
+		System.out.println("ep_code"+ep_code);
+		if(payDao.refundInsert(ep_code)) {
+			if(payDao.ceoRefundBtn(ep_code, 0)){
+				msg="환불되었습니다";
+			}else {
+				msg="환불에 실패했습니다";
+			}
+		}else {
+			msg="환불에 실패했습니다";
+		}
+		return msg;
 	}
 }

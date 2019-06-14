@@ -1,6 +1,7 @@
 package com.event.evengers_v2.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -53,7 +54,6 @@ public interface PayDao {
 
 	boolean refundInsert(String ep_code);
 
-	EventPay ceoEvtpayList(String e_code);
 
 	EventRefund ceoRefundList(String ep_code);
 
@@ -75,5 +75,8 @@ public interface PayDao {
 
 	int rBtnChk3(@Param("ep_code")String ep_code);
 
+	ArrayList<String> isRefundedEp(@Param("ep_codes")ArrayList<String> ep_codes);
+
+	Collection<? extends EventPay> ceoEvtpayList(String e_code);
 
 }

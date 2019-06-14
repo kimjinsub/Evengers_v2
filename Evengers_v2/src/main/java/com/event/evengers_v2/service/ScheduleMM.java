@@ -134,9 +134,17 @@ public class ScheduleMM {
 			}
 		}*/
 		//mybatis 로 foreach문 써서 dday와 payday로 정렬하기
-		ArrayList<String> ep_codes2=new ArrayList<>();
-		ep_codes2=payDao.ceoEvtPayList2(e_codes);
-		return ep_codes2; 
+		ArrayList<String> ep_codes=new ArrayList<>();
+		ep_codes=payDao.ceoEvtPayList2(e_codes);
+		
+		//환불된 것들 빼버리고 출력하기
+		
+		ArrayList<String> refundedEp_Codes=new ArrayList<>();
+		refundedEp_Codes=payDao.isRefundedEp(ep_codes);
+		for(String refundedEp_Code:refundedEp_Codes) {
+			ep_codes.remove(refundedEp_Code);
+		}
+		return ep_codes; 
 	}
 
 	public String insertEvtSchedule(EventSchedule es) {

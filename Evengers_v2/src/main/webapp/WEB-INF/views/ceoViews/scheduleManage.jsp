@@ -68,6 +68,21 @@ $(".unassigned").each(function(){
 		$("#epInfo").html($(this)[0].textContent);
 	})
 })
+function rejectEvtPay(){
+	console.log("reject:ep_code=",ep_code);
+	$.ajax({
+		url:"rejectEvtPay",
+		data:{ep_code:ep_code},
+		dataType:"text",
+		success:function(result){
+			alert(result);
+			location.href="javascript:Ajax_forward('scheduleManage')";
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
 function confirmDept(){
 	var dept_code=$("#selectDept").val();
 	console.log("dept=",dept_code);
