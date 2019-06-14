@@ -58,6 +58,7 @@ table {
 										&sysFileName=${file.esti_sysfilename}">
 							${file.esti_orifilename}</a>
 				</c:if></td>
+				<td>${msg}</td>
 		</tr>
 		<tr>
 			<td><input type="button" value="승인" 

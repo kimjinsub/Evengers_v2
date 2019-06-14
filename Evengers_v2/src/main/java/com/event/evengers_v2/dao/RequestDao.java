@@ -81,7 +81,6 @@ public interface RequestDao {
 
 	public EstimatePay getPayday(String id);
 
-	
 
 
 

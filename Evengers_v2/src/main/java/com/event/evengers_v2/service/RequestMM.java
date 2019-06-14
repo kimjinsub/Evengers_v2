@@ -433,7 +433,7 @@ public class RequestMM {
 		return mav;
 	}
 
-	public ModelAndView receivedEstDenial(String est_code) {
+		public ModelAndView receivedEstDenial(String est_code) {
 		boolean b = rDao.estiDelete(est_code);		
 		boolean r = rDao.estDelete(est_code);
 		
@@ -484,6 +484,7 @@ public class RequestMM {
 			return mav;
 		}
 
+
 		public Map<String, Object> estSell(String id) {
 			ArrayList<EstimatePay> esList = new ArrayList<EstimatePay>();
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -513,7 +514,8 @@ public class RequestMM {
 			
 			return map;
 		}
-}
+
+
 		
-	
+}
 

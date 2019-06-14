@@ -123,4 +123,5 @@
    <select id="getPayday" parameterType="string" resultType="estimatepay">
          SELECT estp_payday FROM ESTP WHERE C_ID=#{id}
    </select>
+
 </mapper>

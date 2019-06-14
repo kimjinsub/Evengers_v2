@@ -21,7 +21,7 @@ margin-left: 350px;
   <table border="1">
   <tr>
   <th>견적제목</th>
-  <td><input type="text" id="est_title" name="est_title">${request.req_title}</td>
+  <td><input type="text" id="est_title" name="est_title" value="${request.req_title}"></td>
   </tr>
   <tr>
   <th>견적내용</th>
