@@ -1,6 +1,8 @@
 package com.event.evengers_v2;
 
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import com.event.evengers_v2.bean.Email;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
 import com.event.evengers_v2.service.MemberMM;
+import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.RequestMM;
 import com.event.evengers_v2.userClass.EmailSender;
 import com.event.evengers_v2.userClass.TempKey;
@@ -39,6 +42,8 @@ public class Controller_Chun {
 	EventMM em;
 	@Autowired
 	RequestMM rm;
+	@Autowired
+	PayMM pm;
 	@RequestMapping(value = "/loginFrm", method = RequestMethod.GET)
 	public ModelAndView loginFrm() {
 		mav = new ModelAndView();
@@ -191,7 +196,7 @@ public class Controller_Chun {
 	@RequestMapping(value = "/payList", method = RequestMethod.GET)
 	public ModelAndView payList() {
 		mav = new ModelAndView();
-		mav.setViewName("memberViews/payList");
+		mav = pm.memberPayList();
 		return mav;
 	}
 	@RequestMapping(value = "/choiceList", method = RequestMethod.GET)
@@ -275,12 +280,13 @@ public class Controller_Chun {
 	@RequestMapping(value = "/ceoRefundList", method = RequestMethod.GET)
 	public ModelAndView ceoRefundList() {
 		mav = new ModelAndView();
-		mav.setViewName("ceoViews/ceoRefundList");
+		mav = pm.ceoRefundList();
 		return mav;
 	}
 	@RequestMapping(value = "/refundCompleteList", method = RequestMethod.GET)
 	public ModelAndView refundCompleteList() {
 		mav = new ModelAndView();
+		mav = pm.refundCompleteList();
 		mav.setViewName("ceoViews/refundCompleteList");
 		return mav;
 	}
@@ -388,4 +394,43 @@ public class Controller_Chun {
 		str = em.myEvtModifyBtn(formData);
 		return str;
 	}
+	
+	@RequestMapping(value = "/refundEvt",produces = "application/json; charset=utf8")
+	public @ResponseBody String refundEvt(String ep_code ) {
+		String str = "";
+		System.out.println("ep_code : "+ep_code);
+		str = pm.refundEvt(ep_code);
+		return str;
+	}
+	@RequestMapping(value = "/er_total",produces = "application/json; charset=utf8")
+	public @ResponseBody int er_total(double ep_panalty,double total) {
+		int er_total = 0;
+		er_total=pm.er_total(ep_panalty,total);
+		
+		return er_total;
+	}
+	@RequestMapping(value = "/ceoRefundBtn",produces = "application/json; charset=utf8")
+	public @ResponseBody String ceoRefundBtn(String ep_code,int ep_penalty) {
+		String str = "";
+		str=pm.ceoRefundBtn(ep_code,ep_penalty);
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/er_days",produces = "application/json; charset=utf8")
+	public @ResponseBody int er_days(String ep_dday,String er_rday) throws ParseException {
+		int er_days = 0;
+		er_days=pm.er_days(ep_dday,er_rday);
+		
+		return er_days;
+	}
+	@RequestMapping(value = "/rBtnChk",produces = "application/json; charset=utf8")
+	public @ResponseBody String rBtnChk(String ep_code)  {
+		String rBtnChk = "";
+		System.out.println("11111111111111111111111111"+ep_code);
+		rBtnChk=pm.rBtnChk(ep_code);
+		
+		return rBtnChk;
+	}
+	
 }

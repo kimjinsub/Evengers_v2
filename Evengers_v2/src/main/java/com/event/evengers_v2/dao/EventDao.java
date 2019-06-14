@@ -81,4 +81,7 @@ public interface EventDao {
 	public boolean evtOptionDelete(String e_code);
 	
 	public ArrayList<String> getEvtCodeList(String c_id);
+	
+	public ArrayList<Event> ceoEvtList2(@Param("c_id")String c_id);
+
 }

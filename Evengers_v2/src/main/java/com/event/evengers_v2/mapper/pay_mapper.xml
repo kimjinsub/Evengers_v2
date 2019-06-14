@@ -22,7 +22,7 @@
 		SELECT COUNT(*) FROM BS WHERE EB_CODE=#{eb_code}
 	</select>
 	<insert id="evtPay" parameterType="eventpay">
-		INSERT INTO EP VALUES('EP'||LPAD(EP_SEQ.NEXTVAL,4,0),#{e_code},#{m_id},#{ep_total},#{ep_dday},DEFAULT,0)
+		INSERT INTO EP VALUES('EP'||LPAD(EP_SEQ.NEXTVAL,4,0),#{e_code},#{m_id},#{ep_total},#{ep_dday},DEFAULT,DEFAULT)
 	</insert>
 	<select id="getEpCode" parameterType="String" resultType="String">
 		SELECT MAX(EP_CODE) FROM EP WHERE M_ID=#{m_id} AND E_CODE=#{e_code}
@@ -60,5 +60,45 @@
 			#{e_code}
 		</foreach>
 		ORDER BY EP_DDAY ASC, EP_PAYDAY ASC
+	</select>
+	 <update id="refundEvt" parameterType="String" >
+		UPDATE EP SET EP_REFUNDSTATE = 0 WHERE M_ID=#{m_id} AND EP_CODE=#{ep_code}
+	</update>
+	<insert id="refundInsert" parameterType="EventRefund">
+		INSERT INTO ER VALUES('ER'||LPAD(ER_SEQ.NEXTVAL,4,0),DEFAULT,#{ep_code},DEFAULT,DEFAULT)
+	</insert>
+	<select id="ceoEvtpayList" parameterType="String" resultType="EventPay">
+		SELECT * FROM EP WHERE E_CODE=#{e_code} 
+	</select>
+	<select id="ceoRefundList" parameterType="String" resultType="EventRefund">
+		SELECT * FROM ER WHERE EP_CODE=#{ep_code} and ER_STATE=0 
+	</select>
+	<select id="refundChk" parameterType="String" resultType="String">
+		SELECT EP_CODE FROM ER WHERE EP_CODE=#{ep_code} 
+	</select>
+	
+	<select id="ceoEvtpayChk" parameterType="String" resultType="String">
+		SELECT EP_CODE FROM EP WHERE EP_CODE=#{ep_code} 
+	</select>
+	<select id="eptableChk" parameterType="String" resultType="EventPay">
+		SELECT * FROM EP WHERE EP_CODE=#{ep_code} 
+	</select>
+	<select id="evttableChk" parameterType="String" resultType="Event">
+		SELECT * FROM E WHERE E_CODE=#{e_code} 
+	</select>
+	<update id="ceoRefundBtn" parameterType="EventRefund" >
+		UPDATE ER SET ER_PENALTY=#{ep_penalty} ,ER_STATE=1 WHERE EP_CODE=#{ep_code} 
+	</update>
+	<select id="ceoRefundCompleteList" parameterType="String" resultType="EventRefund">
+		SELECT * FROM ER WHERE EP_CODE=#{ep_code} and ER_STATE=1
+	</select>
+	<select id="rBtnChk" parameterType="String" resultType="EventPay">
+		SELECT * FROM EP WHERE EP_CODE=#{ep_code} and M_ID=#{m_id} AND EP_REFUNDSTATE=0
+	</select>
+	<select id="rBtnChk2" parameterType="String" resultType="int">
+		SELECT ER_STATE FROM ER WHERE EP_CODE=#{ep_code} 
+	</select>
+	<select id="rBtnChk3" parameterType="String" resultType="int">
+		SELECT ER_PENALTY FROM ER WHERE EP_CODE=#{ep_code} 
 	</select>
 </mapper>

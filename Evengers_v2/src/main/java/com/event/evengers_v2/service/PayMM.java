@@ -20,6 +20,7 @@ import com.event.evengers_v2.bean.EventBuy;
 import com.event.evengers_v2.bean.EventOption;
 import com.event.evengers_v2.bean.EventPay;
 import com.event.evengers_v2.bean.EventPaySelectedOption;
+import com.event.evengers_v2.bean.EventRefund;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.PayDao;
 import com.google.gson.Gson;
@@ -219,53 +220,252 @@ public class PayMM {
 		mav=new ModelAndView();
 		String m_id=session.getAttribute("id").toString();
 		ArrayList<EventPay> epList=payDao.memberPayList(m_id);
+		mav.addObject("epList", epList);
 		mav.addObject("makeHtml_memberPayList", makeHtml_memberpayList(epList));
 		mav.setViewName("memberViews/payList");
 		return mav;
 	}
 	
 	private String makeHtml_memberpayList(ArrayList<EventPay> epList) {
-		StringBuilder sb=new StringBuilder();
-		for(EventPay ep:epList) {
-			Event e=eDao.getEvtInfo(ep.getE_code());
+		StringBuilder sb = new StringBuilder();
+		for (EventPay ep : epList) {
+			Event e = eDao.getEvtInfo(ep.getE_code());
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date refundAble=null;
+			Date refundAble = null;
 			try {
 				Date payday = format.parse(format.format(ep.getEp_dday()));
-				long refundAble_long=payday.getTime()-e.getE_refunddate()*(24*60*60*1000);
-				refundAble=new Date(refundAble_long);
+				long refundAble_long = payday.getTime() - e.getE_refunddate() * (24 * 60 * 60 * 1000);
+				refundAble = new Date(refundAble_long);
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
-			sb.append("<div class='payList'>"
-					+ "		<img src='upload/thumbnail/"+e.getE_sysfilename()+"'/>"
-					+ "		<p>결제코드:"+ep.getEp_code()+"</p>"
-					+ "		<p>이벤트명:"+e.getE_name()+"</p>"
-					+ "		<p>기본가:"+e.getE_price()+"원</p>"
-					+ "		<p>총가격:"+ep.getEp_total()+"원</p>");
-			if(payDao.memberEps(ep.getEp_code())!=null) {
-				ArrayList<EventPaySelectedOption> epsList=payDao.memberEps(ep.getEp_code());
-				for(EventPaySelectedOption eps:epsList) {
-					EventOption eo=eDao.getEoInfo(eps.getEo_code());
-					sb.append("<p>이벤트옵션:"+eo.getEo_name()+"/(+"+eo.getEo_price()+"원)</p>");
+			String ep_code = ep.getEp_code();
+			System.out.println("ep_code: " + ep_code);
+			sb.append("<input type='hidden' class='rBtnChk_epCode' name='"+ep_code+"'>"
+					+ "<div class='payList'>" + "		<img src='upload/thumbnail/" + e.getE_sysfilename() + "'/>"
+					+ "		<p>결제코드:" + ep.getEp_code() + "</p>" + "		<p>이벤트명:" + e.getE_name() + "</p>"
+					+ "		<p>기본가:" + e.getE_price() + "원</p>" + "		<p>총가격:" + ep.getEp_total() + "원</p>");
+			if (payDao.memberEps(ep.getEp_code()) != null) {
+				ArrayList<EventPaySelectedOption> epsList = payDao.memberEps(ep.getEp_code());
+				for (EventPaySelectedOption eps : epsList) {
+					EventOption eo = eDao.getEoInfo(eps.getEo_code());
+					sb.append("<p>이벤트옵션:" + eo.getEo_name() + "/(+" + eo.getEo_price() + "원)</p>");
 				}
 			}
-			sb.append("		<p>이벤트 날짜"+format.format(ep.getEp_dday())+"</p>"
-					+ "		<p>결제 날짜:"+format.format(ep.getEp_payday())+"</p>"
-					+ "		<p>환불가능일:~"+format.format(refundAble)+"까지</p>");
+			sb.append("		<p>이벤트 날짜" + format.format(ep.getEp_dday()) + "</p>" + "		<p>결제 날짜:"
+					+ format.format(ep.getEp_payday()) + "</p>" + "		<p>환불가능일:~" + format.format(refundAble)
+					+ "까지</p>"
+					+ "<div class='ing'> 환불 요청 중</div>"
+					+ "<div class='no'> 환불 거부</div>"
+					+ "<div class='yes'> 환불 완료</div>");
 			try {
-				if(refundAble.compareTo(format.parse(format.format(new Date())))>=0) {//환불가능
-					sb.append("<button onclick='refundEvt'>환불하기</button>");
-				}else {//환불불가
-					sb.append("<button disabled=disabled>환불불가</button>");
+				if (refundAble.compareTo(format.parse(format.format(new Date()))) >= 0) {// 환불가능
+					sb.append("<div id='"+ep_code+"'><button class='ep_code' name='" + ep_code + "'>환불하기</button></div>");
+				} else {// 환불불가
+					sb.append("<div id='"+ep_code+"'><button disabled=disabled>환불불가</button></div>");
 				}
-				//A.compareTo(B) 
-				//A가 B보다 미래면 +1 과거면 -1 같으면0
+				// A.compareTo(B)
+				// A가 B보다 미래면 +1 과거면 -1 같으면0
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
 			sb.append("</div>");
 		}
 		return sb.toString();
+	}
+
+	public String refundEvt(String ep_code) {
+		String str = "";
+		String m_id = (String) session.getAttribute("id");
+		if (m_id != null) {
+			if (payDao.refundChk(ep_code) == null) {
+				if (payDao.refundEvt(ep_code, m_id)) {
+					if (payDao.refundInsert(ep_code)) {
+						str = "환불하기 요청됨";
+					}
+				} else {
+					str = "환불하기 요청 안됨.";
+				}
+			} else {
+				str = "이미 환불 요청중.";
+			}
+		}
+		return str;
+	}
+
+	public ModelAndView ceoRefundList() {
+		mav = new ModelAndView();
+		String view = null;
+		ArrayList<Event> eList = new ArrayList<Event>();
+		ArrayList<EventPay> epList = new ArrayList<EventPay>();
+		ArrayList<EventRefund> erList = new ArrayList<EventRefund>();
+		ArrayList<EventPay> epList2 = new ArrayList<EventPay>();
+		ArrayList<Event> eList2 = new ArrayList<Event>();
+		String c_id = session.getAttribute("id").toString();
+		if (eDao.ceoEvtList2(c_id) != null) {
+			eList = eDao.ceoEvtList2(c_id);// 1 널 체크
+		
+			for (int i = 0; i < eList.size(); i++) {
+				Event e = eList.get(i);
+				String e_code = e.getE_code();
+				if (payDao.ceoEvtpayList(e_code) != null) {
+					epList.add(payDao.ceoEvtpayList(e_code));
+				}
+
+			}
+		}
+		for (int j = 0; j < epList.size(); j++) {
+			EventPay ep = epList.get(j);
+			System.out.println("ep: " + ep);
+			String ep_code = ep.getEp_code();
+			if (payDao.ceoRefundList(ep_code) != null) {
+				erList.add(payDao.ceoRefundList(ep_code));
+			}
+		}
+		for (int k = 0; k < erList.size(); k++) {// 네이밍
+			EventRefund er = erList.get(k);
+			System.out.println("er: " + er);
+			String ep_code = er.getEp_code();
+			if (payDao.eptableChk(ep_code) != null) {
+				epList2.add(payDao.eptableChk(ep_code));
+			}
+			EventPay ep = epList2.get(k);
+			System.out.println("ep: " + ep);
+			String e_code = ep.getE_code();
+			eList2.add(payDao.evttableChk(e_code));
+		}
+		mav.addObject("eList2", eList2);
+		mav.addObject("epList2", epList2);
+		mav.addObject("erList", erList);
+		view = "ceoViews/ceoRefundList";
+		mav.setViewName(view);
+		return mav;
+	}
+
+	public int er_total(double ep_panalty, double total) {
+		int er_total = 0;
+		System.out.println(ep_panalty);
+		System.out.println(total);
+
+		er_total = (int) (total - Math.ceil(total * ep_panalty / 100));
+
+		System.out.println(er_total);
+		return er_total;
+	}
+
+	public String ceoRefundBtn(String ep_code, int ep_penalty) {
+		String str = "";
+		EventRefund er = new EventRefund();
+		System.out.println("2222" + ep_code);
+		System.out.println("2222" + ep_penalty);
+		er.setEr_penalty(ep_penalty);
+		er.setEp_code(ep_code);
+		if (payDao.ceoRefundBtn(ep_code, ep_penalty)) {
+			str = "등록됨";
+		} else {
+			str = "등록 안됨";
+		}
+		return str;
+	}
+
+	public ModelAndView refundCompleteList() {
+		mav = new ModelAndView();
+		String view = null;
+		ArrayList<Event> eList = new ArrayList<Event>();
+		ArrayList<EventPay> epList = new ArrayList<EventPay>();
+		ArrayList<EventRefund> erList = new ArrayList<EventRefund>();
+		ArrayList<EventPay> epList2 = new ArrayList<EventPay>();
+		ArrayList<Event> eList2 = new ArrayList<Event>();
+		String c_id = session.getAttribute("id").toString();
+		if (eDao.ceoEvtList2(c_id) != null) {
+			eList = eDao.ceoEvtList2(c_id);
+
+			for (int i = 0; i < eList.size(); i++) {
+				Event e = eList.get(i);
+				String e_code = e.getE_code();
+				if (payDao.ceoEvtpayList(e_code) != null) {
+					epList.add(payDao.ceoEvtpayList(e_code));
+				}
+
+			}
+		}
+		for (int j = 0; j < epList.size(); j++) {
+			EventPay ep = epList.get(j);
+			System.out.println("ep: " + ep);
+			String ep_code = ep.getEp_code();
+			if (payDao.ceoRefundCompleteList(ep_code) != null) {
+				erList.add(payDao.ceoRefundCompleteList(ep_code));
+			}
+		}
+		for (int k = 0; k < erList.size(); k++) {// 네이밍
+			EventRefund er = erList.get(k);
+			System.out.println("er: " + er);
+			String ep_code = er.getEp_code();
+			if (payDao.eptableChk(ep_code) != null) {
+				epList2.add(payDao.eptableChk(ep_code));
+			}
+			EventPay ep = epList2.get(k);
+			System.out.println("ep: " + ep);
+			String e_code = ep.getE_code();
+			eList2.add(payDao.evttableChk(e_code));
+		}
+		System.out.println("------------------");
+		System.out.println(epList);
+		System.out.println(epList);
+		System.out.println(erList);
+		System.out.println(epList2);
+		System.out.println(eList2);
+		mav.addObject("er_total", er_total(epList2,erList));
+		mav.addObject("eList2", eList2);
+		mav.addObject("epList2", epList2);
+		mav.addObject("erList", erList);
+		mav.setViewName(view);
+		return mav;
+		//eventpay.ep_total 
+		//eventrefund.er_penalty
+	}
+
+	private Object er_total(ArrayList<EventPay> epList2, ArrayList<EventRefund> erList) {
+		StringBuilder sb = new StringBuilder();
+		for (EventPay ep : epList2) {
+		}
+		for (EventRefund er : erList) {
+		}
+		return sb.toString();
+	}
+
+	public int er_days(String ep_dday, String er_rday) throws ParseException {
+		int er_days = 0;
+		System.out.println("ep_dday "+ep_dday);
+		System.out.println("er_rday "+er_rday);
+		String strStartDate = ep_dday;
+	    String strEndDate = er_rday;
+	    String strFormat = "yyyy-MM-dd";    
+        SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+        Date startDate = sdf.parse(strStartDate);
+        Date endDate = sdf.parse(strEndDate);
+        long diffDay = (startDate.getTime() - endDate.getTime()) / (24*60*60*1000);
+        System.out.println(diffDay+"일");
+		return (int) diffDay;
+		
+	}
+
+	public String rBtnChk(String ep_code) {
+		String str = "";
+		String m_id =(String) session.getAttribute("id");
+		if (payDao.rBtnChk(ep_code, m_id)!=null) {
+			if(payDao.rBtnChk2(ep_code)==1) {
+				if(payDao.rBtnChk3(ep_code)==100) {
+					str = "환불거부";
+				}else {
+					str = "환불완료";
+				}
+			}else {//0
+				str = "환불중";
+			}
+		} else {
+			str = "등록 안됨";
+		}
+		return str;
 	}
 }

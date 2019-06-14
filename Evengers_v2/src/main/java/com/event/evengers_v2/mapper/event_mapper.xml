@@ -140,4 +140,8 @@
    	<select id="getEvtCodeList" parameterType="String" resultType="String">
 		SELECT E_CODE FROM EVENT WHERE C_ID=#{c_id}
 	</select>
+	<select id="ceoEvtList2" parameterType="String"
+		resultType="Event">
+		SELECT * FROM E WHERE C_ID=#{c_id}
+	</select>
 </mapper>
