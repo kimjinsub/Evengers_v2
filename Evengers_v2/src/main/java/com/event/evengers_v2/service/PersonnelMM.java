@@ -151,7 +151,6 @@ public class PersonnelMM {
 		for(Employee emp:empList) {
 			Date enterdate = emp.getEmp_enterdate();
 			String emp_enterdate = new SimpleDateFormat("yyyy-MM-dd").format(enterdate);
-			
 			Position p = new Position();
 			p = pDao.getPositionInfo(emp.getP_code());
 			String p_name = p.getP_name();

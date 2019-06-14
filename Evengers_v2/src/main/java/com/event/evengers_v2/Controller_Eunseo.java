@@ -1,5 +1,6 @@
 package com.event.evengers_v2;
 
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,11 +23,11 @@ import com.event.evengers_v2.userClass.DBException;
 
 @Controller
 public class Controller_Eunseo {
-	
+
 	ModelAndView mav;
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	MemberMM mm;
 	@Autowired
@@ -39,62 +40,76 @@ public class Controller_Eunseo {
 	PayMM paym;
 	@Autowired
 	FinancialMM fm;
-	
+
 	@RequestMapping(value = "/eunseo", method = RequestMethod.GET)
 	public String home() {
 		return "home";
 	}
+
 	@RequestMapping(value = "/evtInfo", method = RequestMethod.GET)
 	public ModelAndView evtInfo(String e_code) {
 		mav = em.getEvtInfo(e_code);
 		/* System.out.println(e_code); */
 		return mav;
 	}
+
 	@RequestMapping(value = "/selectOption", produces = "application/json; charset=utf-8")
 	public @ResponseBody String selectOption(String e_code) {
 		String json_option = em.getOptionList(e_code);
-		System.out.println("e_code="+e_code);
+		System.out.println("e_code=" + e_code);
 		return json_option;
 	}
-	
+
 	@RequestMapping(value = "/evtInsertFrm", method = RequestMethod.GET)
 	public ModelAndView evtInsertFrm() {
-		mav=new ModelAndView();
+		mav = new ModelAndView();
 		mav.setViewName("ceoViews/evtInsertFrm");
 		return mav;
 	}
+
 	@RequestMapping(value = "/selectPosition", produces = "application/json; charset=utf-8")
 	public @ResponseBody String selectPosition() {
 		String json_option = cm.getPositionList();
 		return json_option;
 	}
+
 	@RequestMapping(value = "/selectDept", produces = "application/json; charset=utf-8")
 	public @ResponseBody String selectDept() {
 		String json_option = cm.getDeptList();
 		return json_option;
 	}
+
 	@RequestMapping(value = "/performInsert", method = RequestMethod.POST)
 	public ModelAndView performInsert(MultipartHttpServletRequest multi) {
 		mav = pm.performInsert(multi);
 		return mav;
 	}
+
 	@RequestMapping(value = "/rejectBuy", method = RequestMethod.POST)
 	public ModelAndView rejectBuy(String eb_code) throws DBException {
 		mav = paym.rejectBuy(eb_code);
-		System.out.println("eb_code="+eb_code);
+		System.out.println("eb_code=" + eb_code);
 		return mav;
 	}
+
 	@RequestMapping(value = "/performManage")
 	public ModelAndView performManage() {
 		String c_id = (String) session.getAttribute("id");
-		System.out.println("c_id2="+c_id);
+		System.out.println("c_id2=" + c_id);
 		mav = pm.getPerformList(c_id);
 		return mav;
 	}
+
 	@RequestMapping(value = "/accountingManage")
 	public ModelAndView accountingManage() {
 		mav = new ModelAndView();
 		mav.setViewName("ceoViews/accountingManage");
+		return mav;
+	}
+	@RequestMapping(value = "/calList")
+	public ModelAndView calList() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/calList");
 		return mav;
 	}
 	@RequestMapping(value = "/calInsert")
@@ -103,9 +118,25 @@ public class Controller_Eunseo {
 		mav = fm.calInsert(calb);
 		return mav;
 	}
-	@RequestMapping(value = "/validation",produces = "application/json; charset=utf-8;")
+
+	@RequestMapping(value = "/getCalList")
+	public ModelAndView getCalList(Date choicedate) {
+		String c_id = session.getAttribute("id").toString();
+		mav = fm.getCalList(choicedate, c_id);
+		return mav;
+	}
+	@RequestMapping(value = "/allShowCal", produces = "application/json; charset=utf-8")
+	public @ResponseBody String allShowCal(Date choicedate) {
+		String c_id = session.getAttribute("id").toString();
+		System.out.println("c_id2="+c_id);
+		System.out.println("choicedate2="+choicedate);
+		String json_calList = fm.allShowCal(choicedate,c_id);
+		return json_calList;
+	}
+	@RequestMapping(value = "/validation", produces = "application/json; charset=utf-8;")
 	public @ResponseBody String validation(String day) {
-		System.out.println("day2="+day);
+		System.out.println("day2=" + day);
 		return fm.validation(day);
 	}
+
 }

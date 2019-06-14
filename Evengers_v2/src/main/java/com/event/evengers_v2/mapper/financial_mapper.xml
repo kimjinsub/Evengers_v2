@@ -3,8 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.event.evengers_v2.dao.FinancialDao">
+<!-- 	<resultMap type="List" id="String">
+		<result property="sum" column="SUM(CAL_PRICE)"/>
+		<result property="category" column="CAL_CATEGORY"/>
+	</resultMap> -->
 	<insert id="calInsert">
 		INSERT INTO CAL VALUES('CAL'||LPAD(CAL_SEQ.NEXTVAL,4,0),#{c_id},#{cal_receiptdate},#{cal_category},#{cal_contents},#{cal_price})		
 	</insert>
-	
+	<select id="getCalList" resultType="String">
+		SELECT SUM(CAL_PRICE) || ','|| CAL_CATEGORY FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} GROUP BY CAL_CATEGORY 
+	</select>
+	<select id="getAllCal" resultType="calculate">
+	SELECT * FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id}
+	</select>
 </mapper>
