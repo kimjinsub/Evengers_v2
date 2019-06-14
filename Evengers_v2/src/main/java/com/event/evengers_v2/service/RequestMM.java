@@ -466,6 +466,8 @@ public class RequestMM {
 
 		public ModelAndView showEstpDetail(String estp_code) {
 			mav=new ModelAndView();
+			String msg=null;
+			String refundStateMsg=null;
 			EstimatePay estp = new EstimatePay();
 			estp=rDao.getEstpDetail(estp_code);
 			String req_code1=estp.getReq_code();
@@ -476,13 +478,69 @@ public class RequestMM {
 			EstimatePayImage estpi=new EstimatePayImage();
 			  estpi=rDao.getEstpiImage(estp_code);
 			  System.out.println(estpi);
-			  mav.addObject("estpi",estpi);
+			  int refundstate=estp.getEstp_refundstate();
+			   if(refundstate==0) {
+				   refundStateMsg="결제완료";
+			   }else if(refundstate==1){
+				   refundStateMsg="환불중";
+			   }else {
+				   refundStateMsg="환불완료";
+			   }
+				try {
+			  int refunddate=est.getEst_refunddate();
+			  String hopedate=req.getReq_hopedate(); //2018-12-30
+				SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+				Date hopedate1;
+					hopedate1 = format1.parse(hopedate);
+					format1.format(hopedate1);
+					System.out.println("hopedate1:"+format1.format(hopedate1));
+				Date today = new Date(); 
+				today=format1.parse(format1.format(today));
+				long refundAble=hopedate1.getTime()-refunddate*(24*60*60*1000);
+				String refundable1=format1.format(new Date(refundAble));
+				System.out.println("kkk"+refundable1+"일 Rkwl");
+				System.out.println("누가먼저?:"+hopedate1.compareTo(today));
+				
+				mav.addObject("refundable",refundable1);
+				int check=hopedate1.compareTo(today);
+				if(check==0) {
+					msg="환불가능";
+				}else if(check>=1) {
+						msg="환불가능";		
+				}else {
+					msg="환불 불가능";
+				}
+				}catch(ParseException e){
+					e.printStackTrace();
+				}
+			mav.addObject("refundstate",refundStateMsg);
+		    mav.addObject("msg",msg);
+			mav.addObject("estpi",estpi);
 			mav.addObject("req", req);
 			mav.addObject("estp",estp);
 			mav.setViewName("memberViews/showEstimateDetail");
 			
 			return mav;
 		}
+		public void download3(Map<String, Object> params) throws Exception {
+			String root = (String) params.get("root");
+			String sysFileName = (String) params.get("sysFileName");
+			String oriFileName = (String) params.get("oriFileName");
+			String fullPath = root + "upload/estimateImage/" + sysFileName;
+
+			HttpServletResponse resp = (HttpServletResponse) params.get("response");
+			// 실제 다운로드
+			file.download(fullPath, oriFileName, resp);
+
+		}
+
+		public ModelAndView estRefundRequest(String estp_code) {
+		 int c=rDao.estpStateChange(estp_code);
+		 System.out.println("c="+c);
+		 
+			return mav;
+		}
+
 
 
 		public Map<String, Object> estSell(String id) {

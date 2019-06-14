@@ -195,5 +195,26 @@ public class Controller_Bin {
         mav = rm.showEstpDetail(estp_code);
 		return mav;
 	}
+	@RequestMapping(value = "/download3", method = RequestMethod.GET) // get,post 모두 가능
+	public void download3(
+			@RequestParam Map<String,Object> params,
+			HttpServletResponse response ,HttpServletRequest req) throws Exception { // int를 쓰면 null값이 올 수 없기 때문에
+		System.out.println("of = " + params.get("oriFileName"));
+		System.out.println("sf = " + params.get("sysFileName"));
+		
+		params.put("root", req.getSession().getServletContext().getRealPath("/"));
+		params.put("response",response);
+		rm.download1(params);
+	}
+	@RequestMapping(value = "/estpRefundRequest",method = RequestMethod.GET)
+	public ModelAndView estpRefundRequest(HttpServletRequest req) {
+		mav=new ModelAndView();
+		String estp_code=req.getParameter("estp_code");
+		System.out.println("estp_code="+estp_code);
+		mav=rm.estRefundRequest(estp_code);
+		mav.setViewName("memberViews/estimatePayList");
+		return mav;
+	}
+	
 	
 }

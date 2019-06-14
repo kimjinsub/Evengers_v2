@@ -7,6 +7,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+#msg{
+color:red;
+font-size: x-large;
+}
+#msg.show{
+}
+#refundButton{
+visibility: hidden;
+}
+
+#refundButton.show{
+visibility: visible;
+}
+
+</style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
@@ -18,21 +34,21 @@
 		</tr>
 		<tr height="40">
 			<td bgcolor="blue" align="center">문의자</td>
-			<td width="200">${req.m_id}</td>
+			<td width="200">${req.m_id}님</td>
 			<td bgcolor="blue" align="center">견적자</td>
-			<td width="200">${estp.c_id}</td>
+			<td width="200">${estp.c_id}님</td>
 		</tr>
 		<tr height="40">
 			<td bgcolor="blue" align="center">총가격</td>
-			<td width="200">${estp.estp_total}</td>
+			<td width="200">${estp.estp_total}원</td>
 			<td bgcolor="blue" align="center">결제날짜</td>
 			<td width="200">${estp.estp_payday}</td>
 		</tr>
 		<tr height="40">
 			<td bgcolor="blue" align="center">환불가능일</td>
-			<td width="200"></td>
+			<td width="200">${refundable}까지</td>
 			<td bgcolor="blue" align="center">상태</td>
-			<td width="200"></td>
+			<td width="200">${refundstate}</td>
 		</tr>
 		<tr height="200">
 			<td bgcolor="blue" align="center">내용</td>
@@ -45,7 +61,7 @@
 				첨부된 파일이 없습니다.
 			</c:if> 
 			<c:if test="${!empty file}">
-						<a href="download?oriFileName=${file.estpi_orifilename}
+						<a href="download3?oriFileName=${file.estpi_orifilename}
 										&sysFileName=${file.estpi_sysfilename}">
 							${file.estpi_orifilename}
 						</a>
@@ -53,7 +69,22 @@
 			</td>
 		</tr>
 	</table>
-
-</table>
+ <a  href="estpRefundRequest?estp_code=${estp.estp_code}" id="refundButton">환불하기</a>
+  <div id="msg">${msg}</div>
 </body>
+<script>
+
+$(document).ready(function() {
+	msgView();
+});
+function msgView(){
+	console.log('${msg}')
+	if('${msg}'=='환불 불가능'){
+		$("#refundButton").removeClass("show");
+	}else{
+		$("#refundButton").addClass("show");
+	}
+}
+
+</script>
 </html>
