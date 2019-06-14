@@ -186,7 +186,7 @@
 			data : {pw:pw,name:name,tel:tel,email:email,area:area},
 			dataType : "html",
 			success : function(data) {
-				$("#modifyMemInfo").html(data);
+				location.href = "./memberMyPage";
 			},
 			error : function(error) {
 				console.log(error);

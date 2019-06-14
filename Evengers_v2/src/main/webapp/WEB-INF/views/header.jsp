@@ -54,7 +54,7 @@
 						<span class="sr-only">(current)</span>
 				</a></li>
 			 	<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+				<li class="nav-item"><a class="nav-link" href="./ceoMyPage">마이페이지</a></li>
 				<li class="nav-item"><a class="nav-link" href="./evtInsertFrm">이벤트등록</a></li>
 				<li class="nav-item"><a class="nav-link" href="./myReqList">의뢰목록</a></li>
 				<li class="nav-item"><a class="nav-link" href="./erpIndex">ERP자원관리</a></li>

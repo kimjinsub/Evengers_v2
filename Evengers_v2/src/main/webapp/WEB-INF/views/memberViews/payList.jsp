@@ -23,7 +23,7 @@ ${makeHtml_memberPayList}
 <script >
 
 $(document).ready(function() {
-	$('.rBtnChk_epCode').each(function() {
+	$('.payList').each(function() {
 		var ep_code = $(this).attr("name");
 		console.log("ep_code" + ep_code);
 		 $.ajax({
@@ -33,23 +33,25 @@ $(document).ready(function() {
 			},
 			dataType : "text",
 			success : function(result) {
-				console.log(result);
+				console.log(ep_code,":",result);
 				//alert("체크");
-				if(result=="등록 안됨"){
+				if(result==="등록 안됨"){
 					$('.showBtn').show();
 				}
-				else if(result=="환불중"){
+				if(result==="환불중"){
 					$('.showBtn').hide();
 					$('div[id="' + ep_code + '"]').hide();
-					$('.ing').show();
-				}else if(result=="환불거부"){
+					$('div[name="' + ep_code + '"]').append(result);
+				} 
+				if(result==="환불거부"){
 					$('.showBtn').hide();
 					$('div[id="' + ep_code + '"]').hide();
-					$('.no').show();
-				}else{//환불 완료
+					$('div[name="' + ep_code + '"]').append(result);
+				}
+				if(result==="환불완료"){//환불 완료
 					$('.showBtn').hide();
 					$('div[id="' + ep_code + '"]').hide();
-					$('.yes').show();
+					$('div[name="' + ep_code + '"]').append(result);
 				}
 			},
 			error : function(error) {
@@ -72,7 +74,8 @@ $(document).ready(function() {
 				success : function(result) {
 					console.log(result);
 					alert(result);
-					location.href = "./memberMyPage";
+					location.href = "javascript:Ajax_forward('payList')";
+					
 				},
 				error : function(error) {
 					console.log(error);
@@ -80,8 +83,6 @@ $(document).ready(function() {
 			})
 		})
 	})
-$('.ing').hide();
-$('.no').hide();
-$('.yes').hide();
+
 </script>
 </html>

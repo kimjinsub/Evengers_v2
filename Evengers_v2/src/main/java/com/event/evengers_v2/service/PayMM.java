@@ -241,8 +241,7 @@ public class PayMM {
 			}
 			String ep_code = ep.getEp_code();
 			System.out.println("ep_code: " + ep_code);
-			sb.append("<input type='hidden' class='rBtnChk_epCode' name='"+ep_code+"'>"
-					+ "<div class='payList'>" + "		<img src='upload/thumbnail/" + e.getE_sysfilename() + "'/>"
+			sb.append( "<div class='payList' name='"+ep_code+"'>" + "		<img src='upload/thumbnail/" + e.getE_sysfilename() + "'/>"
 					+ "		<p>결제코드:" + ep.getEp_code() + "</p>" + "		<p>이벤트명:" + e.getE_name() + "</p>"
 					+ "		<p>기본가:" + e.getE_price() + "원</p>" + "		<p>총가격:" + ep.getEp_total() + "원</p>");
 			if (payDao.memberEps(ep.getEp_code()) != null) {
@@ -254,10 +253,7 @@ public class PayMM {
 			}
 			sb.append("		<p>이벤트 날짜" + format.format(ep.getEp_dday()) + "</p>" + "		<p>결제 날짜:"
 					+ format.format(ep.getEp_payday()) + "</p>" + "		<p>환불가능일:~" + format.format(refundAble)
-					+ "까지</p>"
-					+ "<div class='ing'> 환불 요청 중</div>"
-					+ "<div class='no'> 환불 거부</div>"
-					+ "<div class='yes'> 환불 완료</div>");
+					+ "까지</p>");
 			try {
 				if (refundAble.compareTo(format.parse(format.format(new Date()))) >= 0) {// 환불가능
 					sb.append("<div id='"+ep_code+"'><button class='ep_code' name='" + ep_code + "'>환불하기</button></div>");
@@ -308,8 +304,8 @@ public class PayMM {
 			for (int i = 0; i < eList.size(); i++) {
 				Event e = eList.get(i);
 				String e_code = e.getE_code();
-				if (payDao.ceoEvtpayList(e_code) != null) {
-					epList.addAll(payDao.ceoEvtpayList(e_code));
+				if (payDao.epListPayList(e_code) != null) {
+					epList.addAll(payDao.epListPayList(e_code));
 				}
 
 			}
@@ -383,8 +379,8 @@ public class PayMM {
 			for (int i = 0; i < eList.size(); i++) {
 				Event e = eList.get(i);
 				String e_code = e.getE_code();
-				if (payDao.ceoEvtpayList(e_code) != null) {
-					epList.addAll(payDao.ceoEvtpayList(e_code));
+				if (payDao.epListPayList(e_code) != null) {
+					epList.addAll(payDao.epListPayList(e_code));
 				}
 
 			}

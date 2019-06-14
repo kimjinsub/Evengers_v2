@@ -49,7 +49,7 @@ $('.e_code').each(function(){
 			success : function(result) {
 				console.log(result);
 				alert(result);
-				location.href = "memberMyPage";
+				location.href ="javascript:Ajax_forward('choiceList')";
 			},
 			error : function(error) {
 				console.log(error);

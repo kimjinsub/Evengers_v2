@@ -161,7 +161,7 @@ $('.refundBtn').each(function() {
 				success:function(result){
 					console.log(result);
 					alert(result);
-					location.href = "./ceoMyPage";
+					location.href = "javascript:Ajax_forward('refundCompleteList')";
 				},
 				error:function(error){
 					console.log(error);

@@ -64,13 +64,13 @@
 	 <update id="refundEvt" parameterType="String" >
 		UPDATE EP SET EP_REFUNDSTATE = 0 WHERE M_ID=#{m_id} AND EP_CODE=#{ep_code}
 	</update>
-	<insert id="refundInsert" parameterType="EventRefund">
+	<insert id="refundInsert" parameterType="eventrefund">
 		INSERT INTO ER VALUES('ER'||LPAD(ER_SEQ.NEXTVAL,4,0),DEFAULT,#{ep_code},DEFAULT,DEFAULT)
 	</insert>
-	<select id="ceoEvtpayList" parameterType="String" resultType="EventPay">
+	<select id="epListPayList" parameterType="String" resultType="eventpay">
 		SELECT * FROM EP WHERE E_CODE=#{e_code} 
 	</select>
-	<select id="ceoRefundList" parameterType="String" resultType="EventRefund">
+	<select id="ceoRefundList" parameterType="String" resultType="eventrefund">
 		SELECT * FROM ER WHERE EP_CODE=#{ep_code} and ER_STATE=0 
 	</select>
 	<select id="refundChk" parameterType="String" resultType="String">
@@ -80,19 +80,19 @@
 	<select id="ceoEvtpayChk" parameterType="String" resultType="String">
 		SELECT EP_CODE FROM EP WHERE EP_CODE=#{ep_code} 
 	</select>
-	<select id="eptableChk" parameterType="String" resultType="EventPay">
+	<select id="eptableChk" parameterType="String" resultType="eventpay">
 		SELECT * FROM EP WHERE EP_CODE=#{ep_code} 
 	</select>
-	<select id="evttableChk" parameterType="String" resultType="Event">
+	<select id="evttableChk" parameterType="String" resultType="event">
 		SELECT * FROM E WHERE E_CODE=#{e_code} 
 	</select>
-	<update id="ceoRefundBtn" parameterType="EventRefund" >
+	<update id="ceoRefundBtn" parameterType="eventrefund" >
 		UPDATE ER SET ER_PENALTY=#{ep_penalty} ,ER_STATE=1 WHERE EP_CODE=#{ep_code} 
 	</update>
 	<select id="ceoRefundCompleteList" parameterType="String" resultType="EventRefund">
 		SELECT * FROM ER WHERE EP_CODE=#{ep_code} and ER_STATE=1
 	</select>
-	<select id="rBtnChk" parameterType="String" resultType="EventPay">
+	<select id="rBtnChk" parameterType="String" resultType="eventpay">
 		SELECT * FROM EP WHERE EP_CODE=#{ep_code} and M_ID=#{m_id} AND EP_REFUNDSTATE=0
 	</select>
 	<select id="rBtnChk2" parameterType="String" resultType="int">

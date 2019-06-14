@@ -59,19 +59,19 @@
       </div> -->
 
      <!-- Nav Item - Charts -->
-      <li id="mInfo" class="nav-item">
+      <li id="mInfo" class="nav-item" onclick="Ajax_forward('mInfo')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>개인정보 보기</span></a>
       </li>
      <!-- Nav Item - Charts -->
-      <li id="mInfoModify" class="nav-item">
+      <li id="mInfoModify" class="nav-item" onclick="Ajax_forward('mInfoModify')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>개인정보 수정</span></a>
       </li>
      <!-- Nav Item - Charts -->
-      <li id="payList" class="nav-item">
+      <li id="payList" class="nav-item" onclick="Ajax_forward('payList')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>구매내역</span></a>
@@ -86,14 +86,14 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-            <div id="receivedEstList"><a class="collapse-item" href="#">받은견적</a></div>
-            <div id="myReqList"><a class="collapse-item" href="#">요청서</a></div>
+            <div id="receivedEstList"><a class="collapse-item" href="#"onclick="Ajax_forward('receivedEstList')">받은견적</a></div>
+            <div id="myReqList"><a class="collapse-item" href="#"onclick="Ajax_forward('myReqList')">요청서</a></div>
           </div>
         </div>
       </li>
       
       <!-- Nav Item - Charts -->
-      <li id="choiceList" class="nav-item">
+      <li id="choiceList" class="nav-item"onclick="Ajax_forward('choiceList')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>찜목록보기</span></a>
@@ -161,42 +161,19 @@
 
 			<li class="nav-item"><a class="nav-link" href="./"><span class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로가기</span></a></li>
             <div class="topbar-divider d-none d-sm-block"></div>
-               <li class="nav-item"><a class="nav-link" href="#"><span class="mr-2 d-none d-lg-inline text-gray-800 ">견적의뢰</span></a></li>
+               <li class="nav-item"><a class="nav-link" href="./evtReqFrm"><span class="mr-2 d-none d-lg-inline text-gray-800 ">의뢰요청</span></a></li>
             <div class="topbar-divider d-none d-sm-block"></div>
 
+               <li class="nav-item"><a class="nav-link" href="./serviceCenter"><span class="mr-2 d-none d-lg-inline text-gray-800 ">1 : 1 문의</span></a></li>
+          <div class="topbar-divider d-none d-sm-block"></div>
+
                <li class="nav-item"><a class="nav-link" href="./logout"><span class="mr-2 d-none d-lg-inline text-gray-800 ">로그아웃</span></a></li>
-         
             
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-            </li>
+           
           </ul>
         </nav>
         <div class="container-fluid">
@@ -244,90 +221,18 @@
 			}
 		})
 	}
-	 $('#receivedEstList').click(function(){
+	function Ajax_forward(url){
 		$.ajax({
-			url:"receivedEstList",
+			url:url,
 			dataType:"html",
-			success:function(result){
-				$("#mMain").html(result);
+			success:function(page){
+				$("#mMain").html(page);
 			},
 			error:function(error){
 				console.log(error);
 			}
 		})
-	});
-	$('#myReqList').click(function(){
-		$.ajax({
-			url:"myReqList",
-			dataType:"html",
-			success:function(result){
-				$("#mMain").html(result);
-			},
-			error:function(error){
-				console.log(error);
-			}
-		})
-	});
-	$('#mInfo').click(function() {
-		$.ajax({
-			url : "mInfo",
-			dataType : "html",
-			success : function(result) {
-				$("#mMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#mInfoModify').click(function() {
-		$.ajax({
-			url : "mInfoModify",
-			dataType : "html",
-			success : function(result) {
-				$("#mMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#payList').click(function() {
-		$.ajax({
-			url : "memberPayList",
-			dataType : "html",
-			success : function(result) {
-				$("#mMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-		
-	});
-	$('#receivedList').click(function() {
-		$.ajax({
-			url : "receivedList",
-			dataType : "html",
-			success : function(result) {
-				$("#mMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#choiceList').click(function() {
-		$.ajax({
-			url : "choiceList",
-			dataType : "html",
-			success : function(result) {
-				$("#mMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	}); 	
+	}
+
 </script>
 </html>

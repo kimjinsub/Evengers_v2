@@ -58,19 +58,19 @@
       </div> -->
 
      <!-- Nav Item - Charts -->
-      <li id="ceoInfo" class="nav-item">
+      <li id="ceoInfo" class="nav-item" onclick="Ajax_forward('ceoInfo')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>사업자 정보 보기</span></a>
       </li>
      <!-- Nav Item - Charts -->
-      <li id="ceoInfoModify" class="nav-item">
+      <li id="ceoInfoModify" class="nav-item" onclick="Ajax_forward('ceoInfoModify')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>사업자 정보 수정</span></a>
       </li>
      <!-- Nav Item - Charts -->
-      <li id="sellInfo" class="nav-item">
+      <li id="sellInfo" class="nav-item"onclick="Ajax_forward('sellInfo')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>판매현황</span></a>
@@ -85,20 +85,20 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-            <div id="ceoRefundList"><a class="collapse-item" href="#">환불 요청</a></div>
-            <div id="refundCompleteList"><a class="collapse-item" href="#">환불 완료</a></div>
+            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">환불 요청</a></div>
+            <div id="refundCompleteList"onclick="Ajax_forward('refundCompleteList')"><a class="collapse-item" href="#">환불 완료</a></div>
           </div>
         </div>
       </li>
       
       <!-- Nav Item - Charts -->
-      <li id="myEvtManagement" class="nav-item">
+      <li id="myEvtManagement" class="nav-item" onclick="Ajax_forward('myEvtManagement')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>내 상품 관리</span></a>
       </li>
       
-      <li id="sentEstList" class="nav-item">
+      <li id="sentEstList" class="nav-item"onclick="Ajax_forward('sentEstList')">
         <a class="nav-link" href="#">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>보낸 견적서</span></a>
@@ -166,35 +166,18 @@
             <div class="topbar-divider d-none d-sm-block"></div>
 			<li class="nav-item"><a class="nav-link" href="./"><span class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로 가기</span></a></li>
             <div class="topbar-divider d-none d-sm-block"></div>
-               <li class="nav-item"><a class="nav-link" href="#"><span class="mr-2 d-none d-lg-inline text-gray-800 ">의뢰목록</span></a></li>
+               <li class="nav-item"><a class="nav-link" href="./myReqList"><span class="mr-2 d-none d-lg-inline text-gray-800 ">의뢰목록</span></a></li>
             <div class="topbar-divider d-none d-sm-block"></div>
 
-               <li class="nav-item"><a class="nav-link" href="#"><span class="mr-2 d-none d-lg-inline text-gray-800 ">이벤트 상품 등록</span></a></li>
-         
+               <li class="nav-item"><a class="nav-link" href="./evtInsertFrm"><span class="mr-2 d-none d-lg-inline text-gray-800 ">이벤트 상품 등록</span></a></li>
+          
             
 
             <div class="topbar-divider d-none d-sm-block"></div>
+               <li class="nav-item"><a class="nav-link" href="./erpIndex"><span class="mr-2 d-none d-lg-inline text-gray-800 ">ERP 자원 관리</span></a></li>
 
             <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 ">ERP 자원 관리  ᗊ</span>
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  - 인사 관리
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  - 일정 관리
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  - 급여 관리
-                </a>
-            </li>
+           
              <div class="topbar-divider d-none d-sm-block"></div>
 
                <li class="nav-item"><a class="nav-link" href="./logout"><span class="mr-2 d-none d-lg-inline text-gray-800 ">로그아웃</span></a></li>
@@ -246,89 +229,18 @@
 			}
 		})
 	}
-	 $('#ceoInfo').click(function(){
+	function Ajax_forward(url){
 		$.ajax({
-			url:"ceoInfo",
+			url:url,
 			dataType:"html",
-			success:function(result){
-				$("#cMain").html(result);
+			success:function(page){
+				$("#cMain").html(page);
 			},
 			error:function(error){
 				console.log(error);
 			}
 		})
-	});
-	$('#ceoInfoModify').click(function(){
-		$.ajax({
-			url:"ceoInfoModify",
-			dataType:"html",
-			success:function(result){
-				$("#cMain").html(result);
-			},
-			error:function(error){
-				console.log(error);
-			}
-		})
-	});
-	$('#sellInfo').click(function() {
-		$.ajax({
-			url : "sellInfo",
-			dataType : "html",
-			success : function(result) {
-				$("#cMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#ceoRefundList').click(function() {
-		$.ajax({
-			url : "ceoRefundList",
-			dataType : "html",
-			success : function(result) {
-				$("#cMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#refundCompleteList').click(function() {
-		$.ajax({
-			url : "refundCompleteList",
-			dataType : "html",
-			success : function(result) {
-				$("#cMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#myEvtManagement').click(function() {
-		$.ajax({
-			url : "myEvtManagement",
-			dataType : "html",
-			success : function(result) {
-				$("#cMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	});
-	$('#sentEstList').click(function() {
-		$.ajax({
-			url : "sentEstList",
-			dataType : "html",
-			success : function(result) {
-				$("#cMain").html(result);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		})
-	}); 	
+	}
+	
 </script>
 </html>

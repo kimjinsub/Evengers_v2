@@ -77,6 +77,6 @@ public interface PayDao {
 
 	ArrayList<String> isRefundedEp(@Param("ep_codes")ArrayList<String> ep_codes);
 
-	Collection<? extends EventPay> ceoEvtpayList(String e_code);
+	ArrayList<EventPay> epListPayList(String e_code);
 
 }

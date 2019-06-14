@@ -311,7 +311,7 @@ input.option-add {
 			success:function(data){
 				alert(data);
 				console.log(data);
-				location.href="./ceoMyPage";
+				location.href="javascript:Ajax_forward('myEvtManagement')";
 			},
 			error:function(error){
 				alert(data);

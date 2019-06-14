@@ -166,7 +166,7 @@
 			data : {pw:pw,name:name,tel:tel,email:email},
 			dataType : "html",
 			success : function(data) {
-				$("#ceoModifyInfo").html(data);
+				location.href = "./ceoMyPage";
 			},
 			error : function(error) {
 				console.log(error);
