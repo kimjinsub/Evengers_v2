@@ -15,7 +15,7 @@
 <title>Insert title here</title>
 <style>
 #member,#ceo,#admin,#common{
-	visibility: hidden;
+	visibility: hidden; font-size: 20px;
 }
 #member.show,#ceo.show,#admin.show,#common.show{
 	visibility: visible;
