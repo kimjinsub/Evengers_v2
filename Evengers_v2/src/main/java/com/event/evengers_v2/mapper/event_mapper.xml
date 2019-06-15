@@ -25,8 +25,17 @@
          INSERT INTO EO VALUES('EO'||LPAD(EO_SEQ.NEXTVAL,4,0),#{eo_name},#{eo_price},#{e_code})
    </insert>
    
-   <select id="getEvtList" parameterType="String" resultType="event">
-        SELECT * FROM E WHERE E_CATEGORY=#{ec_name}
+   <select id="getEvtList" resultType="event">
+   		<![CDATA[
+        SELECT * FROM 
+        (SELECT ROWNUM RN,E.* FROM E
+        WHERE E_CATEGORY=#{ec_name}
+        AND ROWNUM<=#{pageNum}*#{listCount}) 
+        WHERE RN>((#{pageNum}-1)*#{listCount})
+        ]]>
+   </select>
+   <select id="getEvtListSize" parameterType="String" resultType="int">
+   		SELECT COUNT(*) FROM E WHERE E_CATEGORY=#{ec_name}
    </select>
 	
 	<insert id="evtImageInsert" parameterType="eventimage">

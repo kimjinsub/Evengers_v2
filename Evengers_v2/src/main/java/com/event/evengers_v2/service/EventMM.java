@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale.Category;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
 import com.event.evengers_v2.bean.Review;
 import com.event.evengers_v2.dao.EventDao;
+import com.event.evengers_v2.userClass.Paging;
 import com.event.evengers_v2.userClass.UploadFile;
 import com.google.gson.Gson;
 
@@ -128,12 +130,18 @@ public class EventMM {
 		return mav;
 	}
 
-	public String getEvtList(String ec_name) {
-        String json_evtList="";
-        ArrayList<Event> evtList=eDao.getEvtList(ec_name);
+	public String getEvtList(String ec_name,int pageNum, int listCount) {
+        String json_result="";
+        ArrayList<Event> evtList=eDao.getEvtList(ec_name,pageNum,listCount);
+        String paging=new Paging(eDao.getEvtListSize(ec_name), pageNum
+        		, listCount, 2, "AjaxEvtList").makeHtmlAjaxPaging();
         Gson gson=new Gson();
-        json_evtList=gson.toJson(evtList);
-      return json_evtList;
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("evtList", evtList);
+        result.put("paging",paging);
+        json_result=gson.toJson(result);
+        System.out.println("ajax:"+ec_name+"/"+pageNum+"/"+listCount);
+      return json_result;
    }
 
 	public String getPath(HttpServletRequest req) {

@@ -25,7 +25,8 @@ public interface EventDao {
 	
 	public String getEvtCode(String c_id);
 
-	ArrayList<Event> getEvtList(String ec_name);
+	ArrayList<Event> getEvtList(@Param("ec_name")String ec_name
+			,@Param("pageNum")int pageNum,@Param("listCount")int listCount);
 	
 	public boolean evtImageInsert(EventImage ei);
 
@@ -83,5 +84,7 @@ public interface EventDao {
 	public ArrayList<String> getEvtCodeList(String c_id);
 	
 	public ArrayList<Event> ceoEvtList2(@Param("c_id")String c_id);
+
+	public int getEvtListSize(String ec_name);
 
 }

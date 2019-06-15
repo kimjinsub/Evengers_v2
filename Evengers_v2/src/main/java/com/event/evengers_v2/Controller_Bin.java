@@ -64,10 +64,8 @@ public class Controller_Bin {
 	}
 
 	@RequestMapping(value = "/getEvtList", produces = "application/json; charset=utf-8")
-	public @ResponseBody String getEvtList(String ec_name) {
-		System.out.println("ec_name=" + ec_name);
-		String json_evtList = em.getEvtList(ec_name);
-		System.out.println(json_evtList);
+	public @ResponseBody String getEvtList(String ec_name,int pageNum,int listCount) {
+		String json_evtList = em.getEvtList(ec_name,pageNum,listCount);
 		return json_evtList;
 	}
 	@RequestMapping(value = "/getCategoryList", produces = "application/json; charset=utf-8")

@@ -63,12 +63,13 @@
 <!-- Page Content -->
 <div class="container">
 	<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0"
-		id="ec_name"></h1>
+		id="title"></h1>
 		
 	<hr class="mt-2 mb-5">
 	
 	<div class="row text-center text-lg-left" id="evtList">
 	</div>
+	<div id="paging"></div>
 </div>
 <div class="col-lg-2 col-md-3 col-6">
 </div>
@@ -77,16 +78,22 @@
 $(document).ready(function(){
 	getCategories();
 });
-function getEvtList(ec_name){
-	$("#ec_name").html(ec_name);
-	AjaxEvtList(ec_name);
+function getEvtList(category,pageNum,listCount){
+	$("#title").html(category);
+	ec_name=category;
+	AjaxEvtList(pageNum,listCount);
 }
-function AjaxEvtList(ec_name){
+function AjaxEvtList(pageNum,listCount){
+	console.log("ec_name:",ec_name);
+	console.log("pageNum:",pageNum);
+	console.log("listCount:",listCount);
 	$.ajax({
 		url:"getEvtList",
-		data:{ec_name:ec_name},
+		data:{ec_name:ec_name,pageNum:pageNum,listCount:listCount},
 		dataType:"json",
-		success:function(result){
+		success:function(data){
+			var result=data['evtList'];
+			var paging=data['paging'];
 			var str="";
 			for(var i in result){
 				str+='<div class="col-lg-3 col-md-4 col-6">'
@@ -96,6 +103,7 @@ function AjaxEvtList(ec_name){
 					+'</a></div>'
 			}
 			$("#evtList").html(str);
+			$("#paging").html(paging);
 		},
 		error:function(error){
 			console.log(error);
@@ -111,12 +119,12 @@ function getCategories(){
 			for(var i in result){
 				str+='<li class="nav-item active" style="font-size:20px;">'
 						+'<a class="nav-link" id="'+result[i].ec_name
-						+'" onclick="getEvtList(this.id)">'
+						+'" onclick="getEvtList(this.id,1,4)">'
 						+result[i].ec_name+'</a></li>';
 			}
 			$("#navbarResponsive2 ul").append(str);
 			//$("#navbarResponsive2 ul li:first").addClass("active");
-			getEvtList(result[0].ec_name);
+			getEvtList(result[0].ec_name,1,4);
 		},
 		error:function(error){
 			console.log(error);
