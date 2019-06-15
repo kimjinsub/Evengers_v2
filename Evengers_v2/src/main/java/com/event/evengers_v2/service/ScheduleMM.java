@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.event.evengers_v2.bean.BuySelectedOption;
-import com.event.evengers_v2.bean.Department;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventPay;
 import com.event.evengers_v2.bean.EventPaySelectedOption;
@@ -48,6 +46,11 @@ public class ScheduleMM {
 		mav=new ModelAndView();
 		//c_id에 해당하는 ep_code를 전부 가져옴
 		ArrayList<String> ep_codes=getEpCodeListByCeo();//**처음사용자면 null일수 있다
+		if(ep_codes==null) {
+			mav.addObject("msg", "예약된 이벤트가 없습니다");
+			mav.setViewName("ceoViews/scheduleManage");
+			return mav;
+		}
 		//일정에 있는 (수락된) 결제코드들을 뽑음
 		ArrayList<String> assigned_codes=getAssigned_codes(ep_codes);
 		
@@ -134,17 +137,20 @@ public class ScheduleMM {
 			}
 		}*/
 		//mybatis 로 foreach문 써서 dday와 payday로 정렬하기
-		ArrayList<String> ep_codes=new ArrayList<>();
-		ep_codes=payDao.ceoEvtPayList2(e_codes);
-		
-		//환불된 것들 빼버리고 출력하기
-		
-		ArrayList<String> refundedEp_Codes=new ArrayList<>();
-		refundedEp_Codes=payDao.isRefundedEp(ep_codes);
-		for(String refundedEp_Code:refundedEp_Codes) {
-			ep_codes.remove(refundedEp_Code);
+		if(e_codes.size()==0) {
+			return null;
+		}else {
+			ArrayList<String> ep_codes=new ArrayList<>();
+			ep_codes=payDao.ceoEvtPayList2(e_codes);
+			
+			//환불된 것들 빼버리고 출력하기
+			ArrayList<String> refundedEp_Codes=new ArrayList<>();
+			refundedEp_Codes=payDao.isRefundedEp(ep_codes);
+			for(String refundedEp_Code:refundedEp_Codes) {
+				ep_codes.remove(refundedEp_Code);
+			}
+			return ep_codes; 
 		}
-		return ep_codes; 
 	}
 
 	public String insertEvtSchedule(EventSchedule es) {

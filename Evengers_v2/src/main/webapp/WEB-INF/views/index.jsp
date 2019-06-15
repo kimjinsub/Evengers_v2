@@ -101,6 +101,7 @@ function AjaxEvtList(pageNum,listCount){
 		success:function(data){
 			var result=data['evtList'];
 			var paging=data['paging'];
+			var msg=data['msg'];
 			var str="";
 			for(var i in result){
 				str+='<div class="col-lg-3 col-md-4 col-6">'
@@ -111,6 +112,9 @@ function AjaxEvtList(pageNum,listCount){
 			}
 			$("#evtList").html(str);
 			$("#pagination").html(paging);
+			if(data['msg']!=null){
+				$("#evtList").html(data['msg']);
+			}
 		},
 		error:function(error){
 			console.log(error);

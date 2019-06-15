@@ -28,6 +28,7 @@
 <title>일정관리</title>
 </head>
 <body>
+${msg}
 <div id='schedule'>
 ${makeHtml_EpList}
 <div id="insertEsFrm">
@@ -55,8 +56,10 @@ function hideInsertEsFrm(){
 }
 
 $(document).ready(function(){
-	getDeptList();
 	selectDept();
+	if("${msg}"==null){
+		getDeptList();
+	}
 })
 var epAllList="${epAllList}";
 var ep_codes="${ep_codes}";

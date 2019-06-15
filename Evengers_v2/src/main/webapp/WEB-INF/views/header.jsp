@@ -75,7 +75,7 @@
 						<a class="dropdown-item" href="#">일정관리</a>
 					</div>
 				</li> -->
-				<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
 	</div>

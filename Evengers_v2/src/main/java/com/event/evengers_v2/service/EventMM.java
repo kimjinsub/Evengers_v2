@@ -139,6 +139,7 @@ public class EventMM {
         HashMap<String, Object> result = new HashMap<>();
         result.put("evtList", evtList);
         result.put("paging",paging);
+        if(evtList.size()==0) {result.put("msg", "해당 카테고리에 대한 이벤트가 없습니다");}
         json_result=gson.toJson(result);
       return json_result;
    }

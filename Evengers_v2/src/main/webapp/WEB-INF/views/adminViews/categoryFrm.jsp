@@ -18,46 +18,18 @@
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
+<br/>
+<br/>
+<br/>
 	<h2>카테고리 설정</h2>
 	<div id="categories"></div>
 	
 	<input type="text" id="inserted"/><button id="addCategory">카테고리 추가</button>
 	<div id="selectZone"></div>
 	
-	<form action="carryOption" method="post" enctype="multipart/form-data">
-		<div id="options">
-			<input class="option_name" type="text" placeholder="옵션명"/>
-			<input class="option_price" type="number" placeholder="가격"/><br/>
-		</div>
-		<input type="button" onclick="addOption()" value="옵션추가"/><br>
-		<input type="button" onclick="confirm()" value="옵션완료"/><br>
-		<button>보내기</button>
-	</form>
+
 </body>
 <script>
-function addOption(){
-	$("#options").append('<input class="option_name" type="text" placeholder="옵션명"/>'
-			+'<input class="option_price" type="number" placeholder="가격"/><br/>');
-}
-function confirm(){
-	var str="";
-	var num="";
-	$(".option_name").each(function(){
-		str+=$(this).val()+",";
-	})
-	$(".option_price").each(function(){
-		num+=$(this).val()+",";
-	})
-	console.log(str);
-	console.log(num);
-	$("#options").append('<input type="hidden" name="eo_name"/>'
-			+'<input type="hidden" name="eo_price"/>');
-	$("input[name=eo_name]").val(str);
-	$("input[name=eo_price]").val(num);
-	console.log($("input[name=eo_name]").val());
-	console.log($("input[name=eo_price]").val());
-}
-
 $(document).ready(function(){
 	getCategoryList();
 	selectCategory();
