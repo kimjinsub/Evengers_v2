@@ -140,7 +140,6 @@ public class EventMM {
         result.put("evtList", evtList);
         result.put("paging",paging);
         json_result=gson.toJson(result);
-        System.out.println("ajax:"+ec_name+"/"+pageNum+"/"+listCount);
       return json_result;
    }
 

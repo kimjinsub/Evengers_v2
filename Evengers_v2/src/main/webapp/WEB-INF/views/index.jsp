@@ -30,6 +30,13 @@
 	height: 250px;
 	width: 250px;
 }
+#pagination{margin: auto; height:50px; text-align: center;}
+#pagination div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 30px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -69,10 +76,10 @@
 	
 	<div class="row text-center text-lg-left" id="evtList">
 	</div>
-	<div id="paging"></div>
 </div>
 <div class="col-lg-2 col-md-3 col-6">
 </div>
+<div id="pagination"></div>
 </body>
 <script>
 $(document).ready(function(){
@@ -103,7 +110,7 @@ function AjaxEvtList(pageNum,listCount){
 					+'</a></div>'
 			}
 			$("#evtList").html(str);
-			$("#paging").html(paging);
+			$("#pagination").html(paging);
 		},
 		error:function(error){
 			console.log(error);
@@ -119,12 +126,12 @@ function getCategories(){
 			for(var i in result){
 				str+='<li class="nav-item active" style="font-size:20px;">'
 						+'<a class="nav-link" id="'+result[i].ec_name
-						+'" onclick="getEvtList(this.id,1,4)">'
+						+'" onclick="getEvtList(this.id,1,12)">'
 						+result[i].ec_name+'</a></li>';
 			}
 			$("#navbarResponsive2 ul").append(str);
 			//$("#navbarResponsive2 ul li:first").addClass("active");
-			getEvtList(result[0].ec_name,1,4);
+			getEvtList(result[0].ec_name,1,12);
 		},
 		error:function(error){
 			console.log(error);

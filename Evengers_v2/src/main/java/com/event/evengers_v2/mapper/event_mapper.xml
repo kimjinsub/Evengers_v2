@@ -28,7 +28,8 @@
    <select id="getEvtList" resultType="event">
    		<![CDATA[
         SELECT * FROM 
-        (SELECT ROWNUM RN,E.* FROM E
+        (SELECT /*+INDEX_DESC(E PK_E_CODE)*/
+        ROWNUM RN,E.* FROM E
         WHERE E_CATEGORY=#{ec_name}
         AND ROWNUM<=#{pageNum}*#{listCount}) 
         WHERE RN>((#{pageNum}-1)*#{listCount})
