@@ -3,8 +3,8 @@ package com.event.evengers_v2.userClass;
 public class Paging {
 	private int maxNum; 		// 전체 글의 개수
 	private int pageNum; 		// 현재 페이지 번호
-	private int listCount; //10		// 페이지당 나타낼 글의 갯수
-	private int pageCount; //2		// 페이지그룹당 페이지 갯수
+	private int listCount; 		// 페이지당 나타낼 글의 갯수
+	private int pageCount; 		// 페이지그룹당 페이지 갯수
 	private String boardName; 	// 게시판의 종류
 
 	public Paging(int maxNum, int pageNum, int listCount, int pageCount, String boardName) {
