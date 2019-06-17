@@ -57,7 +57,7 @@ function hideInsertEsFrm(){
 
 $(document).ready(function(){
 	selectDept();
-	if("${msg}"==null){
+	if("${msg}"==""){//null로 하면 인식이안됨
 		getDeptList();
 	}
 })
