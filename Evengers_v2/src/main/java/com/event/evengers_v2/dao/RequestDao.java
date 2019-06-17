@@ -83,6 +83,14 @@ public interface RequestDao {
 
 	public int estpStateChange(String estp_code);
 
+	//public ArrayList<Request> reqSearch(String words, String id);
+
+	public ArrayList<Request> reqSearch(Map<String, Object> map);
+
+	public ArrayList<Request> allReqSearch(Map<String, Object> map);
+
+
+
 
 
 

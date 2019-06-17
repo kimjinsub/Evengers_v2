@@ -37,11 +37,43 @@
 </head>
 <body>
 	<h1 align="center">의뢰요청 목록</h1>
+	
+	
+	제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)" align="center"/>
+	
+	
 	<div id="list"></div>
 	<div id="detail"></div>
 </body>
 
 <script>
+function searchajax(keyword){
+	$.ajax({
+		type:'POST',
+		data : {words : keyword},
+		url : 'reqSearch',
+		dataType:'json',
+		success: function(result){
+			var rList = result['rList'];
+			var str = "<table id='reqList' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
+			for ( var i in rList) {
+				str += "<tr><td>" + rList[i].req_code + "</td><td>"
+							+ "<a href='#' onclick=evtReqInfo('"
+							+ rList[i].req_code + "')>"
+							+ rList[i].req_title + "</a></td><td>"
+							+ rList[i].m_id + "</td><td>"
+							+ rList[i].req_hopedate + "</td><td>"
+							+ rList[i].req_hopearea + "</td></tr>"
+				}
+				str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
+				$("#list").html(str);
+		},
+		error :function(e) {}
+	
+	});
+}
+
+
 $(document).ready(function() {
 	getReqList();
 });
