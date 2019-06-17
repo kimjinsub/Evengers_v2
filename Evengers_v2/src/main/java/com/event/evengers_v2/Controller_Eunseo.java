@@ -47,8 +47,8 @@ public class Controller_Eunseo {
 	}
 
 	@RequestMapping(value = "/evtInfo", method = RequestMethod.GET)
-	public ModelAndView evtInfo(String e_code) {
-		mav = em.getEvtInfo(e_code);
+	public ModelAndView evtInfo(String e_code,Integer pageNum,Integer listCount) {
+		mav = em.getEvtInfo(e_code,pageNum,listCount);
 		/* System.out.println(e_code); */
 		return mav;
 	}

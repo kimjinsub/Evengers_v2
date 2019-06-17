@@ -41,7 +41,7 @@ public interface EventDao {
 	
 	public boolean review(Review review);
 
-	public List<Review> getReview(String e_code);
+	public List<Review> getReview(@Param("e_code")String e_code,@Param("pageNum") Integer pageNum,@Param("listCount") Integer listCount);
 
 	public Review reviewCheck(@Param("m_id")String id, @Param("e_code")String e_code);
 
@@ -87,4 +87,9 @@ public interface EventDao {
 
 	public int getEvtListSize(String ec_name);
 
+	public ArrayList<Event> searchEvt(String evtSearch);
+
+	public int rCount(String e_code);
+
+	public int evtBuyChk(String id);
 }
