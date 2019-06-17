@@ -211,8 +211,4 @@ public class Controller_Jinsub {
 	public @ResponseBody String rejectEvtPay(String ep_code) {
 		return paym.rejectEvtPay(ep_code);
 	}
-	@RequestMapping(value = "/webSocket")
-	public String webSocket() {
-		return "webSocket";
-	}
 }
