@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.userClass.DBException;
+import com.event.evengers_v2.bean.EstimateRefund;
 import com.event.evengers_v2.bean.QuestionReply;
 import com.event.evengers_v2.service.CeoMM;
 import com.event.evengers_v2.service.EventMM;
@@ -212,6 +213,42 @@ public class Controller_Bin {
 		mav=rm.estRefundRequest(estp_code);
 		mav.setViewName("memberViews/estimatePayList");
 		return mav;
+	}
+	@RequestMapping(value = "/RefundAcceptList", produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> RefundAcceptList(Integer pageNum) {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map1 = rm.RefundAcceptList(id,pageNum);
+		return map1;
+	}
+
+	@RequestMapping(value = "/refundAcceptPage")
+	public ModelAndView refundAcceptPage() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/refundAccept");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/insertPenalty", produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> insertPenalty(String estp_code,int estr_penalty) {
+        EstimateRefund estr=new EstimateRefund();
+        estr.setEstp_code(estp_code);
+        estr.setEstr_penalty(estr_penalty);
+		Map<String, Object> map1 = rm.insertPenalty(estr);
+		return map1;
+	}
+	
+	@RequestMapping(value = "/estrRefundCompleteList")
+	public ModelAndView estrRefundCompleteList() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/estrRefundCompleteList");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/estrRefundComplete", produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> estrRefundCompleteList(Integer pageNum) {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map1 = rm.RefundCompleteList(id,pageNum);
+		return map1;
 	}
 	
 	

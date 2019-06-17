@@ -27,6 +27,7 @@ import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
 import com.event.evengers_v2.bean.EstimatePay;
 import com.event.evengers_v2.bean.EstimatePayImage;
+import com.event.evengers_v2.bean.EstimateRefund;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
@@ -539,11 +540,12 @@ public class RequestMM {
 		}
 
 		public ModelAndView estRefundRequest(String estp_code) {
-		 int c=rDao.estpStateChange(estp_code);
-		 System.out.println("c="+c);
-		 
-			return mav;
-		}
+			 mav=new ModelAndView();
+				int c=rDao.estpStateChange(estp_code);
+			 System.out.println("c="+c); 
+			 boolean a=rDao.insertRefund(estp_code);
+				return mav;
+			}
 
 
 		//미완성
@@ -618,7 +620,73 @@ public class RequestMM {
 			
 			return map1;
 		}
+		public Map<String, Object> RefundAcceptList(String id, Integer pageNum) {
+			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
+			ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
+			estpList=rDao.RefundAcceptList1(id);
+			ArrayList<Request> reqList=new ArrayList<Request>();  
+			System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			for(int i=0;i<estpList.size();i++) {
+			EstimatePay estp=new EstimatePay();
+				estp=estpList.get(i);
+				String req_code=estp.getReq_code();
+				String estp_code=estp.getEstp_code();
+				reqList.add(rDao.getRefundInfo(req_code));
+				estrList.add(rDao.getEstr(estp_code));
+			}
+			
+			map1.put("reqList",reqList);
+			map1.put("estpList", estpList);
+			map1.put("estrList", estrList);
+			return map1;
+		}
+
+		public Map<String, Object> insertPenalty(EstimateRefund estr) {
+			int a=rDao.insertPenalty(estr);
+				int b=rDao.changeState(estr);
+				String id=session.getAttribute("id").toString();
+				ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
+				ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
+				estpList=rDao.RefundAcceptList1(id);
+				ArrayList<Request> reqList=new ArrayList<Request>();  
+				System.out.println("estpList:"+estpList);
+				Map<String, Object> map1 = new HashMap<String, Object>();
+				for(int i=0;i<estpList.size();i++) {
+				EstimatePay estp=new EstimatePay();
+					estp=estpList.get(i);
+					String req_code=estp.getReq_code();
+					String estp_code=estp.getEstp_code();
+					reqList.add(rDao.getRefundInfo(req_code));
+					estrList.add(rDao.getEstr(estp_code));
+				}
+				map1.put("reqList",reqList);
+				map1.put("estpList", estpList);
+				map1.put("estrList", estrList);
+				return map1;
+		}
+
+		public Map<String, Object> RefundCompleteList(String id, Integer pageNum) {
+			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
+			ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
+			estpList=rDao.RefundAcceptList(id);
+			ArrayList<Request> reqList=new ArrayList<Request>();  
+			System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			for(int i=0;i<estpList.size();i++) {
+			EstimatePay estp=new EstimatePay();
+				estp=estpList.get(i);
+				estp.getEstp_total();
+				String req_code=estp.getReq_code();
+				String estp_code=estp.getEstp_code();
+				reqList.add(rDao.getRefundInfo(req_code));
+				estrList.add(rDao.getCompleteEstr(estp_code));
+			}
+			map1.put("reqList",reqList);
+			map1.put("estpList", estpList);
+			map1.put("estrList", estrList);
+			return map1;
+		}
+		}
 		
-		
-}
 
