@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @ServerEndpoint(value="/webSocket")
-public class webSocket {
+public class WebSocket {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private static Set<Session> clients
