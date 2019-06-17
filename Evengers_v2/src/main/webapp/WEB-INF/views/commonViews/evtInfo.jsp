@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,7 +145,12 @@
 				<c:if test="${review.re_stars == 1}">
 					<td align="center" width="200">★</td>
 				</c:if>
-				<td align="center" width="200">${review.re_writedate}</td>
+				<div class="hideDate">
+					<fmt:parseDate value='${review.re_writedate}' var='trading_day'
+						 pattern="yyyy-MM-dd HH:mm:ss.S"/>
+				<td align="center" width="200">	<fmt:formatDate value="${trading_day}" pattern="yyyy년MM월dd일 HH시mm분"/>				</div>
+				</td>
+				
 				<c:if test="${id==review.m_id}">
 					<td><button onclick="reviewModify()">수정</button></td>
 					<td><button onclick="reviewDelete()">삭제</button></td>
@@ -155,10 +161,14 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div align="center">${paging}
+	</div>
+	
 	<div class="container-fluid" id="ebInfoZone"></div>
 
 </body>
 <script>
+$('.hideDate').hide();
 	$(document).ready(function() {
 		selectOption();
 		getTotalPrice();

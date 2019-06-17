@@ -93,6 +93,9 @@
    <update id="ceoModifyInfo">
 		UPDATE C SET C_PW=#{c_pw},C_NAME=#{c_name},C_TEL=#{c_tel},C_EMAIL=#{c_email} WHERE C_ID = #{c_id}
 	</update>
+	<update id="ceoModifyInfo2">
+		UPDATE C SET C_NAME=#{c_name},C_TEL=#{c_tel},C_EMAIL=#{c_email} WHERE C_ID = #{c_id}
+	</update>
 	<select id="ceoMyPageChk" parameterType="String"
 		resultType="String">
 		SELECT C_ID from C WHERE C_ID=#{c_id, jdbcType=VARCHAR}

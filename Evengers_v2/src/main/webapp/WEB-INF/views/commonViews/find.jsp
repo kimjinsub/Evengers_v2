@@ -1,46 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <html>
 <head>
+<title>Home</title>
 <meta charset="UTF-8">
-<title>find.jsp</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/all.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <style>
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
 #find {
-	border: 2px solid black;
 	position: absolute;
 	padding: 20px;
-	height: 470px;
+	height: 550px;
 	width: 425px;
-	background-color: #EEEFF1;
-	border-radius: 5px;
+	background-color: white;
+	border-radius:2em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+      padding: 1rem;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-}
-
-.find {
-	display: inline;
-	width: 300px;
-	height: 300px;
-	border: 1px solid skyblue;
-	background-color: #F2CB61;
-}
-
-.find:hover {
-	background-color: aqua;
-	transition: all linear 1s;
 }
 </style>
 
 </head>
 <body>
 	<div id="find">
-		<div class="find" id="idFind"name="idFind">아이디 찾기</div>
-		<div class="find" id="pwFind"name="pwFind">비밀번호 찾기</div>
-		<div id="find_main">
-		
-		
+										
+		<div class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="idFind" style="width: 40%;float: left;display:inline;position: relative;top:15px;left: 7px">아이디 찾기</div>
+		<div class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="pwFind" style="width: 50%;float: right;display:inline;position: relative;top: 7px;right: 10px">비밀번호 찾기</div>
+		<div id="find_main"style="display:inline;position: relative;top:25px;">
 		</div>
 	</div>
 
