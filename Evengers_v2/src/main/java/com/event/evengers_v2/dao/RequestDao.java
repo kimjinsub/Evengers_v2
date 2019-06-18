@@ -10,6 +10,7 @@ import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
 import com.event.evengers_v2.bean.EstimatePay;
 import com.event.evengers_v2.bean.EstimatePayImage;
+import com.event.evengers_v2.bean.EstimateRefund;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 
@@ -82,6 +83,29 @@ public interface RequestDao {
 	public EstimatePay getPayday(String id);
 
 	public int estpStateChange(String estp_code);
+
+	//public ArrayList<Request> reqSearch(String words, String id);
+
+	public ArrayList<Request> reqSearch(Map<String, Object> map);
+
+	public ArrayList<Request> allReqSearch(Map<String, Object> map);
+
+	public boolean insertRefund(String estp_code);
+
+	public ArrayList<EstimatePay> RefundAcceptList(String id);
+	
+	public ArrayList<EstimatePay> RefundAcceptList1(String id);
+
+	public Request getRefundInfo(String req_code);
+
+	public EstimateRefund getEstr(String estp_code);
+
+	public int insertPenalty(EstimateRefund estr);
+
+	public int changeState(EstimateRefund estr);
+
+	public EstimateRefund getCompleteEstr(String estp_code);
+
 
 
 

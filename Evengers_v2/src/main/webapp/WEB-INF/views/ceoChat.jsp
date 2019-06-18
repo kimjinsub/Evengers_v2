@@ -13,12 +13,11 @@
 	text-align: center; background-color:white; color:red;
 }
 </style>
-<title>memberChat</title>
+<title>ceoChat</title>
 </head>
 <body>
-<h1>소비자 페이지</h1>
+<h1>판매자 페이지</h1>
 <form>
-	대화명:<input id="nick" type="text"/><br/>
 	대화내용:<textarea id="monitor" rows="20"></textarea><br/>
 	보낼메세지:<input id="msg" type="text"/><br/>
 	<input type="button" value="전송" onclick="sendMsg()"/>
@@ -29,11 +28,13 @@
 <script>
 var sock = new SockJS("webSocket")
 var content = document.getElementById("monitor");
+var receiver = "";
 sock.onopen=function(){
 	console.log("info : connection opened.");
 	content.value+="웹소켓 연결...\n";
 }
 sock.onmessage=function(event){
+	
 	console.log(event.data+'\n');
 	content.value+=event.data+"\n";
 }
@@ -48,7 +49,7 @@ console.log("receiver","${receiver}");
 console.log("sender","${sender}");
 function sendMsg(){
 	var obj={};
-	obj.nick=$("#nick").val();
+	obj.nick="${c_name}";
 	obj.receiver="${receiver}";
 	obj.sender="${sender}";
 	obj.msg=$("#msg").val();
@@ -57,7 +58,7 @@ function sendMsg(){
 	$("#msg").val("");
 }
 function disConn(){
-	webSocket.close();
+	sock.close();
 }
 </script>
 </html>

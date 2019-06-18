@@ -57,7 +57,7 @@ function sendMsg(){
 	$("#msg").val("");
 }
 function disConn(){
-	webSocket.close();
+	sock.close();
 }
 </script>
 </html>

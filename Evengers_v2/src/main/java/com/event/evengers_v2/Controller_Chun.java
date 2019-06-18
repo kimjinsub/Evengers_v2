@@ -406,14 +406,12 @@ public class Controller_Chun {
 	public @ResponseBody int er_total(double ep_panalty,double total) {
 		int er_total = 0;
 		er_total=pm.er_total(ep_panalty,total);
-		
 		return er_total;
 	}
 	@RequestMapping(value = "/ceoRefundBtn",produces = "application/json; charset=utf8")
 	public @ResponseBody String ceoRefundBtn(String ep_code,int ep_penalty) {
 		String str = "";
 		str=pm.ceoRefundBtn(ep_code,ep_penalty);
-		
 		return str;
 	}
 	
@@ -421,16 +419,19 @@ public class Controller_Chun {
 	public @ResponseBody int er_days(String ep_dday,String er_rday) throws ParseException {
 		int er_days = 0;
 		er_days=pm.er_days(ep_dday,er_rday);
-		
 		return er_days;
 	}
 	@RequestMapping(value = "/rBtnChk",produces = "application/json; charset=utf8")
 	public @ResponseBody String rBtnChk(String ep_code)  {
 		String rBtnChk = "";
-		System.out.println("11111111111111111111111111"+ep_code);
 		rBtnChk=pm.rBtnChk(ep_code);
 		
 		return rBtnChk;
 	}
 	
+	@RequestMapping(value = "/searchEvt",produces = "application/json; charset=utf8")
+	public  @ResponseBody String searchEvt(String evtSearch)  {
+		String json_evtList=em.searchEvt(evtSearch);
+		return json_evtList;
+	}
 }

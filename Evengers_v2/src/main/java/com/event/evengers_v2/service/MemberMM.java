@@ -227,7 +227,15 @@ public String memberTest(String testcode) {
 	public ModelAndView modifyMemInfo(String pw, String name, String tel, String email, String area) {
 		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 		String id= (String) session.getAttribute("id");
-		pw = pwdEncoder.encode(pw);
+		System.out.println(pw);
+		if(pw.length()<20) {
+			pw = pwdEncoder.encode(pw);
+			System.out.println(pw);
+			if (mDao.modifyMemInfo(id,pw,name,tel,email,area)) {
+			mav.setViewName("memberViews/memberMyPage");
+			}
+		}
+		System.out.println(pw);
 		if (mDao.modifyMemInfo(id,pw,name,tel,email,area)) {
 		mav.setViewName("memberViews/memberMyPage");
 		}
@@ -289,7 +297,15 @@ public String memberTest(String testcode) {
 	public ModelAndView ceoModifyInfo(String pw, String name, String tel, String email) {
 		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 		String id= (String) session.getAttribute("id");
-		pw = pwdEncoder.encode(pw);
+		System.out.println(pw);
+		if(pw.length()<20) {
+			pw = pwdEncoder.encode(pw);
+			System.out.println(pw);
+			if (mDao.ceoModifyInfo(id,pw,name,tel,email)) {
+			mav.setViewName("ceoViews/ceoMyPage");
+			}
+		}
+		System.out.println(pw);
 		if (mDao.ceoModifyInfo(id,pw,name,tel,email)) {
 		mav.setViewName("ceoViews/ceoMyPage");
 		}
@@ -333,6 +349,23 @@ public String memberTest(String testcode) {
 			mav.addObject("eList", "등록한 상품이 없습니다");
 		}
 		mav.setViewName("ceoViews/myEvtManagement");
+		return mav;
+	}
+
+	public ModelAndView chat(String receiver) {
+		mav=new ModelAndView();
+		String sender = session.getAttribute("id").toString();
+		if(receiver==null) {
+			mav.addObject("receiver", null);
+			mav.addObject("c_name", mDao.ceoInfo(sender).getC_name());
+			mav.setViewName("ceoChat");
+			return mav;
+		}
+		mav.addObject("sender",sender);
+		mav.addObject("receiver",receiver);
+		if(mDao.mInfo(sender)!=null) {	//sender:member->memberChat으로
+			mav.setViewName("memberChat");
+		}
 		return mav;
 	}
 }

@@ -211,8 +211,13 @@ public class Controller_Jinsub {
 	public @ResponseBody String rejectEvtPay(String ep_code) {
 		return paym.rejectEvtPay(ep_code);
 	}
-	@RequestMapping(value = "/webSocket")
-	public String webSocket() {
-		return "webSocket";
+	@RequestMapping(value = "/chat")
+	public ModelAndView chat(String receiver) {
+		mav=mm.chat(receiver);
+		return mav;
+	}
+	@RequestMapping(value = "/ceoChatWindow")
+	public String ceoChatWindow() {
+		return "ceoChatWindow";
 	}
 }

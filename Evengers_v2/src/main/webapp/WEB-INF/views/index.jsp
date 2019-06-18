@@ -42,14 +42,12 @@
 <jsp:include page="header.jsp"></jsp:include>
 <!-- jumbotron -->
 <div class="jumbotron text-center">
-  <form>
     <div class="input-group col-lg-4">
-      <input type="text" class="form-control" size="50" placeholder="원하는 이벤트를 찾아보세요" required>
+      <input type="text" class="form-control" size="50" onkeyup="enterkey();" placeholder="원하는 이벤트를 찾아보세요" name="evtSearch" id="evtSearch"required>
       <div class="input-group-btn">
-        <button type="button" class="btn btn-danger">검색</button>
+        <button type="button" class="btn btn-danger" name="btnSearch" id="btnSearch" onclick="searchEvt()" >검색</button>
       </div>
     </div>
-  </form>
 </div>
 
 <!-- Navigation -->
@@ -76,15 +74,59 @@
 	
 	<div class="row text-center text-lg-left" id="evtList">
 	</div>
+	<div class="row text-center text-lg-left" id="evtList2">
+	</div> 
 </div>
 <div class="col-lg-2 col-md-3 col-6">
 </div>
 <div id="pagination"></div>
 </body>
 <script>
+$('#evtList2').hide();
 $(document).ready(function(){
 	getCategories();
+	
 });
+function enterkey() {
+    if (window.event.keyCode == 13) {
+
+    	searchEvt();
+    }
+}
+
+
+function searchEvt(){
+	var evtSearch=$('#evtSearch').val();
+	$.ajax({
+		url:"searchEvt",
+		data:{evtSearch:evtSearch},
+		dataType:"json",
+		success:function(data){
+			var result=data['evtList'];
+			var paging=data['paging'];
+			var msg=data['msg'];
+			var str="";
+			$('#evtList2').show();
+			$('#evtList').hide();
+			$("#title").html(evtSearch+"의 검색 결과");
+			for(var i in result){
+				str+='<div class="col-lg-3 col-md-4 col-6">'
+					+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 
+					+'<img class="img-fluid img-thumbnail"'
+					+'src="upload/thumbnail/'+result[i].e_sysfilename+'">'
+					+'</a></div>'
+			}
+			$("#evtList2").html(str);
+			$("#pagination").html(paging);
+			if(data['msg']!=null){
+				$("#evtList2").html(data['msg']);
+			}
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
 function getEvtList(category,pageNum,listCount){
 	$("#title").html(category);
 	ec_name=category;
@@ -103,6 +145,8 @@ function AjaxEvtList(pageNum,listCount){
 			var paging=data['paging'];
 			var msg=data['msg'];
 			var str="";
+			$('#evtList').show();
+			$('#evtList2').hide();
 			for(var i in result){
 				str+='<div class="col-lg-3 col-md-4 col-6">'
 					+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 

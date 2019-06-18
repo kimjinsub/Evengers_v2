@@ -93,6 +93,9 @@
    <update id="ceoModifyInfo">
 		UPDATE C SET C_PW=#{c_pw},C_NAME=#{c_name},C_TEL=#{c_tel},C_EMAIL=#{c_email} WHERE C_ID = #{c_id}
 	</update>
+	<update id="ceoModifyInfo2">
+		UPDATE C SET C_NAME=#{c_name},C_TEL=#{c_tel},C_EMAIL=#{c_email} WHERE C_ID = #{c_id}
+	</update>
 	<select id="ceoMyPageChk" parameterType="String"
 		resultType="String">
 		SELECT C_ID from C WHERE C_ID=#{c_id, jdbcType=VARCHAR}
@@ -101,5 +104,16 @@
 		resultType="String">
 		SELECT M_ID from M WHERE M_ID=#{m_id, jdbcType=VARCHAR}
 	</select>
-	
+	<insert id="chatIn" parameterType="String">
+		INSERT INTO CHAT VALUES(#{m_id},#{sessionId})
+	</insert>
+	<select id="getCeoSessionId" parameterType="String" resultType="String">
+		SELECT SESSIONID FROM CHAT WHERE ID=#{c_id}
+	</select>
+	<select id="chatInCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM CHAT WHERE ID=#{id}
+	</select>
+	<delete id="chatOut" parameterType="String">
+		DELETE FROM CHAT WHERE SESSIONID=#{sessionId}
+	</delete>
 </mapper>

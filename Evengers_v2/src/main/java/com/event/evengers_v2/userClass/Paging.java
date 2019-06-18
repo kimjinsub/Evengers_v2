@@ -40,14 +40,14 @@ public class Paging {
 				: currentGroup * pageCount;
 
 		if (start != 1) {
-			sb.append("<a href='"+boardName+"?pageNum=" + (start -1) + "'>");
+			sb.append("<a href='"+boardName+"?pageNum=" + (start -1) + "&listCount="+listCount+"'>");
 			sb.append("[이전]");
 			sb.append("</a>");
 		}
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { //현재 페이지가 아닌 경우 링크처리
-				sb.append("<a href='"+boardName+"?pageNum=" + i + "'>");
+				sb.append("<a href='"+boardName+"?pageNum=" + i + "&listCount="+listCount+"'>");
 				sb.append(" [ ");
 				sb.append(i);
 				sb.append(" ] ");
@@ -61,7 +61,7 @@ public class Paging {
 			}
 		}
 		if (end != totalPage) {
-			sb.append("<a href='"+boardName+"?pageNum=" + (end + 1) + "'>");
+			sb.append("<a href='"+boardName+"?pageNum=" + (end + 1) + "&listCount="+listCount+"'>");
 			sb.append("[다음]");
 			sb.append("</a>");
 		}

@@ -66,4 +66,14 @@ public interface MemberDao {
 
 	String memberMyPageChk(@Param("m_id")String id);
 
+	boolean ceoModifyInfo2(@Param("c_id")String id, @Param("c_name")String name,@Param("c_tel") String tel, @Param("c_email")String email);
+
+	boolean chatIn(@Param("sessionId")String sessionId, @Param("m_id")String m_id);
+
+	String getCeoSessionId(String c_id);
+
+	int chatInCheck(String id);
+
+	boolean chatOut(String sessionId);
+
 }

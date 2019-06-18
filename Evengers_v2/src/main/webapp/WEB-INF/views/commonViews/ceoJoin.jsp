@@ -52,6 +52,7 @@
 				<td><select name="c_email1">
 						<option value="@naver.com">@naver.com</option>
 						<option value="@yahoo.co.kr">@yahoo.co.kr</option>
+						<option value="@gmail.com">@gmail.com</option>
 				</select></td>
 
 			<tr>

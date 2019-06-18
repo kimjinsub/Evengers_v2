@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -24,6 +27,7 @@ import com.event.evengers_v2.bean.Estimate;
 import com.event.evengers_v2.bean.EstimateImage;
 import com.event.evengers_v2.bean.EstimatePay;
 import com.event.evengers_v2.bean.EstimatePayImage;
+import com.event.evengers_v2.bean.EstimateRefund;
 import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.bean.RequestImage;
 import com.event.evengers_v2.dao.EventDao;
@@ -31,8 +35,6 @@ import com.event.evengers_v2.dao.RequestDao;
 import com.event.evengers_v2.userClass.DBException;
 import com.event.evengers_v2.userClass.Paging;
 import com.event.evengers_v2.userClass.UploadFile;
-
-
 
 @Service
 public class RequestMM {
@@ -81,6 +83,8 @@ public class RequestMM {
 		 rq.setReq_hopedate(req_hopedate);
 		 rq.setReq_hopearea(req_hopearea);
 		 rq.setReq_hopeaddr(req_hopeaddr);
+		 
+		 System.out.println(rq.getReq_hopedate());
 		 
 		 if(rDao.evtReqInsert(rq)) {
 			 String req_code = rDao.getReqCode();
@@ -183,7 +187,7 @@ public class RequestMM {
 
 		return paging.makeHtmlPaging();
 	}
-
+	
 	public ModelAndView showEstimate(String est_code){
 		mav = new ModelAndView();
 		Estimate est = new Estimate();
@@ -210,7 +214,8 @@ public class RequestMM {
 		System.out.println("누가먼저?:"+hopedate1.compareTo(today));
 		mav.addObject("refundable",refundable1);
 		long okAble=hopedate1.getTime()-okdate*(24*60*60*1000);
-		String okAble1=format1.format(new Date(okAble));
+			String okAble1=format1.format(new Date(okAble));
+			System.out.println("승인 가능일 : " + okAble1);
 		mav.addObject("ok",okAble1);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -535,14 +540,15 @@ public class RequestMM {
 		}
 
 		public ModelAndView estRefundRequest(String estp_code) {
-		 int c=rDao.estpStateChange(estp_code);
-		 System.out.println("c="+c);
-		 
-			return mav;
-		}
+			 mav=new ModelAndView();
+				int c=rDao.estpStateChange(estp_code);
+			 System.out.println("c="+c); 
+			 boolean a=rDao.insertRefund(estp_code);
+				return mav;
+			}
 
 
-
+		//미완성
 		public Map<String, Object> estSell(String id) {
 			ArrayList<EstimatePay> esList = new ArrayList<EstimatePay>();
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -572,8 +578,115 @@ public class RequestMM {
 			
 			return map;
 		}
-
-
 		
-}
+		
+		//매일 12시마다 메소드 실행
+		//@Scheduled(fixedDelay = 1000) //1초마다 실행
+		@Scheduled(cron = "00 00 00 * * *")
+		public ModelAndView AutoDelete() {
+			Estimate est = new Estimate();
+			//est = rDao.getEstTable();
+			
+			return mav;
+		}
+
+		public Map<String, Object> reqSearch(String words ,String id) {
+			ArrayList<Request> rList = new ArrayList<Request>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map1 = new HashMap<String, Object>();
+	
+			System.out.println("id는 뭐지 : " + id);
+			System.out.println("words는 뭐지 : " + words);
+			
+			boolean ceoChk=false;
+			if(rDao.ceoChk(id)>0) {
+				ceoChk=true;
+			}
+			
+			if(id.equals("admin") || ceoChk) {
+				System.out.println("관리자 계정 or 기업계정 리스트 검색");
+				map.put("words",words);
+				rList=rDao.allReqSearch(map);
+				
+			}else {
+				System.out.println("일반사람 리스트 검색");
+				
+				map.put("words", words);
+				map.put("id", id);
+				rList = rDao.reqSearch(map);
+			}
+			
+			map1.put("rList", rList);
+			
+			return map1;
+		}
+		public Map<String, Object> RefundAcceptList(String id, Integer pageNum) {
+			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
+			ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
+			estpList=rDao.RefundAcceptList1(id);
+			ArrayList<Request> reqList=new ArrayList<Request>();  
+			System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			for(int i=0;i<estpList.size();i++) {
+			EstimatePay estp=new EstimatePay();
+				estp=estpList.get(i);
+				String req_code=estp.getReq_code();
+				String estp_code=estp.getEstp_code();
+				reqList.add(rDao.getRefundInfo(req_code));
+				estrList.add(rDao.getEstr(estp_code));
+			}
+			
+			map1.put("reqList",reqList);
+			map1.put("estpList", estpList);
+			map1.put("estrList", estrList);
+			return map1;
+		}
+
+		public Map<String, Object> insertPenalty(EstimateRefund estr) {
+			int a=rDao.insertPenalty(estr);
+				int b=rDao.changeState(estr);
+				String id=session.getAttribute("id").toString();
+				ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
+				ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
+				estpList=rDao.RefundAcceptList1(id);
+				ArrayList<Request> reqList=new ArrayList<Request>();  
+				System.out.println("estpList:"+estpList);
+				Map<String, Object> map1 = new HashMap<String, Object>();
+				for(int i=0;i<estpList.size();i++) {
+				EstimatePay estp=new EstimatePay();
+					estp=estpList.get(i);
+					String req_code=estp.getReq_code();
+					String estp_code=estp.getEstp_code();
+					reqList.add(rDao.getRefundInfo(req_code));
+					estrList.add(rDao.getEstr(estp_code));
+				}
+				map1.put("reqList",reqList);
+				map1.put("estpList", estpList);
+				map1.put("estrList", estrList);
+				return map1;
+		}
+
+		public Map<String, Object> RefundCompleteList(String id, Integer pageNum) {
+			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
+			ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
+			estpList=rDao.RefundAcceptList(id);
+			ArrayList<Request> reqList=new ArrayList<Request>();  
+			System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			for(int i=0;i<estpList.size();i++) {
+			EstimatePay estp=new EstimatePay();
+				estp=estpList.get(i);
+				estp.getEstp_total();
+				String req_code=estp.getReq_code();
+				String estp_code=estp.getEstp_code();
+				reqList.add(rDao.getRefundInfo(req_code));
+				estrList.add(rDao.getCompleteEstr(estp_code));
+			}
+			map1.put("reqList",reqList);
+			map1.put("estpList", estpList);
+			map1.put("estrList", estrList);
+			return map1;
+		}
+		}
+		
 

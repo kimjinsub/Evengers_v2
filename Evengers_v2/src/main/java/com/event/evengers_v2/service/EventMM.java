@@ -150,7 +150,10 @@ public class EventMM {
 		return path;
 	}
 
-	public ModelAndView getEvtInfo(String e_code) {
+	public ModelAndView getEvtInfo(String e_code,Integer pageNum,Integer listCount) {
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+		listCount=10;
+		if(pageNum==null){pageNum=1;}
 		mav = new ModelAndView();
 		String id = (String) session.getAttribute("id");
 		String view = null;
@@ -160,20 +163,19 @@ public class EventMM {
 		Event eb = new Event();
 		List<Review> rList = null;
 		eb = eDao.getEvtInfo(e_code);
-		rList = eDao.getReview(e_code);
+		rList = eDao.getReview(e_code,pageNum,listCount);
+		int rCount =eDao.rCount(e_code);
 		choiceChk = eDao.getChoiceChk(e_code, id);
 		if (eDao.reviewChk(e_code) != 0) {
-
 			starAverage = eDao.getStarAverage(e_code);
 			System.out.println(starAverage);
-
+			System.out.println(rList);
 			DecimalFormat format = new DecimalFormat(".#");
 			str = format.format(starAverage);
 			System.out.println("str" + str);
 			if (str == null) {
 				str = 0 + "";
 				System.out.println("str" + str);
-
 			}
 			System.out.println("starAverage:" + str);
 
@@ -185,6 +187,7 @@ public class EventMM {
 		mav.addObject("rList", rList);
 		mav.addObject("choiceChk", choiceChk);
 		mav.addObject("starAverage", str);
+		mav.addObject("paging", new Paging(rCount, pageNum, listCount, 10, "getEvtInfo").makeHtmlPaging());
 
 		view = "commonViews/evtInfo";
 		mav.setViewName(view);
@@ -208,7 +211,7 @@ public class EventMM {
 		review.setM_id(id);
 		review.setRe_contents(r_contents);
 		review.setRe_stars(star);
-		/*if (eDao.reviewMemberCheck(id) != null) {*/
+		if (eDao.evtBuyChk(id) != 0) {
 			if (eDao.reviewCheck(id, e_code) == null) {
 				if (eDao.review(review)) {
 					str = "리뷰가 등록 되었습니다.";
@@ -217,7 +220,7 @@ public class EventMM {
 			} else {
 				str = "이미 등록된 리뷰가 있습니다.";
 			}
-		/* } else { str = "개인 회원만 작성 가능합니다."; } */
+		} else { str = "구매 회원만 작성 가능합니다."; } 
 		return str;
 	}
 
@@ -560,5 +563,22 @@ public class EventMM {
 
 		}
 		return str;
+	}
+
+	public String searchEvt(String evtSearch) {
+        String json_result="";
+        Gson gson=new Gson();
+		ArrayList<Event> e=new ArrayList<Event>();
+		if(evtSearch!=null) {
+		e =eDao.searchEvt(evtSearch);
+		System.out.println("작동함");
+		System.out.println(e);
+		}
+		 HashMap<String, Object> result = new HashMap<>();
+	        result.put("evtList", e);
+	        result.put("paging",e);
+	        if(e.size()==0) {result.put("msg", "해당 검색에 대한 이벤트가 없습니다");}
+	        json_result=gson.toJson(result);
+	      return json_result;
 	}
 }

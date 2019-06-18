@@ -57,10 +57,16 @@
    <insert id="review">
 	INSERT INTO RE VALUES(#{e_code},#{m_id},SYSDATE,#{re_contents},#{re_stars})
 	</insert>
-	<select id="getReview" parameterType="String"
-		resultType="review">
-		SELECT * FROM RE WHERE E_CODE=#{e_code}
-	</select>
+	<select id="getReview" resultType="review">
+		<![CDATA[
+        SELECT * FROM 
+        (SELECT /*+INDEX_DESC(RE PK_RE_M_ID_E_CODE)*/
+        ROWNUM RN,RE.* FROM RE
+        WHERE E_CODE=#{e_code}
+        AND ROWNUM<=#{pageNum}*#{listCount}) 
+        WHERE RN>((#{pageNum}-1)*#{listCount})
+        ]]><!-- 부등호 -->
+    </select>
 	<select id="reviewCheck" parameterType="String"
 		resultType="review">
 		SELECT * FROM RE WHERE E_CODE=#{e_code} AND M_ID=#{m_id}
@@ -153,5 +159,17 @@
 	<select id="ceoEvtList2" parameterType="String"
 		resultType="Event">
 		SELECT * FROM E WHERE C_ID=#{c_id}
+	</select>
+	<select id="searchEvt" parameterType="String"
+		resultType="Event">
+		SELECT * FROM E WHERE E_NAME LIKE '%'|| #{evtSearch} ||'%' OR E_CATEGORY LIKE '%'|| #{evtSearch}||'%' OR E_CONTENTS LIKE '%'|| #{evtSearch}||'%'
+	</select>
+	<select id="rCount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM E WHERE E_CODE=#{e_code}
+	</select>
+	<select id="evtBuyChk" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM EP WHERE m_id=#{m_id}
 	</select>
 </mapper>

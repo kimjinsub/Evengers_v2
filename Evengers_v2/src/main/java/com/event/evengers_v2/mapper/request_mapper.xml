@@ -49,13 +49,18 @@
 	<delete id="estDelete" parameterType="string">
 	DELETE FROM EST WHERE EST_CODE=#{est_code}
 	</delete>
-   
+	
+   <!-- 이미결제가 된 친구들은 셀렉을 안함!! -->
    <select id="AllReqList" parameterType="map" resultType="request">
          SELECT * FROM REQ WHERE REQ_CODE NOT IN (SELECT DISTINCT REQ.REQ_CODE FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE)
+         	AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
+         	ORDER BY REQ_HOPEDATE
    </select>
-   
+      
    <select id="myReqList" parameterType="map" resultType="request">
-         SELECT * FROM REQ WHERE M_ID=#{id}
+         SELECT * FROM REQ WHERE M_ID=#{id} 
+         	AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
+         	ORDER BY REQ_HOPEDATE
    </select>
    
    <select id="getReqInfo" parameterType="string" resultType="request">
@@ -79,7 +84,7 @@
    </select>
 	
 	<select id="getRecivedEstList" parameterType="string" resultType="request">
-	 SELECT * FROM REQ WHERE M_ID=#{id}
+	 SELECT * FROM REQ WHERE M_ID=#{id} AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL)
 	</select>
 	
 	<select id="getRecivedEstList1" parameterType="request" resultType="estimate">
@@ -123,5 +128,56 @@
    <select id="getPayday" parameterType="string" resultType="estimatepay">
          SELECT estp_payday FROM ESTP WHERE C_ID=#{id}
    </select>
+   
+   <select id="reqSearch" parameterType="map" resultType="request">
+         SELECT * FROM REQ WHERE M_ID=#{id} 
+         AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
+         AND REQ_TITLE LIKE CONCAT('%',CONCAT(#{words},'%')) 
+         ORDER BY REQ_HOPEDATE
+   </select>
+   
+   <!-- 이미 결제되고 날짜지나고 입력한거랑 일치하지 않는 데이터 제외 출력 -->
+   <select id="allReqSearch" parameterType="map" resultType="request">
+         SELECT * FROM REQ WHERE REQ_CODE NOT IN (SELECT DISTINCT REQ.REQ_CODE FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE)
+         	AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
+         	AND REQ_TITLE LIKE CONCAT('%',CONCAT(#{words},'%'))
+         	ORDER BY REQ_HOPEDATE
+   </select>
+   
+    
+   <update id="estpStateChange" parameterType="string">
+   UPDATE ESTP SET ESTP_REFUNDSTATE='1' WHERE ESTP_CODE=#{estp_code}
+   </update>
+    
+    <insert id="insertRefund" parameterType="string">
+    INSERT INTO ESTR VALUES('ESTR'||LPAD(ESTR_SEQ.NEXTVAL,4,0),DEFAULT,#{estp_code},DEFAULT,DEFAULT)
+   </insert>   
+   
+   <select id="RefundAcceptList1" parameterType="string" resultType="estimatePay">
+   SELECT * FROM ESTP WHERE C_ID=#{id} AND ESTP_REFUNDSTATE=1
+   </select>
+   
+   <select id="RefundAcceptList" parameterType="string" resultType="estimatePay">
+   SELECT * FROM ESTP WHERE C_ID=#{id} AND ESTP_REFUNDSTATE=2
+   </select>
+    
+   <select id="getRefundInfo" parameterType="string" resultType="request">
+   SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
+   </select>
+   
+   <select id="getEstr" resultType="estimaterefund">
+   SELECT * FROM ESTR WHERE ESTP_CODE=#{estp_code} AND ESTR_STATE=0
+   </select>
+   
+     <update id="insertPenalty" parameterType="estimaterefund">
+   UPDATE ESTR SET ESTR_STATE='1',ESTR_PENALTY=#{estr_penalty} WHERE ESTP_CODE=#{estp_code}
+   </update>
 
+   <update id="changeState" parameterType="estimaterefund">
+   UPDATE ESTP SET ESTP_REFUNDSTATE='2' WHERE ESTP_CODE=#{estp_code}
+   </update>
+   <select id="getCompleteEstr" resultType="estimaterefund">
+   SELECT * FROM ESTR WHERE ESTP_CODE=#{estp_code} AND ESTR_STATE=1
+   </select>
+   
 </mapper>

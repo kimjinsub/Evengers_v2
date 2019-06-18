@@ -75,6 +75,7 @@
 						<a class="dropdown-item" href="#">일정관리</a>
 					</div>
 				</li> -->
+				<li class="nav-item active"><a class="nav-link" href="./chat" target="_blank">상담받기</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>

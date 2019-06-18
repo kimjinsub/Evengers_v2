@@ -11,8 +11,10 @@
 #msg{
 color:red;
 font-size: x-large;
+visibility: hidden;
 }
 #msg.show{
+visibility: visible;
 }
 #refundButton{
 visibility: hidden;
@@ -81,8 +83,17 @@ function msgView(){
 	console.log('${msg}')
 	if('${msg}'=='환불 불가능'){
 		$("#refundButton").removeClass("show");
+		$("#msg").addClass("show");
 	}else{
 		$("#refundButton").addClass("show");
+		$("#msg").addClass("show");
+	}
+	if('${refundstate}'=='환불중'){
+		$("#refundButton").removeClass("show");
+		$("#msg").removeClass("show");
+	}else if('${refundstate}'=='환불완료'){
+		$("#refundButton").removeClass("show");
+		$("#msg").removeClass("show");
 	}
 }
 

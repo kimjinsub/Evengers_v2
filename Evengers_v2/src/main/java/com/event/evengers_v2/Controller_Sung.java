@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -147,6 +148,7 @@ public class Controller_Sung {
 		String req_code1=req_code;
         mav = rm.evtReqInfo(req_code1);
 		return mav;
+		
 	}
 	
 	@RequestMapping(value = "/download1", method = RequestMethod.GET) 
@@ -196,5 +198,12 @@ public class Controller_Sung {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value = "/reqSearch",produces = "application/json; charset=utf8")
+	public @ResponseBody Map<String, Object> reqSearch(String words) {
+		String id = session.getAttribute("id").toString();
+		Map<String, Object> map = rm.reqSearch(words,id);
+		return map;
+	}
 	
 }
