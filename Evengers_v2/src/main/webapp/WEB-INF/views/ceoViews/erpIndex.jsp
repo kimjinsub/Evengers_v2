@@ -71,6 +71,7 @@
 					<!-- <h6 class="dropdown-header">Login Screens:</h6> -->
 					<a class="dropdown-item" href="javascript:Ajax_forward('performManage')">사원목록</a>
 					<a class="dropdown-item" href="javascript:void(0);" onclick="Ajax_forward('perform')">사원등록</a> 
+					<!-- <a class="dropdown-item" href="javascript:Ajax_forward('perform')">사원등록</a> --> 
 					<a class="dropdown-item" href="javascript:Ajax_forward('position')">직책 관리</a> 
 					<a class="dropdown-item" href="javascript:Ajax_forward('dept')">부서 관리</a>
 				</div></li>
@@ -83,7 +84,7 @@
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> <span>회계관리</span></a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<a class="dropdown-item" href="#">급여관리</a> 
+					<a class="dropdown-item" href="javascript:Ajax_forward('salaryManage')">급여관리</a> 
 					<a class="dropdown-item" href="javascript:Ajax_forward('accountingManage')">정산</a>
 				</div>
 			</li>
