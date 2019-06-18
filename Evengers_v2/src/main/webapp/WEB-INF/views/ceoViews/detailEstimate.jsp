@@ -71,5 +71,18 @@ table {
 	
 
 </body>
+<script>
+	$(document).ready(function() {
+		msgAlert();
+	});
+	function msgAlert() {
+		console.log('${msg}')
+		if ('${msg}' == '결제성공') {
+			alert("결제성공!");
+		} else if ('${msg}' == '결제실패') {
+			alert("결제실패!");
+		}
+	}
+</script>
 
 </html>

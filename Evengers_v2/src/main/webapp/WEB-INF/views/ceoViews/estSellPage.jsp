@@ -36,7 +36,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 align="center">기업 판매 목록</h1>
+	<h1 align="center">기업 견적 판매 내역</h1>
 	<div id="list"></div>
 	
 </body>
@@ -54,12 +54,13 @@ function getReqList() {
 
 		var str = "<table id='esList' border='1' align='center'>";
 		for ( var i in esList) {
-			str += "<tr>" + "견적 결제 코드 : " + esList[i].estp_code + "<br>"
+			str += "<tr><td>" + "견적 결제 코드 : " + esList[i].estp_code + "<br>"
 					+ "총가격 : " + esList[i].estp_total + "<br>"
 					+ "결제일 : " + esList[i].estp_payday + "<br>"
-					+ "환불 가능일 : " + esList[i].estp_refunddate + "<br></tr></table>"
+					+ "환불 가능일 : " + esList[i].estp_refunddate + "<br>"
+					+ "내용 : " + esList[i].estp_contents + "<br></td></tr>"
 			}
-			str += "<input type='button' onclick=location.href='./' value='홈으로'>"
+			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
 			$("#list").html(str);
 			},
 		error : function(error) {

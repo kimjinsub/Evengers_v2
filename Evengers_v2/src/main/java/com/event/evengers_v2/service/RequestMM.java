@@ -383,19 +383,20 @@ public class RequestMM {
 	
 
 	
-	public ModelAndView estPay(String est_code) throws DBException {
+	@Transactional
+	public ModelAndView estPay(String est_code) throws DBException, ParseException {
 		mav = new ModelAndView();
 		Estimate estimate =new Estimate();
 		EstimatePay estimatepay =new EstimatePay();
-		
-		estimate = rDao.getEstInfo(est_code);
+		String msg=null;
+		estimate = rDao.getEstInfo(est_code);	//견적코드와 맞는 정보
 		
 		String req_code = estimate.getReq_code();
 		String estp_contents = estimate.getEst_contents();
 		String c_id = estimate.getC_id();
 		int estp_total = estimate.getEst_total();
 		int estp_refunddate = estimate.getEst_refunddate();
-		
+		int okdate = estimate.getEst_okdate();
 		
 		System.out.println("받아온 req 코드!" + req_code);
 		System.out.println("받아온 내용!" + estp_contents);
@@ -410,10 +411,28 @@ public class RequestMM {
 		estimatepay.setEstp_total(estp_total);
 		estimatepay.setEstp_refunddate(estp_refunddate);
 		
+		String hopedate = rDao.gethopedate(req_code);
 		
+		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+		Date hopedate1 = format1.parse(hopedate);
+		format1.format(hopedate1);
+			
+		System.out.println("hopedate1:"+format1.format(hopedate1));
+		Date today = new Date(); 
 		
-		if(rDao.estPay(estimatepay)) {
-			System.out.println("결제가 완료 되었습니다.");
+		today=format1.parse(format1.format(today));
+		long okAble=hopedate1.getTime()-okdate*(24*60*60*1000);	//승인가능일
+		long refundAble=hopedate1.getTime()-estp_refunddate*(24*60*60*1000);	//환불가능일
+		
+		System.out.println("ok-able : " + okAble);
+		System.out.println("refund-able : " + refundAble);
+		System.out.println("to-day : " + today.getTime());
+		//오늘날짜 6-18 승인가능일 6-17이면 결제x 고로 	(희망일-okdate)>오늘날짜
+		
+		 
+		if(okAble>today.getTime() && rDao.estPay(estimatepay)) {
+			//오늘날짜<(희망일-승인가능일)
+			
 			String estp_code=rDao.getEstpCode();
 			System.out.println("estp_code="+estp_code);
 			EstimateImage esti=new EstimateImage();
@@ -423,26 +442,26 @@ public class RequestMM {
             estpi.setEstpi_orifilename(esti.getEsti_orifilename());
             estpi.setEstpi_sysfilename(esti.getEsti_sysfilename());
             System.out.println(estpi);
-            boolean e = rDao.insertEstpi(estpi);
+            boolean e = rDao.insertEstpi(estpi);	//견적결제 이미지 테이블에 삽입
 			boolean b = rDao.estiDelete(est_code);		//견적 이미지 삭제
 			boolean r = rDao.estDelete(est_code); // 견적 삭제
 						
 			
-			if (r == false) {
-				throw new DBException();
-			}
-
+			if (r == false) {throw new DBException();}
 			if (b && r) {
 				System.out.println("삭제 트랜잭션 성공");
-			} else {
+				System.out.println("결제가 완료 되었습니다.");
+				msg="결제완료";
+			}else {
 				System.out.println("삭제 트랜잭션 실패");
 			}
 			
-			mav.addObject("check", 1);
+			
 		}else {
 			System.out.println("띨패");
+			msg="결제실패";
 		}
-		
+		mav.addObject("msg",msg);
 		mav.setViewName("memberViews/memberMyPage");
 		
 		return mav;
@@ -565,32 +584,35 @@ public class RequestMM {
 			}
 
 
-		//미완성
-		public Map<String, Object> estSell(String id) {
+		public Map<String, Object> estSell(String id)  {
 			ArrayList<EstimatePay> esList = new ArrayList<EstimatePay>();
 			Map<String, Object> map = new HashMap<String, Object>();
+			
 			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+			EstimatePay estp = new EstimatePay();
 			
 			esList = rDao.getEstSell(id);	//세션 id와 일치하는 판매내역을 뽑아옴
 			
-				try {
-					for(int i=0;i<esList.size();i++) {
-						EstimatePay estp = new EstimatePay();
-						
-						Date a = esList.get(i).getEstp_payday();
-						String b = format1.format(a);
-						
-						System.out.println("bbb:" + b);
-						
-						esList.get(i).setEstp_payday(format1.parse(b));
-						
-					}
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			
+		/*
+		 * for(int i=0;i<esList.size();i++) { String estp_code =
+		 * esList.get(i).getEstp_code(); Date date = esList.get(i).getEstp_payday(); int
+		 * estp_refunddate = esList.get(i).getEstp_refunddate(); int estp_total =
+		 * esList.get(i).getEstp_total();
+		 * 
+		 * String b = format1.format(date);
+		 * 
+		 * Date estp_payday = new SimpleDateFormat("yyyy-MM-dd").parse(b);
+		 * 
+		 * System.out.println("bbb:" + b); System.out.println("띠요오오옹 : " + date);
+		 * 
+		 * 
+		 * estp.setEstp_code(estp_code); estp.setEstp_payday(estp_payday);
+		 * estp.setEstp_refunddate(estp_refunddate); estp.setEstp_total(estp_total);
+		 * 
+		 * esList.add(i,estp);
+		 * 
+		 * }
+		 */
 			map.put("esList", esList);	//맵에 저장해서 턴
 			
 			return map;

@@ -103,12 +103,16 @@ public interface RequestDao {
 	public int changeState(EstimateRefund estr);
 
 	public EstimateRefund getCompleteEstr(String estp_code);
+	
+	public String gethopedate(String req_code);
 
 	public ArrayList<Request> getReqList(Estimate est);
 
 	public Request getReqTitle(Estimate est);
 
 	public Request getReqTitle1(EstimatePay estp);
+
+
 
 
 

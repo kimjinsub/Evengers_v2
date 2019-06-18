@@ -1,6 +1,7 @@
 package com.event.evengers_v2;
 
 
+import java.text.ParseException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -172,7 +173,7 @@ public class Controller_Sung {
 	
 	
 	@RequestMapping(value = "/estPay", method = RequestMethod.GET) 
-	public ModelAndView estPay(String est_code) throws DBException{
+	public ModelAndView estPay(String est_code) throws DBException, ParseException{
 		mav = rm.estPay(est_code);
 		return mav;
 	}

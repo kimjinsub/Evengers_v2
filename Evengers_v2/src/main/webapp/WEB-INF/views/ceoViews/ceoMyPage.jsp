@@ -69,11 +69,21 @@
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
           <span>사업자 정보 수정</span></a>
       </li>
-     <!-- Nav Item - Charts -->
-      <li id="sellInfo" class="nav-item"onclick="Ajax_forward('sellInfo')">
-        <a class="nav-link" href="#">
+     <!-- Nav Item - Pages Collapse Menu -->
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-          <span>판매현황</span></a>
+          <span>판매현황</span>
+          </a>
+      	  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">이벤트 판매 내역</a></div>
+            <div id="estSellPage"onclick="Ajax_forward('estSellPage')"><a class="collapse-item" href="#">견적 판매 내역</a></div>
+          </div>
+        </div>
+      
       </li>
       <!-- Nav Item - Pages Collapse Menu -->
       
@@ -83,12 +93,10 @@
           <span>환불 현황</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-4 collapse-inner rounded">
+          <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">이벤트 환불 요청</a></div>
-            <div id="refundCompleteList"onclick="Ajax_forward('refundCompleteList')"><a class="collapse-item" href="#">이벤트 환불 내역</a></div>
-              <div id="refundAcceptPage"onclick="Ajax_forward('refundAcceptPage')"><a class="collapse-item" href="#">견적 환불 요청</a></div>
-            <div id="estrRefundCompleteList"onclick="Ajax_forward('estrRefundCompleteList')"><a class="collapse-item" href="#">견적 환불 내역</a></div>
+            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">환불 요청</a></div>
+            <div id="refundCompleteList"onclick="Ajax_forward('refundCompleteList')"><a class="collapse-item" href="#">환불 완료</a></div>
           </div>
         </div>
       </li>
