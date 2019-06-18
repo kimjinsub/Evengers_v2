@@ -200,4 +200,8 @@
    SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
    </select>
    
+    <select id="getReqTitle1" parameterType="estimatepay" resultType="request">
+   SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
+   </select>
+   
 </mapper>

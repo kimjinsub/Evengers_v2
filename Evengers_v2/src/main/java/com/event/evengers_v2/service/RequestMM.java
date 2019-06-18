@@ -380,6 +380,7 @@ public class RequestMM {
 		// System.out.println("jsonStr=" + jsonStr);
 		return map1;
 	}
+	
 
 	
 	public ModelAndView estPay(String est_code) throws DBException {
@@ -461,6 +462,7 @@ public class RequestMM {
 	}
 		public Map<String, Object> getEstPayList(String id, Integer pageNum) {
 			ArrayList<Request> reqList=new ArrayList<Request>();
+			ArrayList<Request> reqList1=new ArrayList<Request>();
 			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();
 			reqList=rDao.getReqCodes(id);
 			System.out.println("ReqList="+reqList);
@@ -469,10 +471,16 @@ public class RequestMM {
 				req=reqList.get(i);
 		        estpList.addAll(rDao.getEstPayList(req));
 			}
+			for(int i=0;i<estpList.size();i++) {
+				EstimatePay estp=new EstimatePay();
+				estp=estpList.get(i);
+				reqList1.add(rDao.getReqTitle1(estp));
+			}
 			  while (estpList.remove(null));
 			System.out.println("estpList:"+estpList);
 			Map<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("estpList", estpList);
+			map1.put("reqList", reqList1);
 			
 			return map1;
 			

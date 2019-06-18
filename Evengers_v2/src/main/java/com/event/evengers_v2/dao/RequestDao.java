@@ -108,6 +108,8 @@ public interface RequestDao {
 
 	public Request getReqTitle(Estimate est);
 
+	public Request getReqTitle1(EstimatePay estp);
+
 
 
 
