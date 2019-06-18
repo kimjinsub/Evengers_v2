@@ -3,10 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.event.evengers_v2.dao.FinancialDao">
-<!-- 	<resultMap type="List" id="String">
-		<result property="sum" column="SUM(CAL_PRICE)"/>
-		<result property="category" column="CAL_CATEGORY"/>
-	</resultMap> -->
 	<insert id="calInsert">
 		INSERT INTO CAL VALUES('CAL'||LPAD(CAL_SEQ.NEXTVAL,4,0),#{c_id},#{cal_receiptdate},#{cal_category},#{cal_contents},#{cal_price})		
 	</insert>
@@ -14,9 +10,15 @@
 		SELECT SUM(CAL_PRICE) || ','|| CAL_CATEGORY FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} GROUP BY CAL_CATEGORY 
 	</select>
 	<select id="getAllCal" resultType="calculate">
-	SELECT * FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} ORDER BY CAL_RECEIPTDATE
+		SELECT * FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} ORDER BY CAL_RECEIPTDATE
 	</select>
 	<select id="getTotalPrice" resultType="String">
 		SELECT SUM(CAL_PRICE) FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} 
 	</select>
+	<select id="selectSalary" resultType="monthlysalary">
+		SELECT MS_EMP_CODE,MS_P_NAME,MS_P_SALARY,MS_EMP_NAME FROM MS WHERE MS_DATE LIKE CONCAT(#{choice},'%') AND MS_C_ID=#{c_id} ORDER BY MS_EMP_CODE
+	</select>
+	<insert id="salaryInsert">
+		INSERT INTO MS VALUES(#{ms_emp_code},#{ms_date},#{ms_p_code},#{ms_c_id},#{ms_p_name},#{ms_p_salary},#{ms_emp_name}) 
+	</insert>
 </mapper>

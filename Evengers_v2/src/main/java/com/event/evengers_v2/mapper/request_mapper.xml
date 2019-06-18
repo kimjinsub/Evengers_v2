@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+ 
 <mapper namespace="com.event.evengers_v2.dao.RequestDao">
 
 	<insert id="evtReqInsert" parameterType="request">
@@ -16,36 +17,47 @@
    <insert id="evtReqImageInsert" parameterType="requestimage">
 		INSERT INTO REQI VALUES('REQI'||LPAD(REQI_SEQ.NEXTVAL,4,0),#{reqi_orifilename},#{reqi_sysfilename},#{req_code})   		
    </insert>
+   
    <insert id="estInsert" parameterType="estimate">
        INSERT INTO EST VALUES('EST'||LPAD(EST_SEQ.NEXTVAL,4,0),#{req_code},#{c_id},#{est_contents},#{est_total},#{est_okdate},#{est_refunddate})
    </insert>
+   
    <select id="getEstCode" parameterType="String" resultType="String">
    		SELECT MAX(EST_CODE) FROM EST WHERE C_ID=#{c_id}
    </select>
+   
    <insert id="estImageInsert" parameterType="estimateimage">
        INSERT INTO ESTI VALUES('ESTI'||LPAD(ESTI_SEQ.NEXTVAL,4,0),#{esti_orifilename},#{esti_sysfilename},#{est_code})
    </insert>
+   
    <select id="getEstList" parameterType="map" resultType="estimate">
       SELECT * FROM EST WHERE C_ID=#{id}
    </select>
+   
    	<select id="getEstCount" resultType="int">
 	SELECT COUNT(*) FROM EST
 	</select>
-	<select id="getReqList" resultType="request">
-	 SELECT * FROM REQUEST
+	
+	<select id="getReqList" parameterType="estimate" resultType="request">
+	 SELECT * FROM REQUEST WHERE REQ_CODE=#{req_code}
 	</select>
+	
 	<select id="showEstimate" parameterType="string" resultType="estimate">
 	 SELECT * FROM EST WHERE EST_CODE=#{est_code}
 	</select>
+	
 	<select id="getEstimateImage" parameterType="string" resultType="estimateimage">
 	SELECT * FROM ESTI WHERE EST_CODE=#{est_code}
 	</select>
+	
 	<select id="getIdTitle" parameterType="string" resultType="request">
 	SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
 	</select>
+	
 	<delete id="estiDelete" parameterType="string">
 	DELETE FROM ESTI WHERE EST_CODE=#{est_code}
 	</delete>
+	
 	<delete id="estDelete" parameterType="string">
 	DELETE FROM EST WHERE EST_CODE=#{est_code}
 	</delete>
@@ -106,6 +118,7 @@
    <select id='getEstPayList' parameterType="request" resultType="estimatepay">
    SELECT * FROM ESTP WHERE REQ_CODE=#{req_code}
    </select>
+   
    <select id="getEstpDetail" parameterType="string" resultType="estimatepay">
    SELECT * FROM ESTP WHERE ESTP_CODE=#{estp_code}
    </select>
@@ -113,6 +126,7 @@
    <select id="getEstpCode" resultType="string">
    SELECT MAX(ESTP_CODE) FROM ESTP
    </select>
+   
    <insert id="insertEstpi" parameterType="estimatepayimage">
    INSERT INTO ESTPI VALUES('ESTPI'||LPAD(ESTPI_SEQ.NEXTVAL,4,0),#{estp_code},#{estpi_orifilename},#{estpi_sysfilename})
    </insert>
@@ -176,8 +190,18 @@
    <update id="changeState" parameterType="estimaterefund">
    UPDATE ESTP SET ESTP_REFUNDSTATE='2' WHERE ESTP_CODE=#{estp_code}
    </update>
+  
    <select id="getCompleteEstr" resultType="estimaterefund">
    SELECT * FROM ESTR WHERE ESTP_CODE=#{estp_code} AND ESTR_STATE=1
+  
+   </select>
+  
+   <select id="getReqTitle" parameterType="estimate" resultType="request">
+   SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
+   </select>
+   
+    <select id="getReqTitle1" parameterType="estimatepay" resultType="request">
+   SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
    </select>
    
 </mapper>

@@ -9,11 +9,59 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
-.payList{
+img {
+	width: 300px;
+	height: auto;
+	position:relative;
+    margin:auto;
+    top:50%; bottom:0; left:10%; right:0;
+}
+
+.payList {
+	background-color: white;
 	border: 1px solid black;
 	display: block;
-	width: 70%; height: 350px;
-	overflow: auto; margin: auto;
+	width: 65%;
+	height: 380px;
+	overflow: auto;
+	margin: auto;
+	border-radius: 10px;
+}
+.payList2 {
+	position: relative;
+	height: 200px;
+	float: left;
+	line-height: 100px;
+}
+
+.payList3 {
+	float: left;
+	position:relative;
+    margin:auto;
+    top:5%; bottom:0; left:10%; right:0;
+}
+.ep_code {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: block;
+	margin: 20px auto;
+	max-width: 180px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 20px 30px;
+}
+
+.ep_code {
+	color: rgba(30, 22, 54, 0.6);
+	box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+.ep_code:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 }
 </style>
 </head>

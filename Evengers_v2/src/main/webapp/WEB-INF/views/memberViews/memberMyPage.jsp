@@ -71,12 +71,26 @@
           <span>개인정보 수정</span></a>
       </li>
      <!-- Nav Item - Charts -->
-      <li id="payList" class="nav-item" onclick="Ajax_forward('payList')">
+   <!--    <li id="payList" class="nav-item" onclick="Ajax_forward('payList')">
         <a class="nav-link" href="#">
-          <!-- <i class="fas fa-fw fa-chart-area"></i> -->
+          <i class="fas fa-fw fa-chart-area"></i>
           <span>구매내역</span></a>
-      </li>
+      </li> -->
       <!-- Nav Item - Pages Collapse Menu -->
+      
+          <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <!-- <i class="fas fa-fw fa-cog"></i> -->
+          <span>구매내역</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+            <div id="evtpayList"><a class="collapse-item" href="#"onclick="Ajax_forward('payList')">이벤트결제내역</a></div>
+            <div id="estpayList"><a class="collapse-item" href="#"onclick="Ajax_forward('estimatePayList')">견적결제내역</a></div>
+          </div>
+        </div>
+      </li>
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -179,7 +193,7 @@
         <div class="container-fluid">
 
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800"></h1>
           </div>
           <div id="mMain">
           

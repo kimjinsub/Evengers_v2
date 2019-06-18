@@ -172,4 +172,7 @@
 		resultType="int">
 		SELECT COUNT(*) FROM EP WHERE m_id=#{m_id}
 	</select>
+	<delete id="myEvtDelete" parameterType="String">
+		DELETE FROM E WHERE E_CODE=#{e_code}
+	</delete>
 </mapper>

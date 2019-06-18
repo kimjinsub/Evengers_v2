@@ -32,8 +32,6 @@ public interface RequestDao {
 
 	public int getEstCount();
 
-	public ArrayList<Request> getReqList();
-
 	public Estimate showEstimate(String est_code);
 
 	public EstimateImage getEstimateImage(String est_code);
@@ -105,6 +103,12 @@ public interface RequestDao {
 	public int changeState(EstimateRefund estr);
 
 	public EstimateRefund getCompleteEstr(String estp_code);
+
+	public ArrayList<Request> getReqList(Estimate est);
+
+	public Request getReqTitle(Estimate est);
+
+	public Request getReqTitle1(EstimatePay estp);
 
 
 

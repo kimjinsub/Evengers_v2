@@ -40,19 +40,21 @@ public class Controller_Eunseo {
 	PayMM paym;
 	@Autowired
 	FinancialMM fm;
-
+	
 	@RequestMapping(value = "/eunseo", method = RequestMethod.GET)
 	public String home() {
 		return "home";
 	}
-
+	@RequestMapping(value = "/introduce", method = RequestMethod.GET)
+	public String introduce() {
+		return "commonViews/introduce";
+	}
 	@RequestMapping(value = "/evtInfo", method = RequestMethod.GET)
 	public ModelAndView evtInfo(String e_code,Integer pageNum,Integer listCount) {
-		mav = em.getEvtInfo(e_code,pageNum,listCount);
+		mav = em.getEvtInfo(e_code, pageNum,listCount);
 		/* System.out.println(e_code); */
 		return mav;
 	}
-
 	@RequestMapping(value = "/selectOption", produces = "application/json; charset=utf-8")
 	public @ResponseBody String selectOption(String e_code) {
 		String json_option = em.getOptionList(e_code);
@@ -91,12 +93,42 @@ public class Controller_Eunseo {
 		System.out.println("eb_code=" + eb_code);
 		return mav;
 	}
-
 	@RequestMapping(value = "/performManage")
 	public ModelAndView performManage() {
 		String c_id = (String) session.getAttribute("id");
-		System.out.println("c_id2=" + c_id);
 		mav = pm.getPerformList(c_id);
+		return mav;
+	}
+
+	@RequestMapping(value = "/inputSalary")
+	public ModelAndView inputSalary(Date date) {
+		mav = fm.inputSalary(date);
+		return mav;
+	}
+
+	@RequestMapping(value = "/selectSalary")
+	public ModelAndView selectSalary(Date date) {
+		mav = fm.selectSalary(date);
+		return mav;
+	}
+
+	@RequestMapping(value = "/salary")
+	public ModelAndView salary() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/salary");
+		return mav;
+	}
+	@RequestMapping(value = "/salaryList")
+	public ModelAndView salaryList() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/salaryList");
+		return mav;
+	}
+
+	@RequestMapping(value = "/salaryManage")
+	public ModelAndView salaryManage() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/salaryManage");
 		return mav;
 	}
 
@@ -106,12 +138,14 @@ public class Controller_Eunseo {
 		mav.setViewName("ceoViews/accountingManage");
 		return mav;
 	}
+
 	@RequestMapping(value = "/calList")
 	public ModelAndView calList() {
 		mav = new ModelAndView();
 		mav.setViewName("ceoViews/calList");
 		return mav;
 	}
+
 	@RequestMapping(value = "/calInsert")
 	public ModelAndView calculateInsert(Calculate calb) {
 		mav = new ModelAndView();
@@ -125,13 +159,15 @@ public class Controller_Eunseo {
 		mav = fm.getCalList(choicedate, c_id);
 		return mav;
 	}
+
 	@RequestMapping(value = "/allShowCal", produces = "application/json; charset=utf-8")
 	public @ResponseBody String allShowCal(Date choicedate) {
 		String c_id = session.getAttribute("id").toString();
-		System.out.println("c_id2="+c_id);
-		System.out.println("choicedate2="+choicedate);
-		return fm.allShowCal(choicedate,c_id);
+		System.out.println("c_id2=" + c_id);
+		System.out.println("choicedate2=" + choicedate);
+		return fm.allShowCal(choicedate, c_id);
 	}
+
 	@RequestMapping(value = "/validation", produces = "application/json; charset=utf-8;")
 	public @ResponseBody String validation(String day) {
 		System.out.println("day2=" + day);

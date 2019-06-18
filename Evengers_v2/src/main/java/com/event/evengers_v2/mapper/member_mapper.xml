@@ -5,7 +5,6 @@
 <mapper namespace="com.event.evengers_v2.dao.MemberDao">
 
 	 <resultMap type="member" id="member">
-	
 		<result property="m_id" column="m_id"/>
 		<result property="m_pw" column="m_pw"/>
 		<result property="m_name" column="m_name"/>
@@ -13,7 +12,6 @@
 		<result property="m_rrn" column="m_rrn"/>
 		<result property="m_email" column="m_email"/>
 		<result property="m_area" column="m_area"/>
-		
 	</resultMap> 
 	<resultMap type="ceo" id="ceo">
 	<result property="c_id" column="c_id"/>
@@ -22,7 +20,6 @@
 		<result property="c_tel" column="c_tel"/>
 		<result property="c_rn" column="c_rn"/>
 		<result property="c_email" column="c_email"/>
-	
 	</resultMap> 
 	<select id="mAccess" parameterType="String" resultType="String">
 		SELECT M_PW FROM M WHERE M_ID=#{m_id}
@@ -30,7 +27,6 @@
 	<select id="cAccess" parameterType="String" resultType="String">
 		SELECT C_PW FROM C WHERE C_ID=#{c_id}
 	</select>
-	
 	<select id="sendMId" parameterType="String" resultType="String">
 		SELECT M_ID FROM M WHERE M_EMAIL=#{m_email}
 	</select>
@@ -55,17 +51,12 @@
 	<update id="pwCeoChange" parameterType="String" >
 		UPDATE C SET C_PW = #{c_pw} WHERE C_ID=#{c_id}
 	</update>
-
-	
 	<insert id="memberInsert">
 		INSERT INTO M VALUES(#{m_id},#{m_pw},#{m_name},#{m_tel},#{m_rrn},#{m_email},#{m_area})
 	</insert>
-	
-
 	<select id="memberDoubleChk" resultType="integer">
 		SELECT COUNT(*) FROM M WHERE M_ID = #{m_id}
 	</select>
-
 	<select id="testDao" resultType="String">
 	    SELECT M_ID FROM MEMBER WHERE M_ID=#{testcode}
 	</select>
@@ -104,5 +95,10 @@
 		resultType="String">
 		SELECT M_ID from M WHERE M_ID=#{m_id, jdbcType=VARCHAR}
 	</select>
-	
+	<delete id="memberDelete" parameterType="String">
+		DELETE FROM M WHERE M_ID=#{m_id}
+	</delete>
+	<delete id="ceoDelete" parameterType="String">
+		DELETE FROM C WHERE C_ID=#{c_id}
+	</delete>
 </mapper>

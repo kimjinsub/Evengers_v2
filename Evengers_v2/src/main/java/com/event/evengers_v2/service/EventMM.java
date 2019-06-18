@@ -151,17 +151,18 @@ public class EventMM {
 	}
 
 	public ModelAndView getEvtInfo(String e_code,Integer pageNum,Integer listCount) {
+		String id = (String) session.getAttribute("id");
 		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
 		listCount=10;
-		if(pageNum==null){pageNum=1;}
 		mav = new ModelAndView();
-		String id = (String) session.getAttribute("id");
 		String view = null;
 		String str = null;
 		float starAverage = 0;
 		String choiceChk;
 		Event eb = new Event();
 		List<Review> rList = null;
+		if(id!=null) {
+		if(pageNum==null){pageNum=1;}
 		eb = eDao.getEvtInfo(e_code);
 		rList = eDao.getReview(e_code,pageNum,listCount);
 		int rCount =eDao.rCount(e_code);
@@ -188,8 +189,10 @@ public class EventMM {
 		mav.addObject("choiceChk", choiceChk);
 		mav.addObject("starAverage", str);
 		mav.addObject("paging", new Paging(rCount, pageNum, listCount, 10, "getEvtInfo").makeHtmlPaging());
-
 		view = "commonViews/evtInfo";
+		}else {
+			view = "commonViews/loginFrm";
+		}
 		mav.setViewName(view);
 		return mav;
 	}
@@ -580,5 +583,16 @@ public class EventMM {
 	        if(e.size()==0) {result.put("msg", "해당 검색에 대한 이벤트가 없습니다");}
 	        json_result=gson.toJson(result);
 	      return json_result;
+	}
+
+	public String myEvtDelete(String e_code) {
+		String str="";
+		if (eDao.myEvtDelete(e_code)) {
+			str = "이벤트 삭제됨";
+			return str;
+		} else {
+			str = "이벤트 삭제 안됨.";
+		}
+		return str;
 	}
 }

@@ -51,13 +51,14 @@
 					success : function(data) {
 						console.log(data);
 						var estpList = data['estpList'];
+						var reqList = data['reqList'];
 						var str = "<table id='et' border='1'><th>구매코드</th><th>상품제목</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th>";
 
 						for ( var i in estpList) {
 							str += "<tr><td>" + estpList[i].estp_code + "</td><td>"
 									+ "<a href='#' onclick=getDetailEstp('"
 									+ estpList[i].estp_code + "')>"
-									+ estpList[i].estp_contents + "</a></td><td>"
+									+ reqList[i].req_title + "</a></td><td>"
 									+ estpList[i].estp_total + '원 '+"</td><td>"
 									+ estpList[i].c_id+"</td><td>"
 									+ estpList[i].estp_payday+"</td><tr>"

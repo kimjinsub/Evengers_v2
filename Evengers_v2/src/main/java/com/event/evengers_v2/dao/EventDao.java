@@ -92,4 +92,6 @@ public interface EventDao {
 	public int rCount(String e_code);
 
 	public int evtBuyChk(String id);
+	
+	public boolean myEvtDelete(String e_code);
 }

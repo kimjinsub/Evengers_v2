@@ -30,5 +30,9 @@ public interface PersonnelDao {
 	Position getPositionInfo(String p_code);
 
 	Department getDeptInfo(String dept_code);
+	
+	ArrayList<Employee> getSalaryEmp(@Param("c_id")String c_id);
+
+	ArrayList<Position> getSalaryP(@Param("c_id") String c_id);
 
 }

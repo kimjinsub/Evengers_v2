@@ -51,15 +51,15 @@ function getRecivedEstList() {
 		success : function(data) {
 			console.log(data.estList);
 			var estList = data['estList'];
-			//var reqList = data['reqList'];
+			var reqList = data['reqList'];
 			//var paging =result['paging'];
-			var str = "<table id='et' border='1'><th>견적자 ID</th><th>견적내용</th><th>총가격</th>";
+			var str = "<table id='et' border='1'><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
 
 			for ( var i in estList) {
 				str += "<tr><td>" + estList[i].c_id + "</td><td>"
 						+ "<a href='#' onclick=getDetailE('"
 						+ estList[i].est_code + "')>"
-						+ estList[i].est_contents+"</a></td><td>"
+						+ reqList[i].req_title+"</a></td><td>"
 						+ estList[i].est_total+'원 '+ "</td></tr>" 
 
 			}

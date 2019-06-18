@@ -3,6 +3,27 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.event.evengers_v2.dao.PersonnelDao">
+<resultMap type="employee" id="employee">
+		<result column="emp_code" property="emp_code"/>
+		<result column="emp_name" property="emp_name"/>
+		<result column="c_id" property="c_id"/>
+		<result column="p_code" property="p_code"/>
+		<result column="dept_code" property="dept_code"/>
+		<result column="emp_rrn" property="emp_rrn"/>
+		<result column="emp_enterdate" property="emp_enterdate"/>
+		<result column="emp_tel" property="emp_tel"/>
+		<result column="emp_addr" property="emp_addr"/>
+		<result column="emp_bank" property="emp_bank"/>
+		<result column="emp_acnumber" property="emp_acnumber"/>
+		<result column="emp_orifilename" property="emp_orifilename"/>
+		<result column="emp_sysfilename" property="emp_sysfilename"/>
+	</resultMap>
+	<resultMap type="position" id="position">
+		<result column="p_code" property="p_code"/>
+		<result column="p_name" property="p_name"/>
+		<result column="c_id" property="c_id"/>
+		<result column="p_salary" property="p_salary"/>
+	</resultMap>
 	<insert id="addPosition" parameterType="position">
 		INSERT INTO P VALUES('P'||LPAD(P_SEQ.NEXTVAL,4,0),#{p_name},#{c_id},#{p_salary})
 	</insert>
@@ -33,4 +54,5 @@
 	<select id="getDeptInfo" parameterType="String" resultType="department">
 		SELECT * FROM DEPT WHERE DEPT_CODE=#{dept_code}
 	</select>
+	
 </mapper>
