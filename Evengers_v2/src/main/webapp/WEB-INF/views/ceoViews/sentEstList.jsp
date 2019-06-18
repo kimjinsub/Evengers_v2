@@ -32,11 +32,16 @@
 }
 
 #estList{
-margin-left: 300px;
+margin-top:60px;
+margin-left: 250px;
 align-content: center;
+}
+#dd{
+text-align: center;
 }
 </style>
 <body>
+ <h1 id='dd'> 보낸 견적서 내역</h1>
 
 	<div id="estList">
 	</div>

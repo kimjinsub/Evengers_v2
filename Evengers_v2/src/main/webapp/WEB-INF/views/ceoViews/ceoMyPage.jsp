@@ -83,10 +83,12 @@
           <span>환불 현황</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+          <div class="bg-white py-4 collapse-inner rounded">
             <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">환불 요청</a></div>
-            <div id="refundCompleteList"onclick="Ajax_forward('refundCompleteList')"><a class="collapse-item" href="#">환불 완료</a></div>
+            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">이벤트 환불 요청</a></div>
+            <div id="refundCompleteList"onclick="Ajax_forward('refundCompleteList')"><a class="collapse-item" href="#">이벤트 환불 내역</a></div>
+              <div id="refundAcceptPage"onclick="Ajax_forward('refundAcceptPage')"><a class="collapse-item" href="#">견적 환불 요청</a></div>
+            <div id="estrRefundCompleteList"onclick="Ajax_forward('estrRefundCompleteList')"><a class="collapse-item" href="#">견적 환불 내역</a></div>
           </div>
         </div>
       </li>

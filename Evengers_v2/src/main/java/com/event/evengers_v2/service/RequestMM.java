@@ -166,7 +166,11 @@ public class RequestMM {
 		map.put("num", num);
 		estList = rDao.getEstList(map);
 		System.out.println("estList:" + estList);
-		reqList = rDao.getReqList();
+		for(int i=0;i<estList.size();i++) {
+			Estimate est=new Estimate();
+			est=estList.get(i);
+			reqList.addAll(rDao.getReqList(est));
+		}
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("estList", estList);
 		map1.put("reqList", reqList);
@@ -349,6 +353,7 @@ public class RequestMM {
 	public Map<String, Object> getRecivedEstList(String id, Integer pageNum) {
 		ArrayList<Estimate> estList = new ArrayList<Estimate>();
 		ArrayList<Request> reqList = new ArrayList<Request>();
+		ArrayList<Request> reqList1 = new ArrayList<Request>();
 		int num = (pageNum == null) ? 1 : pageNum;
 		System.out.println("아이디:" + id);
 		//Map<String, Object> map = new HashMap<String, Object>
@@ -360,13 +365,17 @@ public class RequestMM {
 			req=reqList.get(i);
 			System.out.println("Req="+req);
 			estList.addAll(rDao.getRecivedEstList1(req));
-			
+		}
+		for(int i=0;i<estList.size();i++) {
+			Estimate est=new Estimate();
+			est=estList.get(i);
+			reqList1.add(rDao.getReqTitle(est));
 		}
 		System.out.println("estList="+estList);
 		//reqList = rDao.getReqList();
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("estList", estList);
-		map1.put("reqList", reqList);
+		map1.put("reqList", reqList1);
 		//map1.put("paging", getPaging(num));
 		// System.out.println("jsonStr=" + jsonStr);
 		return map1;
@@ -682,6 +691,7 @@ public class RequestMM {
 				reqList.add(rDao.getRefundInfo(req_code));
 				estrList.add(rDao.getCompleteEstr(estp_code));
 			}
+			
 			map1.put("reqList",reqList);
 			map1.put("estpList", estpList);
 			map1.put("estrList", estrList);
