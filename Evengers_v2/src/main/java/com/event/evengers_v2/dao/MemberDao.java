@@ -68,4 +68,8 @@ public interface MemberDao {
 
 	boolean ceoModifyInfo2(@Param("c_id")String id, @Param("c_name")String name,@Param("c_tel") String tel, @Param("c_email")String email);
 
+	boolean memberDelete(@Param("m_id")String id);
+
+	boolean ceoDelete(@Param("c_id")String id);
+
 }

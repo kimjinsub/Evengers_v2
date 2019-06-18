@@ -434,4 +434,24 @@ public class Controller_Chun {
 		String json_evtList=em.searchEvt(evtSearch);
 		return json_evtList;
 	}
+	@RequestMapping(value = "/memberDelete",produces = "application/json; charset=utf8")
+	public @ResponseBody String memberDelete() {
+		String str = "";
+		str=mm.memberDelete();
+		session.invalidate();
+		return str;
+	}
+	@RequestMapping(value = "/ceoDelete",produces = "application/json; charset=utf8")
+	public @ResponseBody String ceoDelete() {
+		String str = "";
+		str=mm.ceoDelete();
+		session.invalidate();
+		return str;
+	}
+	@RequestMapping(value = "/myEvtDelete",produces = "application/json; charset=utf8")
+	public @ResponseBody String myEvtDelete(String e_code) {
+		String str = "";
+		str=em.myEvtDelete(e_code);
+		return str;
+	}
 }

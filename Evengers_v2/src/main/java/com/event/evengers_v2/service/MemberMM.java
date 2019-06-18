@@ -343,12 +343,35 @@ public String memberTest(String testcode) {
 
 	public ModelAndView myEvtManagement(String id) {
 		if(eDao.myEvtManagement(id)!=null) {
-			List<Event> eList = eDao.myEvtManagement(id);  
+			List<Event> eList = eDao.myEvtManagement(id);
+			System.out.println("eList"+eList);
 			mav.addObject("eList", eList);
 		}else {
 			mav.addObject("eList", "등록한 상품이 없습니다");
 		}
 		mav.setViewName("ceoViews/myEvtManagement");
 		return mav;
+	}
+
+	public String memberDelete() {
+		String str = "";
+		String id= (String) session.getAttribute("id");
+			if (mDao.memberDelete(id)) {
+				str = "개인 회원 탈퇴 되었습니다";
+			} else {
+				str = "개인 회원 탈퇴 ㄴㄴ";
+			}
+		return str;
+	}
+
+	public String ceoDelete() {
+		String str = "";
+		String id= (String) session.getAttribute("id");
+			if (mDao.ceoDelete(id)) {
+				str = "기업 회원 탈퇴 되었습니다";
+			} else {
+				str = "기업 회원 탈퇴 ㄴㄴ";
+			}
+		return str;
 	}
 }

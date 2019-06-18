@@ -83,7 +83,7 @@
 				</tr>
 				</table>
 				<button class="e_code" name="${event.e_code}">수정</button>
-				<button >삭제</button>
+				<button class="evtDel_code" name="${event.e_code}">삭제</button>
 		</div>
 	</c:forEach>
 	
@@ -112,7 +112,24 @@ $('.e_code').each(function(){
 		})
 	})
 })
-
+$('.evtDel_code').each(function(){
+	 var e_code =$(this).attr("name");
+		$(this).click(function(){
+		console.log(e_code);
+		$.ajax({
+			type:'get',
+			url:'myEvtDelete',
+			data:{e_code:e_code}, 
+			dataType:'text', 
+			success:function(data){
+				alert(data);
+				location.href ="javascript:Ajax_forward('myEvtManagement')";
+			},error:function(error){
+				console.log(error);
+			}
+		})
+	})
+})
 var $layerWindow =$('#articleView_layer');
 $layerWindow.find('#bg_layer').on('mousedown',function(event){
 	console.log(event);
