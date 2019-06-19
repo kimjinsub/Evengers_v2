@@ -26,6 +26,15 @@ public class Paging {
 		// 현재 페이지가 속해 있는 그룹 번호
 		int currentGroup = (pageNum % pageCount > 0)
 				? pageNum/pageCount+1 : pageNum/pageCount;
+		
+		System.out.println("pageNum:"+pageNum);
+		System.out.println("pageCount:"+pageCount);
+		System.out.println("maxNum:"+maxNum);
+		System.out.println("listCount:"+listCount);
+		System.out.println("totalPage:"+totalPage);
+		System.out.println("totalGroup:"+totalGroup);
+		System.out.println("currentGroup:"+currentGroup);
+		
 		return makeHtml(currentGroup, totalPage, boardName);
 	}
 
@@ -40,14 +49,14 @@ public class Paging {
 				: currentGroup * pageCount;
 
 		if (start != 1) {
-			sb.append("<a href='"+boardName+"?pageNum=" + (start -1) + "&listCount="+listCount+"'>");
+			sb.append("<a href='"+boardName+"pageNum=" + (start -1) + "&listCount="+listCount+"'>");
 			sb.append("[이전]");
 			sb.append("</a>");
 		}
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { //현재 페이지가 아닌 경우 링크처리
-				sb.append("<a href='"+boardName+"?pageNum=" + i + "&listCount="+listCount+"'>");
+				sb.append("<a href='"+boardName+"pageNum=" + i + "&listCount="+listCount+"'>");
 				sb.append(" [ ");
 				sb.append(i);
 				sb.append(" ] ");
@@ -61,7 +70,7 @@ public class Paging {
 			}
 		}
 		if (end != totalPage) {
-			sb.append("<a href='"+boardName+"?pageNum=" + (end + 1) + "&listCount="+listCount+"'>");
+			sb.append("<a href='"+boardName+"pageNum=" + (end + 1) + "&listCount="+listCount+"'>");
 			sb.append("[다음]");
 			sb.append("</a>");
 		}

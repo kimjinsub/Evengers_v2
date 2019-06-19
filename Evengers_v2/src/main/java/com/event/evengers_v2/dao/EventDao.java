@@ -94,4 +94,7 @@ public interface EventDao {
 	public int evtBuyChk(String id);
 	
 	public boolean myEvtDelete(String e_code);
+	
+	public List<EventImage> getEvtImg(String e_code);
+
 }

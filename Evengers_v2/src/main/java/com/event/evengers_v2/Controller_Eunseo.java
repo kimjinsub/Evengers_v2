@@ -50,8 +50,8 @@ public class Controller_Eunseo {
 		return "commonViews/introduce";
 	}
 	@RequestMapping(value = "/evtInfo", method = RequestMethod.GET)
-	public ModelAndView evtInfo(String e_code,Integer pageNum,Integer listCount) {
-		mav = em.getEvtInfo(e_code, pageNum,listCount);
+	public ModelAndView evtInfo(String e_code) {
+		mav = em.getEvtInfo(e_code);
 		/* System.out.println(e_code); */
 		return mav;
 	}

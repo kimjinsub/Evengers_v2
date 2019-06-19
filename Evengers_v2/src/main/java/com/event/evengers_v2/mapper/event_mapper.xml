@@ -166,7 +166,7 @@
 	</select>
 	<select id="rCount" parameterType="String"
 		resultType="int">
-		SELECT COUNT(*) FROM E WHERE E_CODE=#{e_code}
+		SELECT COUNT(*) FROM RE WHERE E_CODE=#{e_code}
 	</select>
 	<select id="evtBuyChk" parameterType="String"
 		resultType="int">
@@ -175,4 +175,8 @@
 	<delete id="myEvtDelete" parameterType="String">
 		DELETE FROM E WHERE E_CODE=#{e_code}
 	</delete>
+	<select id="getEvtImg" parameterType="String"
+		resultType="eventimage">
+		SELECT * FROM EI WHERE E_CODE=#{e_code}
+	</select>
 </mapper>

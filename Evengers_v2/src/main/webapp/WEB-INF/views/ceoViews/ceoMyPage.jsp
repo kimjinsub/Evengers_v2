@@ -6,251 +6,217 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-  <title>SB Admin 2 - Dashboard</title>
+<title>SB Admin 2 - Dashboard</title>
 
-  <!-- Custom fonts for this template-->
-  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css"
+	rel="stylesheet">
 
 </head>
 
 <body id="page-top">
+	<div id="wrapper">
+		<ul
+			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+			id="accordionSidebar">
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="#">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-laugh-wink"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">
+					Evengers<sup>CEO</sup>
+				</div>
+			</a>
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+			<hr class="sidebar-divider my-0">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+			<li class="nav-item active"><a class="nav-link" href="#"> <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
+					<span>기업마이페이지</span></a></li>
+			<hr class="sidebar-divider">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Evengers<sup>CEO</sup></div>
-      </a>
+			<li id="ceoInfo" class="nav-item" onclick="Ajax_forward('ceoInfo')">
+				<a class="nav-link" href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> -->
+					<span>사업자 정보 보기</span></a>
+			</li>
+			<li id="ceoInfoModify" class="nav-item"
+				onclick="Ajax_forward('ceoInfoModify')"><a class="nav-link"
+				href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> --> <span>사업자
+						정보 수정</span></a></li>
+			<li id="sellInfo" class="nav-item" onclick="Ajax_forward('sellInfo')">
+				<a class="nav-link" href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> -->
+					<span>판매현황</span></a>
+			</li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseTwo"
+				aria-expanded="true" aria-controls="collapseTwo"> <!-- <i class="fas fa-fw fa-cog"></i> -->
+					<span>환불 현황</span>
+			</a>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-4 collapse-inner rounded">
+						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
+						<div id="ceoRefundList" onclick="Ajax_forward('ceoRefundList')">
+							<a class="collapse-item" href="#">이벤트 환불 요청</a>
+						</div>
+						<div id="refundCompleteList"
+							onclick="Ajax_forward('refundCompleteList')">
+							<a class="collapse-item" href="#">이벤트 환불 내역</a>
+						</div>
+						<div id="refundAcceptPage"
+							onclick="Ajax_forward('refundAcceptPage')">
+							<a class="collapse-item" href="#">견적 환불 요청</a>
+						</div>
+						<div id="estrRefundCompleteList"
+							onclick="Ajax_forward('estrRefundCompleteList')">
+							<a class="collapse-item" href="#">견적 환불 내역</a>
+						</div>
+					</div>
+				</div></li>
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="#">
-          <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
-          <span>기업마이페이지</span></a>
-      </li>
+			<li id="myEvtManagement" class="nav-item"
+				onclick="Ajax_forward('myEvtManagement')"><a class="nav-link"
+				href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> --> <span>내
+						상품 관리</span></a></li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
+			<li id="sentEstList" class="nav-item"
+				onclick="Ajax_forward('sentEstList')"><a class="nav-link"
+				href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> --> <span>보낸
+						견적서</span></a></li>
 
-      <!-- Heading -->
-      <!-- <div class="sidebar-heading">
-        Interface
-      </div> -->
+			<hr class="sidebar-divider d-none d-md-block">
 
-     <!-- Nav Item - Charts -->
-      <li id="ceoInfo" class="nav-item" onclick="Ajax_forward('ceoInfo')">
-        <a class="nav-link" href="#">
-          <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-          <span>사업자 정보 보기</span></a>
-      </li>
-     <!-- Nav Item - Charts -->
-      <li id="ceoInfoModify" class="nav-item" onclick="Ajax_forward('ceoInfoModify')">
-        <a class="nav-link" href="#">
-          <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-          <span>사업자 정보 수정</span></a>
-      </li>
-     <!-- Nav Item - Pages Collapse Menu -->
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-          <span>판매현황</span>
-          </a>
-      	  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">이벤트 판매 내역</a></div>
-            <div id="estSellPage"onclick="Ajax_forward('estSellPage')"><a class="collapse-item" href="#">견적 판매 내역</a></div>
-          </div>
-        </div>
-      
-      </li>
-      <!-- Nav Item - Pages Collapse Menu -->
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <!-- <i class="fas fa-fw fa-cog"></i> -->
-          <span>환불 현황</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-            <div id="ceoRefundList"onclick="Ajax_forward('ceoRefundList')"><a class="collapse-item" href="#">환불 요청</a></div>
-            <div id="refundCompleteList"onclick="Ajax_forward('refundCompleteList')"><a class="collapse-item" href="#">환불 완료</a></div>
-          </div>
-        </div>
-      </li>
-      
-      <!-- Nav Item - Charts -->
-      <li id="myEvtManagement" class="nav-item" onclick="Ajax_forward('myEvtManagement')">
-        <a class="nav-link" href="#">
-          <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-          <span>내 상품 관리</span></a>
-      </li>
-      
-      <li id="sentEstList" class="nav-item"onclick="Ajax_forward('sentEstList')">
-        <a class="nav-link" href="#">
-          <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-          <span>보낸 견적서</span></a>
-      </li>
-      
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
 
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
+		</ul>
+		<div id="content-wrapper" class="d-flex flex-column">
 
-    </ul>
-    <!-- End of Sidebar -->
+			<div id="content">
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+				<nav
+					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-      <!-- Main Content -->
-      <div id="content">
+					<button id="sidebarToggleTop"
+						class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+					<ul class="navbar-nav ml-auto">
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+						<li class="nav-item dropdown no-arrow d-sm-none"><a
+							class="nav-link dropdown-toggle" href="#" id="searchDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+						</a> <!-- Dropdown - Messages -->
+							<div
+								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text"
+											class="form-control bg-light border-0 small"
+											placeholder="Search for..." aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div></li>
+						<div class="topbar-divider d-none d-sm-block"></div>
+						<li class="nav-item"><a class="nav-link" href="./"><span
+								class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로 가기</span></a></li>
+						<div class="topbar-divider d-none d-sm-block"></div>
+						<li class="nav-item"><a class="nav-link" href="./myReqList"><span
+								class="mr-2 d-none d-lg-inline text-gray-800 ">의뢰목록</span></a></li>
+						<div class="topbar-divider d-none d-sm-block"></div>
 
-          <!-- Topbar Search -->
-          <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form> -->
+						<li class="nav-item"><a class="nav-link"
+							href="./evtInsertFrm"><span
+								class="mr-2 d-none d-lg-inline text-gray-800 ">이벤트 상품 등록</span></a></li>
 
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-            <div class="topbar-divider d-none d-sm-block"></div>
-			<li class="nav-item"><a class="nav-link" href="./"><span class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로 가기</span></a></li>
-            <div class="topbar-divider d-none d-sm-block"></div>
-               <li class="nav-item"><a class="nav-link" href="./myReqList"><span class="mr-2 d-none d-lg-inline text-gray-800 ">의뢰목록</span></a></li>
-            <div class="topbar-divider d-none d-sm-block"></div>
 
-               <li class="nav-item"><a class="nav-link" href="./evtInsertFrm"><span class="mr-2 d-none d-lg-inline text-gray-800 ">이벤트 상품 등록</span></a></li>
-          
-            
+						<div class="topbar-divider d-none d-sm-block"></div>
+						<li class="nav-item"><a class="nav-link" href="./erpIndex"><span
+								class="mr-2 d-none d-lg-inline text-gray-800 ">ERP 자원 관리</span></a></li>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
-               <li class="nav-item"><a class="nav-link" href="./erpIndex"><span class="mr-2 d-none d-lg-inline text-gray-800 ">ERP 자원 관리</span></a></li>
 
-            <!-- Nav Item - User Information -->
-           
-             <div class="topbar-divider d-none d-sm-block"></div>
+						<div class="topbar-divider d-none d-sm-block"></div>
 
-               <li class="nav-item"><a class="nav-link" href="./logout"><span class="mr-2 d-none d-lg-inline text-gray-800 ">로그아웃</span></a></li>
-                <div class="topbar-divider d-none d-sm-block"></div>	
-          </ul>
-        </nav>
-        <div class="container-fluid">
+						<li class="nav-item"><a class="nav-link" href="./logout"><span
+								class="mr-2 d-none d-lg-inline text-gray-800 ">로그아웃</span></a></li>
+						<div class="topbar-divider d-none d-sm-block"></div>
+					</ul>
+				</nav>
+				<div class="container-fluid">
 
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-          </div>
-          <div id="cMain">
-          
-          
-          </div>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+					</div>
+					<div id="cMain"></div>
+					<script type="text/javascript"
+						src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
+					<script type="text/javascript"
+						src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+					<script type="text/javascript"
+						src="${pageContext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/admin/vendor/chart.js/Chart.min.js"></script> --%>
-
-  <!-- Page level custom scripts -->
-  <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/demo/chart-area-demo.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/demo/chart-pie-demo.js"></script> --%>
-
+					<script type="text/javascript"
+						src="${pageContext.request.contextPath}/admin/js/sb-admin-2.min.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
-</html>	
-</body>
 <script>
-	
-	goCeoMenu("ceoInfo","#cMain");
-	
-	function goCeoMenu(url,position){
+	goCeoMenu("ceoInfo", "#cMain");
+
+	function goCeoMenu(url, position) {
 		$.ajax({
-			url:url,
-			dataType:"html",
-			success:function(result){
+			url : url,
+			dataType : "html",
+			success : function(result) {
 				$(position).html(result);
 			},
-			error:function(error){
+			error : function(error) {
 				console.log(error);
 			}
 		})
 	}
-	function Ajax_forward(url){
+	function Ajax_forward(url) {
 		$.ajax({
-			url:url,
-			dataType:"html",
-			success:function(page){
+			url : url,
+			dataType : "html",
+			success : function(page) {
 				$("#cMain").html(page);
 			},
-			error:function(error){
+			error : function(error) {
 				console.log(error);
 			}
 		})
 	}
-	
 </script>
 </html>

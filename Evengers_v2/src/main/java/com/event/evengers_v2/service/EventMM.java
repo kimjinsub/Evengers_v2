@@ -150,10 +150,9 @@ public class EventMM {
 		return path;
 	}
 
-	public ModelAndView getEvtInfo(String e_code,Integer pageNum,Integer listCount) {
+	public ModelAndView getEvtInfo(String e_code) {
 		String id = (String) session.getAttribute("id");
 		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-		listCount=10;
 		mav = new ModelAndView();
 		String view = null;
 		String str = null;
@@ -161,10 +160,11 @@ public class EventMM {
 		String choiceChk;
 		Event eb = new Event();
 		List<Review> rList = null;
+		List<EventImage> eiList = null;
 		if(id!=null) {
-		if(pageNum==null){pageNum=1;}
 		eb = eDao.getEvtInfo(e_code);
-		rList = eDao.getReview(e_code,pageNum,listCount);
+		//rList = eDao.getReview(e_code,pageNum,listCount);
+		eiList = eDao.getEvtImg(e_code);
 		int rCount =eDao.rCount(e_code);
 		choiceChk = eDao.getChoiceChk(e_code, id);
 		if (eDao.reviewChk(e_code) != 0) {
@@ -183,12 +183,14 @@ public class EventMM {
 		} else {
 			str = "0";
 		}
+		System.out.println("rCount"+rCount);
 		mav.addObject("eb", eb);
 		mav.addObject("id", id);
-		mav.addObject("rList", rList);
+		//mav.addObject("rList", rList);
+		mav.addObject("eiList", eiList);
 		mav.addObject("choiceChk", choiceChk);
 		mav.addObject("starAverage", str);
-		mav.addObject("paging", new Paging(rCount, pageNum, listCount, 10, "getEvtInfo").makeHtmlPaging());
+		//mav.addObject("paging", new Paging(rCount, pageNum, listCount, 10, "evtInfo?e_code="+e_code).makeHtmlPaging());
 		view = "commonViews/evtInfo";
 		}else {
 			view = "commonViews/loginFrm";
@@ -196,7 +198,20 @@ public class EventMM {
 		mav.setViewName(view);
 		return mav;
 	}
-
+	public String getReply(String e_code, Integer pageNum, Integer listCount) {
+		String json_result = "";
+		List<Review> rList = new ArrayList<Review>();
+		if(pageNum==null){pageNum=1;}
+		rList = eDao.getReview(e_code, pageNum, listCount);
+		String paging = new Paging(eDao.rCount(e_code), pageNum, listCount, 10, "getReply").makeHtmlAjaxPaging();
+		Gson gson = new Gson();
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("rList", rList);
+		result.put("paging", paging);
+		json_result = gson.toJson(result);
+		return json_result;
+	}
+	
 	public String getOptionList(String e_code) {
 		String json_option="";
 		ArrayList<EventOption> optionList=eDao.getOption(e_code);

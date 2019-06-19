@@ -454,4 +454,11 @@ public class Controller_Chun {
 		str=em.myEvtDelete(e_code);
 		return str;
 	}
+	
+	@RequestMapping(value = "/getReply", produces = "application/json; charset=utf8")
+	public @ResponseBody String getReply(String e_code, Integer pageNum, Integer listCount) {
+		String json_reList = em.getReply(e_code, pageNum, listCount);
+		return json_reList;
+	}
+
 }
