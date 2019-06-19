@@ -80,4 +80,10 @@ public interface MemberDao {
 
 	boolean chatOut(String sessionId);
 
+	boolean inWaitingRoom(@Param("c_id")String receiver, @Param("m_id")String sender);
+
+	int alreadyWait(@Param("c_id")String receiver, @Param("m_id")String sender);
+
+	ArrayList<String> getWaitingRoom(String c_id);
+
 }

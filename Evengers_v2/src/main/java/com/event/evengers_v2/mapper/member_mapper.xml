@@ -113,4 +113,13 @@
 	<delete id="chatOut" parameterType="String">
 		DELETE FROM CHAT WHERE SESSIONID=#{sessionId}
 	</delete>
+	<insert id="inWaitingRoom" parameterType="String">
+		INSERT INTO WR VALUES(#{c_id},#{m_id})
+	</insert>
+	<select id="alreadyWait" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM WR WHERE C_ID=#{c_id} AND M_ID=#{m_id}
+	</select>
+	<select id="getWaitingRoom" parameterType="String" resultType="String">
+		SELECT M_ID FROM WR WHERE C_ID=#{c_id}
+	</select>
 </mapper>

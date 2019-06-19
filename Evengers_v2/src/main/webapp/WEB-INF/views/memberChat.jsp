@@ -30,7 +30,9 @@ sock.onopen=function(){
 }
 sock.onmessage=function(event){
 	var box=JSON.parse(event.data);
-	content.value+=box.msg+"\n";
+	if(box.sender=="${sender}"){
+		content.value+=box.msg+"\n";
+	}
 }
 sock.onclose=function(event){
 	console.log("info : connection closed.");

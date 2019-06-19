@@ -9,51 +9,59 @@
 <meta charset="UTF-8">
 <style>
 </style>
-<title>ceoChat</title>
+<title>waiting Room</title>
 </head>
 <body>
-<h1>판매자 페이지</h1>
-<form>
-	구매자ID:${receiver}<br/>
-	대화내용:<textarea id="monitor" rows="20"></textarea><br/>
-	보낼메세지:<input id="msg" type="text"/><br/>
-	<input type="button" value="전송" onclick="sendMsg()"/>
-	<input type="button" value="접속끊기" onclick="disConn()"/>
-</form>
+<h1>판매자 대기실 페이지</h1>
+<h2>신청자ID명단</h2>
+<table border="1" id="waitingRoom">
+	<tr><th>MEMBER ID</th></tr>
+</table>
+<button onclick='disConn()'>상담종료</button>
 </body>
 <script>
 var sock = new SockJS("webSocket")
 var content = document.getElementById("monitor");
 sock.onopen=function(){
 	console.log("info : connection opened.");
-	content.value+="웹소켓 연결...상담대기중\n";
 }
+var receiver="";
+var hasNewReq="";
 sock.onmessage=function(event){
+	console.log("info : onmessage run.");
 	var box=JSON.parse(event.data);
-	if(box.sender=="${sender}"){
-		content.value+=box.msg+"\n";
+	console.log("box.",box);
+	receiver=box.sender;
+	hasNewReq=box.hasNewReq;
+	if(hasNewReq=="yes"){
+		getWaitingRoom();
 	}
 }
 sock.onclose=function(event){
 	console.log("info : connection closed.");
-	content.value+="웹소켓 끊김...\n";
 }
 sock.onerror=function(error){
 	console.log("error : ",error);
 }
-console.log("receiver","${receiver}");
-console.log("nick","${c_name}");
-function sendMsg(){
-	var obj={};
-	obj.nick="${c_name}";
-	obj.receiver="${receiver}";
-	obj.msg=$("#msg").val();
-	content.value+="나> "+obj.msg+"\n";
-	sock.send(JSON.stringify(obj));
-	$("#msg").val("");
-}
 function disConn(){
 	sock.close();
+}
+function getWaitingRoom(){
+	$.ajax({
+		url:"getWaitingRoom",
+		dataType:"text",
+		success:function(result){
+			console.log("getWR Result:",result);
+			$("#waitingRoom").html(result);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
+function openChatWindow(m_id){
+	console.log("OCW m_id:",m_id);
+	window.open("chat?receiver="+m_id,"_blank","width=400,height=700;");
 }
 </script>
 </html>

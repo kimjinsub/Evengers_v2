@@ -379,16 +379,27 @@ public String memberTest(String testcode) {
 	public ModelAndView chat(String receiver) {
 		mav=new ModelAndView();
 		String sender = session.getAttribute("id").toString();
-		if(receiver==null) {//ceo
-			mav.addObject("receiver", null);
+		mav.addObject("sender", sender);
+		mav.addObject("receiver", receiver);
+		if(mDao.memberDoubleChk(receiver)==1) {//sender:ceo -> receiver:member
 			mav.addObject("c_name", mDao.ceoInfo(sender).getC_name());
 			mav.setViewName("ceoChat");
 			return mav;
-		}else {	//member
+		}else {//sender:member -> receiver:ceo
 			mav.addObject("m_name", mDao.mInfo(sender).getM_name());
-			mav.addObject("receiver",receiver);
 			mav.setViewName("memberChat");
 			return mav;
 		}
+	}
+
+	public String getWaitingRoom() {
+		String c_id = session.getAttribute("id").toString();
+		ArrayList<String> wrList = mDao.getWaitingRoom(c_id);
+		StringBuilder sb= new StringBuilder();
+		sb.append("<tr><th>MEMBER ID</th></tr>");
+		for(String m_id:wrList) {
+			sb.append("<tr><td onclick='openChatWindow(\""+m_id+"\")'>"+m_id+"</td></tr>");
+		}
+		return sb.toString();
 	}
 }

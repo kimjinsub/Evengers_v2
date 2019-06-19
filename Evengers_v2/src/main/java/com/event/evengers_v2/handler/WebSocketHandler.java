@@ -72,6 +72,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 					if(wss.getId().equals(receiver_sessionId)) {//상대(member)에게만//websocket id
 						box=new HashMap<>();
 						box.put("msg", obj.get("nick")+":"+obj.get("msg"));
+						box.put("sender", sender);
 						wss.sendMessage(new TextMessage(new Gson().toJson(box)));
 					}
 				}
@@ -91,6 +92,10 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						box=new HashMap<>();
 						box.put("msg", obj.get("nick")+":"+obj.get("msg"));
 						box.put("sender", sender);
+						if(mDao.alreadyWait(receiver,sender)==0) {//1:대기중 0:대기X
+							mDao.inWaitingRoom(receiver,sender);
+							box.put("hasNewReq", "yes");
+						}
 						wss.sendMessage(new TextMessage(new Gson().toJson(box)));
 					}
 				}
@@ -105,6 +110,10 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		logger.info("afterConnectionClosed:"+session);
 		if(mDao.chatOut(session.getId())) {
 			logger.info(session.getId()+"님이 퇴장하셨습니다");
+		}
+		int flag=mDao.memberDoubleChk(session.getAttributes().get("id").toString());
+		logger.info("flag="+flag);
+		switch(flag) {
 		}
 	}
 }
