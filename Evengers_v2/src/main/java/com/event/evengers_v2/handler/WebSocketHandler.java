@@ -1,6 +1,7 @@
 package com.event.evengers_v2.handler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import com.google.gson.Gson;
 public class WebSocketHandler extends TextWebSocketHandler{
 	List<WebSocketSession> sessions = new ArrayList<>();
 	private Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
-	
+	Map<String,Object> box;
 	@Autowired
 	MemberDao mDao;
 	
@@ -69,7 +70,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 				for(WebSocketSession wss:sessions) {
 					logger.info("ceo to mem");
 					if(wss.getId().equals(receiver_sessionId)) {//상대(member)에게만//websocket id
-						wss.sendMessage(new TextMessage(obj.get("nick")+":"+obj.get("msg")));
+						box=new HashMap<>();
+						box.put("msg", obj.get("nick")+":"+obj.get("msg"));
+						wss.sendMessage(new TextMessage(new Gson().toJson(box)));
 					}
 				}
 				break;
@@ -85,8 +88,10 @@ public class WebSocketHandler extends TextWebSocketHandler{
 				for(WebSocketSession wss:sessions) {
 					logger.info("mem to ceo");
 					if(wss.getId().equals(receiver_sessionId)) {//상대(ceo)에게만
-						wss.sendMessage(new TextMessage("sender,:"+sender));
-						wss.sendMessage(new TextMessage(obj.get("nick")+":"+obj.get("msg")));
+						box=new HashMap<>();
+						box.put("msg", obj.get("nick")+":"+obj.get("msg"));
+						box.put("sender", sender);
+						wss.sendMessage(new TextMessage(new Gson().toJson(box)));
 					}
 				}
 				break;

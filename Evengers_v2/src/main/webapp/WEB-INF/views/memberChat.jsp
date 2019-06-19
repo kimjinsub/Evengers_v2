@@ -14,7 +14,7 @@
 <body>
 <h1>소비자 페이지</h1>
 <form>
-	대화명:<input id="nick" type="text"/><br/>
+	판매자ID:${receiver}<br/>
 	대화내용:<textarea id="monitor" rows="20"></textarea><br/>
 	보낼메세지:<input id="msg" type="text"/><br/>
 	<input type="button" value="전송" onclick="sendMsg()"/>
@@ -29,9 +29,8 @@ sock.onopen=function(){
 	content.value+="웹소켓 연결...\n";
 }
 sock.onmessage=function(event){
-	console.log(event.data);
-	console.log(event);
-	content.value+=event.data+"\n";
+	var box=JSON.parse(event.data);
+	content.value+=box.msg+"\n";
 }
 sock.onclose=function(event){
 	console.log("info : connection closed.");
@@ -41,9 +40,10 @@ sock.onerror=function(error){
 	console.log("error : ",error);
 }
 console.log("receiver","${receiver}");
+console.log("nick","${m_name}");
 function sendMsg(){
 	var obj={};
-	obj.nick=$("#nick").val();
+	obj.nick="${m_name}";
 	obj.receiver="${receiver}";
 	obj.msg=$("#msg").val();
 	content.value+="나> "+obj.msg+"\n";

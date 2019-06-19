@@ -14,6 +14,7 @@
 <body>
 <h1>판매자 페이지</h1>
 <form>
+	구매자ID:${receiver}<br/>
 	대화내용:<textarea id="monitor" rows="20"></textarea><br/>
 	보낼메세지:<input id="msg" type="text"/><br/>
 	<input type="button" value="전송" onclick="sendMsg()"/>
@@ -29,14 +30,9 @@ sock.onopen=function(){
 }
 var receiver="";
 sock.onmessage=function(event){
-	console.log("event.data:",event.data);
-	console.log("event",event);
-	if(String(event.data).substring(0, 7)=="sender,"){//evengers id
-		receiver=String(event.data).substring(8);
-		console.log("receiver",receiver);
-	}else{
-		content.value+=event.data+"\n";
-	}
+	var box=JSON.parse(event.data);
+	receiver=box.sender;
+	content.value+=box.msg+"\n";
 }
 sock.onclose=function(event){
 	console.log("info : connection closed.");

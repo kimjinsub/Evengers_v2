@@ -378,13 +378,14 @@ public String memberTest(String testcode) {
 
 	public ModelAndView chat(String receiver) {
 		mav=new ModelAndView();
+		String sender = session.getAttribute("id").toString();
 		if(receiver==null) {//ceo
-			String sender = session.getAttribute("id").toString();
 			mav.addObject("receiver", null);
 			mav.addObject("c_name", mDao.ceoInfo(sender).getC_name());
 			mav.setViewName("ceoChat");
 			return mav;
 		}else {	//member
+			mav.addObject("m_name", mDao.mInfo(sender).getM_name());
 			mav.addObject("receiver",receiver);
 			mav.setViewName("memberChat");
 			return mav;
