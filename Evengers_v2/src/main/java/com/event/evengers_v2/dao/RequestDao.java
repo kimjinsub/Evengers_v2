@@ -66,7 +66,7 @@ public interface RequestDao {
 
 	public ArrayList<Request> getReqCodes(String id);
 
-	public Collection<? extends EstimatePay> getEstPayList(Request req);
+	public Collection<? extends EstimatePay> getEstPayList(Map<String, Object> map);
 
 	public EstimatePay getEstpDetail(String estp_code);
 
@@ -102,7 +102,7 @@ public interface RequestDao {
 
 	public int changeState(EstimateRefund estr);
 
-	public EstimateRefund getCompleteEstr(String estp_code);
+	public EstimateRefund getCompleteEstr(Map<String, Object> map);
 	
 	public String gethopedate(String req_code);
 
@@ -119,6 +119,9 @@ public interface RequestDao {
 	public int getMyReqCount(Map<String, Object> map);
 
 	public int getEstpCount(Map<String, Object> map);
+	
+	public int getEstpCount(String id);
+
 
 
 

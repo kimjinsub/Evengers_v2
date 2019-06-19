@@ -37,4 +37,5 @@ public interface QuestionDao {
 
 	ArrayList<Question> getAllQuestionList(int num);
 
+	int getQuestionCount1(String id);
 }

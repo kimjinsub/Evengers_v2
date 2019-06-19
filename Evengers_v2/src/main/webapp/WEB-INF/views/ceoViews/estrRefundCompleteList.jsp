@@ -11,20 +11,23 @@
 <body>
 <h3>환불 완료 리스트</h3>
 	<div id="estimateRefundList"></div>
+	<div id="paging"></div>
 </body>
 <script>
 $(document).ready(function() {
-	RefundCompleteList();
+	RefundCompleteList(1,5);
 });
-function RefundCompleteList(){
+function RefundCompleteList(pageNum,listCount){
 	$.ajax({
 		url:'estrRefundComplete',
 		dataType:'json',
+		data:{pageNum:pageNum,listCount:listCount},
 		success:function(data){
 			console.log(data);
 			var estpList=data['estpList'];
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
+			var paging=data['paging'];
 			var str = "<table id='et' border='1'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>환불금액</th><th>환불상태</th>";
 
 			for ( var i in estpList) {
@@ -46,7 +49,7 @@ function RefundCompleteList(){
 			str += "</table>"
 			$("#estimateRefundList").html(str);
 			$(".state").html("환불완료");
-			// $("#paging").html(paging);
+			 $("#paging").html(paging);
 		},
 		error:function(error){
 			

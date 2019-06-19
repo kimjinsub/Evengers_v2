@@ -74,41 +74,33 @@ public class QuestionMM {
 		return mav;
 	}
 
-	public Map<String, Object> getQuestionList(String id, Integer pageNum) {
+	public Map<String, Object> getQuestionList(String id, Integer pageNum,Integer listCount) {
 		String jsonStr = "";
 		ArrayList<Question> qList = new ArrayList<Question>();
 		int num = (pageNum == null) ? 1 : pageNum;
 		System.out.println("아이디:"+id);
+		if(listCount==null) {
+			listCount=10;
+		}
+		Map<String,Object> map1= new HashMap<String,Object>();
 		if(id.equals("admin")) {
 			qList = qDao.getAllQuestionList(num);
+			  String paging=new Paging(qDao.getQuestionCount(), num, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
 			System.out.println("관리자qList:"+qList);
+			map1.put("paging",paging);
 		}else {
 		Map<String, Object> map = new HashMap<String, Object>(); // MAP을 이용해 담기
         map.put("id",id);
         map.put("num", num);
 		qList = qDao.getQuestionList(map);
+		 String paging1=new Paging(qDao.getQuestionCount1(id), num, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
+		 map1.put("paging",paging1);
 		}
-		//Gson gson = new Gson();
-		//jsonStr = gson.toJson(qList);
-		Map<String,Object> map1= new HashMap<String,Object>();
 		map1.put("qList",qList);
-		map1.put("paging",getPaging(num));
-		//System.out.println("jsonStr=" + jsonStr);
 		return map1;
 	}
 
-	private Object getPaging(int pageNum) {
-		int maxNum = qDao.getQuestionCount(); // 전체 글의 갯수
-		System.out.println("전페" + maxNum);
-
-		int listCount = 5; // 페이지당 글의 수
-		int pageCount = 2; // 그룹당 페이지 수
-		String boardName = "questionList"; // 게시판이 여러개 일떄
-
-		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
-
-		return paging.makeHtmlPaging();
-	}
+	
 
 	public ModelAndView showQuestion(String q_code) {
 		mav=new ModelAndView();

@@ -96,9 +96,9 @@ public class Controller_Bin {
 	}
 
 	@RequestMapping(value = "/getQuestionList", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> getQuestionList(Integer pageNum) {
+	public @ResponseBody Map<String, Object> getQuestionList(Integer pageNum,Integer listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map1 = qm.getQuestionList(id,pageNum);
+		Map<String, Object> map1 = qm.getQuestionList(id,pageNum,listCount);
 		return map1;
 	}
 
@@ -181,9 +181,9 @@ public class Controller_Bin {
 	}
 	
 	@RequestMapping(value = "/getEstPayList", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> getEstPayList(Integer pageNum) {
+	public @ResponseBody Map<String, Object> getEstPayList(Integer pageNum, Integer listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map1 = rm.getEstPayList(id,pageNum);
+		Map<String, Object> map1 = rm.getEstPayList(id,pageNum,listCount);
 		return map1;
 	}
 	
@@ -245,9 +245,9 @@ public class Controller_Bin {
 	}
 	
 	@RequestMapping(value = "/estrRefundComplete", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> estrRefundCompleteList(Integer pageNum) {
+	public @ResponseBody Map<String, Object> estrRefundCompleteList(Integer pageNum,Integer listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map1 = rm.RefundCompleteList(id,pageNum);
+		Map<String, Object> map1 = rm.RefundCompleteList(id,pageNum,listCount);
 		return map1;
 	}
 	@RequestMapping(value = "/estEffectiveness", produces = "application/json; charset=utf-8;")

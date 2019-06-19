@@ -65,10 +65,12 @@ table {
 	text-align: center;
 }
 #paging{
+float:left;
   width:200px;
   height:50px;
-  text-align: center;
-  margin-left: 250px;
+  margin-top:380px;
+  margin-left:270px;
+
 }
 #list{
   position: fixed;
@@ -82,16 +84,17 @@ table {
 	<div class="question1" id="questionList"
 		onclick="location.href='questionList';">문의 내역</div>
 	<div id="list"></div>
-	<div id="detail"></div>
 	<div id="paging"></div>
+	<div id="detail"></div>
 </body>
 <script>
 	$(document).ready(function() {
-		getQuestionList();
+		getQuestionList(1,10);
 	});
-	function getQuestionList() {
+	function getQuestionList(pageNum,listCount) {
 				$.ajax({
 					url : "getQuestionList",
+					data:{pageNum:pageNum,listCount:listCount},
 					dataType : 'json',
 					success : function(result) {
 						console.log(result.qList);

@@ -37,21 +37,24 @@
 <body>
   <h3 align="center"> 견적 결제 구매 내역</h3>
 	<div id="estPayList"></div>
+	<div id="paging"></div>
 	<div id="detail"></div>
 
 </body>
 <script>
 	$(document).ready(function() {
-		getEstPayList();
+		getEstPayList(1,2);
 	});
-	function getEstPayList() {
+	function getEstPayList(pageNum,listCount) {
 		      $.ajax({
 					url : 'getEstPayList',
+					data:{pageNum:pageNum,listCount:listCount},
 					dataType : 'json',
 					success : function(data) {
 						console.log(data);
 						var estpList = data['estpList'];
 						var reqList = data['reqList'];
+						var paging = data['paging'];
 						var str = "<table id='et' border='1'><th>구매코드</th><th>상품제목</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th>";
 
 						for ( var i in estpList) {
@@ -66,7 +69,7 @@
 						}
 						str += "</table>"
 						$("#estPayList").html(str);
-						// $("#paging").html(paging);
+						$("#paging").html(paging);
 					},
 					error : function(error) {
 

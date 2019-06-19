@@ -520,31 +520,42 @@ public class RequestMM {
 		mav.setViewName("memberViews/memberMyPage");
 		return mav;
 	}
-		public Map<String, Object> getEstPayList(String id, Integer pageNum) {
+		public Map<String, Object> getEstPayList(String id, Integer pageNum, Integer listCount) {
 			ArrayList<Request> reqList=new ArrayList<Request>();
 			ArrayList<Request> reqList1=new ArrayList<Request>();
 			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();
+			int num = (pageNum == null) ? 1 : pageNum;
 			reqList=rDao.getReqCodes(id);
 			System.out.println("ReqList="+reqList);
 			for(int i=0;i<reqList.size();i++) {
-				Request req=new Request();
-				req=reqList.get(i);
-		        estpList.addAll(rDao.getEstPayList(req));
+				String req_code=reqList.get(i).getReq_code();
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("req_code",req_code);
+				map.put("num", num);
+				map.put("listCount",listCount);
+		        estpList.addAll(rDao.getEstPayList(map));
 			}
 			for(int i=0;i<estpList.size();i++) {
 				EstimatePay estp=new EstimatePay();
 				estp=estpList.get(i);
 				reqList1.add(rDao.getReqTitle1(estp));
 			}
+			
+			ArrayList<EstimatePay> estpList1=new ArrayList<EstimatePay>();
+		    // estpList1=rDao.getPageEstpList(pageNum);
 			  while (estpList.remove(null));
+			  System.out.println("estpList.size="+estpList.size());
+			  String paging=new Paging(estpList.size(),num, listCount, 2, "getEstPayList").makeHtmlAjaxPaging();
 			System.out.println("estpList:"+estpList);
-			Map<String, Object> map1 = new HashMap<String, Object>();
+			Map<String, Object> map1 = new HashMap<String, Object>(); 
 			map1.put("estpList", estpList);
 			map1.put("reqList", reqList1);
+			map1.put("paging",paging);
 			
 			return map1;
 			
 		}
+		
 
 		public ModelAndView showEstpDetail(String estp_code) {
 			mav = new ModelAndView();
@@ -711,10 +722,11 @@ public class RequestMM {
 				reqList.add(rDao.getRefundInfo(req_code));
 				estrList.add(rDao.getEstr(estp_code));
 			}
-			
+			System.out.println("estrList:"+estrList);
+			 while (estrList.remove(null));
 			map1.put("reqList",reqList);
-			map1.put("estpList", estpList);
-			map1.put("estrList", estrList);
+			map1.put("estpList",estpList);
+			map1.put("estrList",estrList);
 			return map1;
 		}
 
@@ -742,7 +754,7 @@ public class RequestMM {
 				return map1;
 		}
 
-		public Map<String, Object> RefundCompleteList(String id, Integer pageNum) {
+		public Map<String, Object> RefundCompleteList(String id, Integer pageNum, Integer listCount) {
 			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();  
 			ArrayList<EstimateRefund> estrList=new ArrayList<EstimateRefund>();
 			estpList=rDao.RefundAcceptList(id);
@@ -756,13 +768,18 @@ public class RequestMM {
 				String req_code=estp.getReq_code();
 				String estp_code=estp.getEstp_code();
 				reqList.add(rDao.getRefundInfo(req_code));
-				estrList.add(rDao.getCompleteEstr(estp_code));
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("estp_code",estp_code);
+				map.put("pageNum",pageNum);
+				map.put("listCount",listCount);
+				estrList.add(rDao.getCompleteEstr(map));
 			}
-			
-			map1.put("reqList",reqList);
-			map1.put("estpList", estpList);
-			map1.put("estrList", estrList);
-			return map1;
+			  String paging=new Paging(estrList.size(),pageNum, listCount, 2, "estrRefundComplete").makeHtmlAjaxPaging();
+		     map1.put("paging",paging);
+			 map1.put("reqList",reqList);
+			 map1.put("estpList", estpList);
+			 map1.put("estrList", estrList);
+			 return map1;
 		}
 		public String estEffectiveness(String okDate, String req_code1) {
 			String msg = "";
