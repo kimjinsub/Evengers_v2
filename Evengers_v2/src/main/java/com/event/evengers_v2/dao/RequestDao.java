@@ -112,10 +112,6 @@ public interface RequestDao {
 
 	public Request getReqTitle1(EstimatePay estp);
 
-
-
-
-
-
+	public ArrayList<String> getReqCodeList();
 
 }

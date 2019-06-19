@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.event.evengers_v2.bean.Calculate;
 import com.event.evengers_v2.bean.MonthlySalary;
+import java.util.List;
+import java.util.Map;
 
 public interface FinancialDao {
 
@@ -21,5 +23,10 @@ public interface FinancialDao {
 	ArrayList<MonthlySalary> selectSalary(@Param("choice")String choice,@Param("c_id") String c_id);
 
 	boolean salaryInsert(MonthlySalary ms);
+	
+	List<Map<String, Object>> getEvtRevenue(@Param("choice") String choice);
 
+	List<Map<String, Object>> getEstpRevenue(@Param("choice") String choice);
+	
+	ArrayList<Double> getEvtPenalty(@Param("refundedEp_Code") String refundedEp_Code,@Param("choice")String choice);
 }

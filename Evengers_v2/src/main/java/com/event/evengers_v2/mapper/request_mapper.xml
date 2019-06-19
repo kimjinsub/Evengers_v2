@@ -203,5 +203,7 @@
     <select id="getReqTitle1" parameterType="estimatepay" resultType="request">
    SELECT * FROM REQ WHERE REQ_CODE=#{req_code}
    </select>
-   
+   <select id="getReqCodeList" resultType="String">
+		SELECT REQ_CODE FROM REQ
+	</select>
 </mapper>

@@ -3,6 +3,22 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.event.evengers_v2.dao.FinancialDao">
+<resultMap id="getEvtRe" type="map">
+	<id column="ep_payday" property="choice"/>
+	<result property="ep_total" column="sum(ep_total)"/>
+	<result property="category" column="e_category"/>
+</resultMap>
+<resultMap id="getEstpRe" type="map">
+	<id column="ep_payday" property="choice"/>
+	<result property="estp_total" column="sum(estp_total)"/>
+	<result property="category" column="ec_name"/>
+</resultMap>
+<resultMap id="getPenalty" type="map">
+	<id column="ep_code" property="refundedEp_Code"/>
+	<id column="er_refunddate" property="choice"/>
+	<result property="er_penalty" column="er_penalty"/>
+	<result property="ep_total" column="ep_total"/>
+</resultMap>
 	<insert id="calInsert">
 		INSERT INTO CAL VALUES('CAL'||LPAD(CAL_SEQ.NEXTVAL,4,0),#{c_id},#{cal_receiptdate},#{cal_category},#{cal_contents},#{cal_price})		
 	</insert>
@@ -21,4 +37,15 @@
 	<insert id="salaryInsert">
 		INSERT INTO MS VALUES(#{ms_emp_code},#{ms_date},#{ms_p_code},#{ms_c_id},#{ms_p_name},#{ms_p_salary},#{ms_emp_name}) 
 	</insert>
+	<select id="getEvtRevenue" resultMap="getEvtRe">
+		SELECT SUM(EP_TOTAL),E_CATEGORY FROM EP,E
+		WHERE EP.E_CODE=E.E_CODE AND EP_PAYDAY LIKE CONCAT(#{choice},'%') GROUP BY E_CATEGORY
+	</select>
+	<select id="getEstpRevenue" resultMap="getEstpRe">
+		SELECT SUM(ESTP_TOTAL),EC_NAME FROM ESTP,REQ
+		WHERE ESTP.REQ_CODE=REQ.REQ_CODE AND ESTP_PAYDAY LIKE CONCAT(#{choice},'%') GROUP BY EC_NAME
+	</select>
+	<select id="getEvtPenalty" resultType="Double">
+		SELECT ER_PENALTY FROM EP,ER WHERE EP.EP_CODE=#{refundedEp_Code} AND ER_REFUNDDATE LIKE CONCAT(#{choice},'%')
+	</select>
 </mapper>

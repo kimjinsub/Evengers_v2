@@ -107,4 +107,19 @@
 			#{ep_code}
 		</foreach>
 	</select>
+	<select id="estPayList" parameterType="list" resultType="String">
+		SELECT ESTP_CODE FROM ESTP WHERE REQ_CODE IN 
+		<foreach collection="req_codes1" item="req_code" open="(" separator="," close=")">
+			#{req_code}
+		</foreach>
+	</select>
+	<select id="isrefundedEstp" parameterType="list" resultType="String">
+		SELECT ESTP_CODE FROM ESTR WHERE ESTP_CODE IN
+		<foreach collection="estp_codes" item="estp_code" open="(" separator="," close=")">
+			#{estp_code}
+		</foreach>
+	</select>
+	<select id="getEvtTotal" resultType="Double">
+		SELECT EP_TOTAL FROM EP,ER WHERE EP.EP_CODE=#{refundedEp_Code} AND ER_REFUNDDATE LIKE CONCAT(#{choice},'%')
+	</select>
 </mapper>

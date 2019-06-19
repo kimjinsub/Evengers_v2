@@ -86,6 +86,7 @@
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<a class="dropdown-item" href="javascript:Ajax_forward('salaryManage')">급여관리</a> 
 					<a class="dropdown-item" href="javascript:Ajax_forward('accountingManage')">정산</a>
+					<a class="dropdown-item" href="javascript:Ajax_forward('showRevenue')">수익보기</a>
 				</div>
 			</li>
 		</ul>

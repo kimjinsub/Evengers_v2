@@ -173,5 +173,24 @@ public class Controller_Eunseo {
 		System.out.println("day2=" + day);
 		return fm.validation(day);
 	}
+	@RequestMapping(value = "/showRevenue")
+	public ModelAndView showRevenue() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/showRevenue");
+		return mav;
+	}
+
+	@RequestMapping(value = "/revenueList")
+	public ModelAndView revenueList(Date choicedate) {
+		System.out.println("choicedate는?="+choicedate);
+		mav = fm.revenueList(choicedate);
+		return mav;
+	}
+	@RequestMapping(value = "/revenue")
+	public ModelAndView revenueList() {
+		mav = new ModelAndView();
+		mav.setViewName("ceoViews/revenue");
+		return mav;
+	}
 
 }

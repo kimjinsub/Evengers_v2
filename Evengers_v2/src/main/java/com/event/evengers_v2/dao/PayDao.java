@@ -78,5 +78,11 @@ public interface PayDao {
 	ArrayList<String> isRefundedEp(@Param("ep_codes")ArrayList<String> ep_codes);
 
 	ArrayList<EventPay> epListPayList(String e_code);
+	
+	ArrayList<String> estPayList(@Param("req_codes1")ArrayList<String> req_codes);
+
+	ArrayList<String> isrefundedEstp(@Param("estp_codes")ArrayList<String> estp_codes);
+
+	ArrayList<Double> getEvtTotal(@Param("refundedEp_Code") String refundedEp_Code,@Param("choice") String choice);
 
 }
