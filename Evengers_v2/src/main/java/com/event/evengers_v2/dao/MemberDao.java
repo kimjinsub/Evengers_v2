@@ -71,5 +71,13 @@ public interface MemberDao {
 	boolean memberDelete(@Param("m_id")String id);
 
 	boolean ceoDelete(@Param("c_id")String id);
+	
+	boolean chatIn(@Param("sessionId")String sessionId, @Param("id")String id);
+
+	String getSessionId(String id);
+
+	int chatInCheck(String id);
+
+	boolean chatOut(String sessionId);
 
 }

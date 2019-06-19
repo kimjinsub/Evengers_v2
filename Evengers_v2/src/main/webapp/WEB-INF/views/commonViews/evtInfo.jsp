@@ -144,8 +144,11 @@
 						</tr>
 						<tr>
 							<td><button onclick="evtBuy()">구매하기</button></td>
-							<td><button id="choice" onclick="choice()">찜하기</button>
-								<button id="choiceDelete" onclick="choiceDelete()">찜삭제하기</button></td>
+							<td>
+								<button id="choice" onclick="choice()">찜하기</button>
+								<button id="choiceDelete" onclick="choiceDelete()">찜삭제하기</button>
+								<button onclick="javascript:memberChat('${eb.c_id}')">실시간상담요청</button>
+							</td>
 						</tr>
 						<tr>
 							<td>별점 평균</td>
@@ -212,9 +215,11 @@
 		  </div>
 		</div>
 	</div>
-
 </body>
 <script>
+function memberChat(receiver){
+	window.open('chat?receiver='+receiver,"_blank","width=400,height=700;");
+}
 	$('.hideDate').hide();
 	$(document).ready(function(){
 		getCategories();

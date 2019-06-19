@@ -374,4 +374,20 @@ public String memberTest(String testcode) {
 			}
 		return str;
 	}
+	
+
+	public ModelAndView chat(String receiver) {
+		mav=new ModelAndView();
+		if(receiver==null) {//ceo
+			String sender = session.getAttribute("id").toString();
+			mav.addObject("receiver", null);
+			mav.addObject("c_name", mDao.ceoInfo(sender).getC_name());
+			mav.setViewName("ceoChat");
+			return mav;
+		}else {	//member
+			mav.addObject("receiver",receiver);
+			mav.setViewName("memberChat");
+			return mav;
+		}
+	}
 }

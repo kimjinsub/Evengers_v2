@@ -140,12 +140,13 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
     <!-- 스프링 웹소켓 설정 -->
-	<beans:bean id="webSocketHandler" class="com.event.evengers_v2.userClass.WebSocketHandler"/>
-	<websocket:handlers>
+	<beans:bean id="webSocketHandler" class="com.event.evengers_v2.handler.WebSocketHandler"/>
+	<websocket:handlers allowed-origins="*">
 		<websocket:mapping handler="webSocketHandler" path="/webSocket"/>
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
 	</websocket:handlers>
 	
 	<!-- Session Interceptor(가로채기) -->

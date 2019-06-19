@@ -101,4 +101,16 @@
 	<delete id="ceoDelete" parameterType="String">
 		DELETE FROM C WHERE C_ID=#{c_id}
 	</delete>
+	<insert id="chatIn" parameterType="String">
+		INSERT INTO CHAT VALUES(#{id},#{sessionId})
+	</insert>
+	<select id="getSessionId" parameterType="String" resultType="String">
+		SELECT SESSIONID FROM CHAT WHERE ID=#{id}
+	</select>
+	<select id="chatInCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM CHAT WHERE ID=#{id}
+	</select>
+	<delete id="chatOut" parameterType="String">
+		DELETE FROM CHAT WHERE SESSIONID=#{sessionId}
+	</delete>
 </mapper>

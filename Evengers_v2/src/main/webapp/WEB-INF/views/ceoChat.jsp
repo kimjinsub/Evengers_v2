@@ -5,13 +5,15 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/sockjs.min.js"></script>
 <meta charset="UTF-8">
-<title>WebSocket</title>
+<style>
+</style>
+<title>ceoChat</title>
 </head>
 <body>
-<h1>WebSocket</h1>
+<h1>판매자 페이지</h1>
 <form>
-	대화명:<input id="nick" type="text"/><br/>
 	대화내용:<textarea id="monitor" rows="20"></textarea><br/>
 	보낼메세지:<input id="msg" type="text"/><br/>
 	<input type="button" value="전송" onclick="sendMsg()"/>
@@ -19,35 +21,43 @@
 </form>
 </body>
 <script>
-var url="ws://localhost/evengers_v2/webSocket?ceo_id=ceo"
-var webSocket = new WebSocket(url);
+var sock = new SockJS("webSocket")
 var content = document.getElementById("monitor");
-webSocket.onopen=function(){
+sock.onopen=function(){
 	console.log("info : connection opened.");
-	content.value+="웹소켓 연결...\n";
+	content.value+="웹소켓 연결...상담대기중\n";
 }
-webSocket.onmessage=function(event){
-	console.log(event.data+'\n');
-	content.value+=event.data+"\n";
+var receiver="";
+sock.onmessage=function(event){
+	console.log("event.data:",event.data);
+	console.log("event",event);
+	if(String(event.data).substring(0, 7)=="sender,"){//evengers id
+		receiver=String(event.data).substring(8);
+		console.log("receiver",receiver);
+	}else{
+		content.value+=event.data+"\n";
+	}
 }
-webSocket.onclose=function(event){
+sock.onclose=function(event){
 	console.log("info : connection closed.");
 	content.value+="웹소켓 끊김...\n";
-	//setTimeout(function(){connect();}, 1000);//retry connection!!
 }
-webSocket.onerror=function(error){
+sock.onerror=function(error){
 	console.log("error : ",error);
 }
+console.log("receiver",receiver);
+console.log("nick","${c_name}");
 function sendMsg(){
 	var obj={};
-	obj.nick=$("#nick").val();
+	obj.nick="${c_name}";
+	obj.receiver=receiver;
 	obj.msg=$("#msg").val();
 	content.value+="나> "+obj.msg+"\n";
-	webSocket.send(JSON.stringify(obj));
+	sock.send(JSON.stringify(obj));
 	$("#msg").val("");
 }
 function disConn(){
-	webSocket.close();
+	sock.close();
 }
 </script>
 </html>
