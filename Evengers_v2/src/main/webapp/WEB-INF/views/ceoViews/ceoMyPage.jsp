@@ -57,11 +57,27 @@
 				onclick="Ajax_forward('ceoInfoModify')"><a class="nav-link"
 				href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> --> <span>사업자
 						정보 수정</span></a></li>
-			<li id="sellInfo" class="nav-item" onclick="Ajax_forward('sellInfo')">
-				<a class="nav-link" href="#"> <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-					<span>판매현황</span></a>
-			</li>
 
+
+			<!-- Nav Item - Pages Collapse Menu -->
+
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseTwo"
+				aria-expanded="true" aria-controls="collapseTwo"> <!-- <i class="fas fa-fw fa-chart-area"></i> -->
+					<span>판매현황</span>
+			</a>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
+						<div id="ceoRefundList" onclick="Ajax_forward('ceoRefundList')">
+							<a class="collapse-item" href="#">이벤트 판매 내역</a>
+						</div>
+						<div id="estSellPage" onclick="Ajax_forward('estSellPage')">
+							<a class="collapse-item" href="#">견적 판매 내역</a>
+						</div>
+					</div>
+				</div>
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseTwo"
 				aria-expanded="true" aria-controls="collapseTwo"> <!-- <i class="fas fa-fw fa-cog"></i> -->

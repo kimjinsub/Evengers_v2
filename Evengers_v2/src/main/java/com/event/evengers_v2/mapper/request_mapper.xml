@@ -64,13 +64,44 @@
 	
    <!-- 이미결제가 된 친구들은 셀렉을 안함!! -->
    <select id="AllReqList" parameterType="map" resultType="request">
-         SELECT * FROM REQ WHERE REQ_CODE NOT IN (SELECT DISTINCT REQ.REQ_CODE FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE)
+         
+         <![CDATA[
+         SELECT * FROM 
+         (SELECT /*+INDEX_DESC(REQ PK_REQ_CODE)*/
+         ROWNUM RN,REQ.* FROM REQ
+         WHERE ROWNUM<=#{pageNum}*#{listCount} AND REQ_CODE NOT IN (SELECT DISTINCT REQ.REQ_CODE FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE)
+         AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL))	
+         	 
+         WHERE  RN>((#{pageNum}-1)*#{listCount}) 
+         ORDER BY REQ_CODE DESC
+         
+         ]]>	
+         	
+         	<!-- 행번호가 PN=1*LC=10 = 10보다 같거나 작아야함 -->
+   </select>
+   
+   <select id="getAllReqCount" parameterType="map" resultType="int">
+         SELECT COUNT(*) FROM REQ WHERE REQ_CODE NOT IN (SELECT DISTINCT REQ.REQ_CODE FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE)
          	AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
          	ORDER BY REQ_HOPEDATE
    </select>
       
    <select id="myReqList" parameterType="map" resultType="request">
-         SELECT * FROM REQ WHERE M_ID=#{id} 
+         <![CDATA[
+         SELECT * FROM 
+         (SELECT /*+INDEX_DESC(REQ PK_REQ_CODE)*/
+         ROWNUM RN,REQ.* FROM REQ
+         WHERE ROWNUM<=#{pageNum}*#{listCount} AND M_ID=#{id} AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
+         )
+          
+         WHERE RN>((#{pageNum}-1)*#{listCount})
+         ORDER BY REQ_CODE DESC
+         
+         ]]>
+   </select>
+   
+   <select id="getMyReqCount" parameterType="map" resultType="int">
+         SELECT COUNT(*) FROM REQ WHERE M_ID=#{id} 
          	AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
          	ORDER BY REQ_HOPEDATE
    </select>
@@ -136,7 +167,13 @@
    </select>
    
    <select id="getEstSell" parameterType="map" resultType="estimatepay">
-         SELECT * FROM ESTP WHERE C_ID=#{id}
+         <![CDATA[
+      	SELECT * FROM 
+      	(SELECT /*+INDEX_DESC(ESTP PK_ESTP_CODE)*/
+      	ROWNUM RN,ESTP.* FROM ESTP
+      	WHERE ROWNUM<=#{pageNum}*#{listCount} AND C_ID=#{id})
+      	WHERE  RN>((#{pageNum}-1)*#{listCount}) 
+      	]]>
    </select>
    
    <select id="getPayday" parameterType="string" resultType="estimatepay">
@@ -206,4 +243,13 @@
    <select id="getReqCodeList" resultType="String">
 		SELECT REQ_CODE FROM REQ
 	</select>
+	
+	<select id="gethopedate" parameterType="string" resultType="String">
+         SELECT REQ_HOPEDATE FROM REQ WHERE REQ_CODE=#{req_code}
+   </select>
+   
+   <select id="getEstpCount" parameterType="map" resultType="int">
+         SELECT COUNT(*) FROM ESTP WHERE C_ID=#{id}
+   </select>
+   
 </mapper>

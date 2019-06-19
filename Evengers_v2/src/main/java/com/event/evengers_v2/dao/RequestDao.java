@@ -76,7 +76,7 @@ public interface RequestDao {
 
 	public EstimatePayImage getEstpiImage(String estp_code);
 	
-	public ArrayList<EstimatePay> getEstSell(String id);
+	public ArrayList<EstimatePay> getEstSell(Map<String, Object> map);
 
 	public EstimatePay getPayday(String id);
 
@@ -113,5 +113,13 @@ public interface RequestDao {
 	public Request getReqTitle1(EstimatePay estp);
 
 	public ArrayList<String> getReqCodeList();
+	
+	public int getAllReqCount(Map<String, Object> map);
+
+	public int getMyReqCount(Map<String, Object> map);
+
+	public int getEstpCount(Map<String, Object> map);
+
+
 
 }

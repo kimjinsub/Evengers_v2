@@ -52,60 +52,71 @@ public class RequestMM {
 	@Autowired
 	private HttpSession session;
 
-	public ModelAndView evtReqInsert(MultipartHttpServletRequest multi) {
-		 mav = new ModelAndView(); 
-		 String view = null;
-		 
-		 String m_id=session.getAttribute("id").toString();
-		 String ec_name=multi.getParameter("e_category");
-		 String req_title=multi.getParameter("req_title");
-		 String req_contents=multi.getParameter("req_contents");
-		 String req_hopedate=multi.getParameter("req_hopedate");
-		 String req_hopearea=multi.getParameter("req_hopearea");
-		 String req_hopeaddr=multi.getParameter("req_hopeaddr");
-		 
-		 req_hopedate = req_hopedate.replace('T',' ');
-		 
-		 System.out.println("세션아이디 : " + m_id);	 
-		 System.out.println("카테고리 : " + ec_name);
-		 System.out.println("희망날짜 및 시간 : " + req_hopedate);
-		 
-		 
-		 Map<String, String> fileMap = file.singleFileUp(multi, 2);
-				 
-		 Request rq = new Request();	//빈
-		 RequestImage ri = new RequestImage();	//빈
-		 
-		 rq.setEc_name(ec_name);
-		 rq.setM_id(m_id);
-		 rq.setReq_title(req_title);
-		 rq.setReq_contents(req_contents);
-		 rq.setReq_hopedate(req_hopedate);
-		 rq.setReq_hopearea(req_hopearea);
-		 rq.setReq_hopeaddr(req_hopeaddr);
-		 
-		 System.out.println(rq.getReq_hopedate());
-		 
-		 if(rDao.evtReqInsert(rq)) {
-			 String req_code = rDao.getReqCode();
-			 ri.setReqi_orifilename(fileMap.get("reqi_orifilename"));
-			 ri.setReqi_sysfilename(fileMap.get("reqi_sysfilename"));
-			 ri.setReq_code(req_code);
-			 
-			 if(rDao.evtReqImageInsert(ri)) {
-				 System.out.println("삽입 검색 삽입 완료!");
-				 view = "memberViews/evtReqContents";
-			 }else {
-				 System.out.println("띨패");
-			 	 view = "memberViews/evtReqFrm";
-			 }
-		 }
-		 mav.addObject("request",rq);
-		 mav.addObject("requestimage",ri);
-		 
-		 //mav.addObject("m_id", m_id);
-		 mav.setViewName(view);
-		 
+	@Transactional(rollbackFor = Exception.class)
+	public ModelAndView evtReqInsert(MultipartHttpServletRequest multi){
+		mav = new ModelAndView();
+		String view = null;
+		String m_id = session.getAttribute("id").toString();
+		String ec_name = multi.getParameter("e_category");
+		String req_title = multi.getParameter("req_title");
+		String req_contents = multi.getParameter("req_contents");
+		String req_hopedate = multi.getParameter("req_hopedate");
+		String req_hopearea = multi.getParameter("req_hopearea");
+		String req_hopeaddr = multi.getParameter("req_hopeaddr");
+		
+		try {
+			req_hopedate = req_hopedate.replace('T', ' ');
+
+			System.out.println("세션아이디 : " + m_id);
+			System.out.println("카테고리 : " + ec_name);
+			System.out.println("희망날짜 및 시간 : " + req_hopedate);
+
+			Map<String, String> fileMap = file.singleFileUp(multi, 2);
+
+			Request rq = new Request(); // 빈
+			RequestImage ri = new RequestImage(); // 빈
+
+			rq.setEc_name(ec_name);
+			rq.setM_id(m_id);
+			rq.setReq_title(req_title);
+			rq.setReq_contents(req_contents);
+			rq.setReq_hopedate(req_hopedate);
+			rq.setReq_hopearea(req_hopearea);
+			rq.setReq_hopeaddr(req_hopeaddr);
+
+			System.out.println(rq.getReq_hopedate());
+
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			Date hopedate1 = format1.parse(req_hopedate);
+			format1.format(hopedate1);
+
+			System.out.println("hopedate1:" + format1.format(hopedate1));
+			Date today = new Date();
+
+			today = format1.parse(format1.format(today));
+			long insPos = hopedate1.getTime(); // req_hopedate의 값이 오늘 날짜보다 커야함
+
+			if (insPos > today.getTime() && rDao.evtReqInsert(rq)) {
+				String req_code = rDao.getReqCode();
+				ri.setReqi_orifilename(fileMap.get("reqi_orifilename"));
+				ri.setReqi_sysfilename(fileMap.get("reqi_sysfilename"));
+				ri.setReq_code(req_code);
+
+				if (rDao.evtReqImageInsert(ri)) {
+					System.out.println("삽입 검색 삽입 완료!");
+					view = "memberViews/evtReqContents";
+				} else {
+					System.out.println("삽입 검색 삽입 실패!");
+					view = "memberViews/evtReqFrm";
+				}
+			}
+			mav.addObject("request", rq);
+			mav.addObject("requestimage", ri);
+			mav.setViewName(view);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		return mav;
 
 	}
@@ -237,7 +248,7 @@ public class RequestMM {
 		 * else { msg="<p id='impossible'>불가능한 날짜입니다</p>"; } }else {
 		 * msg="<p id='impossible'>불가능한 날짜입니다</p>"; }
 		 */
-	public Map<String, Object> myReqList(String id, Integer pageNum) {
+	public Map<String, Object> myReqList(String id, Integer pageNum,Integer listCount) {
 		ArrayList<Request> rList = new ArrayList<Request>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> map1 = new HashMap<String, Object>();
@@ -245,19 +256,52 @@ public class RequestMM {
 		if(rDao.ceoChk(id)>0) {
 			ceoChk=true;
 		}
-		
+		System.out.println("세션으 아이디 : " + id);
 		if(id.equals("admin") || ceoChk) {
 			System.out.println("관리자 계정 or 기업계정 모든리스트 출력");
+			map.put("pageNum", pageNum);
+			map.put("listCount", listCount);
+			
 			rList=rDao.AllReqList(map);
+			/////페이징/////
+			int maxNum = rDao.getAllReqCount(map); // 전체 글의 갯수 12
+			System.out.println("관/기 전페" + maxNum);
+			System.out.println("pageNum = " + pageNum);
+			System.out.println("listCount =" + listCount);
+
+			int pageCount = 2; // 그룹당 페이지 수
+			String boardName = "getReqList"; // 게시판이 여러개 일떄
+
+			String paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName).makeHtmlAjaxPaging();
+			
+			map1.put("paging", paging);
+			
 		}else {
 			System.out.println("개인 계정 개별 리스트 출력");
+			map.put("pageNum", pageNum);
+			map.put("listCount", listCount);
 			map.put("id",id);
-			rList = rDao.myReqList(map);
+			
+			rList = rDao.myReqList(map);	
+			/////페이징/////
+			int maxNum = rDao.getMyReqCount(map);	//4
+			System.out.println("개개인 전페" + maxNum);
+			System.out.println("pageNum = " + pageNum);
+			System.out.println("listCount =" + listCount);
+			int pageCount = 2; // 그룹당 페이지 수
+			String boardName = "getReqList"; // 게시판이 여러개 일떄
+
+			String paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName).makeHtmlAjaxPaging();
+			
+			map1.put("paging", paging);
 		}
+		
 		map1.put("rList", rList);
+		
 
 		return map1;
 	}
+	
 	public ModelAndView evtReqInfo(String req_code1) {
 
 		mav=new ModelAndView();
@@ -382,88 +426,85 @@ public class RequestMM {
 	}
 	
 
-	
 	@Transactional
 	public ModelAndView estPay(String est_code) throws DBException, ParseException {
 		mav = new ModelAndView();
-		Estimate estimate =new Estimate();
-		EstimatePay estimatepay =new EstimatePay();
-		String msg=null;
-		estimate = rDao.getEstInfo(est_code);	//견적코드와 맞는 정보
-		
+		Estimate estimate = new Estimate();
+		EstimatePay estimatepay = new EstimatePay();
+
+		estimate = rDao.getEstInfo(est_code); // 견적코드와 맞는 정보
+
 		String req_code = estimate.getReq_code();
 		String estp_contents = estimate.getEst_contents();
 		String c_id = estimate.getC_id();
 		int estp_total = estimate.getEst_total();
 		int estp_refunddate = estimate.getEst_refunddate();
 		int okdate = estimate.getEst_okdate();
-		
+
 		System.out.println("받아온 req 코드!" + req_code);
 		System.out.println("받아온 내용!" + estp_contents);
 		System.out.println("받아온 총가격!" + estp_total);
 		System.out.println("받아온 환불가능일!" + estp_refunddate);
 		System.out.println("받아온 기업아이디!!" + c_id);
-		
-		
+
 		estimatepay.setReq_code(req_code);
 		estimatepay.setEstp_contents(estp_contents);
 		estimatepay.setC_id(c_id);
 		estimatepay.setEstp_total(estp_total);
 		estimatepay.setEstp_refunddate(estp_refunddate);
-		
+
 		String hopedate = rDao.gethopedate(req_code);
-		
-		SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		Date hopedate1 = format1.parse(hopedate);
 		format1.format(hopedate1);
-			
-		System.out.println("hopedate1:"+format1.format(hopedate1));
-		Date today = new Date(); 
-		
-		today=format1.parse(format1.format(today));
-		long okAble=hopedate1.getTime()-okdate*(24*60*60*1000);	//승인가능일
-		long refundAble=hopedate1.getTime()-estp_refunddate*(24*60*60*1000);	//환불가능일
-		
+
+		System.out.println("hopedate1:" + format1.format(hopedate1));
+		Date today = new Date();
+
+		today = format1.parse(format1.format(today));
+		long okAble = hopedate1.getTime() - okdate * (24 * 60 * 60 * 1000); // 승인가능일
+		long refundAble = hopedate1.getTime() - estp_refunddate * (24 * 60 * 60 * 1000); // 환불가능일
+
 		System.out.println("ok-able : " + okAble);
 		System.out.println("refund-able : " + refundAble);
 		System.out.println("to-day : " + today.getTime());
-		//오늘날짜 6-18 승인가능일 6-17이면 결제x 고로 	(희망일-okdate)>오늘날짜
-		
-		 
-		if(okAble>today.getTime() && rDao.estPay(estimatepay)) {
-			//오늘날짜<(희망일-승인가능일)
-			
-			String estp_code=rDao.getEstpCode();
-			System.out.println("estp_code="+estp_code);
-			EstimateImage esti=new EstimateImage();
-            esti=rDao.getEstimateImage(est_code);
-            EstimatePayImage estpi=new EstimatePayImage();
-            estpi.setEstp_code(estp_code);
-            estpi.setEstpi_orifilename(esti.getEsti_orifilename());
-            estpi.setEstpi_sysfilename(esti.getEsti_sysfilename());
-            System.out.println(estpi);
-            boolean e = rDao.insertEstpi(estpi);	//견적결제 이미지 테이블에 삽입
-			boolean b = rDao.estiDelete(est_code);		//견적 이미지 삭제
+		// 오늘날짜 6-18 승인가능일 6-17이면 결제x 고로 (희망일-okdate)>오늘날짜
+
+		if (okAble > today.getTime() && rDao.estPay(estimatepay)) {
+			// 오늘날짜<(희망일-승인가능일)
+
+			String estp_code = rDao.getEstpCode();
+			System.out.println("estp_code=" + estp_code);
+			EstimateImage esti = new EstimateImage();
+			esti = rDao.getEstimateImage(est_code);
+			EstimatePayImage estpi = new EstimatePayImage();
+			estpi.setEstp_code(estp_code);
+			estpi.setEstpi_orifilename(esti.getEsti_orifilename());
+			estpi.setEstpi_sysfilename(esti.getEsti_sysfilename());
+			System.out.println(estpi);
+			boolean e = rDao.insertEstpi(estpi); // 견적결제 이미지 테이블에 삽입
+			boolean b = rDao.estiDelete(est_code); // 견적 이미지 삭제
 			boolean r = rDao.estDelete(est_code); // 견적 삭제
-						
-			
-			if (r == false) {throw new DBException();}
+
+			if (r == false) {
+				throw new DBException();
+			}
 			if (b && r) {
 				System.out.println("삭제 트랜잭션 성공");
 				System.out.println("결제가 완료 되었습니다.");
-				msg="결제완료";
-			}else {
+				mav.addObject("msg", 1);
+			} else {
 				System.out.println("삭제 트랜잭션 실패");
 			}
-			
-			
-		}else {
+
+		} else {
 			System.out.println("띨패");
-			msg="결제실패";
+			mav.addObject("msg", 2);
 		}
-		mav.addObject("msg",msg);
+
 		mav.setViewName("memberViews/memberMyPage");
-		
+
 		return mav;
 	}
 
@@ -587,38 +628,31 @@ public class RequestMM {
 			}
 
 
-		public Map<String, Object> estSell(String id)  {
+		public Map<String, Object> estSell(String id,int pageNum,int listCount)  {
 			ArrayList<EstimatePay> esList = new ArrayList<EstimatePay>();
 			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map1 = new HashMap<String, Object>();
+						
+			map.put("id", id);
+			map.put("pageNum", pageNum);
+			map.put("listCount", listCount);
 			
-			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-			EstimatePay estp = new EstimatePay();
+			int maxNum = rDao.getEstpCount(map); 	//6
+			System.out.println("maaaxNum = " + maxNum);	//6
+			System.out.println("pageeNum = " + pageNum);	//1
+			System.out.println("listtCount =" + listCount);	//10
 			
-			esList = rDao.getEstSell(id);	//세션 id와 일치하는 판매내역을 뽑아옴
+			esList = rDao.getEstSell(map);
 			
-		/*
-		 * for(int i=0;i<esList.size();i++) { String estp_code =
-		 * esList.get(i).getEstp_code(); Date date = esList.get(i).getEstp_payday(); int
-		 * estp_refunddate = esList.get(i).getEstp_refunddate(); int estp_total =
-		 * esList.get(i).getEstp_total();
-		 * 
-		 * String b = format1.format(date);
-		 * 
-		 * Date estp_payday = new SimpleDateFormat("yyyy-MM-dd").parse(b);
-		 * 
-		 * System.out.println("bbb:" + b); System.out.println("띠요오오옹 : " + date);
-		 * 
-		 * 
-		 * estp.setEstp_code(estp_code); estp.setEstp_payday(estp_payday);
-		 * estp.setEstp_refunddate(estp_refunddate); estp.setEstp_total(estp_total);
-		 * 
-		 * esList.add(i,estp);
-		 * 
-		 * }
-		 */
-			map.put("esList", esList);	//맵에 저장해서 턴
+			int pageCount = 2; // 그룹당 페이지 수
+			String boardName = "getEstpList"; // 게시판이 여러개 일떄
+
+			String paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName).makeHtmlAjaxPaging();
 			
-			return map;
+			map1.put("paging", paging);
+			map1.put("esList", esList);	//맵에 저장해서 턴
+			
+			return map1;
 		}
 		
 		

@@ -38,20 +38,22 @@
 <body>
 	<h1 align="center">기업 견적 판매 내역</h1>
 	<div id="list"></div>
+	<div id="paging"></div>
 	
 </body>
 
 <script>
 $(document).ready(function() {
-	getReqList();
+	getEstpList(1,10);
 });
-function getReqList() {
+function getEstpList(pageNum,listCount) {
 		$.ajax({
 		url : "estSell",
 		dataType:'json',
+		data : {pageNum : pageNum ,listCount : listCount},
 		success:function(result) {
 		var esList = result['esList'];
-
+		var paging = result['paging'];
 		var str = "<table id='esList' border='1' align='center'>";
 		for ( var i in esList) {
 			str += "<tr><td>" + "견적 결제 코드 : " + esList[i].estp_code + "<br>"
@@ -62,6 +64,8 @@ function getReqList() {
 			}
 			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
 			$("#list").html(str);
+			$("#paging").html(paging);
+			
 			},
 		error : function(error) {
 		}

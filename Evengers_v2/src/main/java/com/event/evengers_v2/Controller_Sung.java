@@ -136,9 +136,9 @@ public class Controller_Sung {
 	
 	
 	@RequestMapping(value = "/myReqList",produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> evtReqList(Integer pageNum) {
+	public @ResponseBody Map<String, Object> evtReqList(Integer pageNum, Integer listCount) {
 		String id =session.getAttribute("id").toString();
-		Map<String, Object> map = rm.myReqList(id,pageNum);
+		Map<String, Object> map = rm.myReqList(id,pageNum,listCount);
 		
 		return map;
 	}
@@ -186,9 +186,9 @@ public class Controller_Sung {
 	}
 	
 	@RequestMapping(value = "/estSell", produces = "application/json; charset=utf8") 
-	public @ResponseBody Map<String, Object> estSell() {
+	public @ResponseBody Map<String, Object> estSell(int pageNum,int listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map = rm.estSell(id);
+		Map<String, Object> map = rm.estSell(id,pageNum,listCount);
 		return map;
 	}
 	

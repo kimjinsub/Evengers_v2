@@ -44,6 +44,7 @@
 	
 	<div id="list"></div>
 	<div id="detail"></div>
+	<div id="paging"></div>
 </body>
 
 <script>
@@ -75,15 +76,16 @@ function searchajax(keyword){
 
 
 $(document).ready(function() {
-	getReqList();
+	getReqList(1,10);
 });
-function getReqList() {
+function getReqList(pageNum,listCount) {
 		$.ajax({
 		url : "myReqList",
 		dataType:'json',
+		data : {pageNum:pageNum , listCount:listCount},
 		success:function(result) {
 		var rList = result['rList'];
-
+		var paging =result['paging'];
 		var str = "<table id='reqList' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
 		for ( var i in rList) {
 			str += "<tr><td>" + rList[i].req_code + "</td><td>"
@@ -96,6 +98,7 @@ function getReqList() {
 			}
 			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
 			$("#list").html(str);
+			$("#paging").html(paging);
 			},
 		error : function(error) {
 		}
