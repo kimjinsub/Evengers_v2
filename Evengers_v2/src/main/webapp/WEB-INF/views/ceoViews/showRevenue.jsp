@@ -6,15 +6,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+.table{
+	text-align: center;
+}
+</style>
 </head>
+
 <body>
 <h2>수익보기</h2>
 	<input type="month" id="choiceMonth" name="choiceMonth">
+	
 	<div id="show"></div>
 	
 	
 </body>
 <script>
+/* 현재 달 기본 값 입력 */
+document.getElementById('choiceMonth').value= new Date().toISOString().slice(0, 7);
+
+$(document).ready(function(){
+	showRevenue();
+}) 
 $("input[type=month]").change(function() {
 	showRevenue();	
 })

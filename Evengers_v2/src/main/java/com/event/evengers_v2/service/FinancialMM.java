@@ -81,15 +81,12 @@ public class FinancialMM {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = new Date();
 			today = format.parse(format.format(today));
-			System.out.println("today=" + today);
 			Date receipt = format.parse(day);
-			System.out.println("과연?=" + receipt.compareTo(today));
 			if (receipt.compareTo(today) == -1) {
 				msg = "<p id='input'>입력 가능합니다.</p>";
 			} else {
 				msg = "<p id='noinput'> 입력 불가능 합니다.</p>";
 			}
-
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +97,7 @@ public class FinancialMM {
 		mav = new ModelAndView();
 		ArrayList<String> calList = new ArrayList<>();
 		String choice = null;
-		String Total = null;
+		int Total = 0;
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
 		choice = format.format(choicedate);
 		calList = fDao.getCalList(choice, c_id);
@@ -113,7 +110,7 @@ public class FinancialMM {
 		return mav;
 	}
 
-	private String makeHtml_getCalList(ArrayList<String> calList, String choice, String Total) {
+	private String makeHtml_getCalList(ArrayList<String> calList, String choice, int Total) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<br>정산 금액  (총 금액=" + Total + ")<br>");
 		sb.append("<table border='1' id='getCal'>");
@@ -132,7 +129,6 @@ public class FinancialMM {
 
 	public String allShowCal(Date choicedate, String c_id) {
 		StringBuilder sb = new StringBuilder();
-		System.out.println("여기?choice=" + choicedate);
 		ArrayList<Calculate> allCalList = new ArrayList<>();
 		String choice = null;
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
@@ -147,8 +143,10 @@ public class FinancialMM {
 			Date receipt = cal.getCal_receiptdate();
 			String cal_receiptdate = new SimpleDateFormat("yyyy-MM-dd").format(receipt);
 
-			sb.append("<tr><td>" + cal_receiptdate + "</td>" + "<td>" + cal.getCal_category() + "</td>" + "<td>"
-					+ cal.getCal_contents() + "</td>" + "<td>" + cal.getCal_price() + "</td></tr>");
+			sb.append("<tr><td>" + cal_receiptdate + "</td>" 
+						+ "<td>" + cal.getCal_category() + "</td>"
+						+ "<td>"+ cal.getCal_contents() + "</td>" 
+						+ "<td>" + cal.getCal_price() + "</td></tr>");
 		}
 		sb.append("</table>");
 
@@ -194,8 +192,10 @@ public class FinancialMM {
 		sb.append("<h2>급여관리</h2>");
 		sb.append("<table border='1'><tr><th>사번</th><th>성명</th><th>직책</th><th>급여</th>");
 		for (MonthlySalary ms : msList) {
-			sb.append("<tr><td>" + ms.getMs_emp_code() + "</td>" + "<td>" + ms.getMs_emp_name() + "</td>" + "<td>"
-					+ ms.getMs_p_name() + "</td>" + "<td>" + ms.getMs_p_salary() + "</td></tr>");
+			sb.append("<tr><td>" + ms.getMs_emp_code() + "</td>" 
+						+ "<td>" + ms.getMs_emp_name() + "</td>" 
+						+ "<td>"+ ms.getMs_p_name() + "</td>" 
+						+ "<td>" + ms.getMs_p_salary() + "</td></tr>");
 		}
 		sb.append("</table>");
 		return sb.toString();
@@ -206,9 +206,10 @@ public class FinancialMM {
 		sb.append("<div id='inputbtn'><button onclick='inputSalary()'>입력</button></div>");
 		sb.append("<table border='1'><tr><th>사번</th><th>성명</th><th>직책</th><th>급여</th></tr>");
 		for (Employee emp : empList) {
-			sb.append("<tr><td>" + emp.getEmp_code() + "</td>" + "<td>" + emp.getEmp_name() + "</td>" + "<td>"
-					+ pDao.getPositionInfo(emp.getP_code()).getP_name() + "</td>" + "<td>"
-					+ pDao.getPositionInfo(emp.getP_code()).getP_salary() + "</td></tr>");
+			sb.append("<tr><td>" + emp.getEmp_code() + "</td>" 
+						+ "<td>" + emp.getEmp_name() + "</td>" 
+						+ "<td>"+ pDao.getPositionInfo(emp.getP_code()).getP_name() + "</td>" 
+						+ "<td>"+ pDao.getPositionInfo(emp.getP_code()).getP_salary() + "</td></tr>");
 		}
 		sb.append("</table>");
 		return sb.toString();
@@ -249,6 +250,8 @@ public class FinancialMM {
 
 	public ModelAndView revenueList(Date choicedate) {
 		mav = new ModelAndView();
+		int evtRe_total = 0;
+		Date today = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
 		String choice = format.format(choicedate);
 		String id = session.getAttribute("id").toString();
@@ -259,6 +262,10 @@ public class FinancialMM {
 		ArrayList<String> req_codes = new ArrayList<>();
 		req_codes = reqDao.getReqCodeList();
 		
+		try {
+			today = format.parse(format.format(today));
+			Date choiceDate = format.parse(choice);
+			if (choiceDate.compareTo(today) != 1) {
 		if (e_codes.size() == 0 || req_codes.size() ==0) {
 			return null;
 		} else {
@@ -278,12 +285,12 @@ public class FinancialMM {
 			}
 			System.out.println("er_penalty="+er_penalty);
 			System.out.println("ep_total="+ep_total);
-			int re_total = 0; //revenue
+			
 			for(int i=0;i<er_penalty.size();i++) {
-			re_total = (int) (ep_total.get(i) - Math.ceil(ep_total.get(i) * er_penalty.get(i)/ 100));
+			evtRe_total += (int) (ep_total.get(i) - Math.ceil(ep_total.get(i) * er_penalty.get(i)/ 100));
 			}
-			System.out.println("re_total="+re_total);
-			mav.addObject("re_total", re_total); //위약금
+			System.out.println("re_total="+evtRe_total);
+			mav.addObject("re_total", evtRe_total); //위약금
 			mav.addObject("ep_codes", ep_codes);
 			//견적 부분
 			ArrayList<String> estp_codes = new ArrayList<>();
@@ -302,16 +309,90 @@ public class FinancialMM {
 		List<Map<String,Object>> estpReList = new ArrayList<>();
 		estpReList = fDao.getEstpRevenue(choice);
 		System.out.println("estpReList="+estpReList);
-		
 		mav.addObject("evtReList", evtReList);
 		mav.addObject("estpReList", estpReList);
-		mav.addObject("makeHtml_revenue", makeHtml_revenue());
+		mav.addObject("makeHtml_revenue", makeHtml_revenue(evtRe_total,evtReList,estpReList,choicedate));
+			}else {
+				mav.addObject("msg", "수익을 확인할 수 없습니다.");
+			}
+			
+			} catch (ParseException e) {
+				e.printStackTrace();
+		}
 		mav.setViewName("ceoViews/revenue");
 		return mav;
 	}
 
-	private Object makeHtml_revenue() {
-		// TODO Auto-generated method stub
-		return null;
+	private Object makeHtml_revenue(int evtRe_total,List<Map<String,Object>> evtReList,List<Map<String,Object>> estpReList,Date choicedate) {
+		StringBuilder sb= new StringBuilder();
+		String c_id = session.getAttribute("id").toString();
+		MonthlySalary ms = new MonthlySalary();
+		String ep_total = null;
+		String e_category = null;
+		String estp_total = null;
+		String estp_category = null;
+		int allestp_total = 0;
+		int allevt_total = 0;
+		int revenue = 0;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
+		String choice = format.format(choicedate);
+		int totalMonth = fDao.getTotalMonth(choice,c_id); //급여 
+		System.out.println("totalMonth="+totalMonth);
+		int totalCal = fDao.getTotalPrice(choice, c_id); //정산 금액
+		System.out.println("totalCal="+totalCal);
+		
+		sb.append("<div>");
+		sb.append("<table class='table table-hover'><tr><th>내용</th><th>지출</th><th>수입</th>");
+		
+		for(int i=0;i<evtReList.size();i++) {
+			sb.append("<tr><td>이벤트 수입(");
+			ep_total = evtReList.get(i).get("ep_total").toString();
+			e_category = evtReList.get(i).get("category").toString();
+			int evtTotal = Integer.parseInt(ep_total);
+			evtTotal *= 1;
+			allevt_total += evtTotal;
+			sb.append(e_category+")</td>");
+			sb.append("<td></td>");
+			sb.append("<td>"+"+"+evtTotal+"</td>");
+		}
+		sb.append("</tr>");//이벤트
+		sb.append("<tr><td>이벤트 위약금</td>");
+		evtRe_total *= 1;
+		sb.append("<td></td>");
+		sb.append("<td>"+"+"+evtRe_total+"</td></tr>"); //이벤트 위약금
+		
+		for(int i=0;i<estpReList.size();i++) {
+			sb.append("<tr><td>견적 수입(");
+			estp_total = estpReList.get(i).get("estp_total").toString();
+			estp_category = estpReList.get(i).get("category").toString();
+			int estpTotal = Integer.parseInt(estp_total);
+			estpTotal *= 1;
+			allestp_total += estpTotal;
+			sb.append(estp_category+")</td>");
+			sb.append("<td></td>");
+			sb.append("<td>"+"+"+estpTotal+"</td>");
+		}
+		System.out.println("allestp="+allestp_total);
+		System.out.println("allep="+allevt_total);
+		sb.append("</tr>");//견적
+		
+		sb.append("<tr><td>총 급여</td>");
+		totalMonth *= -1;
+		sb.append("<td>"+totalMonth+"</td>");
+		sb.append("<td></td></tr>");//급여
+		
+		sb.append("<tr><td>정산 금액</td>");
+		totalCal *= -1;
+		sb.append("<td>"+totalCal+"</td>");
+		sb.append("<td></td></tr>"); //정산
+
+		revenue = allestp_total + allevt_total + totalMonth + totalCal +evtRe_total;
+		
+		sb.append("<tr><td>순이익</td>"
+				+ "<td colspan='2'>"+revenue+"</td></tr>");
+		
+		sb.append("</table></div>"); 
+		return sb.toString();
 	}
 }

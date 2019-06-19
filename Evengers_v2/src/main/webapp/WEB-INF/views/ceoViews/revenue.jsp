@@ -5,11 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+#msg{
+	color : red;
+}
+</style>
 </head>
 <body>
-
-	이벤트 결제:${evtReList}
-	견적 결제:${estpReList}
-	이벤트 위약금:${re_total}
+	<div id="msg">${msg}</div>
+	${makeHtml_revenue}
 </body>
 </html>

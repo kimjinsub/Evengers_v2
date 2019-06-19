@@ -28,7 +28,7 @@
 	<select id="getAllCal" resultType="calculate">
 		SELECT * FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} ORDER BY CAL_RECEIPTDATE
 	</select>
-	<select id="getTotalPrice" resultType="String">
+	<select id="getTotalPrice" resultType="int">
 		SELECT SUM(CAL_PRICE) FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} 
 	</select>
 	<select id="selectSalary" resultType="monthlysalary">
@@ -47,5 +47,8 @@
 	</select>
 	<select id="getEvtPenalty" resultType="Double">
 		SELECT ER_PENALTY FROM EP,ER WHERE EP.EP_CODE=#{refundedEp_Code} AND ER_REFUNDDATE LIKE CONCAT(#{choice},'%')
+	</select>
+	<select id="getTotalMonth" resultType="int">
+		SELECT SUM(MS_P_SALARY) FROM MS WHERE MS_DATE LIKE CONCAT(#{choice},'%') AND MS_C_ID=#{c_id}
 	</select>
 </mapper>

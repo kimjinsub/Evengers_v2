@@ -18,7 +18,7 @@ public interface FinancialDao {
 
 	ArrayList<Calculate> getAllCal(@Param("choice") String choice,@Param("c_id") String c_id);
 
-	String getTotalPrice(@Param("choice")String choice, @Param("c_id") String c_id);
+	int getTotalPrice(@Param("choice")String choice, @Param("c_id") String c_id);
 	
 	ArrayList<MonthlySalary> selectSalary(@Param("choice")String choice,@Param("c_id") String c_id);
 
@@ -29,4 +29,6 @@ public interface FinancialDao {
 	List<Map<String, Object>> getEstpRevenue(@Param("choice") String choice);
 	
 	ArrayList<Double> getEvtPenalty(@Param("refundedEp_Code") String refundedEp_Code,@Param("choice")String choice);
+
+	int getTotalMonth(@Param("choice")String choice,@Param("c_id") String c_id);
 }
