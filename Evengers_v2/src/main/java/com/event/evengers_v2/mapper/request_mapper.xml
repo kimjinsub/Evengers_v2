@@ -116,7 +116,7 @@
    </select>
    
    <select id='getEstPayList' parameterType="request" resultType="estimatepay">
-   SELECT * FROM ESTP WHERE REQ_CODE=#{req_code}
+   SELECT * FROM ESTP WHERE REQ_CODE=#{req_code} ORDER BY ESTP_CODE
    </select>
    
    <select id="getEstpDetail" parameterType="string" resultType="estimatepay">

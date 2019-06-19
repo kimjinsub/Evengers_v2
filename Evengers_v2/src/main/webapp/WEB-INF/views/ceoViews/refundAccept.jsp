@@ -72,7 +72,7 @@ function insertPenalty(){
 			}
 			str += "</table>"
 			$("#estimateRefund").html(str);
-			location.href="ceoViews/estrRefundCompeleteList"
+			location.href = "javascript:Ajax_forward('estrRefundCompleteList')";
 		},error:function(error){
 			alert("환불이 실패하였습니다.")
 		}

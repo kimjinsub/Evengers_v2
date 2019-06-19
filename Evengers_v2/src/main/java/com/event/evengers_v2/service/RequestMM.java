@@ -506,61 +506,64 @@ public class RequestMM {
 		}
 
 		public ModelAndView showEstpDetail(String estp_code) {
-			mav=new ModelAndView();
-			String msg=null;
-			String refundStateMsg=null;
+			mav = new ModelAndView();
+			String msg = null;
+			String refundStateMsg = null;
 			EstimatePay estp = new EstimatePay();
-			estp=rDao.getEstpDetail(estp_code);
-			String req_code1=estp.getReq_code();
-			Request req=new Request();
-			req=rDao.getReqInfo(req_code1);
-			Estimate est=new Estimate();
-			System.out.println("req:"+req);
-			EstimatePayImage estpi=new EstimatePayImage();
-			  estpi=rDao.getEstpiImage(estp_code);
-			  System.out.println(estpi);
-			  int refundstate=estp.getEstp_refundstate();
-			   if(refundstate==0) {
-				   refundStateMsg="결제완료";
-			   }else if(refundstate==1){
-				   refundStateMsg="환불중";
-			   }else {
-				   refundStateMsg="환불완료";
-			   }
-				try {
-			  int refunddate=est.getEst_refunddate();
-			  String hopedate=req.getReq_hopedate(); //2018-12-30
-				SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+			estp = rDao.getEstpDetail(estp_code);
+			String req_code1 = estp.getReq_code();
+			Request req = new Request();
+			req = rDao.getReqInfo(req_code1);
+			Estimate est = new Estimate();
+			System.out.println("req:" + req);
+			EstimatePayImage estpi = new EstimatePayImage();
+			estpi = rDao.getEstpiImage(estp_code);
+			System.out.println(estpi);
+			int refundstate = estp.getEstp_refundstate();
+			if (refundstate == 0) {
+				refundStateMsg = "결제완료";
+			} else if (refundstate == 1) {
+				refundStateMsg = "환불중";
+			} else {
+				refundStateMsg = "환불완료";
+			}
+			try {
+				Date payday = estp.getEstp_payday();
+				int refunddate = est.getEst_refunddate();
+				String hopedate = req.getReq_hopedate(); // 2018-12-30
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				String payday1 = format1.format(payday);
+				mav.addObject("payday", payday1);
 				Date hopedate1;
-					hopedate1 = format1.parse(hopedate);
-					format1.format(hopedate1);
-					System.out.println("hopedate1:"+format1.format(hopedate1));
-				Date today = new Date(); 
-				today=format1.parse(format1.format(today));
-				long refundAble=hopedate1.getTime()-refunddate*(24*60*60*1000);
-				String refundable1=format1.format(new Date(refundAble));
-				System.out.println("kkk"+refundable1+"일 Rkwl");
-				System.out.println("누가먼저?:"+hopedate1.compareTo(today));
-				
-				mav.addObject("refundable",refundable1);
-				int check=hopedate1.compareTo(today);
-				if(check==0) {
-					msg="환불가능";
-				}else if(check>=1) {
-						msg="환불가능";		
-				}else {
-					msg="환불 불가능";
+				hopedate1 = format1.parse(hopedate);
+				format1.format(hopedate1);
+				System.out.println("hopedate1:" + format1.format(hopedate1));
+				Date today = new Date();
+				today = format1.parse(format1.format(today));
+				long refundAble = hopedate1.getTime() - refunddate * (24 * 60 * 60 * 1000);
+				String refundable1 = format1.format(new Date(refundAble));
+				System.out.println("kkk" + refundable1 + "일 Rkwl");
+				System.out.println("누가먼저?:" + hopedate1.compareTo(today));
+
+				mav.addObject("refundable", refundable1);
+				int check = hopedate1.compareTo(today);
+				if (check == 0) {
+					msg = "환불가능";
+				} else if (check >= 1) {
+					msg = "환불가능";
+				} else {
+					msg = "환불 불가능";
 				}
-				}catch(ParseException e){
-					e.printStackTrace();
-				}
-			mav.addObject("refundstate",refundStateMsg);
-		    mav.addObject("msg",msg);
-			mav.addObject("estpi",estpi);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			mav.addObject("refundstate", refundStateMsg);
+			mav.addObject("msg", msg);
+			mav.addObject("estpi", estpi);
 			mav.addObject("req", req);
-			mav.addObject("estp",estp);
+			mav.addObject("estp", estp);
 			mav.setViewName("memberViews/showEstimateDetail");
-			
+
 			return mav;
 		}
 		public void download3(Map<String, Object> params) throws Exception {
@@ -726,6 +729,66 @@ public class RequestMM {
 			map1.put("estpList", estpList);
 			map1.put("estrList", estrList);
 			return map1;
+		}
+		public String estEffectiveness(String okDate, String req_code1) {
+			String msg = "";
+			Request req = new Request();
+			req = rDao.getReqInfo(req_code1);
+			String hopeDate = req.getReq_hopedate();
+			System.out.println("hopeDate=" + hopeDate);
+			try {
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				Date hopeDate1 = format1.parse(hopeDate);
+				Date today = new Date();
+				today = format1.parse(format1.format(today));
+				
+				long diff = hopeDate1.getTime() - today.getTime();
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+				System.out.println("diff"+diff);
+				System.out.println("날짜차이:" + diffDays + "일");
+				long a=diffDays-Integer.parseInt(okDate);
+				System.out.println("누가먼저?:" + hopeDate1.compareTo(today));
+				System.out.println("a="+a);
+				if (a>=0) {
+					// 입력날짜(selected_dday)가 현재(today)보다 미래면 +1 과거면 -1 같으면0
+						msg = "가능";
+					} else {
+						msg = "불가능";
+				}
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			return msg;
+		}
+
+		public String refundEffectiveness(String refundDate, String req_code1) {
+			String msg = "";
+			Request req = new Request();
+			req = rDao.getReqInfo(req_code1);
+			String hopeDate = req.getReq_hopedate();
+			System.out.println("hopeDate=" + hopeDate);
+			try {
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+				Date hopeDate1 = format1.parse(hopeDate);
+				Date today = new Date();
+				today = format1.parse(format1.format(today));
+				long diff = hopeDate1.getTime() - today.getTime();
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+				System.out.println("diff"+diff);
+				System.out.println("날짜차이:" + diffDays + "일");
+				long a=diffDays-Integer.parseInt(refundDate);
+				System.out.println("누가먼저?:" + hopeDate1.compareTo(today));
+				System.out.println("a="+a);
+				if (a>=0) {
+					// 입력날짜(selected_dday)가 현재(today)보다 미래면 +1 과거면 -1 같으면0
+						msg = "가능";
+					} else {
+						msg = "불가능";
+				}
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			return msg;
 		}
 		}
 		

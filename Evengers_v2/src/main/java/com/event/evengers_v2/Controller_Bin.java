@@ -250,6 +250,16 @@ public class Controller_Bin {
 		Map<String, Object> map1 = rm.RefundCompleteList(id,pageNum);
 		return map1;
 	}
+	@RequestMapping(value = "/estEffectiveness", produces = "application/json; charset=utf-8;")
+	public @ResponseBody String estEffectiveness(String okDate, String req_code) {
+		System.out.println("req_code="+req_code);
+		return rm.estEffectiveness(okDate,req_code);
+	}
+	@RequestMapping(value = "/refundEffectiveness", produces = "application/json; charset=utf-8;")
+	public @ResponseBody String refundEffectiveness(String refundDate, String req_code) {
+		System.out.println("req_code="+req_code);
+		return rm. refundEffectiveness(refundDate,req_code);
+	}
 	
 	
 }

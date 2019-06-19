@@ -44,7 +44,7 @@ visibility: visible;
 			<td bgcolor="blue" align="center">총가격</td>
 			<td width="200">${estp.estp_total}원</td>
 			<td bgcolor="blue" align="center">결제날짜</td>
-			<td width="200">${estp.estp_payday}</td>
+			<td width="200">${payday}</td>
 		</tr>
 		<tr height="40">
 			<td bgcolor="blue" align="center">환불가능일</td>
@@ -71,11 +71,21 @@ visibility: visible;
 			</td>
 		</tr>
 	</table>
- <a  href="estpRefundRequest?estp_code=${estp.estp_code}" id="refundButton">환불하기</a>
+ <button id="refundButton">환불하기</button>
   <div id="msg">${msg}</div>
 </body>
 <script>
-
+$("#refundButton").click(function(){
+	var estp_code="${estp.estp_code}";
+	$.ajax({
+		url:"estpRefundRequest",
+		data:{estp_code:estp_code},
+		dataType:"html",
+		success:function(page){
+			location.href = "javascript:Ajax_forward('estimatePayList')";
+		}
+	})
+})
 $(document).ready(function() {
 	msgView();
 });

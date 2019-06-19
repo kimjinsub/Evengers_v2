@@ -52,6 +52,69 @@ margin-left: 350px;
   
 </body>
 <script>
+$("#est_okDate").change(function() {
+	effectiveness();
+})
+$("#est_refundDate").change(function() {
+	refundEffectiveness();
+})
+
+function refundEffectiveness() {
+	var refundDate = $("#est_refundDate").val();
+	if(refundDate<0){
+		alert("불가능합니다");
+		var input = document.getElementById("est_refundDate");
+		input.value = null;
+	}
+	  $.ajax({
+		url :"refundEffectiveness",
+		data : {
+			refundDate:refundDate,
+			req_code:"${req_code}"
+		},
+		dataType : "text",
+		success : function(result) {
+			if(result!="가능"){
+				alert("불가능합니다");
+				var input = document.getElementById("est_refundDate");
+				input.value = null;
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	})
+} 
+
+function effectiveness() {
+	var okDate = $("#est_okDate").val();
+	var refundDate = $("#est_refundDate").val();
+	if(okDate<0){
+		alert("불가능합니다");
+		var input = document.getElementById("est_okDate");
+		input.value = null;
+	}
+	  $.ajax({
+		url : "estEffectiveness",
+		data : {
+			okDate:okDate,
+			req_code:"${req_code}"
+		},
+		dataType : "text",
+		success : function(result) {
+			$("#msg").html(result);
+			if(result!="가능"){
+				alert("불가능합니다");
+				var input = document.getElementById("est_okDate");
+				input.value = null;
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	})
+} 
+
 function est(){
 	return true;
 }
