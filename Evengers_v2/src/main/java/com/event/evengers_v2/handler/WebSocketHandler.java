@@ -36,67 +36,78 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		logger.info("연결 IP:"+session.getRemoteAddress().getHostName());
 		
 		Map<String, Object> httpSession = session.getAttributes();
-		int chatInNow=mDao.chatInCheck(httpSession.get("id").toString());
+		/*int chatInNow=mDao.chatInCheck(httpSession.get("id").toString());
 		if(chatInNow==0) {
 			mDao.chatIn(session.getId(), httpSession.get("id").toString());
-		}
+		}*///ceo에서 여러개를 받지못함
+		mDao.chatIn(session.getId(), httpSession.get("id").toString());
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		JSONParser parser = new JSONParser();
-		JSONObject obj = (JSONObject) parser.parse(message.getPayload());
+		JSONObject obj=null;
+		obj = (JSONObject) parser.parse(message.getPayload());
 		String sender=session.getAttributes().get("id").toString();
 		logger.info("sender="+sender);//evengers id : mem
 		int flag=mDao.memberDoubleChk(session.getAttributes().get("id").toString());
-		logger.info("flag="+flag);
-		
-		String receiver="";
-		String receiver_sessionId="";
-		if(obj.get("receiver").toString()!="") {
-			receiver=obj.get("receiver").toString();//evengers_id
-			receiver_sessionId=mDao.getSessionId(receiver);//websocket id
-		}else {return;}
+		String receiver=obj.get("receiver").toString();//evengers_id
+		ArrayList<String> receiver_sessionIdList=mDao.getSessionId(receiver);//websocket id
+		/////////////////////////////////////
+		if(obj.get("matching")!=null) {
+			if(obj.get("matching").equals("yes")) {//ceo에서 요청하니...sender:ceo receiver:member
+				mDao.removeOtherWS(sender,session.getId());//새로연결된 세션빼고 나머지 같은아이디 CHAT테이블에서 제거
+				mDao.waitingOut(sender,receiver);//대기실에서 매칭된 대기목록 지우기
+			}
+		}
+		if(obj.get("disConn")!=null) {
+			if(obj.get("disConn").equals("yes")) {//member에서요청하니 sender:member receiver:ceo
+				mDao.waitingOut(receiver,sender);//대기실에서 매칭된 대기목록 지우기
+			}
+		}
+		/////////////////////////////////
 		switch(flag) {
 			case sentFrom.CEO://ceo가 sendMsg()했을때
-				if(receiver_sessionId==null) {//websocket id==null
-					for(WebSocketSession wss:sessions) {
-						logger.info("ceo to ceo");
-						if(wss.getId().equals(session.getId())) {//자기자신(ceo)에게만//websocket id
-							wss.sendMessage(new TextMessage("상대가 비로그인 상태입니다"));
-						}
-					}
-				}
 				for(WebSocketSession wss:sessions) {
 					logger.info("ceo to mem");
-					if(wss.getId().equals(receiver_sessionId)) {//상대(member)에게만//websocket id
-						box=new HashMap<>();
-						box.put("msg", obj.get("nick")+":"+obj.get("msg"));
-						box.put("sender", sender);
-						wss.sendMessage(new TextMessage(new Gson().toJson(box)));
+					for(String receiver_sessionId:receiver_sessionIdList) {
+						logger.info("receiver_sessionId:"+receiver_sessionId);
+						if((wss.getAttributes().get("id").toString()).equals(receiver)) {//상대(member)에게만//websocket id
+							box=new HashMap<>();
+							box.put("sender", sender);
+							if(obj.get("sysMsg")!=null) {
+								box.put("sysMsg", obj.get("sysMsg"));
+							}else {
+								box.put("msg", obj.get("nick")+":"+obj.get("msg"));
+							}
+							wss.sendMessage(new TextMessage(new Gson().toJson(box)));
+						}
 					}
 				}
 				break;
 			case sentFrom.MEMBER://member가 sendMsg()했을때
-				if(receiver_sessionId==null) {
-					for(WebSocketSession wss:sessions) {
-						logger.info("mem to mem");
-						if(wss.getId().equals(session.getId())) {//자기자신(member)에게만
-							wss.sendMessage(new TextMessage("상대가 비로그인 상태입니다"));
-						}
-					}
-				}
 				for(WebSocketSession wss:sessions) {
 					logger.info("mem to ceo");
-					if(wss.getId().equals(receiver_sessionId)) {//상대(ceo)에게만
-						box=new HashMap<>();
-						box.put("msg", obj.get("nick")+":"+obj.get("msg"));
-						box.put("sender", sender);
-						if(mDao.alreadyWait(receiver,sender)==0) {//1:대기중 0:대기X
-							mDao.inWaitingRoom(receiver,sender);
-							box.put("hasNewReq", "yes");
+					for(String receiver_sessionId:receiver_sessionIdList) {
+						logger.info("receiver_sessionId:"+receiver_sessionId);
+						if((wss.getAttributes().get("id").toString()).equals(receiver)) {//상대(ceo)에게만
+							box=new HashMap<>();
+							box.put("sender", sender);
+							if(obj.get("disConnMsg")!=null) {
+								box.put("disConnMsg", obj.get("disConnMsg"));
+							}else {
+								box.put("msg", obj.get("nick")+":"+obj.get("msg"));
+							}
+							/////////////////////
+							if(obj.get("connMsg")!=null) {
+								box.put("connMsg", obj.get("connMsg"));
+								if(mDao.alreadyWait(receiver,sender)==0) {//1:대기중 0:대기X
+									mDao.inWaitingRoom(receiver,sender);
+									box.put("hasNewReq", "yes");
+								}
+							}
+							wss.sendMessage(new TextMessage(new Gson().toJson(box)));
 						}
-						wss.sendMessage(new TextMessage(new Gson().toJson(box)));
 					}
 				}
 				break;
@@ -113,7 +124,5 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		}
 		int flag=mDao.memberDoubleChk(session.getAttributes().get("id").toString());
 		logger.info("flag="+flag);
-		switch(flag) {
-		}
 	}
 }

@@ -382,11 +382,11 @@ public String memberTest(String testcode) {
 		mav.addObject("sender", sender);
 		mav.addObject("receiver", receiver);
 		if(mDao.memberDoubleChk(receiver)==1) {//sender:ceo -> receiver:member
-			mav.addObject("c_name", mDao.ceoInfo(sender).getC_name());
+			mav.addObject("c_id", sender);
 			mav.setViewName("ceoChat");
 			return mav;
 		}else {//sender:member -> receiver:ceo
-			mav.addObject("m_name", mDao.mInfo(sender).getM_name());
+			mav.addObject("m_id", sender);
 			mav.setViewName("memberChat");
 			return mav;
 		}

@@ -74,7 +74,7 @@ public interface MemberDao {
 	
 	boolean chatIn(@Param("sessionId")String sessionId, @Param("id")String id);
 
-	String getSessionId(String id);
+	ArrayList<String> getSessionId(String id);
 
 	int chatInCheck(String id);
 
@@ -85,5 +85,10 @@ public interface MemberDao {
 	int alreadyWait(@Param("c_id")String receiver, @Param("m_id")String sender);
 
 	ArrayList<String> getWaitingRoom(String c_id);
+
+	void removeOtherWS(@Param("id")String sender, 
+			@Param("sessionId")String sender_sessionId);
+
+	void waitingOut(@Param("c_id")String sender, @Param("m_id")String receiver);
 
 }

@@ -18,6 +18,7 @@
 	<tr><th>MEMBER ID</th></tr>
 </table>
 <button onclick='disConn()'>상담종료</button>
+<button onclick='getWaitingRoom()'>새로고침</button>
 </body>
 <script>
 var sock = new SockJS("webSocket")
@@ -35,6 +36,9 @@ sock.onmessage=function(event){
 	hasNewReq=box.hasNewReq;
 	if(hasNewReq=="yes"){
 		getWaitingRoom();
+	}
+	if(box.disConnMsg!=null){
+		location.href="startChat";
 	}
 }
 sock.onclose=function(event){

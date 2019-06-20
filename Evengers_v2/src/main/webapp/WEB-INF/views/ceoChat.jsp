@@ -26,11 +26,23 @@ var sock = new SockJS("webSocket")
 var content = document.getElementById("monitor");
 sock.onopen=function(){
 	console.log("info : connection opened.");
-	content.value+="웹소켓 연결...상담대기중\n";
+	content.value+="${receiver}"+"님과의 상담입니다.\n";
+	matchingMsg();
 }
 sock.onmessage=function(event){
 	var box=JSON.parse(event.data);
-	if(box.sender=="${sender}"){
+	if(box.sender=="${receiver}"){
+		console.log("???outside");
+		console.log("box.sender:",box.sender);
+		console.log("sender:","${sender}");
+		if(box.disConnMsg!=null){
+			content.value+=box.disConnMsg+"\n";
+			return;
+		}
+		if(box.connMsg!=null){
+			content.value+=box.connMsg+"\n";
+			return;
+		}
 		content.value+=box.msg+"\n";
 	}
 }
@@ -42,15 +54,25 @@ sock.onerror=function(error){
 	console.log("error : ",error);
 }
 console.log("receiver","${receiver}");
-console.log("nick","${c_name}");
+console.log("nick","${c_id}");
 function sendMsg(){
 	var obj={};
-	obj.nick="${c_name}";
+	obj.nick="${c_id}";
 	obj.receiver="${receiver}";
 	obj.msg=$("#msg").val();
 	content.value+="나> "+obj.msg+"\n";
 	sock.send(JSON.stringify(obj));
 	$("#msg").val("");
+	obj=null;
+}
+function matchingMsg(){
+	var obj={};
+	obj.nick="${c_id}";
+	obj.receiver="${receiver}";
+	obj.matching="yes";
+	obj.sysMsg="${c_id}"+"님이입장하셨습니다.";
+	sock.send(JSON.stringify(obj));
+	obj=null;
 }
 function disConn(){
 	sock.close();

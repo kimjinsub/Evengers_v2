@@ -122,4 +122,10 @@
 	<select id="getWaitingRoom" parameterType="String" resultType="String">
 		SELECT M_ID FROM WR WHERE C_ID=#{c_id}
 	</select>
+	<delete id="removeOtherWS" parameterType="String">
+		DELETE FROM CHAT WHERE ID=#{id} AND SESSIONID!=#{sessionId}
+	</delete>
+	<delete id="waitingOut" parameterType="String">
+		DELETE FROM WR WHERE C_ID=#{c_id} AND M_ID=#{m_id}
+	</delete>
 </mapper>
