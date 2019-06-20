@@ -110,7 +110,7 @@ public class Paging {
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { //현재 페이지가 아닌 경우 링크처리
 				sb.append(" <div> ");
-				sb.append("<a href='javascript:"+boardName+"("+i+","+listCount+")'>");
+				sb.append("<a href='javascript:"+boardName+"("+i+","+listCount+")'class='button2'>");
 				sb.append(i);
 				sb.append("</a>");
 				sb.append(" </div> ");

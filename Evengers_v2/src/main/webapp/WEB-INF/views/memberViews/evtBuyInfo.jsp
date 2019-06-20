@@ -8,11 +8,16 @@
 <style>
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style >
+
+</style>
 </head>
 <body>
+
 ${makeHtml_evtBuyInfo}
 </body>
 <script>
+
 $(document).ready(function(){
 });
 $("#payBtn").click(function(){
@@ -37,7 +42,8 @@ function memberEvtPay(ep_code){
 		data:{ep_code:ep_code},
 		dataType:"html",
 		success:function(result){
-			$("body").html(result);
+			alert("구매 되었습니다.");
+			$("#ebInfo").html(result);
 		},
 		error:function(error){
 			console.log(error);
@@ -67,5 +73,6 @@ $("#rejectBtn").click(function(){
 		})
 		
 	});
+	
 </script>
 </html>

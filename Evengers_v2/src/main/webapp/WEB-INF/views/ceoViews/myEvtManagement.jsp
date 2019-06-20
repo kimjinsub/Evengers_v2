@@ -37,10 +37,10 @@
 
 #contents_layer {
 	position: absolute;
-	top: 40%;
-	left: 40%;
-	width: 600px;
-	height: 900px;
+	top: 20%;
+	left: 30%;
+	width: 800px;
+	height: 800px;
 	margin: -150px 0 0 -194px;
 	padding: 28px 28px 0 28px;
 	border: 2px solid #555;
@@ -50,38 +50,76 @@
 	color: #767676;
 	line-height: normal;
 	white-space: normal;
-	overflow: scroll
+	overflow: scroll;
+	font-size: 18px;
+	
+}
+.eList{
+	float: left;
+	margin: 50px;
+	border-style: double;
+	text-align: center;
+	border-top: 30px;
+	background-color: white;
+	
+}
+.e_code,.evtDel_code {
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #555;
+  }
+
+.e_code:hover,.evtDel_code:hover
+ {
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
 }
 </style>
 </head>
 <body>
-	내 상품 관리
+<h1>내 상품 관리</h1>
 	<c:forEach var="event" items="${eList}">
 		<div class="eList">
 			<table border="1">
 				<tr>
-					<td>상품 이름: ${event.e_name}</td>
+					<td>상품 이름</td> <td>${event.e_name}</td>
 				</tr>
 				<tr>
-					<td>상품 가격: ${event.e_price}</td>
+					<td>상품 가격</td> <td>${event.e_price}</td>
 				</tr>
 				<tr>
-					<td>상품 카테고리: ${event.e_category}</td>
+					<td>상품 카테고리</td><td> ${event.e_category}</td>
 				</tr>
 				<tr>
-					<td>상품 예약가능일: ${event.e_reservedate}</td>
+					<td>상품 예약가능일</td><td> ${event.e_reservedate}</td>
 				</tr>
 				<tr>
-					<td>상품 환불가능일: ${event.e_refunddate}</td>
+					<td>상품 환불가능일</td><td> ${event.e_refunddate}</td>
 				</tr>
 				<tr>
-					<td>상품 설명: ${event.e_contents}</td>
+					<td style="height: 100px;">상품 설명</td><td style="height: 100px;">${event.e_contents}</td>
 				</tr>
 				<tr>
-					<td>상품 사진: <img src="upload/thumbnail/${event.e_sysfilename}" / width="250"
+					<td >상품 사진</td><td> <img src="upload/thumbnail/${event.e_sysfilename}" / width="250"
 				height="250"></td>
 				</tr>
 				</table>
+				<br>
 				<button class="e_code" name="${event.e_code}">수정</button>
 				<button class="evtDel_code" name="${event.e_code}">삭제</button>
 		</div>

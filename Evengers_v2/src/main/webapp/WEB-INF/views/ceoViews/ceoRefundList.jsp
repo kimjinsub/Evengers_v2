@@ -7,84 +7,125 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style >
+table.type08 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+}
+
+table.type08 thead th {
+    padding: 10px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid #c00;
+    background: #dcdcd1;
+}
+table.type08 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #ececec;
+}
+table.type08 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+</style>
 </head>
 <body>
-	<div id="eList2" style="width: 90px; float: left;">
-		<table border="1">
+<h1>환불 요청 페이지</h1>
+<div>
+	<div id="eList2" style="width:10%; float: left;">
+		<table border="1" class="type08">
+			<thead>
 			<tr align="center">
-				<td width="90">상품이름</td>
+				<th >상품이름</th>
 			</tr>
-		</table>
-		<table>
+			</thead>
+		 <tbody>
 			<c:forEach var="event" items="${eList2}">
-				<tr align="center">
-					<td width="90" height="50px">${event.e_name }</td>
+				<tr align="center"class="type08">
+					<td height="50px">${event.e_name }</td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
 	</div>
 
-	<div id="epList2" style="width: 500px; float: left;">
-		<table border="1">
-			<tr align="center">
-				<td width="100">구매자</td>
-				<td width="100">구매금액(원)</td>
-				<td width="150">구매일</td>
-				<td width="150">실행일</td>
-			</tr>
-		</table>
-		<table>
-
+	<div id="epList2" style="width: 35%; float: left;">
+		<table border="1" class="type08">
+			<thead>
+				<tr align="center">
+					<th >구매자</th>
+					<th >구매금액</th>
+					<th >구매일</th>
+					<th >실행일</th>
+				</tr>
+			</thead>
+			 <tbody>
 			<c:forEach var="eventpay" items="${epList2}">
 				<fmt:formatDate var="payday" value="${eventpay.ep_payday }"
 					pattern="yyyy-MM-dd" />
 				<fmt:formatDate var="dday" value="${eventpay.ep_dday }"
 					pattern="yyyy-MM-dd" />
 				<tr align="center">
-					<td  width="100" height="50px">${eventpay.m_id }</td>
-					<td width="100" height="50px">${eventpay.ep_total }
+					<td  height="50px">${eventpay.m_id }</td>
+					<td  height="50px">${eventpay.ep_total }
 					<input type="hidden" value="${eventpay.ep_total }"id="${eventpay.ep_code }"/>
 					</td>
-					<td width="150" height="50px">${payday }</td>
-					<td width="150" height="50px">${dday }
+					<td height="50px">${payday }</td>
+					<td height="50px">${dday }
 					<input type="hidden"class="dday"value="${dday}"name="${eventpay.ep_code }"></td>
 				</tr>
 				
 			</c:forEach>
+			</tbody>
 		</table>
 	</div>
 
 
-	<div id="erList" style="width: 650px; float: left;">
-		<table border="1">
-			<tr align="center">
-				<td width="150">환불요청일자</td>
-				<td width="100">몇일전</td>
-				<td width="150">위약금(%)</td>
-				<td width="150">환불금액(원)</td>
-				<td width="100">버튼</td>
-			</tr>
-		</table>
-		<table>
+	<div id="erList" style="width: 55%; float: left;">
+		<table border="1" class="type08">
+			<thead>
+				<tr align="center">
+					<th >환불요청일자</th>
+					<th >몇일전</th>
+					<th>위약금(%)</th>
+					<th >환불금액</th>
+					<th >버튼</th>
+				</tr>
+			</thead>
+		 <tbody>
 			<c:forEach var="eventrefund" items="${erList}">
 				<fmt:formatDate var="refunddate"
 					value="${eventrefund.er_refunddate}" pattern="yyyy-MM-dd" />
-				<tr align="center">
-					<td width="180" height="50px">${refunddate}
-					<textarea id="${eventrefund.ep_code}" name="${refunddate}" class="textarea"></textarea></td>
-					<td width="100"><div id="${eventrefund.ep_code}"></div></td>
-					<td width="150" height="50px"><input class="er_panalty"
-						type="number" min="0" max="100" value="0" id="${eventrefund.ep_code}" >
-					</td>
-						
-					<td width="150" height="50px"><input class="er_total" type="number" name="${eventrefund.ep_code}"readonly></td>
-					<td width="150" height="50px"><button class="refundBtn" name="${eventrefund.ep_code}">환불 완료</button> </td>
+					<tr align="center">
+					<td  height="50px">${refunddate}<textarea
+							id="${eventrefund.ep_code}" name="${refunddate}" class="textarea"></textarea></td>
+					<td ><div id="${eventrefund.ep_code}"></div></td>
+					<td  height="50px"><input class="er_panalty"
+						type="number" min="0" max="100" value="0"
+						id="${eventrefund.ep_code}"></td>
+
+					<td  height="50px"><input class="er_total"
+						type="number" name="${eventrefund.ep_code}" readonly></td>
+					<td  height="50px"><button class="refundBtn"
+							name="${eventrefund.ep_code}">환불 완료</button></td>
 				</tr>
-					<textarea class="hiddenclass" name="${eventrefund.ep_code}" ></textarea>
+				<textarea class="hiddenclass" name="${eventrefund.ep_code}"></textarea>
 			</c:forEach>
+			</tbody>
 		</table>
 	</div>
-
+</div>
 
 </body>
 <script >

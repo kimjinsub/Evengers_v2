@@ -125,9 +125,10 @@ public class PayMM {
 			}
 		}
 		sb.append("		<p>상세정보:"+e.getE_contents()+"</p>"
-				+ "</div>"
 				+ "<button id='payBtn'>결제하기</button>"
-				+ "<button id='rejectBtn'>구매취소</button>");
+				+ "<button id='rejectBtn'>구매취소</button>"
+				+ "</div>");
+				
 		return sb.toString();
 	}
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -241,7 +242,10 @@ public class PayMM {
 			}
 			String ep_code = ep.getEp_code();
 			System.out.println("ep_code: " + ep_code);
-			sb.append( "<div class='payList' name='"+ep_code+"'>" + "		<div class='payList2'><img src='upload/thumbnail/" + e.getE_sysfilename() + "'/></div>"
+			System.out.println("ep_code: " + ep_code);
+			sb.append( "<div class='payList' name='"+ep_code+"'>" 
+					
+					+ "		<div class='payList2'><img src='upload/thumbnail/" + e.getE_sysfilename() + "'/></div>"
 					+ "		<div class='payList3'><p>결제코드:" + ep.getEp_code() + "</p>" + "		<p>이벤트명:" + e.getE_name() + "</p>"
 					+ "		<p>기본가:" + e.getE_price() + "원</p>" + "		<p>총가격:" + ep.getEp_total() + "원</p>");
 			if (payDao.memberEps(ep.getEp_code()) != null) {

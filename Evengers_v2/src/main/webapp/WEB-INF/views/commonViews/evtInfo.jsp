@@ -16,18 +16,72 @@
 
 <style>
 /* #totalPriceZone{background-color: white;} */
+.myButton {
+	-moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	-webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:11px 23px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
+	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
+	background-color:#6c7c7c;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
 #totalPrice {
 	display: none;
 }
-
-#ebInfoZone {
-	display: none;
-	border: 1px solid black;
-	height: 500px;
-	width: 500px;
-	margin: auto;
+a.button2 {
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	display: block;
+	text-decoration: none;
+	border-radius: 4px;
 }
 
+a.button2 {
+	color: rgba(30, 22, 54, 0.6);
+	box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button2:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+#eMain{
+}
 #ebInfoZone.show {
 	display: block;
 	position: relative;
@@ -91,6 +145,116 @@
 	width: 100%;
 	padding: 20px;
 }
+
+#articleView_layer2 {
+	display: none;
+	position: fixed;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%
+}
+
+#articleView_layer2.open {
+	display: block;
+	color: red
+}
+
+#articleView_layer2 #bg_layer2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 100
+}
+
+#ebInfoZone {
+	position: absolute;
+	top: 30%;
+	left: 20%;
+	width: 750px;
+	height: 600px;
+	margin: -150px 0 0 -194px;
+	padding: 28px 28px 0 28px;
+	border: 2px solid #555;
+	background: #fff;
+	font-size: 12px;
+	z-index: 200;
+	color: #767676;
+	line-height: normal;
+	white-space: normal;
+	overflow: scroll;
+	position: fixed;
+}
+
+#articleView_layer {
+	display: none;
+	position: fixed;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%
+}
+
+#articleView_layer.open {
+	display: block;
+	color: red
+}
+
+#articleView_layer #bg_layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 100
+}
+
+#contents_layer {
+	position: absolute;
+	top: 30%;
+	right:20%;
+	width: 750px;
+	height: 600px;
+	margin: -150px 0 0 -194px;
+	padding: 28px 28px 0 28px;
+	border: 2px solid #555;
+	background: #fff;
+	font-size: 12px;
+	z-index: 200;
+	color: #767676;
+	line-height: normal;
+	white-space: normal;
+	overflow: scroll;
+	position: fixed;
+}
+#rPagination {
+margin: auto; height:50px; text-align: center;
+}
+#ePagination {
+margin: auto; height:50px; text-align: center; position: absolute;
+}
+#rPagination div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 30px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
+}
+#ePagination div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 30px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
+}
 </style>
 </head>
 <body>
@@ -143,11 +307,11 @@
 							<!-- 2019-12-31T12:59 형식으로 받아짐-->
 						</tr>
 						<tr>
-							<td><button onclick="evtBuy()">구매하기</button></td>
+							<td><button class="myButton"onclick="evtBuy()">구매하기</button></td>
 							<td>
-								<button id="choice" onclick="choice()">찜하기</button>
-								<button id="choiceDelete" onclick="choiceDelete()">찜삭제하기</button>
-								<button onclick="javascript:memberChat('${eb.c_id}')">실시간상담요청</button>
+								<button class="myButton"id="choice" onclick="choice()">찜하기</button>
+								<button class="myButton"id="choiceDelete" onclick="choiceDelete()">찜삭제하기</button>
+								<button class="myButton" onclick="javascript:memberChat('${eb.c_id}')">실시간상담요청</button>
 							</td>
 						</tr>
 						<tr>
@@ -155,7 +319,10 @@
 							<td><div id="starAverage">${starAverage}/5</div></td>
 						</tr>
 					</table>
+					<div id="articleView_layer2">
+					<div id="bg_layer2"></div>	
 					<div class="container-fluid" id="ebInfoZone"></div>
+					</div>
 				</div>
 				<div class="card card-outline-secondary my-4">
 					<div class="card-header">
@@ -185,8 +352,8 @@
 									<td><textarea rows="3" cols="50" name="r_contents"
 											id="r_contents"></textarea></td>
 									<td>
-									<td><input type="button" value="댓글전송" onclick="review()"
-										style="width: 80px; height: 50px"></td>
+									<td><input class="myButton"type="button" value="댓글전송" onclick="review()"
+										style="width: 100px; height: 50px"></td>
 								</tr>
 							</table>
 						</div>
@@ -212,6 +379,7 @@
 					
 				</div>
 			</div>
+			<div align="center" id="ePagination"> </div>
 		  </div>
 		</div>
 	</div>
@@ -319,6 +487,7 @@ function memberChat(receiver){
 				dataType : "html",
 				success : function(result) {
 					alert("구매에 성공하였습니다");
+					$('#articleView_layer2').addClass('open');
 					$("#ebInfoZone").html(result);
 					$("#ebInfoZone").addClass("show");
 				},
@@ -425,9 +594,7 @@ function memberChat(receiver){
 		var myReviewStar = $("#myReviewStar").val();
 		console.log(myReviewStar);
 		var myReviewContents = $("#myReviewContents").val();
-
 		var str = "";
-
 		str += "<table><tr><td><div id='seeShow' onclick='see()' > 수정 전 별"
 		if (myReviewStar == 5) {
 			str += "<td align='center' width='200'>★★★★★</td>"
@@ -448,7 +615,7 @@ function memberChat(receiver){
 		str += "<td><textarea rows='3' cols='50' name='r_contents'"
 		str+="id='r_contents2'>"
 				+ myReviewContents + "</textarea></td><td>"
-		str += "<td><input type='button' value='수정하기'"
+		str += "<td><input class='myButton'type='button' value='수정하기'"
 		str += "onclick='reviewModifyBtn()'"
 		str += "style='width: 80px; height: 50px'></td></tr></table>"
 		$("#hiddenFrom").append(str);
@@ -547,8 +714,8 @@ function memberChat(receiver){
 				var str="";
 				for(var i in result){
 					str+=''
-						+'<a class="list-group-item" id="'+result[i].ec_name
-						+'" onclick="getEvtList(this.id,1,12)">'
+						+'<a href="#"class="list-group-item" id="'+result[i].ec_name
+						+'" onclick="getEvtList(this.id,1,12)" style="text-decoration: none;">'
 						+result[i].ec_name+'</a>';
 				}
 				$("#category").html(str);
@@ -574,14 +741,14 @@ function memberChat(receiver){
 				var str="";
 				console.log(result);
 				for(var i in result){
-					str+='<div class="col-lg-3 col-md-4 col-6">'
+					str+='<div class="col-lg-8 col-md-8 col-8">'
 						+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 
 						+'<img class="img-fluid img-thumbnail"'
 						+'src="upload/thumbnail/'+result[i].e_sysfilename+'">'
-						+'</a></div>'
+						+'</a></div><br>'
 				}
 				$("#eMain").html(str);
-				$("#eMain").append(paging);
+				$("#ePagination").html(paging);
 				if(data['msg']!=null){
 					$("#eMain").html(data['msg']);
 				}
@@ -592,10 +759,9 @@ function memberChat(receiver){
 		}) 
 	};
 	 
-	 function getReply(pageNum,listCount){
+	function getReply(pageNum,listCount){
 		var e_code= "${eb.e_code}";
 		var id= "${id}";
-		
 		$.ajax({
 			url:"getReply",
 			data:{e_code:e_code,listCount:listCount,pageNum:pageNum},
@@ -627,8 +793,8 @@ function memberChat(receiver){
 					}
 					str+="<td align='center' width='200'>"+result[i].re_writedate+"</td>";
 					if(id==result[i].m_id){
-						str+="<td><button onclick='reviewModify()'>수정</button></td>"
-						+"<td><button onclick='reviewDelete()'>삭제</button></td>"
+						str+="<td><button class='myButton'onclick='reviewModify()'>수정</button></td>"
+						+"<td><button class='myButton'onclick='reviewDelete()'>삭제</button></td>"
 						+"<input type='hidden' id='myReviewStar'value='"+result[i].re_stars+"'>"
 						+"<input type='hidden' id='myReviewContents'value='"+result[i].re_contents+"'>";
 					} 

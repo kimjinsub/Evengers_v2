@@ -22,7 +22,7 @@ img {
 	border: 1px solid black;
 	display: block;
 	width: 65%;
-	height: 380px;
+	height: 400px;
 	overflow: auto;
 	margin: auto;
 	border-radius: 10px;
@@ -66,6 +66,7 @@ img {
 </style>
 </head>
 <body>
+<h1>결재 내역</h1>
 ${makeHtml_memberPayList}
 </body>
 <script >

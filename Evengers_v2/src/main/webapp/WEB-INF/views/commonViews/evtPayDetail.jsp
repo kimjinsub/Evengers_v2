@@ -27,6 +27,7 @@
 <div>결제일:${ep_payday}</div>
 <div>이벤트일:${ep_dday}</div>
 <div>환불가능일:~${refundAble}까지</div>
+<button id="exit">마이페이지 가기</button>
 </body>
 <script>
 $(document).ready(function(){
@@ -41,6 +42,9 @@ function showEpsList(){
 	}
 	$("#epsList").html(str);
 };
+$("#exit").click(function() {
+	location.href ="memberMyPage";
+});
 </script>
 
 </html>

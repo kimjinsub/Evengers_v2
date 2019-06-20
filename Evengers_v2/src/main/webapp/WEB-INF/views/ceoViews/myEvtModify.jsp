@@ -13,34 +13,64 @@ input.option-add {
     width: 25px;
     height: 25px;
 }
+.button_base {
+	margin: 0;
+	border: 0;
+	font-size: 18px;
+	width: 180px;
+	height: 40px;
+	text-align: center;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+.button_base:hover {
+	cursor: pointer;
+} 
+
+/* ### ### ### 01 */
+.b01_simple_rollover {
+	color: #000000;
+	border: #000000 solid 1px;
+	padding: 10px;
+	background-color: #ffffff;
+}
+
+.b01_simple_rollover:hover {
+	color: #ffffff;
+	background-color: #000000;
+}
 </style>
 </head>
 <body>
    
-   <table border="1" width="400" align="center">
+   <table border="1" width="700" align="center">
 		<tr>
-			<td colspan="3" align="center">이벤트 상품 등록</td>
+			<td colspan="3" align="center"><h4>이벤트 상품 등록</h4></td>
 		</tr>
 		<tr>
 			<td>상품명</td>
 			<td><div id="e_nameDiv1"><input type="text"  id="e_name1" value="${event.e_name}" readonly></div>
 				<div id="e_nameDiv2"><input type="text"  id="e_name2" ></div>
 			</td>
-			<td><button onclick="e_nameModify()">상품명 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_nameModify()">상품명 수정</button></td>
 		</tr>
 		<tr>
 			<td>가격</td>
 			<td><div id="e_priceDiv1"><input type="number"  id="e_price1" value="${event.e_price}" readonly></div>
 				<div id="e_priceDiv2"><input type="number"  id="e_price2" ></div>
 			</td>
-			<td><button onclick="e_priceModify()">가격 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_priceModify()">가격 수정</button></td>
 		</tr>
 		<tr>
 			<td>이벤트 카테고리</td>
 			<td><div id="selectZone1">${event. e_category}</div>
 			<div id="selectZone2"></div>
 			</td>
-			<td><button onclick="e_categoryModify()">카테고리 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_categoryModify()">카테고리 수정</button></td>
 		</tr>	
 		<tr>
 			<td>옵션</td>
@@ -52,7 +82,7 @@ input.option-add {
 					id="e_option">
 				</div>
 			</td>
-			<td><button onclick="e_optionModify()">옵션 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_optionModify()">옵션 수정</button></td>
 		</tr>
 		
 		<tr>
@@ -60,14 +90,14 @@ input.option-add {
 			<td><div id="e_reserveDateDiv1"><input type="number" id="e_reservedate1" value="${event.e_reservedate}" readonly></div>
 				<div id="e_reserveDateDiv2"><input type="number" id="e_reservedate2" ></div>
 			</td>
-			<td><button onclick="e_reserveDateModify()">예약가능일 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_reserveDateModify()">예약가능일 수정</button></td>
 		</tr>		
 		<tr>
 			<td>환불가능일</td>
 			<td><div id="e_refundDateDiv1"><input type="number" id="e_refunddate1" value="${event.e_refunddate}" readonly></div>
 				<div id="e_refundDateDiv2"><input type="number" id="e_refunddate2" ></div>
 			</td>
-			<td><button onclick="e_refundDateModify()">환불가능일 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_refundDateModify()">환불가능일 수정</button></td>
 		</tr>	
 		<tr>
 			<td>썸네일사진</td>
@@ -79,7 +109,7 @@ input.option-add {
 					<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
 				</div>
 			</td>
-			<td><button onclick="e_sysFileNameModify()">썸네일사진 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_sysFileNameModify()">썸네일사진 수정</button></td>
 		</tr>
 		<tr>
 			<td>이벤트 첨부 사진</td>
@@ -90,17 +120,18 @@ input.option-add {
 						onchange="fileChk(this)" multiple/>
 				</div>
 			</td>
-			<td><button onclick="ei_sysFileNameModify()">이벤트 첨부 사진 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="ei_sysFileNameModify()">첨부 사진 수정</button></td>
 		</tr>
 		<tr>
 			<td>글 내용</td>
 			<td><div id="e_contentsDiv1"><textarea name="e_contents" id="e_contents1" rows="20" readonly>${event.e_contents}</textarea></div>
 				<div id="e_contentsDiv2"><textarea name="e_contents" id="e_contents2" rows="20"></textarea></div>
 			</td>
-			<td><button onclick="e_contentsModify()">글내용 수정하기</button></td>
+			<td><button class='button_base b01_simple_rollover'onclick="e_contentsModify()">글내용 수정</button></td>
 		</tr>	
+		<tr><td colspan="3"style="text-align: center;"><button class='button_base b01_simple_rollover'onclick="myEvtModifyBtn()"> 이벤트 수정</button></td></tr>
 		</table>
-		<button onclick="myEvtModifyBtn()"> 이벤트 수정하기</button>
+		
 		
 </body>
 <script >

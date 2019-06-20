@@ -6,23 +6,111 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#mInfoPwCheck {
+#ceoInfoPwCheck {
+	width: 500px;
+	height: 300px;
 	border: 1px solid black;
+	font-size: 27px;
+	background-color: white;
+	border-radius: 20px;
+	margin: 0 auto;
+	text-align: center;
+}
+#cTable {
+	margin: auto;
+	text-align: center;
 }
 
-#mModifyList {
-	border: 1px solid red;
+#ceoModifyList {
+	width: 60%;
+	height: 550px;
+	font-size: 24px;
+	background-color: white;
+	border-radius: 20px;
+	border: 1px solid black;
+	margin: 0 auto;
+	text-align: center;
+}
+#pwCheckBtn {
+	background: #1AAB8A;
+	color: #fff;
+	border: none;
+	position: relative;
+	height: 60px;
+	font-size: 1.6em;
+	padding: 0 2em;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
+}
+
+#pwCheckBtn:hover {
+	background: #fff;
+	color: #1AAB8A;
+}
+
+#pwCheckBtn:before, #pwCheckBtn:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #1AAB8A;
+	transition: 400ms ease all;
+}
+
+#pwCheckBtn:after {
+	right: inherit;
+	top: inherit;
+	left: 0;
+	bottom: 0;
+}
+
+#pwCheckBtn:hover:before, #pwCheckBtn:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
+}
+
+.button_base {
+	margin: 0;
+	border: 0;
+	font-size: 18px;
+	width: 180px;
+	height: 40px;
+	text-align: center;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+.button_base:hover {
+	cursor: pointer;
+}
+
+/* ### ### ### 01 */
+.b01_simple_rollover {
+	color: #000000;
+	border: #000000 solid 1px;
+	padding: 10px;
+	background-color: #ffffff;
+}
+
+.b01_simple_rollover:hover {
+	color: #ffffff;
+	background-color: #000000;
 }
 </style>
 </head>
 <body>
-사업가 정보 수정
 <div id="ceoModifyInfo">
 
 	<div id="ceoInfoPwCheck">
-			비밀번호를 입력해주세요.<br>
+			<br><br>비밀번호를 입력해주세요.<br>
 		<input type="password" id="pwCheck" name="pwCheck">
-		<button onclick="ceoModifyMainSee()">보내기</button>
+		<button id="pwCheckBtn"onclick="ceoModifyMainSee()">보내기</button>
 	</div>
 	<div id="ceoModifyMain"></div>
 </div>
@@ -65,36 +153,35 @@
 					var str = "";
 					console.log(result);
 					str += "<div id='ceoModifyList'><br>"
-					str += "아이디: <input type='text' name='ceo_id'value='"+result[0]['c_id'] +"' readonly><br>"
+					str += "<table id='cTable'>"
+					str += "<tr><td>아이디</td> <td><input type='text' name='ceo_id'value='"+result[0]['c_id'] +"' readonly></td></tr>"
 					
-					str += "사업가 등록 번호: <input type='text' name='ceo_rn'value='"
-							+ result[0]['c_rn']+ "' readonly>"
-
-					str += "<table>"
+					str += "<tr><td>사업가 등록 번호</td> <td> <input type='text' name='ceo_rn'value='"
+							+ result[0]['c_rn']+ "' readonly></td></tr>"
 					
 					str += "<tr><td>비밀번호</td>"
-					str += "<td><div id='d_ceo_pw1'><input type='text' id='ceo_pw1' name='ceo_pw1' value='*******' readonly></div>"
-					str += "<div id='d_ceo_pw2'><input type='text' id='ceo_pw2' name='ceo_pw2'></div></td>"
-					str += "<td> <button onclick='ceo_pwchk()'>비밀번호 수정</button></td></tr>"
+					str += "<td><div id='d_ceo_pw1'><input type='password' id='ceo_pw1' name='ceo_pw1' value='*******' readonly></div>"
+					str += "<div id='d_ceo_pw2'><input type='password' id='ceo_pw2' name='ceo_pw2'></div></td>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_pwchk()'>비밀번호 수정</button></td></tr>"
 
 					str += "<tr><td>회사명</td>"
 					str += "<td><div id='d_ceo_name1'><input type='text' id='ceo_name1' name='ceo_name1' value='"+result[0]['c_name'] +"' readonly></div>"
 					str += "<div id='d_ceo_name2'><input type='text' id='ceo_name2' name='ceo_name2'></div></td>"
-					str += "<td> <button onclick='ceo_namechk()'>회사명 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_namechk()'>회사명 수정</button></td></tr>"
 					
 					
 					str += "<tr><td>회사전화번호</td>"
 					str += "<td><div id='d_ceo_tel1'><input type='text' id='ceo_tel1' name='ceo_tel1' value='"+result[0]['c_tel'] +"' readonly></div>"
 					str += "<div id='d_ceo_tel2'><input type='text' id='ceo_tel2' name='ceo_tel2'></div></td>"
-					str += "<td> <button onclick='ceo_telchk()'>회사전화번호 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_telchk()'>회사전화번호 수정</button></td></tr>"
 					
 					str += "<tr><td>이메일</td>"
 					str += "<td><div id='d_ceo_email1'><input type='text' id='ceo_email1' name='ceo_email1' value='"+result[0]['c_email'] +"' readonly></div>"
 					str += "<div id='d_ceo_email2'><input type='text' id='ceo_email2' name='ceo_email2'></div></td>"
-					str += "<td> <button onclick='ceo_emailchk()'>이메일 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_emailchk()'>이메일 수정</button></td></tr>"
 
 					str += "</table>"
-					str += "<button onclick='ceoModifyInfo()'>저장하기</button> <button onclick='ceoDelete()'>탈퇴하기</button>"
+					str += "<button class='button_base b01_simple_rollover'onclick='ceoModifyInfo()'>저장하기</button> <button class='button_base b01_simple_rollover'onclick='ceoDelete()'>탈퇴하기</button>"
 					str += "</div>"
 					str += "<input type='text' id='ceo_pw3' name='ceo_pw3' value='"+result[0]['c_pw'] +"' readonly></div>"
 					$("#ceoModifyMain").html(str);
