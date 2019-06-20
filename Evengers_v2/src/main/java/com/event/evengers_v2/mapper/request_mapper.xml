@@ -230,14 +230,7 @@
    </select>
    
   <select id="getEstr" resultType="estimaterefund">
-   <![CDATA[
-        SELECT * FROM 
-        (SELECT /*+INDEX_DESC(ESTR PK_ESTR_CODE)*/
-        ROWNUM RN,ESTR.* FROM ESTR
-        WHERE ESTP_CODE=#{estp_code}
-        AND ESTR_STATE=0 AND ROWNUM<=#{pageNum}*#{listCount}) 
-        WHERE RN>((#{pageNum}-1)*#{listCount})
-        ]]>
+        SELECT * FROM ESTR WHERE ESTP_CODE=#{estp_code} AND ESTR_STATE=0 
    </select>
    
      <update id="insertPenalty" parameterType="estimaterefund">
