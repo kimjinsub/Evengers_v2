@@ -7,7 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#wrap{width: 500px; height: 500px; border: black 1px solid; margin: auto;}
+#wrap{
+	margin: auto; display:inline-block; 
+	/* width: 80%; height: 80%; */
+	position:absolute;
+	overflow: auto; text-align:center;
+    top:30%; left:50%;
+    transform: translate(0%, 0%);
+}
 #addFrm{visibility: hidden;vertical-align: middle; margin: auto;}
 #addFrm.shown{visibility: visible;}
 #removeFrm{cursor: pointer;}

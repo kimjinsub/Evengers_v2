@@ -40,10 +40,7 @@ ${makeHtml_EpList}
 </div>
 </div>
 <div id="Wrap">
-<div id="dayWrap">
-	${year} 
-	${month}
-</div>
+<div id="dayWrap"></div>
 <div id="deptWrap">
 	<select id='dept'></select>
 </div>
@@ -60,6 +57,7 @@ $(document).ready(function(){
 	if("${msg}"==""){//null로 하면 인식이안됨
 		getDeptList();
 	}
+	datePicker();
 })
 var epAllList="${epAllList}";
 var ep_codes="${ep_codes}";
@@ -123,28 +121,13 @@ function selectDept(){
 		}
 	});
 }
-$("#past").click(function(){
-	var y=$("#year").val();
-	var year=Number(y)-Number(1);
-	$("#year").val(year);
-	showCalendar();
-})
-$("#future").click(function(){
-	var y=$("#year").val();
-	var year=Number(y)+Number(1);
-	$("#year").val(year);
-	showCalendar();
-})
-$("#month").change(function(){
-	showCalendar();
-})
-$("#dept").change(function(){
+$("#dept,#month,#dayWrap").change(function(){
 	showCalendar();
 })
 function showCalendar(){
-	var year=$("#year").val();
+	var year=$("#dayWrap #yyyy").val();
 	console.log("year=",year);
-	var month=$("#month").val();
+	var month=$("#dayWrap #MM").val();
 	console.log("month=",month);
 	var str_date=year+"-"+month;
 	var date=new Date(str_date);
@@ -182,5 +165,31 @@ function getDeptList(){
 		}
 	})
 };
+function test(){
+	var yyyy=$("#datepicker #yyyy").val();
+	console.log("yyyy:",yyyy);
+	var MM=$("#datepicker #MM").val();
+	console.log("MM:",MM);
+	var dd=$("#datepicker #dd").val();
+	console.log("dd:",dd);
+	var hh=$("#datepicker #hh").val();
+	console.log("hh:",hh);
+	var mm=$("#datepicker #mm").val();
+	console.log("mm:",mm);
+}
+function datePicker(){
+	var date = new Date();
+	$.ajax({
+		url:"datePicker",
+		data:{date:date,type:"yyyyMM"},
+		dataType:"text",
+		success:function(result){
+			$("#dayWrap").html(result);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
 </script>
 </html>

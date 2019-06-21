@@ -22,6 +22,7 @@ import com.event.evengers_v2.service.MemberMM;
 import com.event.evengers_v2.service.PayMM;
 import com.event.evengers_v2.service.PersonnelMM;
 import com.event.evengers_v2.service.ScheduleMM;
+import com.event.evengers_v2.userClass.DatePicker;
 
 @Controller
 public class Controller_Jinsub {
@@ -223,5 +224,17 @@ public class Controller_Jinsub {
 	@RequestMapping(value = "/startChat")
 	public String startChat() {
 		return "waitingRoom";
+	}
+	@RequestMapping(value = "/boot")
+	public String boot() {
+		return "boot";
+	}
+	@RequestMapping(value = "/datePicker",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String datePicker(Date date,String type) {
+		return new DatePicker().datePicker(date,type);
+	}
+	@RequestMapping(value = "/manageDeptPosition")
+	public String manageDeptPosition() {
+		return "ceoViews/manageDeptPosition";
 	}
 }

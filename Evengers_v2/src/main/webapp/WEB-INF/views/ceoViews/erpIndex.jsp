@@ -71,8 +71,7 @@
 					<a class="dropdown-item" href="javascript:Ajax_forward('performManage')">사원목록</a>
 					<a class="dropdown-item" href="javascript:void(0);" onclick="Ajax_forward('perform')">사원등록</a> 
 					<!-- <a class="dropdown-item" href="javascript:Ajax_forward('perform')">사원등록</a>  -->
-					<a class="dropdown-item" href="javascript:Ajax_forward('position')">직책 관리</a> 
-					<a class="dropdown-item" href="javascript:Ajax_forward('dept')">부서 관리</a>
+					<a class="dropdown-item" href="javascript:Ajax_forward('manageDeptPosition')">직책,부서 관리</a>
 				</div></li>
 			<li class="nav-item">
 				<a class="nav-link" href="javascript:Ajax_forward('scheduleManage')"> 
