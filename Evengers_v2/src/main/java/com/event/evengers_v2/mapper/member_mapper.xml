@@ -128,4 +128,13 @@
 	<delete id="waitingOut" parameterType="String">
 		DELETE FROM WR WHERE C_ID=#{c_id} AND M_ID=#{m_id}
 	</delete>
+	
+	<select id="memberEmailChk" resultType="integer">
+		SELECT COUNT(*) FROM M WHERE M_EMAIL = #{m_email}
+	</select>
+	<select id="ceoEmailChk" resultType="integer">
+		SELECT COUNT(*) FROM C WHERE C_EMAIL = #{c_email}
+	</select>
+	
+	
 </mapper>

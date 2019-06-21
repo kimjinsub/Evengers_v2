@@ -34,26 +34,28 @@ margin-left: 250px;
 
 </style>
 <body>
-
+	<h2 align="center">받은 견적 내역</h2>
 	<div id="estList">
 	</div>
 	<div id="detail"></div>
+	<div id="paging" align="center"></div>
 
 </body>
 <script>
 $(document).ready(function() {
-	getRecivedEstList();
+	getRecivedEstList(1,10);
 });
-function getRecivedEstList() {
+function getRecivedEstList(pageNum,listCount) {
 	$.ajax({
 		url : 'getRecivedEstList',
 		dataType : 'json',
+		data : {pageNum : pageNum ,listCount : listCount},
 		success : function(data) {
 			console.log(data.estList);
 			var estList = data['estList'];
 			var reqList = data['reqList'];
-			//var paging =result['paging'];
-			var str = "<table id='et' border='1'><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
+			var paging =data['paging'];
+			var str = "<table id='et' border='1' align='center'><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
 
 			for ( var i in estList) {
 				str += "<tr><td>" + estList[i].c_id + "</td><td>"
@@ -65,7 +67,8 @@ function getRecivedEstList() {
 			}
 			str += "</table>"
 			$("#estList").html(str);
-           // $("#paging").html(paging);
+			$("#paging").html(paging);
+           
 		},
 		error : function(error) {
 

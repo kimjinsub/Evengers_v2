@@ -90,5 +90,9 @@ public interface MemberDao {
 			@Param("sessionId")String sender_sessionId);
 
 	void waitingOut(@Param("c_id")String sender, @Param("m_id")String receiver);
+	
+	int memberEmailChk(String m_email);
+	
+	int ceoEmailChk(String m_email);
 
 }

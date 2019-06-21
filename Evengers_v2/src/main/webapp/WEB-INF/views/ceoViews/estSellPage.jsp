@@ -38,7 +38,7 @@
 <body>
 	<h1 align="center">기업 견적 판매 내역</h1>
 	<div id="list"></div>
-	<div id="paging"></div>
+		<div id="paging" align="center"></div>
 	
 </body>
 

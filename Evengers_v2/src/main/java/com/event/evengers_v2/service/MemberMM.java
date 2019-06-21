@@ -62,16 +62,19 @@ public class MemberMM {
 
 
 	public int memberDoubleChk(String m_id) {
-		int mbChk = mDao.memberDoubleChk(m_id);
-		int ceoChk = cDao.ceoDoubleChk(m_id);
-		int chkNum = 0;
-		//System.out.println(mbChk);
-		//System.out.println(ceoChk);
+		int chkNum = -1;
+		System.out.println("아뒤 : " + m_id);
 		
-		if(mbChk>0 || ceoChk>0) {
-			chkNum = 1;
+		if(m_id == "" || m_id ==null) {		
+			chkNum = 0;		//아이디가 널값일때 0리턴
+		}else{
+			int mbChk = mDao.memberDoubleChk(m_id);	
+			int ceoChk = cDao.ceoDoubleChk(m_id);
+			
+			if(mbChk>0 || ceoChk>0) {	//둘중 한 테이블이라도 비교했을때 아이디 존재시
+				chkNum = 1;			//1을 리턴
+			}
 		}
-		
 		return chkNum;
 	}
 
@@ -401,5 +404,25 @@ public String memberTest(String testcode) {
 			sb.append("<tr><td onclick='openChatWindow(\""+m_id+"\")'>"+m_id+"</td></tr>");
 		}
 		return sb.toString();
+	}
+
+	public String memberEmailChk(String email, String email1) {
+		String msg ="";
+		String m_email = email+email1;
+		
+		if(mDao.memberEmailChk(m_email)>0){		//존재하면 불가능
+			msg="<p id='impossible'>사용 불가능한 메일입니다</p>";			
+		}else msg="<p id='possible'>사용가능한 메일주소 입니다</p>";
+		return msg;
+	}
+	
+	public String ceoEmailChk(String email, String email1) {
+		String msg ="";
+		String c_email = email+email1;
+		
+		if(mDao.ceoEmailChk(c_email)>0){		//존재하면 불가능
+			msg="<p id='impossible'>사용 불가능한 메일입니다</p>";			
+		}else msg="<p id='possible'>사용가능한 메일주소 입니다</p>";
+		return msg;
 	}
 }

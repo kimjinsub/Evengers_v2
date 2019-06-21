@@ -14,6 +14,40 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
+#pageDown {
+   text-align: right;
+   float: right;
+   position: fixed;
+   margin-left: 710px;
+   font-size: x-large;
+   cursor: pointer;
+}
+
+#detail {
+	position:fixed;
+	top: 30px;
+	left: 35%;
+	width: 750px;
+	height: 650px;
+	padding: 2px;
+	margin-top:-30px;
+	margin-left: -150px;
+	float:left;
+	border: dashed;
+	 z-index: 101;
+	display: none;
+	overflow: auto;
+	overflow: scroll;
+	background-color: #FFFFFF;
+	margin-top: 30px;
+	}
+
+
+	#detail.open {
+		display: block;
+	}
+	
 #member,#ceo,#admin,#common{
 	visibility: hidden; font-size: 20px;
 }
@@ -39,7 +73,8 @@
 				</a></li>
 			 	<li class="nav-item active"><a class="nav-link" href="./introduce">소개</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./memberMyPage">마이페이지</a></li>
-				<li class="nav-item active"><a class="nav-link" href="#" onclick="evtReqFrm1()">의뢰요청</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./evtReqFrm">의뢰요청</a></li>
+				<li class="nav-item active"><a class="nav-link" href="./serviceCenter">문의하기</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
@@ -61,7 +96,7 @@
 			 	<li class="nav-item active"><a class="nav-link" href="./introduce">소개</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./ceoMyPage">마이페이지</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./evtInsertFrm">이벤트등록</a></li>
-				<li class="nav-item active"><a class="nav-link" href="./myReqList">의뢰목록</a></li>
+				<li class="nav-item active"><a class="nav-link" href="#" onclick="Ajax_forward('myReqList')">의뢰목록</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./erpIndex">ERP자원관리</a></li>
 				<!-- <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="./erpIndex" id="navbarDropdown"
@@ -123,6 +158,7 @@
 	</div>
 </nav>
 
+<div id="detail"></div>
 </body>
 <script>
 $(document).ready(function(){
@@ -152,21 +188,38 @@ function getSessionId(){
 	})
 	return iam;
 }
-function evtReqFrm1(){
-	$("#frm").addClass("open");
-	$('#frm').show();
+
+	//getReqList(1,10);
+
+
+
+function Ajax_forward(url){
+	$("#detail").addClass("open");
+	$('#detail').show();
+	$('#detail-shadow').show();
 	$.ajax({
-		url:'evtReqFrm',
-		type : 'get',
-	    dataType:'html',
-	    success:function(data){
-	    	$("#frm").html(data);
-	    },
-	    error:function(error){
-	    	console.log(error);
-	    }
-	});
+		url:url,
+		dataType:"html",
+		success:function(data){
+			$("#detail").html(data);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
 }
 
+var $layerWindows = $('#detail'); 
+$layerWindows.find('#detail-shadow').on('mousedown',function(event){
+console.log(event);
+$layerWindows.removeClass('open');
+});
+$(document).keydown(function(event){
+	console.log(event);
+	if(event.keyCode!=27) return;
+	if($layerWindows.hasClass('open')){
+		$layerWindows.removeClass('open');
+	}
+});
 </script>
 </html>

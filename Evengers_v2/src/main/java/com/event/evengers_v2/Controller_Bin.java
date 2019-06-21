@@ -169,9 +169,9 @@ public class Controller_Bin {
 		return mav;
 	} 
 	@RequestMapping(value = "/getRecivedEstList", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> getRecivedEstList(Integer pageNum) {
+	public @ResponseBody Map<String, Object> getRecivedEstList(int pageNum,int listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map1 = rm.getRecivedEstList(id,pageNum);
+		Map<String, Object> map1 = rm.getRecivedEstList(id,pageNum,listCount);
 		return map1;
 	}
 
@@ -183,7 +183,7 @@ public class Controller_Bin {
 	}
 	
 	@RequestMapping(value = "/getEstPayList", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> getEstPayList(Integer pageNum, Integer listCount) {
+	public @ResponseBody Map<String, Object> getEstPayList(int pageNum, int listCount) {
 		String id = session.getAttribute("id").toString();
 		Map<String, Object> map1 = rm.getEstPayList(id,pageNum,listCount);
 		return map1;

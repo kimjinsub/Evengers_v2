@@ -310,7 +310,7 @@ public class RequestMM {
 		}
 		
 		map1.put("rList", rList);
-		
+		map1.put("url", "memberViews/myReqList");
 
 		return map1;
 	}
@@ -407,11 +407,17 @@ public class RequestMM {
 
 	}
 
-	public Map<String, Object> getRecivedEstList(String id, Integer pageNum) {
+	public Map<String, Object> getRecivedEstList(String id, int pageNum,int listCount) {
 		ArrayList<Estimate> estList = new ArrayList<Estimate>();
 		ArrayList<Request> reqList = new ArrayList<Request>();
 		ArrayList<Request> reqList1 = new ArrayList<Request>();
-		int num = (pageNum == null) ? 1 : pageNum;
+		
+		
+		
+		int maxNum = rDao.getReceivedEstCount(id);
+		
+		System.out.println("총~받은견적 리스트의 갯수 : " + maxNum);
+		
 		System.out.println("아이디:" + id);
 		//Map<String, Object> map = new HashMap<String, Object>
 		//map.put("id", id);
@@ -428,11 +434,18 @@ public class RequestMM {
 			est=estList.get(i);
 			reqList1.add(rDao.getReqTitle(est));
 		}
+		
+		int pageCount = 2; // 그룹당 페이지 수
+		String boardName = "getRecivedEstList"; // 게시판이 여러개 일떄
+
+		String paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName).makeHtmlAjaxPaging();
+		
 		System.out.println("estList="+estList);
 		//reqList = rDao.getReqList();
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("estList", estList);
 		map1.put("reqList", reqList1);
+		map1.put("paging", paging);
 		//map1.put("paging", getPaging(num));
 		// System.out.println("jsonStr=" + jsonStr);
 		return map1;
@@ -535,49 +548,57 @@ public class RequestMM {
 		mav.setViewName("memberViews/memberMyPage");
 		return mav;
 	}
-		public Map<String, Object> getEstPayList(String id, Integer pageNum, Integer listCount) {
+		public Map<String, Object> getEstPayList(String id, int pageNum, int listCount) {
 			ArrayList<Request> reqList=new ArrayList<Request>();
 			ArrayList<Request> reqList1=new ArrayList<Request>();
 			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();
-			int num = (pageNum == null) ? 1 : pageNum;
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
 			reqList=rDao.getReqCodes(id);
-			System.out.println("ReqList="+reqList);
-			Map<String, Object> map1 = new HashMap<String, Object>(); 
+			//int maxNum = rDao.getEstPayCount(map);
+			//System.out.println("이거 받은견적의 총 갯수 : " + maxNum);
 			ArrayList<String> rs=new ArrayList<String>();
+			System.out.println("ReqList="+reqList);
 			for(int i=0;i<reqList.size();i++) {
 				String req_code=reqList.get(i).getReq_code();
-				Map<String, Object> map = new HashMap<String, Object>();
+				
 				map.put("req_code",req_code);
-				map.put("num", num);
+				map.put("pageNum", pageNum);
 				map.put("listCount",listCount);
 		        estpList.addAll(rDao.getEstPayList(map));
 			}
 			for(int i=0;i<estpList.size();i++) {
 				EstimatePay estp=new EstimatePay();
 				estp=estpList.get(i);
-				
 				if(estp.getEstp_refundstate()==0) {
-					String statemsg="결제완료";
-					rs.add(statemsg);}
-					else if(estp.getEstp_refundstate()==1) {
-						String statemsg="환불중";
-						rs.add(statemsg);
-					}else{
-						String statemsg="환불완료";
-						rs.add(statemsg);
-					}
+		               String statemsg="결제완료";
+		               rs.add(statemsg);}
+		               else if(estp.getEstp_refundstate()==1) {
+		                  String statemsg="환불중";
+		                  rs.add(statemsg);
+		               }else{
+		                  String statemsg="환불완료";
+		                  rs.add(statemsg);
+		               }
 				
 				reqList1.add(rDao.getReqTitle1(estp));
 			}
 			
+			
+			ArrayList<EstimatePay> estpList1=new ArrayList<EstimatePay>();
 		    // estpList1=rDao.getPageEstpList(pageNum);
 			  while (estpList.remove(null));
 			  System.out.println("estpList.size="+estpList.size());
-			  String paging=new Paging(estpList.size(),num, listCount, 2, "getEstPayList").makeHtmlAjaxPaging();
-			System.out.println("estpList:"+estpList);
+			  
+			  String paging=new Paging(estpList.size(), pageNum, listCount,2,"getEstPayList").makeHtmlAjaxPaging();
+			
+			 
+			
+			 System.out.println("estpList:"+estpList);
+			Map<String, Object> map1 = new HashMap<String, Object>(); 
 			map1.put("estpList", estpList);
 			map1.put("reqList", reqList1);
-			map1.put("paging",paging); 
+			map1.put("paging",paging);
 			map1.put("statemsg",rs);
 			return map1;
 			

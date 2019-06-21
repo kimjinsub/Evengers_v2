@@ -22,10 +22,30 @@
 	background-color: #FFFFFF;
 	}
 
+	#frm{
+		margin-top: 100px;
+		
+	}
 
 	#detail.open {
 		display: block;
 	}
+	
+table.reqList {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+table.reqList th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #444444;
+    background: #ce4869 ;
+}
 
 
 </style>
@@ -36,15 +56,19 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div id =frm>
+
 	<h1 align="center">의뢰요청 목록</h1>
 	
-	
-	제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)" align="center"/>
-	
-	
+	<div align="center">
+		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
+		<input type="button" onclick=location.href="./" value='홈으로'>
+	</div>
 	<div id="list"></div>
 	<div id="detail"></div>
-	<div id="paging"></div>
+	<div id="paging" align="center"></div>
+	
+	</div>
 </body>
 
 <script>
@@ -56,7 +80,7 @@ function searchajax(keyword){
 		dataType:'json',
 		success: function(result){
 			var rList = result['rList'];
-			var str = "<table id='reqList' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
+			var str = "<table id='reqList' class='reqList' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
 			for ( var i in rList) {
 				str += "<tr><td>" + rList[i].req_code + "</td><td>"
 							+ "<a href='#' onclick=evtReqInfo('"
@@ -66,7 +90,7 @@ function searchajax(keyword){
 							+ rList[i].req_hopedate + "</td><td>"
 							+ rList[i].req_hopearea + "</td></tr>"
 				}
-				str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
+				str += "</table>"
 				$("#list").html(str);
 		},
 		error :function(e) {}
@@ -76,9 +100,9 @@ function searchajax(keyword){
 
 
 $(document).ready(function() {
-	getReqList(1,10);
+	getReqList(1,2);
 });
-function getReqList(pageNum,listCount) {
+function getReqList(pageNum,listCount) {	//기본적으로 보이는
 		$.ajax({
 		url : "myReqList",
 		dataType:'json',
@@ -86,7 +110,7 @@ function getReqList(pageNum,listCount) {
 		success:function(result) {
 		var rList = result['rList'];
 		var paging =result['paging'];
-		var str = "<table id='reqList' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
+		var str = "<table class='reqList' id='reqList' border='1' align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
 		for ( var i in rList) {
 			str += "<tr><td>" + rList[i].req_code + "</td><td>"
 						+ "<a href='#' onclick=evtReqInfo('"
@@ -96,7 +120,7 @@ function getReqList(pageNum,listCount) {
 						+ rList[i].req_hopedate + "</td><td>"
 						+ rList[i].req_hopearea + "</td></tr>"
 			}
-			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
+			str += "</table>"
 			$("#list").html(str);
 			$("#paging").html(paging);
 			},

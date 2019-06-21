@@ -82,16 +82,35 @@ public class Controller_Sung {
 		return mav;
 	}
 
+	@RequestMapping(value = "/memberEmailChk",produces = "application/json; charset=utf-8;")
+	public @ResponseBody String memberEmailChk(String email, String email1) {
+		System.out.println("email="+email);
+		System.out.println("email1="+email1);
+		return mm.memberEmailChk(email,email1);
+	}
+	
+	@RequestMapping(value = "/ceoEmailChk",produces = "application/json; charset=utf-8;")
+	public @ResponseBody String ceoEmailChk(String email, String email1) {
+		System.out.println("email="+email);
+		System.out.println("email1="+email1);
+		return mm.ceoEmailChk(email,email1);
+	}
+	
 	@RequestMapping(value = "/memberDoubleChk", method = RequestMethod.POST)
 	@ResponseBody
 	public int memberDoubleChk(HttpServletRequest req) {
 		String m_id = req.getParameter("m_id");
-		int idCheck = mm.memberDoubleChk(m_id);
-		int result = 0;
+		int idCheck = mm.memberDoubleChk(m_id);		//존재시 1 미존재시 0  널값일때 -1
+		int result=-1;
 
-		if (idCheck > 0) {
+		if (idCheck > 0) {	//존재
 			result = 1;
-		}
+		}else if(idCheck == 0) {	//미입력
+			result =0;
+		}else result = -1;	//사용가능
+		
+		System.out.println("result = " +result);
+		
 		return result;
 	}
 
@@ -100,11 +119,13 @@ public class Controller_Sung {
 	public int ceoDoubleChk(HttpServletRequest req) {
 		String c_id = req.getParameter("c_id");
 		int idCheck = mm.memberDoubleChk(c_id);
-		int result = 0;
+		int result=-1;
 
-		if (idCheck > 0) {
+		if (idCheck > 0) {	//존재
 			result = 1;
-		}
+		}else if(idCheck == 0) {	//미입력
+			result =0;
+		}else result = -1;	//사용가능
 		return result;
 	}
 
@@ -113,11 +134,14 @@ public class Controller_Sung {
 	public int ceoCheckNumber(HttpServletRequest req) {
 		String c_rn = req.getParameter("c_rn");
 		int numCheck = cm.ceoCheckNumber(c_rn);
-		int result = 0;
+		int result = -1;
 
 		if (numCheck > 0) {
 			result = 1;
-		}
+		}else if(numCheck == 0) {	//미입력
+			result =0;
+		}else result = -1;	//사용가능
+		
 		return result;
 	}
 	

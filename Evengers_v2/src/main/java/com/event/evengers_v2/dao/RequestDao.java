@@ -121,6 +121,12 @@ public interface RequestDao {
 	public int getEstpCount(Map<String, Object> map);
 	
 	public int getEstpCount(String id);
+	
+	public int getReceivedEstCount(String id);
+
+	public int getEstPayCount(Map<String, Object> map);
+
+
 
 
 

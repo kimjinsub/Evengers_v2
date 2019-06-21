@@ -135,6 +135,10 @@
 	 SELECT * FROM EST WHERE REQ_CODE=#{req_code}
 	</select>
 	
+	<select id="getReceivedEstCount"  resultType="int">
+	 SELECT COUNT(*) FROM REQ WHERE M_ID=#{id} AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL)
+	</select>
+	
 	<select id="getEstInfo" parameterType="string" resultType="estimate">
       SELECT * FROM EST WHERE EST_CODE=#{est_code}
    	</select>
@@ -159,9 +163,13 @@
         (SELECT /*+INDEX_DESC(ESTP PK_ESTP_CODE)*/
         ROWNUM RN,ESTP.* FROM ESTP
         WHERE REQ_CODE=#{req_code}
-        AND ROWNUM<=#{num}*#{listCount}) 
-        WHERE RN>((#{num}-1)*#{listCount})
+        AND ROWNUM<=#{pageNum}*#{listCount}) 
+        WHERE RN>((#{pageNum}-1)*#{listCount})
         ]]>
+    </select>
+    
+    <select id='getEstPayCount'  resultType="int">
+        SELECT COUNT(*) FROM ESTP C_ID = #{id}
     </select>
    
    <select id="getEstpDetail" parameterType="string" resultType="estimatepay">
@@ -198,7 +206,7 @@
          SELECT * FROM REQ WHERE M_ID=#{id} 
          AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
          AND REQ_TITLE LIKE CONCAT('%',CONCAT(#{words},'%')) 
-         ORDER BY REQ_HOPEDATE
+         ORDER BY REQ_CODE
    </select>
    
    <!-- 이미 결제되고 날짜지나고 입력한거랑 일치하지 않는 데이터 제외 출력 -->
@@ -206,7 +214,7 @@
          SELECT * FROM REQ WHERE REQ_CODE NOT IN (SELECT DISTINCT REQ.REQ_CODE FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE)
          	AND REQ_HOPEDATE > (SELECT SYSDATE FROM DUAL) 
          	AND REQ_TITLE LIKE CONCAT('%',CONCAT(#{words},'%'))
-         	ORDER BY REQ_HOPEDATE
+         	ORDER BY REQ_CODE
    </select>
    
     
@@ -263,7 +271,7 @@
    </select>
    
    <select id="getEstpCount" parameterType="map" resultType="int">
-         SELECT COUNT(*) FROM ESTP WHERE C_ID=#{id}
+         SELECT DISTINCT COUNT(ESTP.ESTP_CODE) FROM REQ,ESTP WHERE REQ.REQ_CODE = ESTP.REQ_CODE  AND ESTP.C_ID=#{id}
    </select>
 	
     <!-- <select id="getEstSell" resultType="estimatepay">

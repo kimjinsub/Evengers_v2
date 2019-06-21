@@ -60,7 +60,6 @@ table.type02 td {
 }
 
 #estPayList {
-	margin-left: 250px;
 }
 #paging{
 position: relative; 
@@ -72,7 +71,7 @@ color:red;
 <body>
   <h3 align="center"> 견적 결제 구매 내역</h3>
 	<div id="estPayList"></div>
-	<div id="paging"></div>
+	<div id="paging" align="center"></div>
 	<div id="detail"></div>
 
 </body>
@@ -92,7 +91,7 @@ color:red;
 						var reqList = data['reqList'];
 						var paging = data['paging'];
 						var statemsg = data['statemsg'];
-						var str = "<table id='et' class='type02' border='1' align='left'><th scope='row'>구매코드</th><th scope='row'>상품제목</th><th scope='row'>총가격</th><th scope='row'>판매자아이디</th><th scope='row'>구매날짜</th><th scope='row'>상태</th>";
+						var str = "<table id='et' class='type02' border='1' align='center'><th scope='row'>구매코드</th><th scope='row'>상품제목</th><th scope='row'>총가격</th><th scope='row'>판매자아이디</th><th scope='row'>구매날짜</th><th scope='row'>상태</th>";
 						for ( var i in estpList) {
 							str += "<tr><td>" + estpList[i].estp_code + "</td><td>"
 									+ "<a href='#' onclick=getDetailEstp('"

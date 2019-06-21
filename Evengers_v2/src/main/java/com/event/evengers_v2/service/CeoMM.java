@@ -41,12 +41,15 @@ public class CeoMM {
 	}
 	
 	public int ceoCheckNumber(String c_rn) {
-		int numCheck = cDao.ceoCheckNumber(c_rn);
-		System.out.println("존재?"+numCheck);
-		int chkNum = 0;
-		
-		if(numCheck>0) {
-			chkNum = 1;
+		int chkNum = -1;
+		if(c_rn == "" || c_rn ==null) {		
+			chkNum = 0;		//아이디가 널값일때 0리턴
+		}else{
+			int numCheck = cDao.ceoCheckNumber(c_rn);
+			
+			if(numCheck>0) {
+				chkNum = 1;
+			}
 		}
 		return chkNum;
 	}
