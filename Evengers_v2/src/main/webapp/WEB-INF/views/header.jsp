@@ -33,6 +33,7 @@
 #frm.open {
 	display: block;
 }
+
 #pageDown {
    text-align: right;
    float: right;
@@ -66,6 +67,7 @@
 		display: block;
 	}
 	
+
 #member,#ceo,#admin,#common{
 	visibility: hidden; font-size: 20px;
 }

@@ -3,7 +3,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+<style>
+#frm {
+	position:fixed;
+	top: 30px;
+	left: 35%;
+	width: 750px;
+	height: 650px;
+	padding: 2px;
+	margin-left: -150px;
+	float:left;
+	z-index: 101;
+	display: none;
+	overflow:scroll;
+	background-color: white;
+}
 
+
+#frm.open {
+	display: block;
+}
+
+</style>
 <head>
 
   <meta charset="utf-8">
@@ -35,6 +56,7 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div id="frm"></div>
 <body>
 <jsp:include page="../header.jsp"/>
 <!-- Navigation -->
@@ -197,5 +219,19 @@
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </body>
+<script>
+var $layerWindows = $('#frm'); //jquery 객체는 변수에 $ 붙혀서 가독성 좋게!
+$layerWindows.find('#detail-shadow').on('mousedown',function(event){
+console.log(event);
+$layerWindows.removeClass('open');
+});
+$(document).keydown(function(event){
+	console.log(event);
+	if(event.keyCode!=27) return;
+	if($layerWindows.hasClass('open')){ //open이라는 클래스를 가지고 있는지 hasClass로 따짐.
+		$layerWindows.removeClass('open');
+	}
+});
 
+</script>
 </html>

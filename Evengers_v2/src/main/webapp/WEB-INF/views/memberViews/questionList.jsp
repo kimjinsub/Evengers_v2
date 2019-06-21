@@ -95,9 +95,21 @@ table.type08 td {
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
+#header{
+margin-top:65px;
+}
 </style>
 </head>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/all.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
+  <div id="member"><jsp:include page="../header.jsp"/></div>
+
 	<div id="header">1:1 문의내역</div>
 	<div id="list"></div>
 	<div id="paging"></div>
@@ -106,6 +118,8 @@ table.type08 td {
 <script>
 	$(document).ready(function() {
 		getQuestionList(1,10);
+		checkAdmin()();
+		
 	});
 	function getQuestionList(pageNum,listCount) {
 				$.ajax({
@@ -119,7 +133,7 @@ table.type08 td {
 						var str = "<table class='type08' align='left' id='QLT' border='1'><th scope='row'>문의자 ID</th><th scope='row'>문의 제목</th><th scope='row'>문의날짜</th>";
 
 						for ( var i in qList) {
-							str += "<tr><td>" + qList[i].m_id + "</td><td>"
+							str += "<tr><td>" + qList[i].m_id + "님</td><td>"
 									+ "<a href='#' onclick=getDetailQ('"
 									+ qList[i].q_code + "')>"
 									+ qList[i].q_title + "</a></td><td>"
@@ -171,5 +185,10 @@ table.type08 td {
 			$layerWindows.removeClass('open');
 		}
 	});
+	function checkAdmin(){
+		if("${check}"==2){
+			$("#member").show();
+		}
+	}
 </script>
 </html>

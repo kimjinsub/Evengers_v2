@@ -168,6 +168,7 @@ public class Controller_Chun {
 		}else {
 		view="memberViews/memberMyPage";
 		}
+		mav.addObject("id", id);
 		mav.setViewName(view);
 		return mav;
 	}
