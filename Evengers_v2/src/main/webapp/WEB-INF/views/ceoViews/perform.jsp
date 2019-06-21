@@ -7,54 +7,91 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#wrap{width: 500px; height: 500px; border: black 1px solid; margin: auto;}
+#wrap.form-control{width: 50%; /* height: 500px; */ border: black 1px solid; /* margin:auto; */}
 #addFrm{visibility: hidden;vertical-align: middle; margin: auto;}
 #addFrm.shown{visibility: visible;}
 #removeFrm{cursor: pointer;}
+
 </style>
 </head>
-<body>
-<form name="perform" method="post" enctype="multipart/form-data">
-	사진:<input type="file" name="emp_orifilename" id="emp_orifilename" onchange="fileChk(this)"><br/>
-	성명:<input type="text" name="emp_name" id="emp_name" placeholder="성명을 입력하세요"><br/>
-	주민등록번호:<input type="text" name="emp_rrn" id="emp_rrn" placeholder="xxxxxx-xxxxxxx"/><br/>
-	직책:<div id="selectPosition"></div><br/>
-	입사일자:<input type="date" id ="emp_enterdate" name="emp_enterdate"/><br/>
-	전화번호: <input type="number" name="emp_tel" id="emp_tel" placeholder="전화번호 10~11자리"/><br/>
-	이메일:<input type="text" name="emp_email1" id="emp_email1"> 
-				<select name="emp_email2" id="emp_email2" >
-				<option value="@naver.com">@naver.com</option>
-				<option value="@yahoo.co.kr">@yahoo.co.kr</option>
-				</select><br/>
-	부서:<div id="selectDept"></div><br/>
-	은행:<select name="emp_bank" id="emp_bank">
+<body id="wrap">
+<div class="card">
+<div class="card-body px-lg-5 pt-0">
+    <div class="card-header info-color white-text text-center py-4">
+        <h4 class="title"><i class="fas fa-pencil-alt"></i> Contact form</h4>
+      </div>
+<form name="perform" method="post" enctype="multipart/form-data"  style="color: #757575;">
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+  </div>
+  <div class="custom-file">
+	<input type="file" name="emp_orifilename" id="emp_orifilename" onchange="fileChk(this)" class="custom-file-input"
+		aria-describedby="inputGroupFileAddon01"><br/>
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
+	<div class="md-form mt-3">
+	      이름:<input type="text" name="emp_name" id="emp_name" placeholder="이름을 입력하세요" class="form-control">
+    </div>
+    <div class="md-form mt-3">
+		주민등록번호:<input type="text" name="emp_rrn" id="emp_rrn" placeholder="xxxxxx-xxxxxxx" class="form-control">
+    </div>
+	<div id="selectPosition" ></div>
+	<div class="md-form mt-3">
+		입사일자:<input type="date" id ="emp_enterdate" name="emp_enterdate" class="form-control">
+    </div>
+    <div class="md-form mt-3">
+		전화번호:<input type="number" name="emp_tel" id="emp_tel" placeholder="전화번호 10~11자리" class="form-control">
+    </div>
+    <div class="md-form mt-3">
+		이메일:<input type="text" name="emp_email1" id="emp_email1" class="form-control">
+		<select name="emp_email2" id="emp_email2" class='custom-select'>
+			<option value="@naver.com">@naver.com</option>
+			<option value="@yahoo.co.kr">@yahoo.co.kr</option>
+		</select>
+    </div>
+	<div id="selectDept"></div>
+	<div class="md-form mt-3">
+		은행:<select name="emp_bank" id="emp_bank" class='custom-select'>
 			<option value="선택하세요">선택하세요</option> 
 			<option value="신한은행">신한은행</option> 
 			<option value="농협">농협</option> 
 			<option value="국민은행">국민은행</option> 
 			<option value="카카오뱅크">카카오뱅크</option> 
 			<option value="하나은행">하나은행</option> 
-		</select><br/>
-	계좌번호:<input type="number" name="emp_acnumber" id="emp_acnumber" placeholder="계좌번호"/><br/>
-	
-	<input type="text" id="postcode" placeholder="우편번호">
-	<input type="button" onclick="postApi()" value="우편번호 찾기"><br>
-	<input type="text" id="address" placeholder="주소"><br>
-	<input type="text" id="detailAddress" placeholder="상세주소">
-	<input type="text" id="extraAddress" placeholder="참고항목">
-	<input type="button" onclick="formData()" value="저장">
-	<input type="reset" id="rs" value="초기화">
-	<input type="button" onclick="location.href='./'" value="홈으로">
+		</select>
+    </div>
+	<div class="md-form mt-3">
+		계좌번호:<input type="number" name="emp_acnumber" id="emp_acnumber" placeholder="계좌번호(20자리)" class="form-control">
+    </div>
+	<div class="md-form mt-3">
+	<input type="button" onclick="execDaumPostCode()" value="우편번호 찾기" class="btn btn-outline-primary btn-rounded waves-effect"/><br>
+	<input type="text" id="postcode" placeholder="우편번호" class="form-control">
+	<input type="text" id="address" placeholder="주소" class="form-control">
+	<input type="text" id="detailAddress" placeholder="상세주소" class="form-control">
+	<input type="text" id="extraAddress" placeholder="참고항목" class="form-control"> 
+	</div>
+	<div class="md-form mt-3">
+	<input type="button" onclick="javascript:formData();" class="btn btn-outline-primary btn-rounded waves-effect" value="저장">
+	<input type="reset" id="rs" value="초기화" class="btn btn-outline-primary btn-rounded waves-effect">
+	<input type="button" onclick="location.href='./'" value="홈으로" class="btn btn-outline-primary btn-rounded waves-effect">
+	</div>
 </form>
+
+</div>
+
+</div>
 </body>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 $(document).ready(function(){
 	selectPosition();
 	selectDept();
 })
 //우편번호 api
-function postApi(){
+function execDaumPostCode(){
 	new daum.Postcode({
         oncomplete: function(data) {
             var addr = ''; // 주소 변수
@@ -105,7 +142,7 @@ function selectPosition(){
 		dataType:"json",
 		success:function(result){
 			var str = "";
-			str+="<select name='p_name' id='p_name'><option selected='selected'>선택하세요</option>";
+			str+="직책 : <select name='p_name' id='p_name' class='custom-select'><option selected='selected'>선택하세요</option>";
 			for(var i in result){
 				str+="<option value='"+result[i].p_name+"'>"+result[i].p_name+"</option>";
 			}
@@ -124,7 +161,7 @@ function selectDept(){
 		dataType:"json",
 		success:function(result){
 			var str = "";
-			str+="<select name='dept_name' id='dept_name'><option selected='selected'>선택하세요</option>";
+			str+="부서 :<select name='dept_name' id='dept_name' class='custom-select'><option selected='selected'>선택하세요</option>";
 			for(var i in result){
 				str+="<option value='"+result[i].dept_name+"'>"+result[i].dept_name+"</option>";
 			}
@@ -187,13 +224,28 @@ function formData(){
 				location.href="./";
 			},
 			error:function(error){
-				alert("인사카드 등록실패");
+				check();
 				console.log(error)
 			}
 		})
 	}
-
-
-
+function check(){     
+    var frm=document.perform;
+    var length=frm.length-1;
+    for(var i=0;i<length;i++){
+       if(frm[i].value=="" || frm[i].value==null){
+    	   swal({
+         	   title: "No!",
+         	   text: "정보를 입력하세요!",
+         	   icon: "warning",
+           });
+          frm[i].focus();
+          return false; //실패
+       }
+    }
+    return true; //성공: 서버로 전송
+    
+ }
 </script>
+
 </html>

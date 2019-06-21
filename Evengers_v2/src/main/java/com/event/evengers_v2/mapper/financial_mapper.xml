@@ -51,4 +51,7 @@
 	<select id="getTotalMonth" resultType="int">
 		SELECT SUM(MS_P_SALARY) FROM MS WHERE MS_DATE LIKE CONCAT(#{choice},'%') AND MS_C_ID=#{c_id}
 	</select>
+	<select id="getEstPenalty" resultType="Double">
+		SELECT ESTR_PENALTY FROM ESTP,ESTR WHERE ESTP.ESTP_CODE=#{refundedEstp_Code} AND ESTR_REFUNDDATE LIKE CONCAT(#{choice},'%')
+	</select>
 </mapper>

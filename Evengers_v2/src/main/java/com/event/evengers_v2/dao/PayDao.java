@@ -85,4 +85,6 @@ public interface PayDao {
 
 	ArrayList<Double> getEvtTotal(@Param("refundedEp_Code") String refundedEp_Code,@Param("choice") String choice);
 
+	ArrayList<Double> getEstTotal(@Param("refundedEstp_Code") String refundedEstp_Code,@Param("choice") String choice);
+
 }

@@ -147,7 +147,7 @@ public class PersonnelMM {
 		
 		sb.append("<div align='center'>");
 		sb.append("사원목록 <br>");
-		sb.append("<table border='1'><tr><th>사번</th><th>성명</th><th>주소</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th>");
+		sb.append("<table border='1' class='table table-bordered'><tr><th>사번</th><th>성명</th><th>주소</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th>");
 		for(Employee emp:empList) {
 			Date enterdate = emp.getEmp_enterdate();
 			String emp_enterdate = new SimpleDateFormat("yyyy-MM-dd").format(enterdate);

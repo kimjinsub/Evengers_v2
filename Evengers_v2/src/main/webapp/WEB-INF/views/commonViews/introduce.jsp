@@ -22,15 +22,23 @@
   
 
   <!-- Plugin CSS -->
-  <link href="${pageContext.request.contextPath}/ces/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/ces/magnific-popup.css" rel="stylesheet">
 
   <!-- Theme CSS - Includes Bootstrap -->
-  <link href="${pageContext.request.contextPath}/ces/css/creative.min.css" rel="stylesheet">
-
+  <link href="${pageContext.request.contextPath}/ces/creative.min.css" rel="stylesheet">
 </head>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/all.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<body>
+<jsp:include page="../header.jsp"/>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">
 		<a class="navbar-brand" href="#">Evengers</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -47,22 +55,22 @@
 				<li class="nav-item"><a class="nav-link" href="./loginFrm">로그인</a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="./joinFrm">회원가입</a></li>
-				<li class="nav-item dropdown"><!-- <a
+				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> Click Me! </a> --> <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
-					<!-- <div class="dropdown-menu dropdown-menu-right animate slideIn"
+					aria-expanded="false"> Click Me! </a> Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set!
+					<div class="dropdown-menu dropdown-menu-right animate slideIn"
 						aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="#">Action</a> 
 						<a class="dropdown-item" href="#">Another action</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">Something else here</a>
-					</div> -->
+					</div>
 				</li>
 			</ul>
 		</div>
 	</div>
-</nav>
+</nav> -->
 
   <!-- Masthead -->
   <header class="masthead">
@@ -177,12 +185,12 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/vendor/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/jquery.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/ces/jquery.magnific-popup.min.js"></script>
 
   <!-- Custom scripts for this template -->
   <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/ces/js/creative.min.js"></script> --%>

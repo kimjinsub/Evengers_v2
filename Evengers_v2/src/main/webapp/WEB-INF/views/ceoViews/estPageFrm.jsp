@@ -8,17 +8,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 #estTable{
-align-content: center;
-margin-left: 350px;
+	align-content: center;
+	margin-top: 100px;
 }
 </style>
 </head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/all.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-  
+  <jsp:include page="../header.jsp"/>
   
   <form action="/" name="estFrm" id="estFrm" method="post" enctype="multipart/form-data" onsubmit="return est()">
   <div id="estTable">
-  <table border="1">
+  <h1 align="center">견적 작성</h1>
+  <table border="1" align="center">
   <tr>
   <th>견적제목</th>
   <td><input type="text" id="est_title" name="est_title" value="${request.req_title}"></td>
@@ -46,8 +55,10 @@ margin-left: 350px;
   </tr>
   </table>
   </div><br>
-  <input type="button" onclick="formData()" value="견적서 보내기" style="margin-left: 310px;">
+  <div align="center">
+  <input type="button" onclick="formData()" value="견적서 보내기">
  <input type="reset" id="rs" value="취소">
+ </div>
   </form>
   
 </body>

@@ -14,6 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h2>급여관리</h2>
 	<div><input type="month" id="choicedate" name="choicedate"></div>
 	<div id="salaryList"></div>
 	<div id="success"></div>

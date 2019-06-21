@@ -122,4 +122,7 @@
 	<select id="getEvtTotal" resultType="Double">
 		SELECT EP_TOTAL FROM EP,ER WHERE EP.EP_CODE=#{refundedEp_Code} AND ER_REFUNDDATE LIKE CONCAT(#{choice},'%')
 	</select>
+	<select id="getEstTotal" resultType="Double">
+		SELECT ESTP_TOTAL FROM ESTP,ESTR WHERE ESTP.ESTP_CODE=#{refundedEstp_Code} AND ESTR_REFUNDDATE LIKE CONCAT(#{choice},'%')
+	</select>
 </mapper>

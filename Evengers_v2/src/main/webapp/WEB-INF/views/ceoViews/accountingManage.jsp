@@ -8,6 +8,11 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
+input[type="month"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-inner-spin-button {
+    display: none;
+    appearance: none;
+}
 #input {
 	color: green;
 }
@@ -75,8 +80,7 @@
 		<div id="monthCalculate">
 		<h2>한달 정산</h2>
 			<input type="month" id="choicedate" name="choicedate">
-			<div id="calList">
-			</div>
+			<div id="calList"></div>
 			<button onclick="allShowCal()">상세보기</button>
 			<div id="allshow">${allShowCal}</div>
 		</div>

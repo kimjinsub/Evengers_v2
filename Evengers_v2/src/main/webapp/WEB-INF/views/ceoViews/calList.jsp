@@ -8,6 +8,7 @@
 </head>
 <body>
 <div id="makeHtml_cal">
+	${msg}
 	${makeHtml_getCalList}
 </div>
 </body>

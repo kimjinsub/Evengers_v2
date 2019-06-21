@@ -105,13 +105,11 @@ public class Controller_Eunseo {
 		mav = fm.inputSalary(date);
 		return mav;
 	}
-
 	@RequestMapping(value = "/selectSalary")
 	public ModelAndView selectSalary(Date date) {
 		mav = fm.selectSalary(date);
 		return mav;
 	}
-
 	@RequestMapping(value = "/salary")
 	public ModelAndView salary() {
 		mav = new ModelAndView();
@@ -156,6 +154,7 @@ public class Controller_Eunseo {
 	@RequestMapping(value = "/getCalList")
 	public ModelAndView getCalList(Date choicedate) {
 		String c_id = session.getAttribute("id").toString();
+		System.out.println("choicedate왜?="+choicedate);
 		mav = fm.getCalList(choicedate, c_id);
 		return mav;
 	}
