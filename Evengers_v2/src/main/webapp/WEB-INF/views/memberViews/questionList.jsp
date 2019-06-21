@@ -38,51 +38,67 @@
 	font-size: xx-large;
 }
 
-.question{
-display:block;
-width:200px;
-height:100px;
-margin:15px;
-background-color:gray;
-position: relative; 
-}
-.question1{
-float:left;
-display:inline-block;
-width:200px;
-height:100px;
-margin:15px;
-background-color:gray;
-position: relative; 
-}
+
 
 #QLT {
 	margin-left: 300px;
 }
 
 table {
-	margin-left: 130px;
-	text-align: center;
-}
-#paging{
-float:left;
-  width:200px;
-  height:50px;
-  margin-top:380px;
-  margin-left:270px;
-
+	float:left;
 }
 #list{
-  position: fixed;
+text-align: left;
+margin-right: 250px;
+}
+
+table.type08 {
+    float:left;
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-left: 1px solid #ccc;
+    margin:  10px;
+    padding-left: 100px;
+     
+}
+#paging{
+   position:relative;
+   margin-top:200px;
+   padding-left: 250px;
+   margin-left: 350px;
+   display: inline-block;
+   float: left;
+}
+
+table.type08 thead th {
+    padding: 10px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid #c00;
+    background: #dcdcd1;
+}
+table.type08 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #ececec;
+}
+table.type08 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 </style>
 </head>
 <body>
 	<div id="header">1:1 문의내역</div>
-	<div class="question" id="serviceCenter"
-		onclick="location.href='serviceCenter';">문의 하기</div>
-	<div class="question1" id="questionList"
-		onclick="location.href='questionList';">문의 내역</div>
 	<div id="list"></div>
 	<div id="paging"></div>
 	<div id="detail"></div>
@@ -100,7 +116,7 @@ float:left;
 						console.log(result.qList);
 						var qList = result['qList'];
 						var paging =result['paging'];
-						var str = "<table id='QLT' border='1'><th>문의자 ID</th><th>문의 제목</th><th>문의날짜</th>";
+						var str = "<table class='type08' align='left' id='QLT' border='1'><th scope='row'>문의자 ID</th><th scope='row'>문의 제목</th><th scope='row'>문의날짜</th>";
 
 						for ( var i in qList) {
 							str += "<tr><td>" + qList[i].m_id + "</td><td>"

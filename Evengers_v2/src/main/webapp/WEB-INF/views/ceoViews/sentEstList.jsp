@@ -10,6 +10,28 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <style>
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #ce4869 ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
 #detail {
 	position:fixed;
 	top: 30px;
@@ -33,7 +55,7 @@
 
 #estList{
 margin-top:60px;
-margin-left: 250px;
+margin-left: 150px;
 align-content: center;
 }
 #dd{
@@ -60,7 +82,7 @@ text-align: center;
 				var estList = data['estList'];
 				var reqList = data['reqList'];
 				//var paging =result['paging'];
-				var str = "<table id='et' border='1'><th>견적자 ID</th><th>견적제목</th><th>문의자아이디</th>";
+				var str = "<table id='et' class='type11' border='1'><th scope='cols'>견적자 ID</th><th scope='cols'>견적제목</th><th scope='cols'>문의자아이디</th>";
 
 				for ( var i in estList) {
 					str += "<tr><td>" + estList[i].c_id + "</td><td>"

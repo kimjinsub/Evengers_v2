@@ -157,7 +157,7 @@ function formData(){
 		success:function(data){
 			alert("견적서 보내기성공");
 			console.log(data);
-			location.href="./sentEstList";
+			location.href="./";
 		},
 		error:function(error){
 			alert("견적서 보내기 실패");

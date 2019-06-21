@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <style>
+#pageDown {
+	text-align: right;
+	float: right;
+	position: fixed;
+	margin-left: 710px;
+	font-size: x-large;
+	cursor: pointer;
+}
 #msg{
 color:red;
 font-size: x-large;
@@ -28,6 +36,7 @@ visibility: visible;
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
+<div id="pageDown"  onclick="reset()">X</div>
 <h3>문의 내용</h3>
 	<table border='1'>
 		<tr height="40">
@@ -104,6 +113,11 @@ function msgView(){
 	}else if('${refundstate}'=='환불완료'){
 		$("#refundButton").removeClass("show");
 		$("#msg").removeClass("show");
+	}
+}
+function reset() {
+	if ($layerWindows.hasClass('open')) {
+		$layerWindows.removeClass('open');
 	}
 }
 

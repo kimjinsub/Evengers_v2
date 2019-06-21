@@ -39,8 +39,7 @@
 				</a></li>
 			 	<li class="nav-item active"><a class="nav-link" href="./introduce">소개</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./memberMyPage">마이페이지</a></li>
-				<li class="nav-item active"><a class="nav-link" href="./evtReqFrm">의뢰요청</a></li>
-				<li class="nav-item active"><a class="nav-link" href="./serviceCenter">문의하기</a></li>
+				<li class="nav-item active"><a class="nav-link" href="#" onclick="evtReqFrm1()">의뢰요청</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
@@ -153,5 +152,21 @@ function getSessionId(){
 	})
 	return iam;
 }
+function evtReqFrm1(){
+	$("#frm").addClass("open");
+	$('#frm').show();
+	$.ajax({
+		url:'evtReqFrm',
+		type : 'get',
+	    dataType:'html',
+	    success:function(data){
+	    	$("#frm").html(data);
+	    },
+	    error:function(error){
+	    	console.log(error);
+	    }
+	});
+}
+
 </script>
 </html>

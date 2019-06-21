@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <style>
+#pageDown {
+	text-align: right;
+	float: right;
+	position: fixed;
+	margin-left: 710px;
+	font-size: x-large;
+	cursor: pointer;
+}
 h3 {
 	text-align: center;
 }
@@ -19,6 +27,7 @@ table {
 
 
 <body>
+<div id="pageDown"  onclick="reset()">X</div>
 	<a href="EstimateDelete?est_code=${estimate.est_code}">삭제</a>
 	<h3>상세 견적서</h3>
 	<table border='1'>
@@ -60,13 +69,15 @@ table {
 				</c:if></td>
 				<td>${msg}</td>
 		</tr>
-		<tr>
+		 
+		<tr id="member">
 			<td><input type="button" value="승인" 
 				onclick="location.href='estPay?est_code=${estimate.est_code}'"></td>
 			<td><input type="button" value="거절" 
 				onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'"></td>
 			
 		</tr>
+		<tr>
 	</table>
 	
 
@@ -74,6 +85,7 @@ table {
 <script>
 	$(document).ready(function() {
 		msgAlert();
+		checkCeo();
 	});
 	function msgAlert() {
 		console.log('${msg}')
@@ -83,6 +95,20 @@ table {
 			alert("결제실패!");
 		}
 	}
+	
+	function checkCeo(){
+		if("${check}"==1){
+			$("#member").hide();
+		}
+	}
+	function reset() {
+		if ($layerWindows.hasClass('open')) {
+			$layerWindows.removeClass('open');
+		}
+	}
+
+	
+	
 </script>
 
 </html>

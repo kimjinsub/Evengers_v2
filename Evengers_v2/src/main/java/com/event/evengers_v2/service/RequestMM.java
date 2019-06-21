@@ -98,18 +98,20 @@ public class RequestMM {
 
 			if (insPos > today.getTime() && rDao.evtReqInsert(rq)) {
 				String req_code = rDao.getReqCode();
+				rq.setReq_code(req_code);
+				if(fileMap.get("reqi_orifilename") != null) {
 				ri.setReqi_orifilename(fileMap.get("reqi_orifilename"));
 				ri.setReqi_sysfilename(fileMap.get("reqi_sysfilename"));
 				ri.setReq_code(req_code);
-
-				if (rDao.evtReqImageInsert(ri)) {
+				rDao.evtReqImageInsert(ri);
+				System.out.println("삽입 검색 삽입 완료!");
+				view = "memberViews/evtReqContents";}
 					System.out.println("삽입 검색 삽입 완료!");
 					view = "memberViews/evtReqContents";
 				} else {
 					System.out.println("삽입 검색 삽입 실패!");
 					view = "memberViews/evtReqFrm";
 				}
-			}
 			mav.addObject("request", rq);
 			mav.addObject("requestimage", ri);
 			mav.setViewName(view);
@@ -120,7 +122,6 @@ public class RequestMM {
 		return mav;
 
 	}
-
 	public ModelAndView estInsert(MultipartHttpServletRequest multi) {
 		mav = new ModelAndView();
 		String c_id = session.getAttribute("id").toString();
@@ -205,6 +206,18 @@ public class RequestMM {
 	
 	public ModelAndView showEstimate(String est_code){
 		mav = new ModelAndView();
+		String id=session.getAttribute("id").toString();
+		boolean ceoChk=false;
+		int check=0;
+		if(rDao.ceoChk(id)>0) {
+			ceoChk=true;
+		}
+		if(id.equals("admin") || ceoChk) {
+			check=1;
+		}else {
+			check=0;
+		}
+		mav.addObject("check",check);
 		Estimate est = new Estimate();
 		est = rDao.showEstimate(est_code);
 		EstimateImage esti = new EstimateImage();
@@ -478,12 +491,14 @@ public class RequestMM {
 			System.out.println("estp_code=" + estp_code);
 			EstimateImage esti = new EstimateImage();
 			esti = rDao.getEstimateImage(est_code);
+		    if(esti!=null) {
 			EstimatePayImage estpi = new EstimatePayImage();
 			estpi.setEstp_code(estp_code);
 			estpi.setEstpi_orifilename(esti.getEsti_orifilename());
 			estpi.setEstpi_sysfilename(esti.getEsti_sysfilename());
 			System.out.println(estpi);
-			boolean e = rDao.insertEstpi(estpi); // 견적결제 이미지 테이블에 삽입
+			boolean e = rDao.insertEstpi(estpi);
+		    }// 견적결제 이미지 테이블에 삽입
 			boolean b = rDao.estiDelete(est_code); // 견적 이미지 삭제
 			boolean r = rDao.estDelete(est_code); // 견적 삭제
 
@@ -527,6 +542,8 @@ public class RequestMM {
 			int num = (pageNum == null) ? 1 : pageNum;
 			reqList=rDao.getReqCodes(id);
 			System.out.println("ReqList="+reqList);
+			Map<String, Object> map1 = new HashMap<String, Object>(); 
+			ArrayList<String> rs=new ArrayList<String>();
 			for(int i=0;i<reqList.size();i++) {
 				String req_code=reqList.get(i).getReq_code();
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -538,20 +555,30 @@ public class RequestMM {
 			for(int i=0;i<estpList.size();i++) {
 				EstimatePay estp=new EstimatePay();
 				estp=estpList.get(i);
+				
+				if(estp.getEstp_refundstate()==0) {
+					String statemsg="결제완료";
+					rs.add(statemsg);}
+					else if(estp.getEstp_refundstate()==1) {
+						String statemsg="환불중";
+						rs.add(statemsg);
+					}else{
+						String statemsg="환불완료";
+						rs.add(statemsg);
+					}
+				
 				reqList1.add(rDao.getReqTitle1(estp));
 			}
 			
-			ArrayList<EstimatePay> estpList1=new ArrayList<EstimatePay>();
 		    // estpList1=rDao.getPageEstpList(pageNum);
 			  while (estpList.remove(null));
 			  System.out.println("estpList.size="+estpList.size());
 			  String paging=new Paging(estpList.size(),num, listCount, 2, "getEstPayList").makeHtmlAjaxPaging();
 			System.out.println("estpList:"+estpList);
-			Map<String, Object> map1 = new HashMap<String, Object>(); 
 			map1.put("estpList", estpList);
 			map1.put("reqList", reqList1);
-			map1.put("paging",paging);
-			
+			map1.put("paging",paging); 
+			map1.put("statemsg",rs);
 			return map1;
 			
 		}
@@ -714,6 +741,7 @@ public class RequestMM {
 			ArrayList<Request> reqList=new ArrayList<Request>();  
 			System.out.println("estpList:"+estpList);
 			Map<String, Object> map1 = new HashMap<String, Object>();
+			int listCount=10;
 			for(int i=0;i<estpList.size();i++) {
 			EstimatePay estp=new EstimatePay();
 				estp=estpList.get(i);

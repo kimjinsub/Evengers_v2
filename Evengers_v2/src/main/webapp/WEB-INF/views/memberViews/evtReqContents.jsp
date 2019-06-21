@@ -21,7 +21,7 @@
 		</tr>
 		
 		<tr>
-			<td>${requestimage.req_code}</td>
+			<td>${request.req_code}</td>
 			<td>${request.m_id}</td>
 			<td>${request.ec_name}</td>
 			<td>${request.req_title}</td>

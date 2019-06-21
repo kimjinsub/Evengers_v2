@@ -77,6 +77,8 @@ public class Controller_Bin {
 	@RequestMapping(value = "/serviceCenter", method = RequestMethod.GET)
 	public ModelAndView serviceCenter() {
 		mav = new ModelAndView();
+		String sc="sc";
+		mav.addObject("sc",sc);
 		mav.setViewName("memberViews/serviceCenter");
 		return mav;
 	}

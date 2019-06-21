@@ -8,6 +8,30 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
+<style>
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #ce4869 ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+</style>
 <body>
 <h3>환불 완료 리스트</h3>
 	<div id="estimateRefundList"></div>
@@ -28,7 +52,7 @@ function RefundCompleteList(pageNum,listCount){
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
 			var paging=data['paging'];
-			var str = "<table id='et' border='1'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>환불금액</th><th>환불상태</th>";
+			var str = "<table class='type11' id='et' border='1'><th scope='cols'>상품제목</th><th scope='cols'>구매자아이디</th><th scope='cols'>총가격</th><th scope='cols'>판매자아이디</th><th scope='cols'>구매날짜</th><th>환불 요청한 날짜</th><th scope='cols'>위약금</th><th scope='cols'>환불금액</th><th scope='cols'>환불상태</th>";
 
 			for ( var i in estpList) {
 				var penaltyPrice=estpList[i].estp_total*estrList[i].estr_penalty/100;
@@ -40,8 +64,8 @@ function RefundCompleteList(pageNum,listCount){
 						+ estpList[i].c_id+"</td><td>"
 						+ estpList[i].estp_payday+"</td><td>"
 						+ estrList[i].estr_refunddate+"</td><td>"
-						+ penaltyPrice+"</td><td>"
-						+ refundPrice+"</td><td><div class='state'>"
+						+ penaltyPrice+"원</td><td>"
+						+ refundPrice+"원</td><td><div class='state'>"
 						+ estrList[i].estr_state+"</div></td><tr>"
 						+"<input type='hidden' name='estp_code' id='estp_code' value='"+estpList[i].estp_code+"'>"
 						

@@ -56,10 +56,10 @@
 				href="#"> <span>개인정보 수정</span></a></li>
 
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseTwo1"
+				data-toggle="collapse" data-target="#collapseTwo3"
 				aria-expanded="true" aria-controls="collapseTwo"> <span>구매내역</span>
 			</a>
-				<div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo"
+				<div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div id="evtpayList">
@@ -73,24 +73,33 @@
 					</div>
 				</div></li>
 
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseTwo"
-				aria-expanded="true" aria-controls="collapseTwo"> <span>의뢰내역</span>
-			</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-					data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<div id="receivedEstList">
-							<a class="collapse-item" href="#"
-								onclick="Ajax_forward('receivedEstList')">받은견적</a>
-						</div>
-						<div id="myReqList">
-							<a class="collapse-item" href="#"
-								onclick="Ajax_forward('myReqList')">요청서</a>
-						</div>
-					</div>
-				</div></li>
-
+		<li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1" aria-expanded="true" aria-controls="collapseTwo">
+          <!-- <i class="fas fa-fw fa-cog"></i> -->
+          <span>의뢰내역</span>
+        </a>
+        <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+            <div id="receivedEstList"><a class="collapse-item" href="#"onclick="Ajax_forward('receivedEstList')">받은견적</a></div>
+            <div id="myReqList"><a class="collapse-item" href="#"onclick="Ajax_forward('myReqList')">요청서</a></div>
+          </div>
+        </div>
+      </li>
+				 <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo">
+          <!-- <i class="fas fa-fw fa-cog"></i> -->
+          <span>문의하기</span>
+        </a>
+        <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+            <div id="serviceCenter"><a class="collapse-item" href="#"onclick="Ajax_forward('serviceCenter')">문의하기</a></div>
+            <div id="questionList"><a class="collapse-item" href="#"onclick="Ajax_forward('questionList')">문의내역</a></div>
+          </div>
+        </div>
+      </li>
+      
 			<li id="choiceList" class="nav-item"
 				onclick="Ajax_forward('choiceList')"><a class="nav-link"
 				href="#"> <span>찜목록보기</span></a></li>

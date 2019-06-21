@@ -10,48 +10,53 @@
 #header{
 text-align: center;
 font-size: xx-large;
-}
-.question{
-display:block;
-width:200px;
-height:100px;
-margin:15px;
-background-color:gray;
-position: absolute; 
-}
-.question1{
-float:left;
-display:inline-block;
-width:200px;
-height:100px;
-margin:15px;
-background-color:gray;
-position: absolute; 
+
 }
 #qt{
 margin-left: 300px;
+}
+ table.type03 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 3px solid #369;
+  margin : 10px 10px;
+}
+table.type03 th {
+    width: 147px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #153d73;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+}
+table.type03 td {
+    width: 349px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 </style>
 </head>
 <body>
   <div id="header">1:1 문의</div>
-  <div class="question" id="questioninsert" onclick="location.href='serviceCenter';"> 문의 하기 </div>
-  
-  <div class="question1" id="questionList" onclick="location.href='questionList';"> 문의 내역 </div>
-  
   <form action="/" name="qFrm" id="qFrm" method="post" enctype="multipart/form-data" onsubmit="return qq()">
   <div id="qt">
-  <table border="1">
+  <table class="type03" border="1">
   <tr>
-  <th>제목</th>
+  <th scope="row">제목</th>
   <td><textarea rows="3" cols="30" id="q_title" name="q_title"></textarea></td>
   </tr>
   <tr>
-  <th>내용</th>
+  <th scope="row">내용</th>
   <td><textarea rows="15" cols="30" id="q_contents" name="q_contents"></textarea></td>
   </tr>
   <tr>
-  <th>파일첨부</th> 
+  <th scope="row">파일첨부</th> 
   <td><input type="file" name="q_files" id="q_files" multiple>
 
   </td>
@@ -93,7 +98,7 @@ function formData(){
 		success:function(data){
 			alert("성공");
 			console.log(data);
-			location.href="./questionList";
+			location.href="javascript:Ajax_forward('questionList')";
 		},
 		error:function(error){
 			alert("에러");

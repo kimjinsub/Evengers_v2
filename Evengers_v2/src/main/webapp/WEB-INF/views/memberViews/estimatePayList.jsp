@@ -8,6 +8,35 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
+#estPayList{
+margin-right: 200px;
+}
+table.type02 {
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+table.type02 th {
+    width: 80px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background: #eee;
+}
+table.type02 td {
+    width: 200px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
 #detail {
 	position: fixed;
 	top: 30px;
@@ -33,6 +62,12 @@
 #estPayList {
 	margin-left: 250px;
 }
+#paging{
+position: relative; 
+}
+#refundState{
+color:red;
+}
 </style>
 <body>
   <h3 align="center"> 견적 결제 구매 내역</h3>
@@ -43,7 +78,7 @@
 </body>
 <script>
 	$(document).ready(function() {
-		getEstPayList(1,2);
+		getEstPayList(1,5);
 	});
 	function getEstPayList(pageNum,listCount) {
 		      $.ajax({
@@ -52,11 +87,12 @@
 					dataType : 'json',
 					success : function(data) {
 						console.log(data);
+						console.log(data.statemsg)
 						var estpList = data['estpList'];
 						var reqList = data['reqList'];
 						var paging = data['paging'];
-						var str = "<table id='et' border='1'><th>구매코드</th><th>상품제목</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th>";
-
+						var statemsg = data['statemsg'];
+						var str = "<table id='et' class='type02' border='1' align='left'><th scope='row'>구매코드</th><th scope='row'>상품제목</th><th scope='row'>총가격</th><th scope='row'>판매자아이디</th><th scope='row'>구매날짜</th><th scope='row'>상태</th>";
 						for ( var i in estpList) {
 							str += "<tr><td>" + estpList[i].estp_code + "</td><td>"
 									+ "<a href='#' onclick=getDetailEstp('"
@@ -64,7 +100,8 @@
 									+ reqList[i].req_title + "</a></td><td>"
 									+ estpList[i].estp_total + '원 '+"</td><td>"
 									+ estpList[i].c_id+"</td><td>"
-									+ estpList[i].estp_payday+"</td><tr>"
+									+ estpList[i].estp_payday+"</td><td id='refundState'>"
+									+ statemsg[i]+"</td></tr>"
 
 						}
 						str += "</table>"
@@ -75,7 +112,8 @@
 
 					}
 				})
-	}
+				console.log($("#refundState").val());
+	} 
 
 	function getDetailEstp(estp_code) {
 		$("#detail").addClass("open");

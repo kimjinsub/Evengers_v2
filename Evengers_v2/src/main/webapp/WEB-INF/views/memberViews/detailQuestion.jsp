@@ -9,6 +9,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#pageDown {
+	text-align: right;
+	float: right;
+	position: fixed;
+	margin-left: 710px;
+	font-size: x-large;
+	cursor: pointer;
+}
 h3{
 text-align: center;
 }
@@ -19,6 +27,7 @@ float:left;
 </head>
 <body>
 <a href="questionDelete?q_code=${question.q_code}">삭제</a>
+<div id="pageDown"  onclick="reset()">X</div>
 	<h3>문의 내용</h3>
 	<table border='1'>
 		<tr height="40">
@@ -89,6 +98,11 @@ float:left;
 
 </body>
 <script>
+function reset() {
+	if ($layerWindows.hasClass('open')) {
+		$layerWindows.removeClass('open');
+	}
+}
 function replyInsert(q_code){
 	  $.ajax({
 		type:'post', //json으로 넘길 때 반드시 post로 해야함!

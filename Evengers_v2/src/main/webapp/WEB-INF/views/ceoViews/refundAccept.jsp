@@ -6,6 +6,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #ce4869 ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <body>
 	<h3>환불 수락 페이지</h3>
@@ -24,7 +48,7 @@ function getRefundAcceptList(){
 			var estpList=data['estpList'];
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
-			var str = "<table id='et' border='1'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>버튼</th>";
+			var str = "<table id='et' class='type11' border='1'><th scope='cols'>상품제목</th><th scope='cols'>구매자아이디</th><th scope='cols'>총가격</th><th scope='cols'>판매자아이디</th><th scope='cols'>구매날짜</th><th scope='cols'>환불 요청한 날짜</th><th scope='cols'>위약금(%)</th><th scope='cols'>버튼</th>";
                console.log(estrList);
                console.log(estpList);
                console.log(reqList);

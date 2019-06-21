@@ -10,8 +10,20 @@
 
 
 <title>Insert title here</title>
+<style>
+#pageDown {
+	text-align: right;
+	float: right;
+	position: fixed;
+	margin-left: 710px;
+	font-size: x-large;
+	cursor: pointer;
+}
+
+</style>
 </head>
 <body>
+	<div id="pageDown"  onclick="reset()">X</div>
 	<a href="myReqDelete?req_code=${request.req_code}">삭제</a>
 	<h3>요청 내용 상세보기</h3>
 	<table border='1'>
@@ -57,4 +69,12 @@
 	</table>
 
 </body>
+<script>
+function reset() {
+	if ($layerWindows.hasClass('open')) {
+		$layerWindows.removeClass('open');
+	}
+}
+
+</script>
 </html>
