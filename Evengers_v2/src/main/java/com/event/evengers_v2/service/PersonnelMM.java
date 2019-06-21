@@ -143,12 +143,11 @@ public class PersonnelMM {
 
 	private Object makeHtml_getPerformList(ArrayList<Employee> empList) {
 		StringBuilder sb = new StringBuilder();
-		
-		
+		int i=0;
 		sb.append("<div align='center'>");
-		sb.append("사원목록 <br>");
-		sb.append("<table border='1' class='table table-bordered'><tr><th>사번</th><th>성명</th><th>주소</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th>");
+		sb.append("<table class='table table-striped' align='center' ><tr><th>#</th><th>사번</th><th>성명</th><th>주소</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th>");
 		for(Employee emp:empList) {
+			i += 1;
 			Date enterdate = emp.getEmp_enterdate();
 			String emp_enterdate = new SimpleDateFormat("yyyy-MM-dd").format(enterdate);
 			Position p = new Position();
@@ -157,7 +156,8 @@ public class PersonnelMM {
 			Department dept = new Department();
 			dept = pDao.getDeptInfo(emp.getDept_code());
 			String dept_name = dept.getDept_name();
-			sb.append("<tr><td>"+emp.getEmp_code()+"</td>"
+			sb.append("<tr><td>"+i+"</td>"
+					+ "<td>"+emp.getEmp_code()+"</td>"
 					+ "<td>"+emp.getEmp_name()+"</td>"
 					+ "<td>"+emp.getEmp_addr()+"</td>"
 					+ "<td>"+emp_enterdate+"</td>"

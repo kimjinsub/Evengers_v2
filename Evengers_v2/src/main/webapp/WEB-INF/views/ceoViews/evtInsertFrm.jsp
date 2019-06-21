@@ -70,16 +70,9 @@ input.option-add {
 			<tr>
 				<td>썸네일사진</td>
 				<td>
-					<!-- <input type="file" name="썸네일 사진" id="e_orifilename"
+					<input type="file" name="썸네일 사진" id="e_orifilename"
 				onchange="fileChk(this)"/>
-				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/> -->
-					<div class="file-field">
-						<div class="btn btn-primary btn-sm float-left">
-							<span>Choose file</span> 
-							<input type="file" onchange="fileChk(this)">
-							<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
-						</div>
-					</div>
+				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
 				</td>
 			</tr>
 			<tr>

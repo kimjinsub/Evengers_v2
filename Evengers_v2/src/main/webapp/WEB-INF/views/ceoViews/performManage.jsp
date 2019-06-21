@@ -6,9 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+#perform{
+	margin-top: 5%;
+	width: 100%;
+}
+</style>
 </head>
 <body>
-	${makeHtml_getPerformList}
+	<div id="perform">${makeHtml_getPerformList}</div>
 </body>
 <script>
 	

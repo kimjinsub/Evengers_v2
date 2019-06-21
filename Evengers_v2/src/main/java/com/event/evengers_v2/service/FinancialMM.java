@@ -138,7 +138,7 @@ public class FinancialMM {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy년MM월");
 		sb.append("<h1>" + format1.format(choicedate) + "</h1>");
 		sb.append("<input type='button' onclick='reset()' value='닫기'>");
-		sb.append("<table border='1' id='calTable'><tr><th>날짜</th><th>카테고리</th><th>내용</th><th>가격</th>");
+		sb.append("<table border='1' id='calTable' ><tr><th>날짜</th><th>카테고리</th><th>내용</th><th>가격</th>");
 
 		for (Calculate cal : allCalList) {
 			Date receipt = cal.getCal_receiptdate();
@@ -189,15 +189,18 @@ public class FinancialMM {
 
 	private Object makeHtml_salary(ArrayList<MonthlySalary> msList,String choice) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<h2>"+choice+"</h2> ");
-		sb.append("<table border='1'><tr><th>사번</th><th>성명</th><th>직책</th><th>급여</th>");
+		int i=0;
+		sb.append("<div>");
+		sb.append("<table class='table table-striped'><tr><th>#</th><th>사번</th><th>성명</th><th>직책</th><th>급여</th>");
 		for (MonthlySalary ms : msList) {
-			sb.append("<tr><td>" + ms.getMs_emp_code() + "</td>" 
+			i += 1;
+			sb.append("<tr><td>"+i+"</td>"
+						+ "<td>" + ms.getMs_emp_code() + "</td>" 
 						+ "<td>" + ms.getMs_emp_name() + "</td>" 
 						+ "<td>"+ ms.getMs_p_name() + "</td>" 
 						+ "<td>" + ms.getMs_p_salary() + "</td></tr>");
 		}
-		sb.append("</table>");
+		sb.append("</table></div>");
 		return sb.toString();
 	}
 

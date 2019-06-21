@@ -21,21 +21,38 @@
 </style>
 </head>
 <body>
-<div id="wrap">
+<!-- <div id="wrap">
 <table border="1">
 	<tr>
 	</tr>
 </table>
 <div id="addFrm">
-	<table border="1">
+	<table class='table table-striped' >
 		<tr>
 			<td>부서명</td><td><input type="text"/></td>
 		</tr>
 	</table>
+</div>
+</div> -->
+<div class="card">
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead class="blue-grey lighten-4">
+                  <tr>
+					<td>부서명</td><td><input type="text"/></td>
+				  </tr>
+                  <!-- <tr>
+                    <th>#</th>
+                    <th>부서명</th>
+                    <th>Ipsum</th>
+                    <th>Dolor</th>
+                  </tr> -->
+                </thead>
+              </table>
+            </div>
+          </div>
 	<button onclick="addDept()">완료</button>
 	<div id="removeFrm" onclick="hideAddFrm()">닫기</div>
-</div>
-</div>
 </body>
 <script>
 $(document).ready(function(){

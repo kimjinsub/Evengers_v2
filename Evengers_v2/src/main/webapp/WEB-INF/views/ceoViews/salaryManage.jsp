@@ -10,19 +10,26 @@
 #inputSalary.open{
 	visibility: visible;
 }
+.form-control{
+	width:30%;
+}
 </style>
 <title>Insert title here</title>
 </head>
 <body>
 	<h2>급여관리</h2>
-	<div><input type="month" id="choicedate" name="choicedate"></div>
+	<div class="md-form">
+  <label for="inputMDEx">Choose your date</label>
+  <input type="month" id="choicedate" name="choicedate" class="form-control">
+	</div><br>
 	<div id="salaryList"></div>
 	<div id="success"></div>
 </body>
 <script>
-/* $(document).ready(function(){
+ $(document).ready(function(){
 	selectSalary();
-})  */
+})
+document.getElementById('choicedate').value= new Date().toISOString().slice(0, 7);
 $("input[type=month]").change(function(){
 	selectSalary();
 })
@@ -63,7 +70,6 @@ function inputSalary(){
 			console.log(error);
 		}
 	})
-	
 }
 </script>
 </html>
