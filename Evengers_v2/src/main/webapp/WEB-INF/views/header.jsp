@@ -14,6 +14,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#frm {
+	position:fixed;
+	top: 30px;
+	left: 35%;
+	width: 750px;
+	height: 650px;
+	padding: 2px;
+	margin-left: -150px;
+	float:left;
+	z-index: 101;
+	display: none;
+	overflow:scroll;
+	background-color: white;
+}
+
+
+#frm.open {
+	display: block;
+}
 #member,#ceo,#admin,#common{
 	visibility: hidden; font-size: 20px;
 }

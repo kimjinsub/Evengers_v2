@@ -11,6 +11,7 @@
 
 <title>Insert title here</title>
 <style>
+
 #pageDown {
 	text-align: right;
 	float: right;
@@ -49,7 +50,7 @@
 		</tr>
 		<tr height="230">
 			<td bgcolor="green" align="center">내용</td>
-			<td colspan="5">${request.req_contents}</td>
+			<td colspan="5">${request.req_contents}</td> 
 		</tr>
 		<tr>
 		<tr>

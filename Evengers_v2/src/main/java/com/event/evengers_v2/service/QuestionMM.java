@@ -83,11 +83,14 @@ public class QuestionMM {
 			listCount=10;
 		}
 		Map<String,Object> map1= new HashMap<String,Object>();
+		int check=0;
 		if(id.equals("admin")) {
 			qList = qDao.getAllQuestionList(num);
 			  String paging=new Paging(qDao.getQuestionCount(), num, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
 			System.out.println("관리자qList:"+qList);
+			check=2;
 			map1.put("paging",paging);
+			map1.put("check",check);
 		}else {
 		Map<String, Object> map = new HashMap<String, Object>(); // MAP을 이용해 담기
         map.put("id",id);

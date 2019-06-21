@@ -6,6 +6,15 @@
 <html lang="en">
 
 <head>
+<style>
+#user{
+margin-right: 15px;
+margin-top: 30px;
+color:#8A0829;
+font-size: medium;
+
+}
+</style>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -146,18 +155,9 @@
 										</div>
 									</div>
 								</form>
-							</div></li>
-
+							</div></li> <h2 id="user" align="center">${id}님 안녕하세요</h2>
 						<li class="nav-item"><a class="nav-link" href="./"><span
 								class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로가기</span></a></li>
-						<div class="topbar-divider d-none d-sm-block"></div>
-						<li class="nav-item"><a class="nav-link" href="./evtReqFrm"><span
-								class="mr-2 d-none d-lg-inline text-gray-800 ">의뢰요청</span></a></li>
-						<div class="topbar-divider d-none d-sm-block"></div>
-
-						<li class="nav-item"><a class="nav-link"
-							href="./serviceCenter"><span
-								class="mr-2 d-none d-lg-inline text-gray-800 ">1 : 1 문의</span></a></li>
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<li class="nav-item"><a class="nav-link" href="./logout"><span
