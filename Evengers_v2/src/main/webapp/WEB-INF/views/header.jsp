@@ -14,7 +14,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#frm {
+	position:fixed;
+	top: 30px;
+	left: 35%;
+	width: 750px;
+	height: 650px;
+	padding: 2px;
+	margin-left: -150px;
+	float:left;
+	z-index: 101;
+	display: none;
+	overflow:scroll;
+	background-color: white;
+}
 
+
+#frm.open {
+	display: block;
+}
 #pageDown {
    text-align: right;
    float: right;
@@ -73,8 +91,7 @@
 				</a></li>
 			 	<li class="nav-item active"><a class="nav-link" href="./introduce">소개</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./memberMyPage">마이페이지</a></li>
-				<li class="nav-item active"><a class="nav-link" href="./evtReqFrm">의뢰요청</a></li>
-				<li class="nav-item active"><a class="nav-link" href="./serviceCenter">문의하기</a></li>
+				<li class="nav-item active"><a class="nav-link" href="#" onclick="evtReqFrm1()">의뢰요청</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
@@ -207,6 +224,22 @@ function Ajax_forward(url){
 			console.log(error);
 		}
 	})
+}
+
+function evtReqFrm1(){
+	$("#frm").addClass("open");
+	$('#frm').show();
+	$.ajax({
+		url:'evtReqFrm',
+		type : 'get',
+	    dataType:'html',
+	    success:function(data){
+	    	$("#frm").html(data);
+	    },
+	    error:function(error){
+	    	console.log(error);
+	    }
+	});
 }
 
 var $layerWindows = $('#detail'); 
