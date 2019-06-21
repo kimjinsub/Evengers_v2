@@ -174,7 +174,9 @@ public class ScheduleMM {
 			}
 		}
 		mav=new ModelAndView();
-		mav.addObject("calendar", makeHtml_calendar(date,dept_code));
+		if(dept_code!=null) {
+			mav.addObject("calendar", makeHtml_calendar(date,dept_code));
+		}
 		mav.setViewName("ceoViews/calendar");
 		return mav;
 	}
@@ -208,7 +210,9 @@ public class ScheduleMM {
 		//c_id에 해당하는 ep_code를 전부 가져옴
 		ArrayList<String> ep_codes=getEpCodeListByCeo();//**처음사용자면 null일수 있다
 		//일정에 있는 (수락된) 결제코드들을 뽑음
+		if(ep_codes.size()==0) {return "<p style='font:italic'>해당 부서에 등록된 결제가 없습니다.</p>";}
 		ArrayList<String> assigned_codes=getAssigned_codes(ep_codes);
+		if(assigned_codes.size()==0) {return "<p style='font:italic'>해당 부서에 수락된 일정이 없습니다.</p>";}
 		
 		//그 날짜의 첫번째 달 firstDay 구하기
 		SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM");
