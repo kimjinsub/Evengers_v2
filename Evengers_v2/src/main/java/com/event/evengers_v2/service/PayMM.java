@@ -134,19 +134,20 @@ public class PayMM {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public ModelAndView rejectBuy(String eb_code) throws DBException {
 		mav = new ModelAndView();
-
 		System.out.println("eb_code2=" + eb_code);
-		boolean b = payDao.bsDelete(eb_code);
+		if(payDao.getEvtBuyOptionCount(eb_code)!=0) {
+			boolean b = payDao.bsDelete(eb_code);
+			if (b == false) {
+				throw new DBException();
+			}
+		}
+		
 		boolean e = payDao.ebDelete(eb_code);
 
 		if (e) {
 			System.out.println("구매 삭제 성공");
 		} else {
 			System.out.println("구매 삭제 실패");
-		}
-
-		if (b == false) {
-			throw new DBException();
 		}
 
 		mav.setViewName("index");

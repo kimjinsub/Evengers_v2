@@ -135,6 +135,17 @@
 	<select id="ceoEmailChk" resultType="integer">
 		SELECT COUNT(*) FROM C WHERE C_EMAIL = #{c_email}
 	</select>
-	
+	<select id="ceoEmailChk2" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM C WHERE C_EMAIL=#{c_email}
+	</select>
+	<select id="memEmailChk" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM M WHERE M_EMAIL=#{m_email}
+	</select>
+	<select id="memEmailSameChk" parameterType="String" resultType="String">
+		SELECT M_EMAIL FROM M WHERE M_EMAIL=#{m_email} AND M_ID=#{m_id}
+	</select>
+	<select id="ceoEmailSameChk" parameterType="String" resultType="String">
+		SELECT C_EMAIL FROM C WHERE C_EMAIL=#{c_email} AND C_ID=#{c_id}
+	</select>
 	
 </mapper>

@@ -38,16 +38,21 @@ table.type08 td {
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
+#span{
+	float: right;
+	color:red;
+	text-align: center;
+}
 </style>
 </head>
 <body>
 <h1>환불 요청 페이지</h1>
-<div>
+<div >
 	<div id="eList2" style="width:10%; float: left;">
-		<table border="1" class="type08">
+		<table border="1" class="type08" style="width: 100%;">
 			<thead>
 			<tr align="center">
-				<th >상품이름</th>
+				<th>상품이름</th>
 			</tr>
 			</thead>
 		 <tbody>
@@ -61,7 +66,7 @@ table.type08 td {
 	</div>
 
 	<div id="epList2" style="width: 35%; float: left;">
-		<table border="1" class="type08">
+		<table border="1" class="type08" style="width: 100%;">
 			<thead>
 				<tr align="center">
 					<th >구매자</th>
@@ -92,8 +97,8 @@ table.type08 td {
 	</div>
 
 
-	<div id="erList" style="width: 55%; float: left;">
-		<table border="1" class="type08">
+	<div id="erList" style="width: 55%; float: right;">
+		<table border="1" class="type08"style="width: 100%;">
 			<thead>
 				<tr align="center">
 					<th >환불요청일자</th>
@@ -118,16 +123,16 @@ table.type08 td {
 					<td  height="50px"><input class="er_total"
 						type="number" name="${eventrefund.ep_code}" readonly></td>
 					<td  height="50px"><button class="refundBtn"
-							name="${eventrefund.ep_code}">환불 완료</button></td>
+							name="${eventrefund.ep_code}">완료</button></td>
 				</tr>
 				<textarea class="hiddenclass" name="${eventrefund.ep_code}"></textarea>
 			</c:forEach>
 			</tbody>
 		</table>
 	</div>
-</div>
-
+</div><br><h6><strong id="span" > <  위약금 소수점자리 이하는 버림입니다. ></strong></h6>	
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script >
 $('.hiddenclass').hide();
 $('.textarea').hide();
@@ -164,11 +169,19 @@ $('.er_panalty').each(function() {
 		console.log("ep_code"+ep_code);
 		if(ep_panalty>100){
 			ep_panalty=100;
-			alert("100이하로 해주세요.");
+			swal({
+	            title: "Warning!",
+	             text:  "100이하로 해주세요.",
+	             icon: "warning",
+			  });
 		}
 		if(ep_panalty<0){
 			ep_panalty=0;
-			alert("0이상으로 해주세요.");
+			swal({
+	            title: "Warning!",
+	             text:  "0이상으로 해주세요.",
+	             icon: "warning",
+			  });
 		}
 		console.log("ep_panalty"+ep_panalty);
 		var total=$('input[id="'+ep_code+'"]').val();
@@ -179,7 +192,6 @@ $('.er_panalty').each(function() {
 			dataType : "text",
 			success:function(result){
 				console.log(result);
-				alert(result+"원을 환불 해줍니다.");
 				$('input[name="'+ep_code+'"]').val(result);
 				$('textarea[name="'+ep_code+'"]').val(ep_panalty);
 			},
@@ -201,7 +213,11 @@ $('.refundBtn').each(function() {
 				dataType : "text",
 				success:function(result){
 					console.log(result);
-					alert(result);
+					swal({
+			            title: "Success!",
+			             text:  result,
+			             icon: "success",
+					  });
 					location.href = "javascript:Ajax_forward('refundCompleteList')";
 				},
 				error:function(error){

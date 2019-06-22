@@ -9,7 +9,9 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style >
-
+body{
+font-size: 20px
+}
 </style>
 </head>
 <body>
@@ -42,7 +44,11 @@ function memberEvtPay(ep_code){
 		data:{ep_code:ep_code},
 		dataType:"html",
 		success:function(result){
-			alert("구매 되었습니다.");
+			swal({
+				title: "Success!",
+				text:  "구매 되었습니다.",
+				icon: "success",
+			});
 			$("#ebInfo").html(result);
 		},
 		error:function(error){
@@ -55,19 +61,29 @@ $("#rejectBtn").click(function(){
 	/* 	var e = "${e}";
 		var eb = "${eb}"; 
 		var bs = "${bs}"; */
-		
+		var e_code="${eb.e_code}";
 		$.ajax({
 			type:"post",
 			url:"rejectBuy",
 			data:{eb_code:"${eb.eb_code}"},
 			dataType:"html",
 			success:function(data){
-				alert("취소 성공")
+				swal({
+					title: "Success!",
+					text:  "취소 성공",
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "evtInfo?e_code=" + e_code;
+				});
 				console.log(data);
-				location.href="./";
 			},
 			error:function(error){
-				alert("취소 실패");
+				swal({
+		            title: "Warning!",
+		             text:  "취소 실패",
+		             icon: "warning",
+				  });
 				console.log(error);
 			}
 		})
@@ -75,4 +91,5 @@ $("#rejectBtn").click(function(){
 	});
 	
 </script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>

@@ -45,7 +45,7 @@ table.type08 td {
 <h1>환불 내역 페이지</h1>
 <div>
 	<div id="eList2" style="width:10%;; float: left;">
-		<table border="1" class="type08">
+		<table border="1" class="type08" style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th >상품이름</th>
@@ -62,7 +62,7 @@ table.type08 td {
 	</div>
 
 	<div id="epList2" style="width: 35%;; float: left;">
-		<table border="1" class="type08">
+		<table border="1" class="type08" style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th >구매자</th>
@@ -93,7 +93,7 @@ table.type08 td {
 	</div>
 
 	<div id="erList" style="width: 55%; float: left;">
-		<table border="1" class="type08">
+		<table border="1" class="type08" style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th>환불요청일자</th>

@@ -11,7 +11,7 @@
 .choiceList{
 border: 1px solid black;
 background-color: white;
-width: 850px;
+width: 900px;
 
 }
 .snip1535, .e_code {
@@ -87,13 +87,13 @@ width: 850px;
 	<div>
 		<c:forEach var="event" items="${choiceList}">
 			<div class="choiceList">
-			<table>
+			<table >
 			<tr><td rowspan="4"><img src="upload/thumbnail/${event.e_sysfilename}" / width="250"
-				height="250"></td><td>상품명 : ${event.e_name}</td><td rowspan="4"><button onclick="location='evtInfo?e_code=${event.e_code}'"class="snip1535">구매하러 가기</button><br><br>
+				height="250"></td><td>상품명 : ${event.e_name}</td><td rowspan="4"width="315px"><button onclick="location='evtInfo?e_code=${event.e_code}'"class="snip1535" >구매하러 가기</button><br><br>
 				<button class="e_code" name="${event.e_code}" >찜삭제</button></td></tr>
 			<tr><td>카테고리 : ${event.e_category}	 |	기업 아이디 : ${event.c_id}</td></tr>
 			<tr><td>상품 가격: ${event.e_price}</td></tr>
-			<tr><td>상품 내용: ${event.e_contents}</td></tr>
+			<tr><td style="word-break:break-all; word-wrap:break-word;">상품 내용: ${event.e_contents}</td></tr>
 			</table>
 			</div>
 			<br>
@@ -116,7 +116,11 @@ $('.e_code').each(function(){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				alert(result);
+				swal({
+		            title: "Success!",
+		             text:  result,
+		             icon: "success",
+				  });
 				location.href ="javascript:Ajax_forward('choiceList')";
 			},
 			error : function(error) {
@@ -131,4 +135,5 @@ $(".hover").mouseleave(
   }
 );
 </script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>

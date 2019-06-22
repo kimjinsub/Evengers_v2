@@ -115,6 +115,7 @@
 	<div id="ceoModifyMain"></div>
 </div>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
 	$("#ceoModifyMain").hide();
@@ -131,13 +132,22 @@
 			dataType : "text",
 			success : function(data) {
 				console.log(data);
-				alert(data);
 				if (data == "비밀번호가 맞았습니다.") {
 					$('#ceoInfoPwCheck').hide();
 					$('#ceoModifyMain').show();
+					swal({
+			            title: "Success!",
+			             text:  data,
+			             icon: "success",
+					  });
 				} else {
 					$("#ceoModifyMain").hide();
 					$('#mInfoPwCheck').value = "";
+					swal({
+			            title: "Warning!",
+			             text:  data,
+			             icon: "warning",
+					  });
 				}
 			},
 			error : function(error) {
@@ -251,9 +261,24 @@
 		$.ajax({
 			url : "ceoModifyInfo",
 			data : {pw:pw,name:name,tel:tel,email:email},
-			dataType : "html",
+			dataType : "text",
 			success : function(data) {
-				location.href = "./ceoMyPage";
+				if(data=="변경 완료"){
+					swal({
+						title: "Success!",
+						text:  data,
+						icon: "success",
+					})
+					. then (function () { 
+						window.location.href = "./ceoMyPage" ;
+					});
+				}else{
+					swal({
+			            title: "Warning!",
+			             text:  data,
+			             icon: "warning",
+					  });
+				}
 			},
 			error : function(error) {
 				console.log(error);
@@ -265,9 +290,15 @@
 			url : "ceoDelete",
 			dataType : "text",
 			success : function(data) {
-				console.log(data)
-				alert(data);
-				location.href = "./";
+				swal({
+					title: "Success!",
+					text:  data,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "./";
+				});
+				console.log(data);
 			},
 			error : function(error) {
 				console.log(error);

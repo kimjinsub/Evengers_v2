@@ -15,10 +15,22 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <style>
+#font{
+	font-size: 20px
+}
+.max-small {
+    width: auto; height: auto;
+    max-width: 300px;
+    max-height: 300px;
+}
 </style>
 </head>
 <body>
-<img src="upload/thumbnail/${e.e_sysfilename}"/><br/>
+<div id="font">
+<div id="payImg">
+<img class='max-small'src="upload/thumbnail/${e.e_sysfilename}" >
+</div>
+<br/>
 <div>상품명:${e.e_name}</div>
 <div>기본가:${e.e_price}원</div>
 <div>결제코드:${ep.ep_code}</div>
@@ -28,6 +40,7 @@
 <div>이벤트일:${ep_dday}</div>
 <div>환불가능일:~${refundAble}까지</div>
 <button id="exit">마이페이지 가기</button>
+</div>
 </body>
 <script>
 $(document).ready(function(){

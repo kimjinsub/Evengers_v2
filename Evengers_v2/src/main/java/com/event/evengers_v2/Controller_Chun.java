@@ -168,7 +168,6 @@ public class Controller_Chun {
 		}else {
 		view="memberViews/memberMyPage";
 		}
-		mav.addObject("id", id);
 		mav.setViewName(view);
 		return mav;
 	}
@@ -225,11 +224,11 @@ public class Controller_Chun {
 		mav.setViewName("memberViews/receivedEstList");
 		return mav;
 	}
-	@RequestMapping(value = "/modifyMemInfo", method = RequestMethod.GET)
-	public ModelAndView modifyMemInfo(String pw,String name,String tel,String email,String area) {
-		mav = new ModelAndView();
-		mav = mm.modifyMemInfo(pw,name,tel,email,area);
-		return mav;
+	@RequestMapping(value = "/modifyMemInfo", produces = "application/json; charset=utf-8")
+	public @ResponseBody String modifyMemInfo(String pw,String name,String tel,String email,String area) {
+		String str="";
+		str = mm.modifyMemInfo(pw,name,tel,email,area);
+		return str;
 	}
 	
 	@RequestMapping(value = "/ceoMyPage", method = RequestMethod.GET)
@@ -310,11 +309,11 @@ public class Controller_Chun {
 		return json_ceoModifyList;
 	}
 	
-	@RequestMapping(value = "/ceoModifyInfo", method = RequestMethod.GET)
-	public ModelAndView ceoModifyInfo(String pw,String name,String tel,String email) {
-		mav = new ModelAndView();
-		mav = mm.ceoModifyInfo(pw,name,tel,email);
-		return mav;
+	@RequestMapping(value = "/ceoModifyInfo", produces = "application/json; charset=utf-8")
+	public @ResponseBody String ceoModifyInfo(String pw,String name,String tel,String email) {
+		String str="";
+		str = mm.ceoModifyInfo(pw,name,tel,email);
+		return str;
 	}
 	@RequestMapping(value = "/logout")
 	public String logout() {
@@ -461,5 +460,9 @@ public class Controller_Chun {
 		String json_reList = em.getReply(e_code, pageNum, listCount);
 		return json_reList;
 	}
-
+	@RequestMapping(value = "/briefInfo", produces = "application/json; charset=utf8")
+	public @ResponseBody String briefInfo(String e_code) {
+		String json_briefInfo = em.briefInfo(e_code);
+		return json_briefInfo;
+	}
 }

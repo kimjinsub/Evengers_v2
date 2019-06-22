@@ -112,6 +112,7 @@ public String memberTest(String testcode) {
 				mav.setViewName(view);
 				return mav;
 			} else {
+				mav.addObject("msg","암호가 일치하지 않습니다." );
 				view = "commonViews/loginFrm";
 			}
 		} else {
@@ -126,6 +127,7 @@ public String memberTest(String testcode) {
 				mav.setViewName(view);
 				return mav;
 			} else {
+				mav.addObject("msg","암호가 일치하지 않습니다." );
 				view = "commonViews/loginFrm";
 			}
 		} else {
@@ -227,22 +229,34 @@ public String memberTest(String testcode) {
 		return json_mModifyList;
 	}
 
-	public ModelAndView modifyMemInfo(String pw, String name, String tel, String email, String area) {
+	public String modifyMemInfo(String pw, String name, String tel, String email, String area) {
 		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 		String id= (String) session.getAttribute("id");
 		System.out.println(pw);
-		if(pw.length()<20) {
-			pw = pwdEncoder.encode(pw);
+		String str="";
+		if (mDao.memEmailChk(email) == 0) {
+			
+			if (pw.length() < 20) {
+				pw = pwdEncoder.encode(pw);
+				System.out.println(pw);
+				if (mDao.modifyMemInfo(id, pw, name, tel, email, area)) {
+					str = "변경 완료";
+				}
+			}
 			System.out.println(pw);
-			if (mDao.modifyMemInfo(id,pw,name,tel,email,area)) {
-			mav.setViewName("memberViews/memberMyPage");
+			if (mDao.modifyMemInfo(id, pw, name, tel, email, area)) {
+				str = "변경 완료";
+			}
+		} else {
+			System.out.println("11111111111"+mDao.memEmailSameChk(email,id));
+			System.out.println("22222222222"+email);
+			if(mDao.memEmailSameChk(email,id).equals(email)) {
+				
+			}else {
+				str = "등록된 이메일 입니다.";
 			}
 		}
-		System.out.println(pw);
-		if (mDao.modifyMemInfo(id,pw,name,tel,email,area)) {
-		mav.setViewName("memberViews/memberMyPage");
-		}
-		return mav;
+		return str;
 	}
 
 	public String mPayList() {
@@ -297,22 +311,43 @@ public String memberTest(String testcode) {
 		return json_ceoModifyList;
 	}
 
-	public ModelAndView ceoModifyInfo(String pw, String name, String tel, String email) {
+	public String ceoModifyInfo(String pw, String name, String tel, String email) {
 		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 		String id= (String) session.getAttribute("id");
 		System.out.println(pw);
-		if(pw.length()<20) {
-			pw = pwdEncoder.encode(pw);
+		String str="";
+		if (mDao.ceoEmailChk2(email)==0) {
+			if (pw.length() < 20) {
+				pw = pwdEncoder.encode(pw);
+				System.out.println(pw);
+				if (mDao.ceoModifyInfo(id, pw, name, tel, email)) {
+					str="변경 완료";
+				}
+			}
 			System.out.println(pw);
-			if (mDao.ceoModifyInfo(id,pw,name,tel,email)) {
-			mav.setViewName("ceoViews/ceoMyPage");
+			if (mDao.ceoModifyInfo(id, pw, name, tel, email)) {
+				str="변경 완료";
+			}
+		}else {
+			System.out.println("11111111111"+mDao.ceoEmailSameChk(email,id));
+			System.out.println("22222222222"+email);
+			if(mDao.ceoEmailSameChk(email,id).equals(email)) {
+				if (pw.length() < 20) {
+					pw = pwdEncoder.encode(pw);
+					System.out.println(pw);
+					if (mDao.ceoModifyInfo(id, pw, name, tel, email)) {
+						str="변경 완료";
+					}
+				}
+				System.out.println(pw);
+				if (mDao.ceoModifyInfo(id, pw, name, tel, email)) {
+					str="변경 완료";
+				}
+			}else {
+				str="등록된 이메일 입니다.";
 			}
 		}
-		System.out.println(pw);
-		if (mDao.ceoModifyInfo(id,pw,name,tel,email)) {
-		mav.setViewName("ceoViews/ceoMyPage");
-		}
-		return mav;
+		return str;
 	}
 
 	public String ceoMyPageChk(String id) {

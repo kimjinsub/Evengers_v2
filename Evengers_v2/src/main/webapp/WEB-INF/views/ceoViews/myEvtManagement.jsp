@@ -62,6 +62,7 @@
 	border-top: 30px;
 	background-color: white;
 	
+	
 }
 .e_code,.evtDel_code {
   width: 140px;
@@ -89,6 +90,14 @@
   color: #fff;
   transform: translateY(-7px);
 }
+.td{
+	width: 130px;
+}
+.td2{
+	height: auto;
+	word-break:break-all; word-wrap:break-word;
+	width: 350px;
+}
 </style>
 </head>
 <body>
@@ -97,25 +106,25 @@
 		<div class="eList">
 			<table border="1">
 				<tr>
-					<td>상품 이름</td> <td>${event.e_name}</td>
+					<td class="td">상품 이름</td> <td class="td2">${event.e_name}</td>
 				</tr>
 				<tr>
-					<td>상품 가격</td> <td>${event.e_price}</td>
+					<td class="td"> 상품 가격</td> <td class="td2">${event.e_price}</td>
 				</tr>
 				<tr>
-					<td>상품 카테고리</td><td> ${event.e_category}</td>
+					<td class="td">상품 카테고리</td><td class="td2"> ${event.e_category}</td>
 				</tr>
 				<tr>
-					<td>상품 예약가능일</td><td> ${event.e_reservedate}</td>
+					<td class="td">상품 예약가능일</td><td class="td2"> ${event.e_reservedate}</td>
 				</tr>
 				<tr>
-					<td>상품 환불가능일</td><td> ${event.e_refunddate}</td>
+					<td class="td">상품 환불가능일</td><td class="td2"> ${event.e_refunddate}</td>
 				</tr>
 				<tr>
-					<td style="height: 100px;">상품 설명</td><td style="height: 100px;">${event.e_contents}</td>
+					<td class="td">상품 설명</td><td class="td2">${event.e_contents}</td>
 				</tr>
 				<tr>
-					<td >상품 사진</td><td> <img src="upload/thumbnail/${event.e_sysfilename}" / width="250"
+					<td class="td">상품 사진</td><td class="td2"> <img src="upload/thumbnail/${event.e_sysfilename}" / width="250"
 				height="250"></td>
 				</tr>
 				</table>
@@ -160,8 +169,14 @@ $('.evtDel_code').each(function(){
 			data:{e_code:e_code}, 
 			dataType:'text', 
 			success:function(data){
-				alert(data);
-				location.href ="javascript:Ajax_forward('myEvtManagement')";
+				swal({
+					title: "Success!",
+					text:  data,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "javascript:Ajax_forward('myEvtManagement')";
+				});
 			},error:function(error){
 				console.log(error);
 			}
@@ -183,4 +198,5 @@ $(document).keydown(function(event) {
 	}
 });
 </script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>

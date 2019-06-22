@@ -35,6 +35,7 @@ body {
 
 </head>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="find">
 										
 		<div class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="idFind" style="width: 40%;float: left;display:inline;position: relative;top:15px;left: 7px">아이디 찾기</div>

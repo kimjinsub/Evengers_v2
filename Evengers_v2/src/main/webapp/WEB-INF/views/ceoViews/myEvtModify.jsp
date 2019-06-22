@@ -340,7 +340,11 @@ input.option-add {
 			contentType:false,
 			dataType:"text",
 			success:function(data){
-				alert(data);
+				swal({
+		            title: "Success!",
+		             text:  "수정 완료",
+		             icon: "success",
+				  });
 				console.log(data);
 				location.href="javascript:Ajax_forward('myEvtManagement')";
 			},
@@ -353,4 +357,6 @@ input.option-add {
 	}
 	
 </script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>

@@ -21,12 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.evengers_v2.bean.Ceo;
 import com.event.evengers_v2.bean.Choice;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
 import com.event.evengers_v2.bean.Review;
 import com.event.evengers_v2.dao.EventDao;
+import com.event.evengers_v2.dao.MemberDao;
 import com.event.evengers_v2.userClass.Paging;
 import com.event.evengers_v2.userClass.UploadFile;
 import com.google.gson.Gson;
@@ -36,6 +38,8 @@ public class EventMM {
 	ModelAndView mav;
 	@Autowired
 	EventDao eDao;
+	@Autowired
+	MemberDao mDao;
 	@Autowired
 	UploadFile file;
 	@Autowired
@@ -592,7 +596,7 @@ public class EventMM {
 		System.out.println("작동함");
 		System.out.println(e);
 		}
-		 HashMap<String, Object> result = new HashMap<>();
+		HashMap<String, Object> result = new HashMap<>();
 	        result.put("evtList", e);
 	        result.put("paging",e);
 	        if(e.size()==0) {result.put("msg", "해당 검색에 대한 이벤트가 없습니다");}
@@ -609,5 +613,14 @@ public class EventMM {
 			str = "이벤트 삭제 안됨.";
 		}
 		return str;
+	}
+	public String briefInfo(String e_code) {
+		Event e=eDao.getEvtInfo(e_code);
+		String c_id=e.getC_id();
+		Ceo c=mDao.ceoInfo(c_id);
+		HashMap <String,Object> result=new HashMap<String, Object>();
+		result.put("event", e);
+		result.put("ceo", c);
+		return new Gson().toJson(result);
 	}
 }

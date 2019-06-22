@@ -108,7 +108,6 @@ supports (-ms-ime-align: auto ) { .form-label-group >label { display:none;
 </style>
 </head>
 <body>
-
 	<div class="container-fluid">
 		<div class="row no-gutter">
 			<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -151,4 +150,17 @@ supports (-ms-ime-align: auto ) { .form-label-group >label { display:none;
 		</div>
 	</div>
 </body>
+<script >
+$(document).ready(function(){
+	console.log("1111");
+	console.log("${msg}");
+	if("${msg}"!=""){
+		swal({
+			title: "${msg}",
+			icon: "warning",
+		})
+	}
+});
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>

@@ -9,6 +9,9 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
+strong{
+	color:blue;
+}
 img {
 	width: 300px;
 	height: auto;
@@ -90,17 +93,17 @@ $(document).ready(function() {
 				if(result==="환불중"){
 					$('.showBtn').hide();
 					$('div[id="' + ep_code + '"]').hide();
-					$('div[name="' + ep_code + '"]').append(result);
+					$('div[name="' + ep_code + '"]').append("<strong><"+result+"입니다.></strong>");
 				} 
 				if(result==="환불거부"){
 					$('.showBtn').hide();
 					$('div[id="' + ep_code + '"]').hide();
-					$('div[name="' + ep_code + '"]').append(result);
+					$('div[name="' + ep_code + '"]').append("<strong>< "+result+"가 되었습니다. ></strong><br>");
 				}
 				if(result==="환불완료"){//환불 완료
 					$('.showBtn').hide();
 					$('div[id="' + ep_code + '"]').hide();
-					$('div[name="' + ep_code + '"]').append(result);
+					$('div[name="' + ep_code + '"]').append("<strong>< "+result+"가 되었습니다. ></strong>");
 				}
 			},
 			error : function(error) {
@@ -122,7 +125,11 @@ $(document).ready(function() {
 				dataType : "text",
 				success : function(result) {
 					console.log(result);
-					alert(result);
+					swal({
+			            title: "Success!",
+			             text:  "환불 요청 성공",
+			             icon: "success",
+					  });
 					location.href = "javascript:Ajax_forward('payList')";
 					
 				},
@@ -134,4 +141,6 @@ $(document).ready(function() {
 	})
 
 </script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </html>

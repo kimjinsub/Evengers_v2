@@ -95,4 +95,11 @@ public interface MemberDao {
 	
 	int ceoEmailChk(String m_email);
 
+	int ceoEmailChk2(@Param("c_email")String email);
+
+	int memEmailChk(@Param("m_email")String email);
+
+	String memEmailSameChk(@Param("m_email")String email, @Param("m_id")String id);
+
+	String ceoEmailSameChk(@Param("c_email")String email, @Param("c_id")String id);
 }

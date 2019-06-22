@@ -117,6 +117,7 @@
 	<div id="mModifyMain"></div>
 </div>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
 	$("#mModifyMain").hide();
@@ -133,11 +134,20 @@
 			dataType : "text",
 			success : function(data) {
 				console.log(data);
-				alert(data);
 				if (data == "비밀번호가 맞았습니다.") {
+					swal({
+			            title: "Success!",
+			             text:  data,
+			             icon: "success",
+					  });
 					$('#mInfoPwCheck').hide();
 					$('#mModifyMain').show();
 				} else {
+					swal({
+			            title: "Warning!",
+			             text:  data,
+			             icon: "warning",
+					  });
 					$("#mModifyMain").hide();
 					$('#mInfoPwCheck').value = "";
 				}
@@ -275,9 +285,24 @@
 		$.ajax({
 			url : "modifyMemInfo",
 			data : {pw:pw,name:name,tel:tel,email:email,area:area},
-			dataType : "html",
+			dataType : "text",
 			success : function(data) {
-				location.href = "./memberMyPage";
+				if(data=="변경 완료"){
+					swal({
+						title: "Success!",
+						text:  data,
+						icon: "success",
+					})
+					. then (function () { 
+						window.location.href = "./memberMyPage" ;
+					});
+				}else{
+					swal({
+			            title: "Warning!",
+			             text:  data,
+			             icon: "warning",
+					  });
+				}
 			},
 			error : function(error) {
 				console.log(error);
@@ -290,8 +315,14 @@
 			dataType : "text",
 			success : function(data) {
 				console.log(data)
-				alert(data);
-				location.href = "./";
+						swal({
+						title: "Success!",
+						text:  data,
+						icon: "success",
+					})
+					. then (function () { 
+						window.location.href = "./";
+					});
 			},
 			error : function(error) {
 				console.log(error);

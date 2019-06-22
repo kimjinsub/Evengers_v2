@@ -13,25 +13,6 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <style>
-#frm {
-	position:fixed;
-	top: 30px;
-	left: 35%;
-	width: 750px;
-	height: 650px;
-	padding: 2px;
-	margin-left: -150px;
-	float:left;
-	z-index: 101;
-	display: none;
-	overflow:scroll;
-	background-color: white;
-}
-
-
-#frm.open {
-	display: block;
-}
 .jumbotron {
     background-image: url("img/main.png");
     background-size: cover;
@@ -55,6 +36,15 @@
 	font-size: 30px;
 	text-align: center; margin: auto;;
 	margin-bottom: 50px;
+}
+#brief{
+	
+	background-color: white;
+	width: 300px;
+	border: 1px solid black;
+	position: fixed;
+	height: auto;
+	word-break:break-all; word-wrap:break-word;
 }
 </style>
 </head>
@@ -83,7 +73,6 @@
 		</div>
 	</div>
 </nav>
-
 <!-- Page Content -->
 <div class="container">
 	<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0"
@@ -98,10 +87,12 @@
 </div>
 <div class="col-lg-2 col-md-3 col-6">
 </div>
+<div id="brief"></div>
 <div id="pagination"></div>
-<div id="frm"></div>
+
 </body>
 <script>
+$('#brief').hide();
 $('#evtList2').hide();
 $(document).ready(function(){
 	getCategories();
@@ -130,9 +121,9 @@ function searchEvt(){
 			$('#evtList').hide();
 			$("#title").html(evtSearch+"의 검색 결과");
 			for(var i in result){
-				str+='<div class="col-lg-3 col-md-4 col-6">'
+				str+='<div class="col-lg-3 col-md-4 col-6" onmouseenter="briefInfo(this.id)"onmouseout="briefInfoOut(this.id)" id="'+result[i].e_code+'">'
 					+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 
-					+'<img class="img-fluid img-thumbnail"'
+					+'<img class="img-fluid img-thumbnail" '
 					+'src="upload/thumbnail/'+result[i].e_sysfilename+'">'
 					+'</a></div>'
 			}
@@ -168,7 +159,9 @@ function AjaxEvtList(pageNum,listCount){
 			$('#evtList').show();
 			$('#evtList2').hide();
 			for(var i in result){
-				str+='<div class="col-lg-3 col-md-4 col-6">'
+				str+='<div class="col-lg-3 col-md-4 col-6" '
+					+'onmouseenter="briefInfo(this.id)"' 
+					+'onmouseout="briefInfoOut(this.id)" id="'+result[i].e_code+'">'
 					+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 
 					+'<img class="img-fluid img-thumbnail"'
 					+'src="upload/thumbnail/'+result[i].e_sysfilename+'">'
@@ -185,6 +178,7 @@ function AjaxEvtList(pageNum,listCount){
 		}	
 	})
 };
+
 function getCategories(){
 	$.ajax({
 		url:"getCategoryList",
@@ -206,18 +200,40 @@ function getCategories(){
 		}
 	})
 };
-var $layerWindows = $('#frm'); //jquery 객체는 변수에 $ 붙혀서 가독성 좋게!
-$layerWindows.find('#detail-shadow').on('mousedown',function(event){
-console.log(event);
-$layerWindows.removeClass('open');
-});
-$(document).keydown(function(event){
-	console.log(event);
-	if(event.keyCode!=27) return;
-	if($layerWindows.hasClass('open')){ //open이라는 클래스를 가지고 있는지 hasClass로 따짐.
-		$layerWindows.removeClass('open');
-	}
-});
-
+ function briefInfo(e_code){
+	console.log(e_code);
+		
+	$.ajax({
+		url:"briefInfo",
+		data:{e_code:e_code},
+		dataType:"json",
+		success:function(data){
+			console.log(data);
+			var e=data['event'];
+			var c=data['ceo'];
+			console.log("e",e);
+			console.log("c",c);
+			str="";
+			str+="<div>"
+			+"이벤트명:"+e.e_name
+			+"<br>사업자명:"+c.c_name
+			+"<br>가격:"+e.e_price
+			+"<br>신청 가능일:이벤트 당일  "+e.e_reservedate+"일  전까지"
+			+"<br>환불 가능일:이벤트 당일"+e.e_refunddate+"일 전까지"
+			+"<br>상품 설명:"+e.e_contents
+			+"</div>";
+			$('#brief').html(str);  
+			$('#brief').show();  
+		},error:function(error){
+			console.log(error);
+		}
+	})//ajax
+	document.addEventListener("mousemove",function(e){
+		$("#brief").css({"top":e.screenY-50,"left":e.screenX-50});
+	})
+} 
+ function briefInfoOut(e_code){
+	 $('#brief').hide();
+} 
 </script>
 </html>

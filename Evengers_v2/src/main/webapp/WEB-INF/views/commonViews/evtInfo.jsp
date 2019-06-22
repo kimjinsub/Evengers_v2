@@ -85,9 +85,27 @@ a.button2:hover {
 #ebInfoZone.show {
 	display: block;
 	position: relative;
+}
+#ebInfoZone {
+	position: absolute;
+	top: 30%;
+	left: 20%;
+	width: 800px;
+	height: 600px;
+	margin: -150px 0 0 -194px;
+	padding: 28px 28px 0 28px;
+	border: 2px solid #555;
+	background: #fff;
+	font-size: 12px;
+	z-index: 200;
+	color: #767676;
+	line-height: normal;
+	white-space: normal;
+	overflow: scroll;
+	position: fixed;
+	font-size: 24px;
 	
 }
-
 #impossible {
 	color: red;
 }
@@ -173,24 +191,7 @@ a.button2:hover {
 	z-index: 100
 }
 
-#ebInfoZone {
-	position: absolute;
-	top: 30%;
-	left: 20%;
-	width: 750px;
-	height: 600px;
-	margin: -150px 0 0 -194px;
-	padding: 28px 28px 0 28px;
-	border: 2px solid #555;
-	background: #fff;
-	font-size: 12px;
-	z-index: 200;
-	color: #767676;
-	line-height: normal;
-	white-space: normal;
-	overflow: scroll;
-	position: fixed;
-}
+
 
 #articleView_layer {
 	display: none;
@@ -255,6 +256,16 @@ margin: auto; height:50px; text-align: center; position: absolute;
 	text-align: center; margin: auto;;
 	margin-bottom: 50px;
 }
+#brief{
+	
+	background-color: white;
+	width: 300px;
+	height: auto;
+	word-break:break-all; word-wrap:break-word;
+	border: 1px solid black;
+	position: fixed;
+	z-index: 1;
+}
 </style>
 </head>
 <body>
@@ -274,7 +285,7 @@ margin: auto; height:50px; text-align: center; position: absolute;
 				</div>
 			</div>
 			<div class="col-lg-9">
-			
+			<div id="brief"></div>
 			<div id="eMain">
 				<div class="card mt-4">
 					<!-- 썸네일 사진 -->
@@ -378,16 +389,19 @@ margin: auto; height:50px; text-align: center; position: absolute;
 					<div align="center" id="rPagination"> </div>
 					
 				</div>
+				
 			</div>
 			<div align="center" id="ePagination"> </div>
 		  </div>
 		</div>
 	</div>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 function memberChat(receiver){
 	window.open('chat?receiver='+receiver,"_blank","width=400,height=700;");
 }
+	$('#brief').hide();
 	$('.hideDate').hide();
 	$(document).ready(function(){
 		getCategories();
@@ -476,7 +490,11 @@ function memberChat(receiver){
 	};
 	function getEvtBuyInfo(eb_code) {
 		if (eb_code == "구매실패") {
-			alert("구매에 실패하였습니다");
+			swal({
+	            title: "Warning!",
+	             text:  "구매에 실패하였습니다",
+	             icon: "warning",
+			  });
 		} else {
 			$.ajax({
 				method : "post",
@@ -486,7 +504,11 @@ function memberChat(receiver){
 				},
 				dataType : "html",
 				success : function(result) {
-					alert("구매에 성공하였습니다");
+					swal({
+			            title: "Success!",
+			             text: "구매에 성공하였습니다",
+			             icon: "success",
+					  });
 					$('#articleView_layer2').addClass('open');
 					$("#ebInfoZone").html(result);
 					$("#ebInfoZone").addClass("show");
@@ -579,8 +601,25 @@ function memberChat(receiver){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				alert(result);
-				location.href = "evtInfo?e_code=" + e_code;
+				if(result=="이미 등록된 리뷰가 있습니다."){
+					swal({
+						title: "Warning!",
+						text:  result,
+						icon: "warning",
+					})
+					. then (function () { 
+						window.location.href = "evtInfo?e_code=" + e_code;
+					});
+				}else{
+					swal({
+						title: "Success!",
+						text:  result,
+						icon: "success",
+					})
+					. then (function () { 
+						window.location.href = "evtInfo?e_code=" + e_code;
+					});
+				}
 			},
 			error : function(error) {
 				console.log(error);
@@ -617,7 +656,7 @@ function memberChat(receiver){
 				+ myReviewContents + "</textarea></td><td>"
 		str += "<td><input class='myButton'type='button' value='수정하기'"
 		str += "onclick='reviewModifyBtn()'"
-		str += "style='width: 80px; height: 50px'></td></tr></table>"
+		str += "style='width: 100px; height: 50px'></td></tr></table>"
 		$("#hiddenFrom").append(str);
 		function see() {
 			$("#seeShow").hide();
@@ -639,8 +678,14 @@ function memberChat(receiver){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				alert(result);
-				location.href = "evtInfo?e_code=" + e_code;
+				swal({
+					title: "Success!",
+					text:  result,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "evtInfo?e_code=" + e_code;
+				});
 			},
 			error : function(error) {
 				console.log(error);
@@ -659,8 +704,14 @@ function memberChat(receiver){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				alert(result);
-				location.href = "evtInfo?e_code=" + e_code;
+				swal({
+					title: "Success!",
+					text:  result,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "evtInfo?e_code=" + e_code;
+				});
 			},
 			error : function(error) {
 				console.log(error);
@@ -679,8 +730,16 @@ function memberChat(receiver){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				alert(result);
-				location.href = "evtInfo?e_code=" + e_code;
+
+				swal({
+					title: "Success!",
+					text:  result,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "evtInfo?e_code=" + e_code;
+				});
+
 			},
 			error : function(error) {
 				console.log(error);
@@ -697,116 +756,180 @@ function memberChat(receiver){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				alert(result);
-				location.href = "evtInfo?e_code=" + e_code;
+				swal({
+					title: "Success!",
+					text:  result,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "evtInfo?e_code=" + e_code;
+				});
 			},
 			error : function(error) {
 				console.log(error);
 			}
 		})
 	}
-	
-	function getCategories(){
+
+	function getCategories() {
 		$.ajax({
-			url:"getCategoryList",
-			dataType:"json",
-			success:function(result){
-				var str="";
-				for(var i in result){
-					str+=''
-						+'<a href="#"class="list-group-item" id="'+result[i].ec_name
-						+'" onclick="getEvtList(this.id,1,12)" style="text-decoration: none;">'
-						+result[i].ec_name+'</a>';
+			url : "getCategoryList",
+			dataType : "json",
+			success : function(result) {
+			var str = "";
+			for ( var i in result) {
+				str += ''
+				+ '<a href="#"class="list-group-item" id="'
+				+ result[i].ec_name
+				+ '" onclick="getEvtList(this.id,1,12)" style="text-decoration: none;">'
+				+ result[i].ec_name + '</a>';
 				}
 				$("#category").html(str);
-			},
-			error:function(error){
-				console.log(error);
+				},
+				error : function(error) {
+					console.log(error);
 			}
 		})
 	};
-	function getEvtList(category,pageNum,listCount){
-		ec_name=category;
-		AjaxEvtList(pageNum,listCount);
+	function getEvtList(category, pageNum, listCount) {
+		ec_name = category;
+		AjaxEvtList(pageNum, listCount);
 	}
-	function AjaxEvtList(pageNum,listCount){
-		 $.ajax({
-			url:"getEvtList",
-			data:{ec_name:ec_name,pageNum:pageNum,listCount:listCount},
-			dataType:"json",
-			success:function(data){
-				var result=data['evtList'];
-				var paging=data['paging'];
-				var msg=data['msg'];
-				var str="";
-				console.log(result);
-				for(var i in result){
-					str+='<div class="col-lg-8 col-md-8 col-8">'
-						+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 
-						+'<img class="img-fluid img-thumbnail"'
-						+'src="upload/thumbnail/'+result[i].e_sysfilename+'">'
-						+'</a></div><br>'
-				}
-				$("#eMain").html(str);
-				$("#ePagination").html(paging);
-				if(data['msg']!=null){
-					$("#eMain").html(data['msg']);
-				}
-			},
-			error:function(error){
-				console.log(error);
-			}
-		}) 
+	function AjaxEvtList(pageNum, listCount) {
+		$
+				.ajax({
+					url : "getEvtList",
+					data : {
+						ec_name : ec_name,
+						pageNum : pageNum,
+						listCount : listCount
+					},
+					dataType : "json",
+					success : function(data) {
+						var result = data['evtList'];
+						var paging = data['paging'];
+						var msg = data['msg'];
+						var str = "";
+						console.log(result);
+						for ( var i in result) {
+							str += '<div class="col-lg-8 col-md-8 col-8" onmouseenter="briefInfo(this.id)"onmouseout="briefInfoOut(this.id)" id="'
+									+ result[i].e_code
+									+ '">'
+									+ '<a href="evtInfo?e_code='
+									+ result[i].e_code
+									+ '" class="d-block mb-4 h-100">'
+									+ '<img class="img-fluid img-thumbnail"'
+						+'src="upload/thumbnail/'+result[i].e_sysfilename+'"style=" width: auto; height: auto;max-width: 550px;max-height: 550px;">'
+									+ '</a></div><br>'
+						}
+
+						$("#eMain").html(str);
+						$("#ePagination").html(paging);
+						if (data['msg'] != null) {
+							$("#eMain").html(data['msg']);
+						}
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				})
 	};
-	 
-	function getReply(pageNum,listCount){
-		var e_code= "${eb.e_code}";
-		var id= "${id}";
+
+	function getReply(pageNum, listCount) {
+		var e_code = "${eb.e_code}";
+		var id = "${id}";
+		$
+				.ajax({
+					url : "getReply",
+					data : {
+						e_code : e_code,
+						listCount : listCount,
+						pageNum : pageNum
+					},
+					dataType : "json",
+					success : function(data) {
+						var result = data['rList'];
+						var paging = data['paging'];
+						console.log("result: " + result);
+						console.log("paging: " + paging);
+						var str = "";
+						str += "<table>";
+						for ( var i in result) {
+							str += "<tr><td align='center' width='100'>"
+									+ result[i].m_id + "</td>"
+									+ "<td align='center' width='200'>"
+									+ result[i].re_contents + "</td>";
+							if (result[i].re_stars == 5) {
+								str += "<td align='center' width='200'>★★★★★</td>";
+							}
+							if (result[i].re_stars == 4) {
+								str += "<td align='center' width='200'>★★★★</td>";
+							}
+							if (result[i].re_stars == 3) {
+								str += "<td align='center' width='200'>★★★</td>";
+							}
+							if (result[i].re_stars == 2) {
+								str += "<td align='center' width='200'>★★</td>";
+							}
+							if (result[i].re_stars == 1) {
+								str += "<td align='center' width='200'>★</td>";
+							}
+							str += "<td align='center' width='200'>"
+									+ result[i].re_writedate + "</td>";
+							if (id == result[i].m_id) {
+								str += "<td><button class='myButton'onclick='reviewModify()'>수정</button></td>"
+										+ "<td><button class='myButton'onclick='reviewDelete()'>삭제</button></td>"
+										+ "<input type='hidden' id='myReviewStar'value='"+result[i].re_stars+"'>"
+										+ "<input type='hidden' id='myReviewContents'value='"+result[i].re_contents+"'>";
+							}
+							str += "</tr>";
+						}
+						str += "</table>";
+						$("#rList").html(str);
+						$("#rPagination").html(paging);
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				})
+	}
+	function briefInfo(e_code) {
+		console.log(e_code);
+
 		$.ajax({
-			url:"getReply",
-			data:{e_code:e_code,listCount:listCount,pageNum:pageNum},
-			dataType:"json",
-			success:function(data){
-				var result=data['rList'];
-				var paging=data['paging'];
-				console.log("result: "+result);
-				console.log("paging: "+paging);
-				var str="";
-				str+="<table>";
-				for(var i in result){
-					str+="<tr><td align='center' width='100'>"+result[i].m_id+"</td>"
-					+"<td align='center' width='200'>"+result[i].re_contents+"</td>";
-					if(result[i].re_stars==5){
-						str+="<td align='center' width='200'>★★★★★</td>";
-					}
-					if(result[i].re_stars==4){
-						str+="<td align='center' width='200'>★★★★</td>";
-					}
-					if(result[i].re_stars==3){
-						str+="<td align='center' width='200'>★★★</td>";
-					}
-					if(result[i].re_stars==2){
-						str+="<td align='center' width='200'>★★</td>";
-					}
-					if(result[i].re_stars==1){
-						str+="<td align='center' width='200'>★</td>";
-					}
-					str+="<td align='center' width='200'>"+result[i].re_writedate+"</td>";
-					if(id==result[i].m_id){
-						str+="<td><button class='myButton'onclick='reviewModify()'>수정</button></td>"
-						+"<td><button class='myButton'onclick='reviewDelete()'>삭제</button></td>"
-						+"<input type='hidden' id='myReviewStar'value='"+result[i].re_stars+"'>"
-						+"<input type='hidden' id='myReviewContents'value='"+result[i].re_contents+"'>";
-					} 
-					str+="</tr>";
-				}
-				str+="</table>";
-				$("#rList").html(str);
-				$("#rPagination").html(paging);
-			},error:function(error){
+			url : "briefInfo",
+			data : {
+				e_code : e_code
+			},
+			dataType : "json",
+			success : function(data) {
+				console.log(data);
+				var e = data['event'];
+				var c = data['ceo'];
+				console.log("e", e);
+				console.log("c", c);
+				str = "";
+				str += "<div>" + "이벤트명:" + e.e_name + "<br>사업자명:" + c.c_name
+						+ "<br>가격:" + e.e_price + "<br>신청 가능일:이벤트 당일  "
+						+ e.e_reservedate + "일  전까지" + "<br>환불 가능일:이벤트 당일"
+						+ e.e_refunddate + "일 전까지" + "<br>상품 설명:"
+						+ e.e_contents + "</div>";
+				$('#brief').html(str);
+				$('#brief').show();
+			},
+			error : function(error) {
 				console.log(error);
 			}
+		})//ajax
+		document.addEventListener("mousemove", function(e) {
+			$("#brief").css({
+				"top" : e.screenY - 50,
+				"left" : e.screenX - 50
+			});
 		})
+	}
+	function briefInfoOut(e_code) {
+		$('#brief').hide();
 	}
 </script>
 
