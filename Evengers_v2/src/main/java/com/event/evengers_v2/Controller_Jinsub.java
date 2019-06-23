@@ -225,4 +225,8 @@ public class Controller_Jinsub {
 	public String manageDeptPosition() {
 		return "ceoViews/manageDeptPosition";
 	}
+	@RequestMapping(value = "/checkDoubleChat",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String checkDoubleChat() {
+		return mm.checkDoubleChat();
+	}
 }

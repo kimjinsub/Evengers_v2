@@ -399,7 +399,23 @@ margin: auto; height:50px; text-align: center; position: absolute;
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 function memberChat(receiver){
-	window.open('chat?receiver='+receiver,"_blank","width=400,height=700;");
+	$.ajax({
+		url:"checkDoubleChat",
+		dataType:"text",
+		success:function(result){
+			if(result=="no"){
+				window.open('chat?receiver='+receiver,"_blank","width=400,height=700;");
+			}else{
+				swal({
+		        	title: result,
+		        	icon: "warning",
+				});
+			}
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
 }
 	$('#brief').hide();
 	$('.hideDate').hide();

@@ -446,4 +446,18 @@ public String memberTest(String testcode) {
 		}else msg="<p id='possible'>사용가능한 메일주소 입니다</p>";
 		return msg;
 	}
+
+	public String checkDoubleChat() {
+		String str="";
+		int result = mDao.chatInCheck(session.getAttribute("id").toString());
+		switch(result) {
+			case 1: 
+				str="이미 채팅중입니다.\n이전 채팅을 종료하고 다시 시도해주세요.";
+				break;
+			case 0: 
+				str="no";
+				break;
+		}
+		return str;
+	}
 }

@@ -179,9 +179,26 @@
 
 <div id="detail"></div>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 function ceoChat(receiver){
-	window.open('chat',"_blank","width=400,height=700;");
+	$.ajax({
+		url:"checkDoubleChat",
+		dataType:"text",
+		success:function(result){
+			if(result=="no"){
+				window.open('chat',"_blank","width=400,height=700;");
+			}else{
+				swal({
+		        	title: result,
+		        	icon: "warning",
+				});
+			}
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
 }
 $(document).ready(function(){
 	console.log("getSessionId:",getSessionId());
@@ -253,7 +270,7 @@ console.log(event);
 $layerWindows.removeClass('open');
 });
 $(document).keydown(function(event){
-	console.log(event);
+	//console.log(event);
 	if(event.keyCode!=27) return;
 	if($layerWindows.hasClass('open')){
 		$layerWindows.removeClass('open');
