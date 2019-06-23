@@ -217,18 +217,6 @@ public class Controller_Jinsub {
 		mav=mm.chat(receiver);
 		return mav;
 	}
-	@RequestMapping(value = "/getWaitingRoom",produces = "application/json;charset=utf-8;")
-	public @ResponseBody String getWaitingRoom() {
-		return mm.getWaitingRoom();
-	}
-	@RequestMapping(value = "/startChat")
-	public String startChat() {
-		return "waitingRoom";
-	}
-	@RequestMapping(value = "/boot")
-	public String boot() {
-		return "boot";
-	}
 	@RequestMapping(value = "/datePicker",produces = "application/json;charset=utf-8;")
 	public @ResponseBody String datePicker(Date date,String type) {
 		return new DatePicker().datePicker(date,type);

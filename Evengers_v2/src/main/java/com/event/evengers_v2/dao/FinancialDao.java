@@ -34,5 +34,7 @@ public interface FinancialDao {
 
 	ArrayList<Double> getEstPenalty(@Param("refundedEstp_Code") String refundedEstp_Code,@Param("choice")String choice);
 
+	int getTotalCount(@Param("choice")String choice, @Param("c_id")String c_id);
+
 	
 }

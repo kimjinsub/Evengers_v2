@@ -137,20 +137,18 @@ public class ScheduleMM {
 			}
 		}*/
 		//mybatis 로 foreach문 써서 dday와 payday로 정렬하기
-		if(e_codes.size()==0) {
-			return null;
-		}else {
-			ArrayList<String> ep_codes=new ArrayList<>();
-			ep_codes=payDao.ceoEvtPayList2(e_codes);
-			
-			//환불된 것들 빼버리고 출력하기
-			ArrayList<String> refundedEp_Codes=new ArrayList<>();
-			refundedEp_Codes=payDao.isRefundedEp(ep_codes);
-			for(String refundedEp_Code:refundedEp_Codes) {
-				ep_codes.remove(refundedEp_Code);
-			}
-			return ep_codes; 
+		if(e_codes.size()==0) {return null;}
+		ArrayList<String> ep_codes=new ArrayList<>();
+		ep_codes=payDao.ceoEvtPayList2(e_codes);
+		
+		//환불된 것들 빼버리고 출력하기
+		if(ep_codes.size()==0) {return null;}
+		ArrayList<String> refundedEp_Codes=new ArrayList<>();
+		refundedEp_Codes=payDao.isRefundedEp(ep_codes);
+		for(String refundedEp_Code:refundedEp_Codes) {
+			ep_codes.remove(refundedEp_Code);
 		}
+		return ep_codes; 
 	}
 
 	public String insertEvtSchedule(EventSchedule es) {
@@ -259,8 +257,9 @@ public class ScheduleMM {
 		
 		//구한 정보들로 달력 출력하기
 		StringBuilder sb= new StringBuilder();
-		sb.append("<h2>"+int_year+"년"+int_month+"월</h2>");
-		sb.append("<table border='1' id='calendar_table'>");
+		//sb.append("<h2>"+int_year+"년"+int_month+"월</h2>");
+		sb.append("<table border='1' id='calendar_table'>"
+				+ "<tr><th colspan=7><h2>"+int_year+"년"+int_month+"월 ["+pDao.getDeptInfo(dept_code).getDept_name()+"]</th><tr>");
 		sb.append("<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>");
 		sb.append("<tr>");
 
@@ -294,7 +293,9 @@ public class ScheduleMM {
 			if(esList.size()>0) {
 				sb.append("<td id='"+calDate+"'>"+i+"<br/>"
 						+ "<a href='javascript:Ajax_showScheduleToday("+json_esList+","+calDate+")' "
-						+ "id='esCount'>"+esList.size()+"건</a></td>");
+						+ "id='esCount' "
+						+ "style='background-color:coral;' "
+						+ ">"+esList.size()+"건</a></td>");
 			}else {
 				sb.append("<td id='"+calDate+"'>"+i+"</td>");
 			}

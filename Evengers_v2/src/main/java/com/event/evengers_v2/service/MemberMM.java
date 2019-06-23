@@ -418,27 +418,13 @@ public String memberTest(String testcode) {
 		mav=new ModelAndView();
 		String sender = session.getAttribute("id").toString();
 		mav.addObject("sender", sender);
-		mav.addObject("receiver", receiver);
-		if(mDao.memberDoubleChk(receiver)==1) {//sender:ceo -> receiver:member
-			mav.addObject("c_id", sender);
-			mav.setViewName("ceoChat");
-			return mav;
-		}else {//sender:member -> receiver:ceo
-			mav.addObject("m_id", sender);
-			mav.setViewName("memberChat");
-			return mav;
+		if(mDao.memberDoubleChk(sender)==1) {
+			mav.setViewName("memberViews/memberChat");
+			mav.addObject("receiver", receiver);
+		}else {
+			mav.setViewName("ceoViews/ceoChat");
 		}
-	}
-
-	public String getWaitingRoom() {
-		String c_id = session.getAttribute("id").toString();
-		ArrayList<String> wrList = mDao.getWaitingRoom(c_id);
-		StringBuilder sb= new StringBuilder();
-		sb.append("<tr><th>MEMBER ID</th></tr>");
-		for(String m_id:wrList) {
-			sb.append("<tr><td onclick='openChatWindow(\""+m_id+"\")'>"+m_id+"</td></tr>");
-		}
-		return sb.toString();
+		return mav;
 	}
 
 	public String memberEmailChk(String email, String email1) {

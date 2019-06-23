@@ -54,4 +54,7 @@
 	<select id="getEstPenalty" resultType="Double">
 		SELECT ESTR_PENALTY FROM ESTP,ESTR WHERE ESTP.ESTP_CODE=#{refundedEstp_Code} AND ESTR_REFUNDDATE LIKE CONCAT(#{choice},'%')
 	</select>
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM CAL WHERE CAL_RECEIPTDATE LIKE CONCAT(#{choice},'%') AND C_ID=#{c_id} 
+	</select>
 </mapper>

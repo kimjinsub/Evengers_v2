@@ -23,7 +23,9 @@ public class DatePicker {
 		SimpleDateFormat yyyyFrm=new SimpleDateFormat("yyyy");
 		int yyyy=0;
 		yyyy=Integer.parseInt(yyyyFrm.format(date));
-		sb.append("<select id='yyyy'>");
+		sb.append("<select id='yyyy' style='width:75px;' "
+				+ "aria-controls=\"dataTable\" "
+				+ "class=\"custom-select custom-select-sm form-control form-control-sm\">");
 		for(int i=yyyy-10;i<=yyyy+10;i++) {
 			if(i==yyyy) {
 				sb.append("<option value="+i+" selected='selected'>"+i+"</option>");
@@ -39,7 +41,9 @@ public class DatePicker {
 		SimpleDateFormat MMFrm=new SimpleDateFormat("MM");
 		int MM=0;
 		MM=Integer.parseInt(MMFrm.format(date));
-		sb.append("<select id='MM'>");
+		sb.append("<select id='MM' style='width:60px;' "
+				+ "aria-controls=\"dataTable\" "
+				+ "class=\"custom-select custom-select-sm form-control form-control-sm\">");
 		for(int i=1;i<=12;i++) {
 			if(i==MM) {
 				sb.append("<option value="+i+" selected='selected'>"+i+"</option>");
@@ -58,7 +62,9 @@ public class DatePicker {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		int maxDay=c.getActualMaximum(Calendar.DAY_OF_MONTH);
-		sb.append("<select id='dd'>");
+		sb.append("<select id='dd' style='width:60px;' "
+				+ "aria-controls=\"dataTable\" "
+				+ "class=\"custom-select custom-select-sm form-control form-control-sm\">");
 		for(int i=1;i<=maxDay;i++) {
 			if(i==dd) {
 				sb.append("<option value="+i+" selected='selected'>"+i+"</option>");
@@ -74,7 +80,9 @@ public class DatePicker {
 		SimpleDateFormat hhFrm=new SimpleDateFormat("hh");
 		int hh=0;
 		hh=Integer.parseInt(hhFrm.format(date));
-		sb.append("<select id='hh'>");
+		sb.append("<select id='hh' style='width:60px;' "
+				+ "aria-controls=\"dataTable\" "
+				+ "class=\"custom-select custom-select-sm form-control form-control-sm\">");
 		for(int i=00;i<=23;i++) {
 			if(i==hh) {
 				sb.append("<option value="+i+" selected='selected'>"+i+"</option>");
@@ -91,7 +99,9 @@ public class DatePicker {
 		int mm=0;
 		mm=Integer.parseInt(mmFrm.format(date));
 		mm=(mm/10)*10;
-		sb.append("<select id='mm'>");
+		sb.append("<select id='mm' style='width:60px;' "
+				+ "aria-controls=\"dataTable\" "
+				+ "class=\"custom-select custom-select-sm form-control form-control-sm\">");
 		for(int i=00;i<=50;i+=10) {
 			if(i==mm) {
 				sb.append("<option value="+i+" selected='selected'>"+i+"</option>");

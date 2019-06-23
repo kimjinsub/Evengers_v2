@@ -101,8 +101,12 @@ public class FinancialMM {
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
 		choice = format.format(choicedate);
 		calList = fDao.getCalList(choice, c_id);
+		if(fDao.getTotalCount(choice, c_id)==0) {
+			mav.addObject("msg", "<p>정산할 금액이 없습니다</p>");
+			mav.setViewName("ceoViews/calList");
+			return mav;
+		}
 		Total = fDao.getTotalPrice(choice, c_id);
-		
 		mav.addObject("Total", Total);
 		mav.addObject("calList", calList);
 		mav.addObject("makeHtml_getCalList", makeHtml_getCalList(calList, choice, Total));

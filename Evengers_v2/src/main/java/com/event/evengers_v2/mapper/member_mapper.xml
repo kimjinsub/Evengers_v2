@@ -102,7 +102,7 @@
 		DELETE FROM C WHERE C_ID=#{c_id}
 	</delete>
 	<insert id="chatIn" parameterType="String">
-		INSERT INTO CHAT VALUES(#{id},#{sessionId})
+		INSERT INTO CHAT VALUES(#{id},#{sessionId},DEFAULT)
 	</insert>
 	<select id="getSessionId" parameterType="String" resultType="String">
 		SELECT SESSIONID FROM CHAT WHERE ID=#{id}
@@ -111,7 +111,7 @@
 		SELECT COUNT(*) FROM CHAT WHERE ID=#{id}
 	</select>
 	<delete id="chatOut" parameterType="String">
-		DELETE FROM CHAT WHERE SESSIONID=#{sessionId}
+		DELETE FROM CHAT WHERE ID=#{id}
 	</delete>
 	<insert id="inWaitingRoom" parameterType="String">
 		INSERT INTO WR VALUES(#{c_id},#{m_id})
@@ -147,5 +147,10 @@
 	<select id="ceoEmailSameChk" parameterType="String" resultType="String">
 		SELECT C_EMAIL FROM C WHERE C_EMAIL=#{c_email} AND C_ID=#{c_id}
 	</select>
-	
+	<select id="getStats" resultType="integer">
+		SELECT STATS FROM CHAT WHERE ID=#{receiver}
+	</select>
+	<update id="updateStats">
+		UPDATE CHAT SET STATS=#{num} WHERE ID=#{id}
+	</update>
 </mapper>

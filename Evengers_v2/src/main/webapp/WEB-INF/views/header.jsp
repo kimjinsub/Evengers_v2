@@ -128,7 +128,7 @@
 						<a class="dropdown-item" href="#">일정관리</a>
 					</div>
 				</li> -->
-				<li class="nav-item active"><a class="nav-link" href="./startChat">채팅시작</a></li>
+				<li class="nav-item active"><a class="nav-link" href="javascript:ceoChat()">채팅시작</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>
@@ -180,6 +180,9 @@
 <div id="detail"></div>
 </body>
 <script>
+function ceoChat(receiver){
+	window.open('chat',"_blank","width=400,height=700;");
+}
 $(document).ready(function(){
 	console.log("getSessionId:",getSessionId());
 	var iam=getSessionId();

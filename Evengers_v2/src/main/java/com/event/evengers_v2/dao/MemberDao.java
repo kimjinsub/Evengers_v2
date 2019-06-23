@@ -74,11 +74,11 @@ public interface MemberDao {
 	
 	boolean chatIn(@Param("sessionId")String sessionId, @Param("id")String id);
 
-	ArrayList<String> getSessionId(String id);
+	String getSessionId(String id);
 
 	int chatInCheck(String id);
 
-	boolean chatOut(String sessionId);
+	boolean chatOut(String id);
 
 	boolean inWaitingRoom(@Param("c_id")String receiver, @Param("m_id")String sender);
 
@@ -98,8 +98,12 @@ public interface MemberDao {
 	int ceoEmailChk2(@Param("c_email")String email);
 
 	int memEmailChk(@Param("m_email")String email);
-
+	
 	String memEmailSameChk(@Param("m_email")String email, @Param("m_id")String id);
 
 	String ceoEmailSameChk(@Param("c_email")String email, @Param("c_id")String id);
+
+	int getStats(String receiver);
+
+	boolean updateStats(@Param("id")String sender, @Param("num")int num);
 }

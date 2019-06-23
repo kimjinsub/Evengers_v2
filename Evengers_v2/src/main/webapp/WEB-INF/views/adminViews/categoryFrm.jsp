@@ -29,7 +29,12 @@ body{
 #categorySetting,#categorySetting *,.font{
 	font-family: "Nanum Gothic", sans-serif; font-size: 23px;
 }
-	
+/* #datepicker select{
+	width:60px;
+}
+#datepicker select[id=yyyy]{
+	width:75px;
+} */
 </style>
 </head>
 <body>
