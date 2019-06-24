@@ -10,28 +10,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <style>
-table.type11 {
-    border-collapse: separate;
-    border-spacing: 1px;
-    text-align: center;
-    line-height: 1.5;
-    margin: 20px 10px;
-}
-table.type11 th {
-    width: 155px;
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    color: #fff;
-    background: #ce4869 ;
-}
-table.type11 td {
-    width: 155px;
-    padding: 10px;
-    vertical-align: top;
-    border-bottom: 1px solid #ccc;
-    background: #eee;
-}
 #detail {
 	position:fixed;
 	top: 30px;
@@ -42,13 +20,14 @@ table.type11 td {
 	margin-top:-30px;
 	margin-left: -150px;
 	float:left;
-	border: dashed;
+	border:groove;
 	 z-index: 101;
 	display: none;
 	overflow: auto;
 	overflow: scroll;
-	background-color: #F6CED8;
+	background-color:buttonhighlight;
 }
+
 #detail.open {
 	display: block;
 }

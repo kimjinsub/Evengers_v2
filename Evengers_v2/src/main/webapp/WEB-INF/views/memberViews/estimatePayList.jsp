@@ -11,48 +11,22 @@
 #estPayList{
 margin-right: 200px;
 }
-table.type02 {
-    border-collapse: separate;
-    border-spacing: 0;
-    text-align: left;
-    line-height: 1.5;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-}
-table.type02 th {
-    width: 80px;
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #fff;
-    border-left: 1px solid #fff;
-    background: #eee;
-}
-table.type02 td {
-    width: 200px;
-    padding: 10px;
-    vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
 #detail {
-	position: fixed;
+	position:fixed;
 	top: 30px;
 	left: 35%;
 	width: 750px;
 	height: 650px;
 	padding: 2px;
-	margin-top: -30px;
+	margin-top:-30px;
 	margin-left: -150px;
-	float: left;
-	border: dashed;
-	z-index: 101;
+	float:left;
+	border:groove;
+	 z-index: 101;
 	display: none;
 	overflow: auto;
 	overflow: scroll;
-	background-color: #F6CED8;
+	background-color:buttonhighlight;
 }
 
 #detail.open {
@@ -60,6 +34,7 @@ table.type02 td {
 }
 
 #estPayList {
+margin-left: 165px;
 }
 #paging{
 position: relative; 
@@ -91,7 +66,7 @@ color:red;
 						var reqList = data['reqList'];
 						var paging = data['paging'];
 						var statemsg = data['statemsg'];
-						var str = "<table id='et' class='type02' border='1' align='center'><th scope='row'>구매코드</th><th scope='row'>상품제목</th><th scope='row'>총가격</th><th scope='row'>판매자아이디</th><th scope='row'>구매날짜</th><th scope='row'>상태</th>";
+						var str = "<table id='et' class='table table-striped' border='1' align='center'><th scope='row'><b>구매코드</b></th><th scope='row'><b>상품제목</b></th><th scope='row'><b>총가격</b></th><th scope='row'><b>판매자아이디</b></th><th scope='row'><b>구매날짜</b></th><th scope='row'><b>상태</b></th>";
 						for ( var i in estpList) {
 							str += "<tr><td>" + estpList[i].estp_code + "</td><td>"
 									+ "<a href='#' onclick=getDetailEstp('"

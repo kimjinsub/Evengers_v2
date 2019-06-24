@@ -44,18 +44,22 @@
 }
 
 #detail {
-position:fixed;
+	position:fixed;
 	top: 30px;
 	left: 35%;
 	width: 750px;
 	height: 650px;
 	padding: 2px;
+	margin-top:-30px;
 	margin-left: -150px;
 	float:left;
-	z-index: 101;
+	border: dashed;
+	 z-index: 101;
 	display: none;
-	overflow:scroll;
-	background-color: white;
+	overflow: auto;
+	overflow: scroll;
+	background-color: #FFFFFF;
+	margin-top: 30px;
 	}
 
 
@@ -175,7 +179,6 @@ position:fixed;
 
 <div id="detail"></div>
 <div id="frm"></div>
-
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
@@ -230,22 +233,20 @@ function getSessionId(){
 
 
 
-	
 function Ajax_forward(url){
 	$("#detail").addClass("open");
 	$('#detail').show();
+	$('#detail-shadow').show();
 	$.ajax({
 		url:url,
-		type : 'get',
 		dataType:"html",
-		success:function(result){
-			$("#detail").html(result);
-			console.log(result);
+		success:function(data){
+			$("#detail").html(data);
 		},
 		error:function(error){
 			console.log(error);
 		}
-	});
+	})
 }
 
 function evtReqFrm1(){
@@ -264,12 +265,11 @@ function evtReqFrm1(){
 	});
 }
 
-var $layerWindows = $('#detail'); 
+var $layerWindows = $('#frm'); 
 $layerWindows.find('#detail-shadow').on('mousedown',function(event){
 console.log(event);
 $layerWindows.removeClass('open');
 });
-
 $(document).keydown(function(event){
 	//console.log(event);
 	if(event.keyCode!=27) return;

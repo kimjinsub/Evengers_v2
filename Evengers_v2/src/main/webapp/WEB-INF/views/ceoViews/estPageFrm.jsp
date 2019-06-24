@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 #estTable{
 	align-content: center;
@@ -155,12 +156,20 @@ function formData(){
 		//contentType:"application/json" json 쓸때 이렇게 했던거 처럼 multipart의 경우 false로 해야됨
 		dataType:"html",//html은 생략가능
 		success:function(data){
-			alert("견적서 보내기성공");
 			console.log(data);
 			location.href="./";
+			swal({
+	            title: "Good!",
+	             text: "견적서 전송 완료!",
+	             icon: "success",
+	  });
 		},
 		error:function(error){
-			alert("견적서 보내기 실패");
+			swal({
+	            title: "Sorry!",
+	             text: "견적서 전송 실패!",
+	             icon: "warning",
+	  });
 			console.log(error)
 		} 
 	});

@@ -6,31 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<style>
-table.type11 {
-    border-collapse: separate;
-    border-spacing: 1px;
-    text-align: center;
-    line-height: 1.5;
-    margin: 20px 10px;
-}
-table.type11 th {
-    width: 155px;
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    color: #fff;
-    background: #ce4869 ;
-}
-table.type11 td {
-    width: 155px;
-    padding: 10px;
-    vertical-align: top;
-    border-bottom: 1px solid #ccc;
-    background: #eee;
-}
-</style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body>
 	<h3>환불 수락 페이지</h3>
 	<div id="estimateRefund"></div>
@@ -82,11 +59,16 @@ function insertPenalty(){
 		data:{estp_code:estp_code,estr_penalty:estr_penalty},
 		dataType:'json',
 		success:function(data){
-			alert("환불이 완료 되었습니다.")
+			swal({
+	            title: "Good!",
+	             text: "환불이 정상적으로 완료 되었습니다!",
+	             icon: "success",
+	  });
+
 			var estpList=data['estpList'];
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
-			var str = "<table id='et' border='1'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>버튼</th>";
+			var str = "<table id='et' class='table table-striped' border='1'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>버튼</th>";
 
 			for ( var i in estpList) {
 				str += "<tr><td>"
@@ -102,7 +84,11 @@ function insertPenalty(){
 			$("#estimateRefund").html(str);
 			location.href = "javascript:Ajax_forward('estrRefundCompleteList')";
 		},error:function(error){
-			alert("환불이 실패하였습니다.")
+			swal({
+	            title: "Sorry!",
+	             text: "환불에 실패하였습니다!",
+	             icon: "warning",
+	  });
 		}
 	})
 }

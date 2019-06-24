@@ -156,6 +156,7 @@ public class Controller_Chun {
 	public ModelAndView memberMyPage() {
 		mav = new ModelAndView();
 		String id= (String) session.getAttribute("id");
+		mav.addObject("id",id);
 		String view= null;
 		id=mm.memberMyPageChk(id);
 		if(id==null) {

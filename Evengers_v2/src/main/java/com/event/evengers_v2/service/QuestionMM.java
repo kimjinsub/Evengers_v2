@@ -75,29 +75,31 @@ public class QuestionMM {
 	}
 
 	public Map<String, Object> getQuestionList(Integer pageNum,Integer listCount) {
-	      String id=session.getAttribute("id").toString();
-	      System.out.println("id="+id);
-	      ArrayList<Question> qList = new ArrayList<Question>();
-	      Map<String,Object> map1= new HashMap<String,Object>();
-	      int check=0;
-	      if(id.equals("admin")) {
-	         qList = qDao.getAllQuestionList(pageNum);
-	           String paging=new Paging(qDao.getQuestionCount(), pageNum, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
-	         System.out.println("관리자qList:"+qList);
-	         check=2;
-	         map1.put("paging",paging);
-	         map1.put("check",check);
-	      }else {
-	      Map<String, Object> map = new HashMap<String, Object>(); // MAP을 이용해 담기
-	        map.put("id",id);
-	        map.put("num", pageNum);
-	      qList = qDao.getQuestionList(map);
-	       String paging1=new Paging(qDao.getQuestionCount1(id), pageNum, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
-	       map1.put("paging",paging1);
-	      }
-	      map1.put("qList",qList);
-	      return map1;
-	   }
+		String id=session.getAttribute("id").toString();
+		System.out.println("id="+id);
+		ArrayList<Question> qList = new ArrayList<Question>();
+		Map<String,Object> map1= new HashMap<String,Object>();
+		int check=0;
+		if(id.equals("admin")) {
+			qList = qDao.getAllQuestionList(pageNum);
+			  String paging=new Paging(qDao.getQuestionCount(), pageNum, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
+			System.out.println("관리자qList:"+qList);
+			check=2;
+			map1.put("paging",paging);
+			map1.put("check",check);
+		}else {
+			check=1;
+		Map<String, Object> map = new HashMap<String, Object>(); // MAP을 이용해 담기
+        map.put("id",id);
+        map.put("pageNum", pageNum);
+		qList = qDao.getQuestionList(map);
+		 String paging1=new Paging(qDao.getQuestionCount1(id), pageNum, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
+		 map1.put("paging",paging1);
+		 map1.put("check",check);
+		}
+		map1.put("qList",qList);
+		return map1;
+	}
 
 	
 
@@ -144,28 +146,27 @@ public class QuestionMM {
 	}
     
 		@Transactional
-		public ModelAndView questionDelete(String q_code) throws DBException {
-			mav = new ModelAndView();
+		public String questionDelete(String q_code) throws DBException {
+			String msg="";
 			boolean b = qDao.qfDelete(q_code);
 			boolean r = qDao.replyDelete(q_code); // 댓글
 			boolean a = qDao.questionDelete(q_code); // 원글 1000번 째 롤백확인
 			System.out.println(b);
 			System.out.println(r);
 			System.out.println(a);
-
-			if (a == false) {
-				throw new DBException();
-			}
-
+		
+		  if (a == false) { throw new DBException(); }
+		 
 			if (r && a) {
 				System.out.println("삭제 트랜잭션 성공");
+				msg="글 삭제 완료";
 			} else {
 				System.out.println("삭제 트랜잭션 실패");
+				msg="글 삭제 실패";
 			}
 
-			mav.setViewName("redirect:/questionList");
-
-			return mav;
+ 
+			return msg;
 		}
 		public void download(Map<String, Object> params) throws Exception {
 			String root = (String) params.get("root");

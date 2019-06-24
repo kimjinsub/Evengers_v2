@@ -99,7 +99,6 @@ public class Controller_Bin {
 
 	@RequestMapping(value = "/getQuestionList", produces = "application/json; charset=utf8")
 	public @ResponseBody Map<String, Object> getQuestionList(Integer pageNum,Integer listCount) {
-		String id = session.getAttribute("id").toString();
 		Map<String, Object> map1 = qm.getQuestionList(pageNum,listCount);
 		return map1;
 	}
@@ -119,10 +118,10 @@ public class Controller_Bin {
 	}
 	
 	@RequestMapping(value = "/questionDelete", method = RequestMethod.GET) // get,post 모두 가능
-	public ModelAndView questionDelete(String q_code) throws DBException{
-		mav = qm.questionDelete(q_code);
+	public String questionDelete(String q_code) throws DBException{
+		String msg = qm.questionDelete(q_code);
 		System.out.println("q_code="+q_code);
-		return mav;
+		return msg;
 	} 
 	@RequestMapping(value = "/download2", method = RequestMethod.GET) // get,post 모두 가능
 	public void download(
@@ -169,9 +168,9 @@ public class Controller_Bin {
 		return mav;
 	} 
 	@RequestMapping(value = "/getRecivedEstList", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> getRecivedEstList(int pageNum,int listCount) {
+	public @ResponseBody Map<String, Object> getRecivedEstList(Integer pageNum,Integer listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map1 = rm.getRecivedEstList(id,pageNum,listCount);
+		Map<String, Object> map1 = rm.getRecivedEstList(listCount,pageNum);
 		return map1;
 	}
 
@@ -183,7 +182,7 @@ public class Controller_Bin {
 	}
 	
 	@RequestMapping(value = "/getEstPayList", produces = "application/json; charset=utf8")
-	public @ResponseBody Map<String, Object> getEstPayList(int pageNum, int listCount) {
+	public @ResponseBody Map<String, Object> getEstPayList(Integer pageNum, Integer listCount) {
 		String id = session.getAttribute("id").toString();
 		Map<String, Object> map1 = rm.getEstPayList(id,pageNum,listCount);
 		return map1;
@@ -205,7 +204,7 @@ public class Controller_Bin {
 		
 		params.put("root", req.getSession().getServletContext().getRealPath("/"));
 		params.put("response",response);
-		rm.download1(params);
+		rm.download3(params);
 	}
 	@RequestMapping(value = "/estpRefundRequest",method = RequestMethod.GET)
 	public ModelAndView estpRefundRequest(HttpServletRequest req) {

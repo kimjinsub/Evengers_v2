@@ -17,12 +17,12 @@
 	margin-top:-30px;
 	margin-left: -150px;
 	float:left;
-	border: dashed;
+	border:groove;
 	 z-index: 101;
 	display: none;
 	overflow: auto;
 	overflow: scroll;
-	background-color: #F6CED8;
+	background-color:buttonhighlight;
 }
 #detail.open {
 	display: block;

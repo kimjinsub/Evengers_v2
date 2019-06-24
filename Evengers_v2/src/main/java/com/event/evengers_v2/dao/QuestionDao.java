@@ -35,7 +35,7 @@ public interface QuestionDao {
 
 	int getQuestionCount();
 
-	ArrayList<Question> getAllQuestionList(int num);
+	ArrayList<Question> getAllQuestionList(int pageNum);
 
 	int getQuestionCount1(String id);
 }

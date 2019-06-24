@@ -6,9 +6,16 @@
 <head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#q_delete{
+cursor: pointer;
+}
+#listBody{
+margin-left: 100px;
+}
 #pageDown {
 	text-align: right;
 	float: right;
@@ -20,38 +27,36 @@
 h3{
 text-align: center;
 }
-table{
-float:left;
-}
 </style>
 </head>
 <body>
-<a href="questionDelete?q_code=${question.q_code}">삭제</a>
+<div id="q_delete" onclick="qDelete('${question.q_code}')">삭제</div>
 <div id="pageDown"  onclick="reset()">X</div>
 	<h3>문의 내용</h3>
+<div id="listBody">
 	<table border='1'>
 		<tr height="40">
-			<td bgcolor="blue" align="center">글번호</td>
+			<td bgcolor="black" style="color: white" align="center">글번호</td>
 			<td colspan="5">${question.q_code}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="blue" align="center">문의자</td>
+			<td bgcolor="black" style="color: white" align="center">문의자</td>
 			<td width="200">${question.m_id}</td>
-			<td bgcolor="blue" align="center">문의날짜</td>
+			<td bgcolor="black" style="color: white" align="center">문의날짜</td>
 			<td width="200">${question.q_date}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="blue" align="center">제목</td>
+			<td bgcolor="black" style="color: white" align="center">제목</td>
 			<td colspan="5">${question.q_title}</td>
 		</tr>
 		<tr height="230">
-			<td bgcolor="blue" align="center">내용</td>
+			<td bgcolor="black" style="color: white" align="center">내용</td>
 			<td colspan="5">${question.q_contents}</td>
 		</tr>
 		<tr>
 			<tr>
-			<th>첨부파일</th>
-			<td><c:set var="file" value="${qfList}" /> 
+			<td bgcolor="black" style="color:white;">첨부파일</td>
+			<td width="200"><c:set var="file" value="${qfList}" /> 
 				<c:if test="${empty file}">
 				첨부된 파일이 없습니다.
 			</c:if> 
@@ -69,31 +74,32 @@ float:left;
 	<form name="rFrm" id="rFrm">
 		<table>
 			<tr>
-				<td><textarea rows="3" cols="70" name="qr_contents"
+				<td><textarea rows="2" cols="70" name="qr_contents"
 						id="qr_contents"></textarea></td>
-				<td><input type="button" value="댓글입력"
+				<td><input type="button"  value="댓글입력"
 					onclick="replyInsert('${question.q_code}')"
-					style="width: 70px; height: 50px"></td>
+					style="width: 85px; height: 50px"></td>
 			</tr>
 		</table>
 	</form>
 	<table>
-		<tr bgcolor="#F2F5A9" align="center" height="30">
-			<td width="100">댓글작성자</td>
-			<td width="200">내용</td>
-			<td width="200">댓글작성날짜</td>
+		<tr bgcolor="black" align="center" height="30">
+			<td width="120" style="color:white;">댓글작성자</td>
+			<td width="210" style="color:white;">내용</td>
+			<td width="210" style="color:white;">댓글작성날짜</td>
 		</tr>
 	</table>
 	<table id="qrTable">
 		<!-- Ajax결과 여기에 쓰기 -->
 		<c:forEach items="${qrList}" var="reply">
 			<tr height="25" align="center">
-				<td width="100">${reply.m_id}</td>
-				<td width="200">${reply.qr_contents}</td>
-				<td width="200">${reply.qr_date}</td>
+				<td width="120">${reply.m_id}</td>
+				<td width="210">${reply.qr_contents}</td>
+				<td width="210">${reply.qr_date}</td>
 			</tr>
 		</c:forEach>
 	</table>
+	</div>
 	
 
 </body>
@@ -110,6 +116,13 @@ function replyInsert(q_code){
 		data:{q_code:q_code,qr_contents:$('#qr_contents').val()}, //넘길 데이터
 		dataType:'json',
 		success:function(data){
+			swal({
+	            title: "Good!",
+	             text: "댓글을 등록하였습니다",
+	             icon: "success",
+	  });
+			var input = document.getElementById("qr_contents");
+			input.value = null;
             console.log(data);
 			var str="";
 			for(var i in data){
@@ -121,9 +134,37 @@ function replyInsert(q_code){
 			$('#qrTable').html(str);
 		},
 		error:function(error){
+			swal({
+	            title: "Sorry!",
+	             text: "댓글 등록을 실패하였습니다",
+	             icon: "warning",
+	  });
 		}
 	}); //ajax End  
-	
+}
+function qDelete(q_code){
+	$.ajax({
+		data:{q_code:q_code},
+		url:"questionDelete",
+		dataType:'text',
+		success:function(text){
+			console.log(text);
+			swal({
+	            title: "Good!",
+	             text: "삭제를 성공하였습니다",
+	             icon: "success",
+	  });
+	             location.href="javascript:Ajax_forward('questionList')";
+		},
+		error:function(error){
+			swal({
+	            title: "Sorry!",
+	             text: "삭제를 실패하였습니다",
+	             icon: "warning",
+	  });
+			location.href="javascript:Ajax_forward('questionList')";
+	}
+	})
 }
 </script>
 </html>

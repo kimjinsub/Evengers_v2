@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 #pageDown {
 	text-align: right;
@@ -163,8 +164,19 @@ table.type08 td {
 		}
 	}
 
-	document.getElementById('req_hopedate').min= new Date().toISOString().slice(0, -1);
-	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; //January is 0!
+	var yyyy = today.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd
+	}
+	if (mm < 10) {
+		mm = '0' + mm
+	}
+
+	today = yyyy + '-' + mm + '-' + dd;
+	document.getElementById('req_hopedate').setAttribute("max", today);
 
 	$(document).ready(function() {
 		selectCategory();
@@ -236,14 +248,22 @@ table.type08 td {
 			contentType : false,
 			dataType : 'html',
 			success : function(data) {
-				alert("의뢰 신청 성공");
+				swal({
+		            title: "Good!",
+		             text: "의뢰 신청 성공!",
+		             icon: "success",
+		  });
 				console.log(data);
 				$('#articleView-layer').html(data);
 				//var str="";
 				//str+="<table><tr><td>"+data.+"</td></tr></table>"
 			},
 			error : function(error) {
-				alert("등록 실패");
+				swal({
+		            title: "Sorry!",
+		             text: "의뢰 신청 실패!",
+		             icon: "warning",
+		  });
 				console.log(error)
 			}
 		})

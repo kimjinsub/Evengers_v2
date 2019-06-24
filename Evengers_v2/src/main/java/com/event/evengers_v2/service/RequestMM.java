@@ -406,16 +406,25 @@ public class RequestMM {
 		file.download(fullPath, oriFileName, resp);
 
 	}
+	public void download3(Map<String, Object> params) throws Exception {
+		String root = (String) params.get("root");
+		String sysFileName = (String) params.get("sysFileName");
+		String oriFileName = (String) params.get("oriFileName");
+		String fullPath = root + "upload/estimatePayImage/" + sysFileName;
 
-	public Map<String, Object> getRecivedEstList(String id, int pageNum,int listCount) {
+		HttpServletResponse resp = (HttpServletResponse) params.get("response");
+		// 실제 다운로드
+		file.download(fullPath, oriFileName, resp);
+
+	}
+
+	public Map<String, Object> getRecivedEstList(int pageNum,int listCount) {
 		ArrayList<Estimate> estList = new ArrayList<Estimate>();
 		ArrayList<Request> reqList = new ArrayList<Request>();
 		ArrayList<Request> reqList1 = new ArrayList<Request>();
-		
-		
-		
+		String id=session.getAttribute("id").toString();
 		int maxNum = rDao.getReceivedEstCount(id);
-		
+	
 		System.out.println("총~받은견적 리스트의 갯수 : " + maxNum);
 		
 		System.out.println("아이디:" + id);
@@ -666,17 +675,8 @@ public class RequestMM {
 
 			return mav;
 		}
-		public void download3(Map<String, Object> params) throws Exception {
-			String root = (String) params.get("root");
-			String sysFileName = (String) params.get("sysFileName");
-			String oriFileName = (String) params.get("oriFileName");
-			String fullPath = root + "upload/estimateImage/" + sysFileName;
 
-			HttpServletResponse resp = (HttpServletResponse) params.get("response");
-			// 실제 다운로드
-			file.download(fullPath, oriFileName, resp);
-
-		}
+		
 
 		public ModelAndView estRefundRequest(String estp_code) {
 			 mav=new ModelAndView();
@@ -703,11 +703,12 @@ public class RequestMM {
 			System.out.println("listtCount =" + listCount);	//10
 			
 			esList = rDao.getEstSell(map);
-			for(int a=0 ; a<esList.size();a++) {
-				
-				imgList.addAll(rDao.estSellImageList(esList.get(a)));
-				System.out.println(imgList.get(a));
-			}
+		/*
+		 * for(int a=0 ; a<esList.size();a++) {
+		 * 
+		 * imgList.addAll(rDao.estSellImageList(esList.get(a))); //
+		 * System.out.println(imgList.get(a)); }
+		 */
 			int pageCount = 2; // 그룹당 페이지 수
 			String boardName = "getEstpList"; // 게시판이 여러개 일떄
 

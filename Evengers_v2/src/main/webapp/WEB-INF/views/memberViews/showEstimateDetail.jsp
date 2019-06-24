@@ -35,38 +35,39 @@ visibility: visible;
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body>
 <div id="pageDown"  onclick="reset()">X</div>
-<h3>문의 내용</h3>
-	<table border='1'>
+<h3>견적 결제 상세 내용</h3>
+	<table class='table table-striped' border= '1'>
 		<tr height="40">
-			<td bgcolor="blue" align="center">견적 상품명</td>
+			<td bgcolor='black' style="color:white;" align="center">견적 상품명</td>
 			<td colspan="5">${req.req_title}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="blue" align="center">문의자</td>
+			<td bgcolor='black' style="color:white;" align="center">문의자</td>
 			<td width="200">${req.m_id}님</td>
-			<td bgcolor="blue" align="center">견적자</td>
+			<td bgcolor='black' style="color:white;" align="center">견적자</td>
 			<td width="200">${estp.c_id}님</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="blue" align="center">총가격</td>
+			<td bgcolor='black' style="color:white;" align="center">총가격</td>
 			<td width="200">${estp.estp_total}원</td>
-			<td bgcolor="blue" align="center">결제날짜</td>
+			<td  bgcolor='black' style="color:white;" align="center">결제날짜</td>
 			<td width="200">${payday}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="blue" align="center">환불가능일</td>
+			<td bgcolor='black' style="color:white;" align="center">환불가능일</td>
 			<td width="200">${refundable}까지</td>
-			<td bgcolor="blue" align="center">상태</td>
+			<td  bgcolor='black' style="color:white;" align="center">상태</td>
 			<td width="200">${refundstate}</td>
 		</tr>
 		<tr height="200">
-			<td bgcolor="blue" align="center">내용</td>
+			<td  bgcolor='black' style="color:white;"  align="center">내용</td>
 			<td colspan="5">${estp.estp_contents}</td>
 		</tr>
 			<tr>
-			<th>첨부파일</th>
+			<td bgcolor='black' style="color:white;" align='center'>첨부파일</td>
 			<td><c:set var="file" value= "${estpi}" /> 
 				<c:if test="${empty file}">
 				첨부된 파일이 없습니다.
@@ -91,7 +92,20 @@ $("#refundButton").click(function(){
 		data:{estp_code:estp_code},
 		dataType:"html",
 		success:function(page){
+			swal({
+	            title: "Good!",
+	             text: "환불 신청이되었습니다!",
+	             icon: "success",
+	  });
+
 			location.href = "javascript:Ajax_forward('estimatePayList')";
+		},
+		error:function(error){
+			swal({
+	            title: "Sorry!",
+	             text: "환불신청을 실패하였습니다!",
+	             icon: "warning",
+	  });
 		}
 	})
 })

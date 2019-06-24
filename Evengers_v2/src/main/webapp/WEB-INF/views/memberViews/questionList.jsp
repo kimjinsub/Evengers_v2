@@ -20,12 +20,12 @@
 	margin-top:-30px;
 	margin-left: -150px;
 	float:left;
-	border: dashed;
+	border:groove;
 	 z-index: 101;
 	display: none;
 	overflow: auto;
 	overflow: scroll;
-	background-color: #F6CED8;
+	background-color:buttonhighlight;
 }
 
 
@@ -36,20 +36,15 @@
 #header {
 	text-align: center;
 	font-size: xx-large;
+	margin-bottom: 60px;
+}
+#member{
+display: none;
 }
 
 
-
-#QLT {
-	margin-left: 300px;
-}
-
-table {
-	float:left;
-}
 #list{
-text-align: left;
-margin-right: 250px;
+margin-left:100px;
 }
 
 table.type08 {
@@ -71,30 +66,6 @@ table.type08 {
    float: left;
 }
 
-table.type08 thead th {
-    padding: 10px;
-    font-weight: bold;
-    border-top: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 2px solid #c00;
-    background: #dcdcd1;
-}
-table.type08 tbody th {
-    width: 150px;
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    background: #ececec;
-}
-table.type08 td {
-    width: 350px;
-    padding: 10px;
-    vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
 #header{
 margin-top:65px;
 }
@@ -108,7 +79,7 @@ margin-top:65px;
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-  <%-- <div id="member"><jsp:include page="../header.jsp"/></div> --%>
+ <%--  <div id="member"><jsp:include page="../header.jsp"/></div> --%>
 
 	<div id="header">1:1 문의내역</div>
 	<div id="list"></div>
@@ -118,7 +89,7 @@ margin-top:65px;
 <script>
 	$(document).ready(function() {
 		getQuestionList(1,10);
-		checkAdmin();
+		//checkAdmin();
 		
 	});
 	function getQuestionList(pageNum,listCount) {
@@ -130,7 +101,7 @@ margin-top:65px;
 						console.log(result.qList);
 						var qList = result['qList'];
 						var paging =result['paging'];
-						var str = "<table class='type08' align='left' id='QLT' border='1'><th scope='row'>문의자 ID</th><th scope='row'>문의 제목</th><th scope='row'>문의날짜</th>";
+						var str = "<table class='table table-striped' id='QLT' border='1'><th scope='row'>문의자 ID</th><th scope='row'>문의 제목</th><th scope='row'>문의날짜</th>";
 
 						for ( var i in qList) {
 							str += "<tr><td>" + qList[i].m_id + "님</td><td>"
@@ -185,10 +156,6 @@ margin-top:65px;
 			$layerWindows.removeClass('open');
 		}
 	});
-	function checkAdmin(){
-		if("${check}"==2){
-			$("#member").show();
-		}
-	}
+	
 </script>
 </html>
