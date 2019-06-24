@@ -24,4 +24,27 @@
 	<select id="howManyEvtSchedule" parameterType="String" resultType="eventschedule">
 		SELECT * FROM ES WHERE DEPT_CODE=#{dept_code} AND EP_CODE=#{ep_code}
 	</select>
+	<select id="getEstScheduleList" parameterType="String" resultType="estimateschedule">
+		SELECT * FROM ESTS WHERE ESTP_CODE=#{estp_code}
+	</select>
+	<insert id="insertEstSchedule" parameterType="estimateschedule">
+		INSERT INTO ESTS VALUES('ESTS'||LPAD(ESTS_SEQ.NEXTVAL,4,0),#{estp_code},#{dept_code})
+	</insert>
+	<select id="getScheduledEstsList" parameterType="String" resultType="estimateschedule">
+		SELECT * FROM ESTS WHERE ESTP_CODE=#{estp_code} AND DEPT_CODE=#{dept_code}
+	</select>
+	<select id="dateCheckEstp" parameterType="list" resultType="String">
+		SELECT ESTP.ESTP_CODE 
+		FROM ESTP,REQ
+		WHERE ESTP.REQ_CODE=REQ.REQ_CODE
+		AND TO_CHAR(REQ.REQ_HOPEDATE,'YYYYMMDD')=#{calDate}
+		AND ESTP_CODE IN 
+		<foreach collection="assigned_estp_codes" item="assigned_estp_code" 
+			open="(" separator="," close=")">
+			#{assigned_estp_code}
+		</foreach>
+	</select>
+	<select id="howManyEstSchedule" parameterType="String" resultType="estimateschedule">
+		SELECT * FROM ESTS WHERE DEPT_CODE=#{dept_code} AND ESTP_CODE=#{estp_code}
+	</select>
 </mapper>

@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class EstimateRefund {
 	private String estr_code;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	//@JsonFormat(pattern="yyyy-MM-dd")
 	private Date estr_refunddate;
 	private String estp_code;
 	private int estr_penalty;

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.event.evengers_v2.bean.Department;
+import com.event.evengers_v2.bean.EstimateSchedule;
 import com.event.evengers_v2.bean.EventSchedule;
 import com.event.evengers_v2.bean.Position;
 import com.event.evengers_v2.service.CeoMM;
@@ -199,18 +200,26 @@ public class Controller_Jinsub {
 	public @ResponseBody String insertEvtSchedule(EventSchedule es) {
 		return sm.insertEvtSchedule(es);
 	}
+	@RequestMapping(value = "/insertEstSchedule",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String insertEstSchedule(EstimateSchedule ests) {
+		return sm.insertEstSchedule(ests);
+	}
 	@RequestMapping(value = "/calendar")
 	public ModelAndView calendar(Date date,String dept_code) {
 		mav=sm.calendar(date,dept_code);
 		return mav;
 	}
 	@RequestMapping(value = "/showScheduleToday",produces = "application/json;charset=utf-8;")
-	public @ResponseBody String showScheduleToday(String json_esList,String calDate) {
-		return sm.showScheduleToday(json_esList,calDate);
+	public @ResponseBody String showScheduleToday(String json_esList,String json_estsList,String calDate) {
+		return sm.showScheduleToday(json_esList,json_estsList,calDate);
 	}
 	@RequestMapping(value = "/rejectEvtPay",produces = "application/json;charset=utf-8;")
 	public @ResponseBody String rejectEvtPay(String ep_code) {
 		return paym.rejectEvtPay(ep_code);
+	}
+	@RequestMapping(value = "/rejectEstPay",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String rejectEstPay(String estp_code) {
+		return paym.rejectEstPay(estp_code);
 	}
 	@RequestMapping(value = "/chat")
 	public ModelAndView chat(String receiver) {

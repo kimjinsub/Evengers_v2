@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.event.evengers_v2.bean.EstimateSchedule;
 import com.event.evengers_v2.bean.EventSchedule;
 
 public interface ScheduleDao {
@@ -20,5 +21,18 @@ public interface ScheduleDao {
 	
 	EventSchedule howManyEvtSchedule(@Param("dept_code")String dept_code
 			, @Param("ep_code")String ep_code);
+	EstimateSchedule getEstScheduleList(String estp_code);
+
+	boolean insertEstSchedule(EstimateSchedule ests);
+
+	EstimateSchedule getScheduledEstsList(@Param("estp_code")String estp_code
+					, @Param("dept_code")String dept_code);
+
+	ArrayList<String> dateCheckEstp(
+			@Param("assigned_estp_codes")ArrayList<String> assigned_estp_codes, 
+			@Param("calDate")String calDate);
+
+	EstimateSchedule howManyEstSchedule(@Param("dept_code")String dept_code, 
+			@Param("estp_code")String estp_code);
 
 }

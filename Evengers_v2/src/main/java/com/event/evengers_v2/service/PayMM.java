@@ -483,4 +483,23 @@ public class PayMM {
 		}
 		return msg;
 	}
+	public String rejectEstPay(String estp_code) {
+		String msg="";
+		System.out.println("estp_code"+estp_code);
+		if(payDao.refundInsertEstp(estp_code)) {
+			if(payDao.ceoRefundBtnEstp(estp_code, 0)){
+				if(payDao.updateEstpRefundState(estp_code,2)) {
+					msg="환불되었습니다";
+				}
+				else {
+					msg="환불에 실패했습니다";
+				}
+			}else {
+				msg="환불에 실패했습니다";
+			}
+		}else {
+			msg="환불에 실패했습니다";
+		}
+		return msg;
+	}
 }

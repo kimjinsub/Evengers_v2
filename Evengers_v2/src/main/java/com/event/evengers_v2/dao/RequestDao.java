@@ -128,7 +128,7 @@ public interface RequestDao {
 
 	public ArrayList<EstimatePayImage> estSellImageList(EstimatePay estimatePay);
 
-
+	public ArrayList<String> getEstpListByCeo(String c_id);
 
 
 

@@ -125,4 +125,16 @@
 	<select id="getEstTotal" resultType="Double">
 		SELECT ESTP_TOTAL FROM ESTP,ESTR WHERE ESTP.ESTP_CODE=#{refundedEstp_Code} AND ESTR_REFUNDDATE LIKE CONCAT(#{choice},'%')
 	</select>
+	<select id="getEstpInfo" parameterType="String" resultType="estimatepay">
+		SELECT * FROM ESTP WHERE ESTP_CODE=#{estp_code}
+	</select>
+	<insert id="refundInsertEstp" parameterType="estimaterefund">
+		INSERT INTO ESTR VALUES('ESTR'||LPAD(ESTR_SEQ.NEXTVAL,4,0),DEFAULT,#{estp_code},DEFAULT,DEFAULT)
+	</insert>
+	<update id="ceoRefundBtnEstp" parameterType="estimaterefund" >
+		UPDATE ESTR SET ESTR_PENALTY=#{estp_penalty} ,ESTR_STATE=1 WHERE ESTP_CODE=#{estp_code} 
+	</update>
+	<update id="updateEstpRefundState">
+		UPDATE ESTP SET ESTP_REFUNDSTATE=#{estp_refundstate} WHERE ESTP_CODE=#{estp_code} 
+	</update>
 </mapper>

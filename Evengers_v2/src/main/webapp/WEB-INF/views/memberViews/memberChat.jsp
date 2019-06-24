@@ -8,6 +8,34 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/sockjs.min.js"></script>
 <meta charset="UTF-8">
 <style>
+input[type=text],textarea{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: "Nanum Gothic", sans-serif; font-size: 15px;
+}
+h1{
+	font-family: "Nanum Gothic", sans-serif; font-size: 18px;
+	text-align: center;
+}
+h2{
+	font-family: "Nanum Gothic", sans-serif; font-size: 18px;
+}
+input[type=button]{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Nanum Gothic", sans-serif;
+}
 #connected{display:none;}
 #connected.show{display:inline;}
 </style>
@@ -15,8 +43,9 @@
 </head>
 <body>
 <h1>${sender}님의 1:1상담 페이지</h1>
-<h2>Evenger's ID:${receiver}</h2><br/>
-<textarea id="monitor" rows="20"></textarea><br/>
+<hr>
+<h2>Evenger's ID:${receiver}</h2>
+<textarea id="monitor" rows="20" disabled="disabled"></textarea><br/>
 <input id="msg" type="text" placeholder="메세지를 입력하세요"/><br/>
 <div id="connected">
 	<input type="button" value="전송" onclick="sendMsg()"/>

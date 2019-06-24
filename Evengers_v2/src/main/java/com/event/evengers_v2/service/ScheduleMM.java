@@ -12,15 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.event.evengers_v2.bean.Estimate;
+import com.event.evengers_v2.bean.EstimatePay;
+import com.event.evengers_v2.bean.EstimateSchedule;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventPay;
 import com.event.evengers_v2.bean.EventPaySelectedOption;
 import com.event.evengers_v2.bean.EventSchedule;
 import com.event.evengers_v2.bean.Member;
+import com.event.evengers_v2.bean.Request;
 import com.event.evengers_v2.dao.EventDao;
 import com.event.evengers_v2.dao.MemberDao;
 import com.event.evengers_v2.dao.PayDao;
 import com.event.evengers_v2.dao.PersonnelDao;
+import com.event.evengers_v2.dao.RequestDao;
 import com.event.evengers_v2.dao.ScheduleDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,6 +45,8 @@ public class ScheduleMM {
 	PersonnelDao pDao;
 	@Autowired
 	MemberDao mDao;
+	@Autowired
+	RequestDao rDao;
 	
 	public ModelAndView scheduleManage(Date date) {
 		if(date==null) {date=new Date();}
@@ -78,8 +85,45 @@ public class ScheduleMM {
 		mav.addObject("month", makeHtml_month(date));
 		mav.addObject("makeHtml_EpList", makeHtml_EpList(epAllList,esList));
 		mav.setViewName("ceoViews/scheduleManage");
+		
+		/////////////견적결제 리스트..
+		//해당ceo의 견적결제된 것들중에 환불안된 estp코드들을 추출
+		
+		
+		
+		ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
+		if(assigned_estp_codes==null) {
+			mav.addObject("estMsg", "예약된 이벤트가 없습니다");
+			mav.setViewName("ceoViews/scheduleManage");
+			return mav;
+		}
+		
+		//전체 견적결제 리스트 -> estpAllList
+		ArrayList<EstimatePay> estpAllList=new ArrayList<>();
+		for(String estp_code:assigned_estp_codes) {
+			//JOIN을 이용해 req_hopedate, estp_payday를 이용해 정렬
+			EstimatePay estp = payDao.getEstpInfo(estp_code);
+			estpAllList.add(estp);
+		}
+		//수락된 견적결제들 리스트 -> estsList
+		ArrayList<EstimateSchedule> estsList=new ArrayList<>();
+		ArrayList<EstimatePay> estpList=new ArrayList<>();
+		if(assigned_estp_codes!=null) {
+			for(String estp_code:assigned_estp_codes) {
+				EstimateSchedule ests=sDao.getEstScheduleList(estp_code);
+				if(ests!=null) {
+					estsList.add(ests);//수락된 견적결제
+				}else {
+					estpList.add(payDao.getEstpInfo(estp_code));//미수락된 견적결제
+				}
+			}
+		}
+		mav.addObject("estpList", estpList);
+		mav.addObject("estsList", estsList);
+		mav.addObject("makeHtml_EstpList", makeHtml_EstpList(estpList,estsList));
 		return mav;
 	}
+
 
 	private ArrayList<String> getAssigned_codes(ArrayList<String> ep_codes) {
 		ArrayList<String> assigned_codes=new ArrayList<>();
@@ -100,16 +144,18 @@ public class ScheduleMM {
 	private String makeHtml_EpList(ArrayList<EventPay> epAllList,ArrayList<EventSchedule> esList) {
 		StringBuilder sb=new StringBuilder();
 		SimpleDateFormat format = new SimpleDateFormat("yy년MM월dd일 HH:mm");
-		sb.append("<table 'border='1'>"
-				+ "<tr><th>미수락</th></tr>");
+		sb.append("<table id='evt_noAssign' "
+				+ "class='table table table-condensed table-hover table-bordered'>"
+				+ "<tr><th align='center'>미수락</th></tr>");
 		for(EventPay ep:epAllList) {
 			Event e=eDao.getEvtInfo(ep.getE_code());
 			sb.append("<tr><td class='unassigned' id='"+ep.getEp_code()+"'>"+ep.getEp_code()
 					+" / "+format.format(ep.getEp_dday())+" / "+e.getE_category()+"</td></tr>");
 		}
 		sb.append("</table>");
-		sb.append("<table 'border='1'>"
-				+ "<tr><th>수락</th></tr>");
+		sb.append("<table id='evt_assign' "
+				+ "class='table table-condensed table-hover table-bordered'>"
+				+ "<tr><th align='center'>수락</th></tr>");
 		for(EventSchedule es:esList) {
 			//해당es의 dept코드로 department를 구함
 			//String dept_name=pDao.getDeptInfo(es.getDept_code()).getDept_name();
@@ -120,6 +166,48 @@ public class ScheduleMM {
 			String e_category=eDao.getEvtInfo(e_code).getE_category();
 			sb.append("<tr><td>"+es.getEp_code()+" / "+
 					format.format(ep.getEp_dday())+" / "+e_category+"</td></tr>");
+		}
+		sb.append("</table>");
+		return sb.toString();
+	}
+	
+	private Object makeHtml_EstpList(ArrayList<EstimatePay> estpList, ArrayList<EstimateSchedule> estsList) {
+		StringBuilder sb=new StringBuilder();
+		SimpleDateFormat format = new SimpleDateFormat("yy년MM월dd일 HH:mm");
+		sb.append("<table id='est_noAssign' "
+				+ "class='table table table-condensed table-hover table-bordered'>"
+				+ "<tr><th align='center'>미수락</th></tr>");
+		for(EstimatePay estp:estpList) {
+			Request req = rDao.getReqInfo(estp.getReq_code());
+			try {
+				sb.append("<tr><td class='unassignedEstp' id='"+estp.getEstp_code()+"'>"+estp.getEstp_code()
+						+" / "+req.getReq_hopedate().substring(0, req.getReq_hopedate().indexOf(".")-3)
+				//		+" / "+format.format(format.parse(req.getReq_hopedate()))  
+						+" / "+req.getEc_name()+"</td></tr>");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		sb.append("</table>");
+		sb.append("<table id='est_assign' "
+				+ "class='table table table-condensed table-hover table-bordered'>"
+				+ "<tr><th align='center'>수락</th></tr>");
+		System.out.println("estsListSize:"+estsList.size());
+		//if(estsList.size()==0) {return sb.append("</table>");}
+		for(EstimateSchedule ests:estsList) {
+			EstimatePay estp=payDao.getEstpInfo(ests.getEstp_code());
+			String req_code=estp.getReq_code();
+			String e_category=rDao.getReqInfo(req_code).getEc_name();
+			String hopedate=rDao.getReqInfo(req_code).getReq_hopedate();
+			try {
+				sb.append("<tr><td>"+ests.getEstp_code()
+						+" / "+hopedate.substring(0,hopedate.indexOf(".")-3)
+				//		+" / "+format.format(format.parse(rDao.getReqInfo(req_code).getReq_hopedate()))
+						+" / "+e_category+"</td></tr>");
+				System.out.println("hopedate:"+rDao.getReqInfo(req_code).getReq_hopedate());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		sb.append("</table>");
 		return sb.toString();
@@ -150,10 +238,33 @@ public class ScheduleMM {
 		}
 		return ep_codes; 
 	}
+	public ArrayList<String> getEstpCodeListByCeo(){//c_id에 해당하는 ep_code를 전부 가져옴
+		String c_id=session.getAttribute("id").toString();
+		//정렬까지 같이해버림
+		ArrayList<String> estp_codes=rDao.getEstpListByCeo(c_id);//**처음사용자면 null일수 있다
+		
+		//환불된 것들 빼버리고 출력하기
+		if(estp_codes.size()==0) {return null;}
+		ArrayList<String> refundedEstp_Codes=new ArrayList<>();
+		refundedEstp_Codes=payDao.isrefundedEstp(estp_codes);
+		for(String refundedEstp_Code:refundedEstp_Codes) {
+			estp_codes.remove(refundedEstp_Code);
+		}
+		return estp_codes; 
+	}
 
 	public String insertEvtSchedule(EventSchedule es) {
 		String msg="";
 		if(sDao.insertEvtSchedule(es)) {
+			msg="등록되었습니다";
+		}else {
+			msg="등록에 실패했습니다";
+		}
+		return msg;
+	}
+	public String insertEstSchedule(EstimateSchedule ests) {
+		String msg="";
+		if(sDao.insertEstSchedule(ests)) {
 			msg="등록되었습니다";
 		}else {
 			msg="등록에 실패했습니다";
@@ -212,6 +323,8 @@ public class ScheduleMM {
 		ArrayList<String> assigned_codes=getAssigned_codes(ep_codes);
 		if(assigned_codes.size()==0) {return "<p style='font:italic'>해당 부서에 수락된 일정이 없습니다.</p>";}
 		
+		
+		
 		//그 날짜의 첫번째 달 firstDay 구하기
 		SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM");
 		Date firstDay = null;
@@ -257,9 +370,9 @@ public class ScheduleMM {
 		
 		//구한 정보들로 달력 출력하기
 		StringBuilder sb= new StringBuilder();
-		//sb.append("<h2>"+int_year+"년"+int_month+"월</h2>");
-		sb.append("<table border='1' id='calendar_table'>"
-				+ "<tr><th colspan=7><h2>"+int_year+"년"+int_month+"월 ["+pDao.getDeptInfo(dept_code).getDept_name()+"]</th><tr>");
+		sb.append("<table class='table table table-condensed table-bordered' "
+				+ "id='calendar_table'>"
+				+ "<tr><th colspan=7><h2>"+int_year+"년 "+int_month+"월 ["+pDao.getDeptInfo(dept_code).getDept_name()+"]</th><tr>");
 		sb.append("<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>");
 		sb.append("<tr>");
 
@@ -289,13 +402,26 @@ public class ScheduleMM {
 					}
 				}
 			}
+			//정렬되고 환불 제거한 결제 리스트 dept와 날짜로 또 추출함
+			ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
+			ArrayList<EstimateSchedule> estsList=new ArrayList<>();
+			if(assigned_estp_codes!=null) {
+				ArrayList<String> checked_assigned_estp_codes=sDao.dateCheckEstp(assigned_estp_codes,calDate);
+				for(String estp_code:checked_assigned_estp_codes) {
+					EstimateSchedule ests=sDao.howManyEstSchedule(dept_code,estp_code);
+					if(ests!=null) {
+						estsList.add(ests);
+					}
+				}
+			}
 			String json_esList=new Gson().toJson(esList);//json으로 넘겨도 jsp에서 배열로 받음 
-			if(esList.size()>0) {
+			String json_estsList=new Gson().toJson(estsList);//json으로 넘겨도 jsp에서 배열로 받음 
+			if(esList.size()>0||estsList.size()>0) {
 				sb.append("<td id='"+calDate+"'>"+i+"<br/>"
-						+ "<a href='javascript:Ajax_showScheduleToday("+json_esList+","+calDate+")' "
-						+ "id='esCount' "
-						+ "style='background-color:coral;' "
-						+ ">"+esList.size()+"건</a></td>");
+						+ "<a href='javascript:Ajax_showScheduleToday("+json_esList+","+json_estsList+","+calDate+")' "
+						+ "class='scheduleAtag' "
+						+ ">"+(esList.size()+estsList.size())+"건</a>"
+						+ "</td>");
 			}else {
 				sb.append("<td id='"+calDate+"'>"+i+"</td>");
 			}
@@ -316,16 +442,24 @@ public class ScheduleMM {
 		return sb.toString();
 	}
 
-	public String showScheduleToday(String json_esList, String calDate) {
+	public String showScheduleToday(String json_esList, String json_estsList, String calDate) {
 		System.out.println("json_esList");
 		System.out.println(json_esList);
+		System.out.println("json_estsList");
+		System.out.println(json_estsList);
 		ArrayList<EventSchedule> esList=new Gson().fromJson(json_esList
 				, new TypeToken<ArrayList<EventSchedule>>(){}.getType());
 		System.out.println("esList");
 		System.out.println(esList);
+		ArrayList<EstimateSchedule> estsList=new Gson().fromJson(json_estsList
+				, new TypeToken<ArrayList<EstimateSchedule>>(){}.getType());
+		System.out.println("estsList");
+		System.out.println(estsList);
 		System.out.println("calDate="+calDate);
+		
 		StringBuilder sb=new StringBuilder();
-		sb.append("<table border='1' id='schedule_table'>"
+		sb.append("<table id='schedule_table' "
+				+ "class='table table table-condensed table-bordered'>"
 				+ "<tr><th>시간</th><th>이벤트명</th><th>옵션</th><th>의뢰자</th><th>핸드폰번호</th></tr>");
 		for(EventSchedule es:esList) {
 			EventPay ep=payDao.getEpInfo(es.getEp_code());
@@ -337,18 +471,41 @@ public class ScheduleMM {
 			ArrayList<EventPaySelectedOption> epsList = payDao.memberEps(es.getEp_code());
 			Member mb=mDao.mInfo(ep.getM_id());
 			Event e=eDao.getEvtInfo(ep.getE_code());
-			sb.append("<tr>"
+			sb.append("<tr class='evt'>"
 					+ "		<td>"+hour+"시"+minute+"분</td>"
-					+ "		<td>"+e.getE_name()+"</td><td>");
+					+ "		<td>[이벤트구매]\n"+e.getE_name()+"</td><td>");
 			for(EventPaySelectedOption eps:epsList) {
 				sb.append(eDao.getEoInfo(eps.getEo_code()).getEo_name() +"<br/>");
 			}
-			sb.append("</td><td>"+mb.getM_name()+"<br/>"
+			sb.append("</td><td>"+mb.getM_name()+"</td>"
 					+ "		<td>"+mb.getM_tel()+"</td>"
-					+ "</td></tr>");
+					+ "</tr>");
+		}
+		for(EstimateSchedule ests:estsList) {
+			EstimatePay estp=payDao.getEstpInfo(ests.getEstp_code());
+			Calendar c=Calendar.getInstance();
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmm");
+			String hopedate=rDao.getReqInfo(estp.getReq_code()).getReq_hopedate();
+			try {
+				c.setTime(format.parse(hopedate));
+				System.out.println("hopedate:"+format.parse(hopedate));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			Request req=rDao.getReqInfo(estp.getReq_code());
+			Member mb = mDao.mInfo(req.getM_id());
+			int hour=c.get(Calendar.HOUR);
+			int minute=c.get(Calendar.MINUTE);
+			sb.append("<tr class='est'>"
+					+ "		<td>"+hour+"시"+minute+"분</td>"
+					+ "		<td>[의뢰견적구매]\n"+req.getReq_title() +"</td>"
+					+ "		<td></td>");
+			sb.append("		<td>"+mb.getM_name()+"<br/>"
+					+ "		<td>"+mb.getM_tel()+"</td>"
+					+ "</tr>");
 		}
 		sb.append("</table>");
-		sb.append("<p style='color:red; text-align:left;' onclick='hideScheduleToday()'>닫기</p>");
+		sb.append("<p style='text-align:right;' onclick='hideScheduleToday()'>[닫기]</p>");
 		return sb.toString();
 	}
 }

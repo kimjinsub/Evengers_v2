@@ -9,36 +9,68 @@
 <link type="text/css" rel="stylesheet" 
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <style>
-#schedule, #calendar{display: inline-block;}
-#insertEsFrm{
+table th{background-color: #96a9aa;}
+#schedule, #scheduleEst, #calendar{display: inline-block;}
+#insertEsFrm,#insertEstsFrm{
 	border: 2px solid black;
 	width: 300px; height: 300px;
 	margin: auto; visibility: hidden;
 	position: fixed; top:10%; left: 40%;
 	background-color: white;
 }
-#insertEsFrm.show{
+#insertEsFrm.show,#insertEstsFrm.show{
 	visibility: visible;
 }
-#dayWrap,#deptWrap{display: inline-block;}
-#dayWrap *{display: inline-block;}
+/* #evtArea,#estArea{ */
+#evtArea,#estArea{
+	display: inline-block; width: 40%;
+	margin: auto; text-align: center;
+}
+#evt_assign,#evt_noAssign{
+	/* display: inline-block; width: 80%; */
+}
+#est_assign,#est_noAssign{
+	/* display: inline-block; width: 80%; */
+}
+#Wrap{margin: auto;}
+#dayWrap,#deptWrap{margin: auto; display: inline-block;}
+#dayWrap *{margin: auto; display: inline-block;}
 #year{background: white;}
 #past,#future{cursor: pointer;}
 </style>
 <title>일정관리</title>
 </head>
 <body>
-${msg}
-<div id='schedule'>
-${makeHtml_EpList}
-<div id="insertEsFrm">
-<p id="epInfo"></p>
-부서 선택:<select id="selectDept"></select>
-<button onclick="confirmDept()">선택완료</button>
-<button onclick="rejectEvtPay()">이벤트 거절(100%환불)</button>
-<p onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;">닫기</p>
+<div id='evtArea'>
+${evtMsg}
+	<div id='schedule'>
+	<h2>이벤트결제</h2>
+	${makeHtml_EpList}
+		<div id="insertEsFrm">
+			<p id="epInfo"></p>
+			부서 선택:<select id="selectDept"></select>
+			<button onclick="confirmDept()">선택완료</button>
+			<button onclick="rejectEvtPay()">이벤트 거절(100%환불)</button>
+			<p onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;">닫기</p>
+		</div>
+	</div>
 </div>
+
+<div id='estArea'>
+${estMsg}
+	<div id='scheduleEst'>
+	<h2>견적결제</h2>
+	${makeHtml_EstpList}
+		<div id="insertEstsFrm">
+			<p id="estpInfo"></p>
+			부서 선택:<select id="selectEstsDept"></select>
+			<button onclick="confirmEstsDept()">선택완료</button>
+			<button onclick="rejectEstPay()">이벤트(견적) 거절(100%환불)</button>
+			<p onclick="hideInsertEstsFrm()" style="cursor:pointer;color: red;">닫기</p>
+		</div>
+	</div>
 </div>
+<hr>
 <div id="Wrap">
 <div id="dayWrap"></div>
 <div id="deptWrap">
@@ -48,8 +80,13 @@ ${makeHtml_EpList}
 <div id="calendar"></div>
 </body>
 <script>
+console.log("estpList","${estpList}");
+console.log("estsList","${estsList}");
 function hideInsertEsFrm(){
 	$("#insertEsFrm").removeClass("show");
+}
+function hideInsertEstsFrm(){
+	$("#insertEstsFrm").removeClass("show");
 }
 
 $(document).ready(function(){
@@ -62,6 +99,7 @@ $(document).ready(function(){
 var epAllList="${epAllList}";
 var ep_codes="${ep_codes}";
 var ep_code="";
+var estp_code="";
 $(".unassigned").each(function(){
 	$(this).click(function(){
 		ep_code=$(this).attr("id");
@@ -69,11 +107,33 @@ $(".unassigned").each(function(){
 		$("#epInfo").html($(this)[0].textContent);
 	})
 })
+$(".unassignedEstp").each(function(){
+	$(this).click(function(){
+		estp_code=$(this).attr("id");
+		$("#insertEstsFrm").addClass("show");
+		$("#estpInfo").html($(this)[0].textContent);
+	})
+})
 function rejectEvtPay(){
 	console.log("reject:ep_code=",ep_code);
 	$.ajax({
 		url:"rejectEvtPay",
 		data:{ep_code:ep_code},
+		dataType:"text",
+		success:function(result){
+			alert(result);
+			location.href="javascript:Ajax_forward('scheduleManage')";
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
+function rejectEstPay(){
+	console.log("reject:estp_code=",estp_code);
+	$.ajax({
+		url:"rejectEstPay",
+		data:{estp_code:estp_code},
 		dataType:"text",
 		success:function(result){
 			alert(result);
@@ -104,6 +164,26 @@ function confirmDept(){
 		}
 	})
 }
+function confirmEstsDept(){
+	var dept_code=$("#selectEstsDept").val();
+	console.log("dept=",dept_code);
+	console.log("estp_code=",estp_code);
+	$.ajax({
+		url:"insertEstSchedule",
+		data:{dept_code:dept_code,estp_code:estp_code},
+		dataType:"text",
+		success:function(result){
+			console.log(result);
+			alert(result);
+			$("#insertEstsFrm").html("");
+			$("#insertEstsFrm").removeClass("show");
+			location.href="javascript:Ajax_forward('scheduleManage')";
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
+}
 function selectDept(){
 	$.ajax({
 		url:"selectDept",
@@ -115,6 +195,7 @@ function selectDept(){
 			}
 			str+="</select>";
 			$('#selectDept').html(str);
+			$('#selectEstsDept').html(str);
 		},
 		error:function(error){
 			console.log(error);
