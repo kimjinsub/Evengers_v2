@@ -54,14 +54,17 @@ function getEstpList(pageNum,listCount) {
 		success:function(result) {
 		var esList = result['esList'];
 		var paging = result['paging'];
-		var str = "<table id='esList' border='1' align='center'>";
+		var imgList = result['imgList'];
+		var str = "<table class='table table-striped'id='esList' border='1' align='center'>";
 		for ( var i in esList) {
 			str += "<tr><td>" + "견적 결제 코드 : " + esList[i].estp_code + "<br>"
 					+ "총가격 : " + esList[i].estp_total + "<br>"
 					+ "결제일 : " + esList[i].estp_payday + "<br>"
 					+ "환불 가능일 : " + esList[i].estp_refunddate + "<br>"
 					+ "내용 : " + esList[i].estp_contents + "<br></td></tr>"
-			}
+					//+ "사진 : <img src='upload/estimateImage/" + imgList[i].estpi_sysfilename + "'><br></td></tr>"
+					
+					}
 			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
 			$("#list").html(str);
 			$("#paging").html(paging);

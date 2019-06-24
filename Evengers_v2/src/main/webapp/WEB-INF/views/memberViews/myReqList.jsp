@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,11 +21,7 @@
 	overflow: auto;
 	overflow: scroll;
 	background-color: #FFFFFF;
-	}
-
-	#frm{
-		margin-top: 100px;
-		
+	margin-top: 30px;
 	}
 
 	#detail.open {
@@ -56,14 +53,13 @@ table.reqList th {
 <title>Insert title here</title>
 </head>
 <body>
-	<div id =frm>
 
 	<h1 align="center">의뢰요청 목록</h1>
 	
 	<div align="center">
 		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
 		<input type="button" onclick=location.href="./" value='홈으로'>
-	</div>
+
 	<div id="list"></div>
 	<div id="detail"></div>
 	<div id="paging" align="center"></div>
@@ -80,7 +76,7 @@ function searchajax(keyword){
 		dataType:'json',
 		success: function(result){
 			var rList = result['rList'];
-			var str = "<table id='reqList' class='reqList' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
+			var str = "<table id='reqList' class='table table-striped' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
 			for ( var i in rList) {
 				str += "<tr><td>" + rList[i].req_code + "</td><td>"
 							+ "<a href='#' onclick=evtReqInfo('"
@@ -100,7 +96,7 @@ function searchajax(keyword){
 
 
 $(document).ready(function() {
-	getReqList(1,2);
+	getReqList(1,5);
 });
 function getReqList(pageNum,listCount) {	//기본적으로 보이는
 		$.ajax({
@@ -110,7 +106,7 @@ function getReqList(pageNum,listCount) {	//기본적으로 보이는
 		success:function(result) {
 		var rList = result['rList'];
 		var paging =result['paging'];
-		var str = "<table class='reqList' id='reqList' border='1' align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
+		var str = "<table class='table table-striped' id='reqList' border='1' align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
 		for ( var i in rList) {
 			str += "<tr><td>" + rList[i].req_code + "</td><td>"
 						+ "<a href='#' onclick=evtReqInfo('"

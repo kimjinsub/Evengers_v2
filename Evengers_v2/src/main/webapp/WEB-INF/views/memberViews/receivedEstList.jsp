@@ -29,7 +29,6 @@
 }
 
 #estList{
-margin-left: 250px;
 }
 
 </style>
@@ -55,7 +54,7 @@ function getRecivedEstList(pageNum,listCount) {
 			var estList = data['estList'];
 			var reqList = data['reqList'];
 			var paging =data['paging'];
-			var str = "<table id='et' border='1' align='center'><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
+			var str = "<table class='table table-striped' id='et' border='1' align='center'><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
 
 			for ( var i in estList) {
 				str += "<tr><td>" + estList[i].c_id + "</td><td>"

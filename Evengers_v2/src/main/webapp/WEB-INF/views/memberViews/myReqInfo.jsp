@@ -27,29 +27,29 @@
 	<div id="pageDown"  onclick="reset()">X</div>
 	<a href="myReqDelete?req_code=${request.req_code}">삭제</a>
 	<h3>요청 내용 상세보기</h3>
-	<table border='1'>
+	<table border='1' class='table table-striped'>
 		<tr height="40">
-			<td bgcolor="green" align="center">요청코드</td>
+			<td align="center">요청코드</td>
 			<td colspan="5">${request.req_code}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="green" align="center">작성자</td>
+			<td align="center">작성자</td>
 			<td width="200">${request.m_id}</td>
-			<td bgcolor="green" align="center">희망날짜</td>
+			<td align="center">희망날짜</td>
 			<td width="200">${request.req_hopedate}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="green" align="center">희망지역</td>
+			<td align="center">희망지역</td>
 			<td width="200">${request.req_hopearea}</td>
-			<td bgcolor="green" align="center">상세주소</td>
+			<td align="center">상세주소</td>
 			<td width="200">${request.req_hopeaddr}</td>
 		</tr>
 		<tr height="40">
-			<td bgcolor="green" align="center">제목</td>
+			<td align="center">제목</td>
 			<td colspan="5">${request.req_title}</td>
 		</tr>
 		<tr height="230">
-			<td bgcolor="green" align="center">내용</td>
+			<td align="center">내용</td>
 			<td colspan="5">${request.req_contents}</td> 
 		</tr>
 		<tr>

@@ -689,6 +689,7 @@ public class RequestMM {
 
 		public Map<String, Object> estSell(String id,int pageNum,int listCount)  {
 			ArrayList<EstimatePay> esList = new ArrayList<EstimatePay>();
+			ArrayList<EstimatePayImage> imgList = new ArrayList<EstimatePayImage>();
 			Map<String, Object> map = new HashMap<String, Object>();
 			Map<String, Object> map1 = new HashMap<String, Object>();
 						
@@ -702,7 +703,11 @@ public class RequestMM {
 			System.out.println("listtCount =" + listCount);	//10
 			
 			esList = rDao.getEstSell(map);
-			
+			for(int a=0 ; a<esList.size();a++) {
+				
+				imgList.addAll(rDao.estSellImageList(esList.get(a)));
+				System.out.println(imgList.get(a));
+			}
 			int pageCount = 2; // 그룹당 페이지 수
 			String boardName = "getEstpList"; // 게시판이 여러개 일떄
 
@@ -710,6 +715,7 @@ public class RequestMM {
 			
 			map1.put("paging", paging);
 			map1.put("esList", esList);	//맵에 저장해서 턴
+			map1.put("imgList", imgList);
 			
 			return map1;
 		}

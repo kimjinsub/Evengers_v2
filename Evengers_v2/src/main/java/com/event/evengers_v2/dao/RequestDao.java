@@ -126,6 +126,8 @@ public interface RequestDao {
 
 	public int getEstPayCount(Map<String, Object> map);
 
+	public ArrayList<EstimatePayImage> estSellImageList(EstimatePay estimatePay);
+
 
 
 

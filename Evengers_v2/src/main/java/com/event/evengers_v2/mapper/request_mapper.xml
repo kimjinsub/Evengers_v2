@@ -285,4 +285,8 @@
         ]]>
    </select>  -->
    
+   <select id="estSellImageList" parameterType="estimatepay" resultType="estimatepayimage">
+         SELECT * FROM ESTIMATEPAYIMAGE WHERE ESTP_CODE = #{estp_code}
+   </select>
+   
 </mapper>

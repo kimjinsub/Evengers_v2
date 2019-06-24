@@ -48,7 +48,7 @@ function getRefundAcceptList(){
 			var estpList=data['estpList'];
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
-			var str = "<table id='et' class='type11' border='1'><th scope='cols'>상품제목</th><th scope='cols'>구매자아이디</th><th scope='cols'>총가격</th><th scope='cols'>판매자아이디</th><th scope='cols'>구매날짜</th><th scope='cols'>환불 요청한 날짜</th><th scope='cols'>위약금(%)</th><th scope='cols'>버튼</th>";
+			var str = "<table id='et' class='table table-striped' border='1'><th scope='cols'>상품제목</th><th scope='cols'>구매자아이디</th><th scope='cols'>총가격</th><th scope='cols'>판매자아이디</th><th scope='cols'>구매날짜</th><th scope='cols'>환불 요청한 날짜</th><th scope='cols'>위약금(%)</th><th scope='cols'>버튼</th>";
                console.log(estrList);
                console.log(estpList);
                console.log(reqList);

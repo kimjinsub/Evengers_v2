@@ -100,7 +100,7 @@ public class Controller_Bin {
 	@RequestMapping(value = "/getQuestionList", produces = "application/json; charset=utf8")
 	public @ResponseBody Map<String, Object> getQuestionList(Integer pageNum,Integer listCount) {
 		String id = session.getAttribute("id").toString();
-		Map<String, Object> map1 = qm.getQuestionList(id,pageNum,listCount);
+		Map<String, Object> map1 = qm.getQuestionList(pageNum,listCount);
 		return map1;
 	}
 

@@ -74,34 +74,30 @@ public class QuestionMM {
 		return mav;
 	}
 
-	public Map<String, Object> getQuestionList(String id, Integer pageNum,Integer listCount) {
-		String jsonStr = "";
-		ArrayList<Question> qList = new ArrayList<Question>();
-		int num = (pageNum == null) ? 1 : pageNum;
-		System.out.println("아이디:"+id);
-		if(listCount==null) {
-			listCount=10;
-		}
-		Map<String,Object> map1= new HashMap<String,Object>();
-		int check=0;
-		if(id.equals("admin")) {
-			qList = qDao.getAllQuestionList(num);
-			  String paging=new Paging(qDao.getQuestionCount(), num, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
-			System.out.println("관리자qList:"+qList);
-			check=2;
-			map1.put("paging",paging);
-			map1.put("check",check);
-		}else {
-		Map<String, Object> map = new HashMap<String, Object>(); // MAP을 이용해 담기
-        map.put("id",id);
-        map.put("num", num);
-		qList = qDao.getQuestionList(map);
-		 String paging1=new Paging(qDao.getQuestionCount1(id), num, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
-		 map1.put("paging",paging1);
-		}
-		map1.put("qList",qList);
-		return map1;
-	}
+	public Map<String, Object> getQuestionList(Integer pageNum,Integer listCount) {
+	      String id=session.getAttribute("id").toString();
+	      System.out.println("id="+id);
+	      ArrayList<Question> qList = new ArrayList<Question>();
+	      Map<String,Object> map1= new HashMap<String,Object>();
+	      int check=0;
+	      if(id.equals("admin")) {
+	         qList = qDao.getAllQuestionList(pageNum);
+	           String paging=new Paging(qDao.getQuestionCount(), pageNum, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
+	         System.out.println("관리자qList:"+qList);
+	         check=2;
+	         map1.put("paging",paging);
+	         map1.put("check",check);
+	      }else {
+	      Map<String, Object> map = new HashMap<String, Object>(); // MAP을 이용해 담기
+	        map.put("id",id);
+	        map.put("num", pageNum);
+	      qList = qDao.getQuestionList(map);
+	       String paging1=new Paging(qDao.getQuestionCount1(id), pageNum, listCount, 2, "getQuestionList").makeHtmlAjaxPaging();
+	       map1.put("paging",paging1);
+	      }
+	      map1.put("qList",qList);
+	      return map1;
+	   }
 
 	
 

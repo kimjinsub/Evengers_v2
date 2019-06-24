@@ -52,7 +52,7 @@ function RefundCompleteList(pageNum,listCount){
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
 			var paging=data['paging'];
-			var str = "<table class='type11' id='et' border='1'><th scope='cols'>상품제목</th><th scope='cols'>구매자아이디</th><th scope='cols'>총가격</th><th scope='cols'>판매자아이디</th><th scope='cols'>구매날짜</th><th>환불 요청한 날짜</th><th scope='cols'>위약금</th><th scope='cols'>환불금액</th><th scope='cols'>환불상태</th>";
+			var str = "<table class='table table-striped' id='et' border='1'><th scope='cols'>상품제목</th><th scope='cols'>구매자아이디</th><th scope='cols'>총가격</th><th scope='cols'>판매자아이디</th><th scope='cols'>구매날짜</th><th>환불 요청한 날짜</th><th scope='cols'>위약금</th><th scope='cols'>환불금액</th><th scope='cols'>환불상태</th>";
 
 			for ( var i in estpList) {
 				var penaltyPrice=estpList[i].estp_total*estrList[i].estr_penalty/100;
