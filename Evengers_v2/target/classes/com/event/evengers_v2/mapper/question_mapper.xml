@@ -8,7 +8,7 @@
 		</insert>
 	<select id="getQuestionList" parameterType="map" resultType="question">
 	<![CDATA[
-	SELECT * FROM QLIST_1 WHERE M_ID=#{id} AND RONUM>=#{num}*10-9 AND RONUM<=#{num}*10 ORDER BY Q_DATE DESC
+	SELECT * FROM QLIST_1 WHERE M_ID=#{id} AND RONUM>=#{pageNum}*10-9 AND RONUM<=#{pageNum}*10 ORDER BY Q_DATE DESC
 	]]>
 	</select>
 	<select id="getQcode" parameterType="string" resultType="string">
@@ -43,7 +43,7 @@
 	</select>
 	<select id="getAllQuestionList" resultType="question">
 	<![CDATA[
-	SELECT * FROM QLIST_1 WHERE RONUM>=#{num}*10-9 AND RONUM<=#{num}*10 ORDER BY Q_DATE DESC
+	SELECT * FROM QLIST_1 WHERE RONUM>=#{pageNum}*10-9 AND RONUM<=#{pageNum}*10 ORDER BY Q_DATE DESC
 	]]>
 	</select>
 	<select id="getQuestionCount1" resultType="int">

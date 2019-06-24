@@ -137,4 +137,16 @@
 	<update id="updateEstpRefundState">
 		UPDATE ESTP SET ESTP_REFUNDSTATE=#{estp_refundstate} WHERE ESTP_CODE=#{estp_code} 
 	</update>
+	<select id="myEvtList" parameterType="String" resultType="event">
+		SELECT * FROM E where C_ID={c_id}
+	</select>
+	<select id="epsList" parameterType="String" resultType="EventPaySelectedOption">
+		SELECT * FROM EPS WHERE EP_CODE=#{ep_code} 
+	</select>
+	<select id="eoList" parameterType="String" resultType="eventoption">
+		SELECT * FROM EO WHERE EO_CODE=#{eo_code} 
+	</select>
+	<select id="epOneList" parameterType="String" resultType="eventpay">
+		SELECT * FROM EP WHERE E_CODE=#{e_code} AND EP_REFUNDSTATE=1 
+	</select>
 </mapper>

@@ -69,7 +69,7 @@ img {
 </style>
 </head>
 <body>
-<h1>결재 내역</h1>
+<h1>결제 내역</h1>
 ${makeHtml_memberPayList}
 </body>
 <script >

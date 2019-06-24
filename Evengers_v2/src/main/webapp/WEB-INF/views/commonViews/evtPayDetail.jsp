@@ -23,6 +23,12 @@
     max-width: 300px;
     max-height: 300px;
 }
+#pageDown {
+	position:absolute;
+	bottom:50%;
+	float: right;
+	font-size: x-large;
+}
 </style>
 </head>
 <body>
@@ -31,6 +37,7 @@
 <img class='max-small'src="upload/thumbnail/${e.e_sysfilename}" >
 </div>
 <br/>
+<div id="pageDown"  onclick="reset()">X</div>
 <div>상품명:${e.e_name}</div>
 <div>기본가:${e.e_price}원</div>
 <div>결제코드:${ep.ep_code}</div>
@@ -58,6 +65,11 @@ function showEpsList(){
 $("#exit").click(function() {
 	location.href ="memberMyPage";
 });
+function reset() {
+	if ($('#articleView_layer2').hasClass('open')) {
+		$('#articleView_layer2').removeClass('open');
+	}
+}
 </script>
 
 </html>

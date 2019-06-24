@@ -34,25 +34,23 @@
 	filter: alpha(opacity = 50);
 	z-index: 100
 }
-
 #contents_layer {
 	position: absolute;
-	top: 20%;
-	left: 30%;
-	width: 800px;
-	height: 800px;
-	margin: -150px 0 0 -194px;
+	top:30%;
+	left:30%;
+	width: 700px;
+	height: 1000px;
+	margin-left: -250px;
+ 	margin-top: -250px;
 	padding: 28px 28px 0 28px;
-	border: 2px solid #555;
 	background: #fff;
-	font-size: 12px;
 	z-index: 200;
 	color: #767676;
 	line-height: normal;
 	white-space: normal;
 	overflow: scroll;
-	font-size: 18px;
-	
+	font-size: 16px;
+	border: #000 solid 1px;
 }
 .eList{
 	float: left;
@@ -91,7 +89,7 @@
   transform: translateY(-7px);
 }
 .td{
-	width: 130px;
+	width: 150px;
 }
 .td2{
 	height: auto;
@@ -104,7 +102,7 @@
 <h1>내 상품 관리</h1>
 	<c:forEach var="event" items="${eList}">
 		<div class="eList">
-			<table border="1">
+			<table  class='table table-striped'>
 				<tr>
 					<td class="td">상품 이름</td> <td class="td2">${event.e_name}</td>
 				</tr>
@@ -157,6 +155,9 @@ $('.e_code').each(function(){
 				console.log(error);
 			}
 		})
+			$('.e_code').click(function(e){
+			$("#contents_layer").css({"top":e.screenY+200,"left":e.screenX});
+			})
 	})
 })
 $('.evtDel_code').each(function(){

@@ -45,7 +45,7 @@ table.type08 td {
 <h1>환불 내역 페이지</h1>
 <div>
 	<div id="eList2" style="width:10%;; float: left;">
-		<table border="1" class="type08" style="width: 100%;">
+		<table border="1" class='table table-striped' style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th >상품이름</th>
@@ -53,7 +53,7 @@ table.type08 td {
 		</thead>
 		<tbody>
 			<c:forEach var="event" items="${eList2}">
-				<tr align="center">
+				<tr align="center" height="60px">
 					<td  height="50px">${event.e_name }</td>
 				</tr>
 			</c:forEach>
@@ -62,7 +62,7 @@ table.type08 td {
 	</div>
 
 	<div id="epList2" style="width: 35%;; float: left;">
-		<table border="1" class="type08" style="width: 100%;">
+		<table border="1" class='table table-striped' style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th >구매자</th>
@@ -77,7 +77,7 @@ table.type08 td {
 					pattern="yyyy-MM-dd" />
 				<fmt:formatDate var="dday" value="${eventpay.ep_dday }"
 					pattern="yyyy-MM-dd" />
-				<tr align="center">
+				<tr align="center" height="60px">
 					<td   height="50px">${eventpay.m_id }</td>
 					<td height="50px">${eventpay.ep_total }
 					<input type="hidden" value="${eventpay.ep_total }"id="${eventpay.ep_code }"/>
@@ -93,7 +93,7 @@ table.type08 td {
 	</div>
 
 	<div id="erList" style="width: 55%; float: left;">
-		<table border="1" class="type08" style="width: 100%;">
+		<table border="1" class='table table-striped' style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th>환불요청일자</th>
@@ -107,7 +107,7 @@ table.type08 td {
 			<c:forEach var="eventrefund" items="${erList}">
 				<fmt:formatDate var="refunddate"
 					value="${eventrefund.er_refunddate}" pattern="yyyy-MM-dd" />
-					<tr align="center">
+					<tr align="center" height="60px">
 					<td  height="50px">${refunddate}
 					
 					<textarea id="${eventrefund.ep_code}" name="${refunddate}" class="textarea"></textarea></td>

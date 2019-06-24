@@ -47,21 +47,21 @@ input.option-add {
 </head>
 <body>
    
-   <table border="1" width="700" align="center">
+   <table border="1" width="700" align="center"class='table table-striped'>
 		<tr>
 			<td colspan="3" align="center"><h4>이벤트 상품 등록</h4></td>
 		</tr>
 		<tr>
 			<td>상품명</td>
-			<td><div id="e_nameDiv1"><input type="text"  id="e_name1" value="${event.e_name}" readonly></div>
-				<div id="e_nameDiv2"><input type="text"  id="e_name2" ></div>
+			<td><div id="e_nameDiv1"><input type="text" style="width: 98%" id="e_name1" value="${event.e_name}" readonly></div>
+				<div id="e_nameDiv2"><input type="text" style="width: 98%" id="e_name2" ></div>
 			</td>
 			<td><button class='button_base b01_simple_rollover'onclick="e_nameModify()">상품명 수정</button></td>
 		</tr>
 		<tr>
 			<td>가격</td>
-			<td><div id="e_priceDiv1"><input type="number"  id="e_price1" value="${event.e_price}" readonly></div>
-				<div id="e_priceDiv2"><input type="number"  id="e_price2" ></div>
+			<td><div id="e_priceDiv1"><input type="number" style="width: 98%" id="e_price1" value="${event.e_price}" readonly></div>
+				<div id="e_priceDiv2"><input type="number" style="width: 98%" id="e_price2" ></div>
 			</td>
 			<td><button class='button_base b01_simple_rollover'onclick="e_priceModify()">가격 수정</button></td>
 		</tr>
@@ -76,8 +76,8 @@ input.option-add {
 			<td>옵션</td>
 			<td><div id="option1">${evtOption}</div>
 				<div id="option2">
-					<div id="add"><input type="text" class="option_name" placeholder="내용">
-					<input type="number" class="option_price" placeholder="가격"></div>
+					<div id="add"><input type="text" style="width: 98%" class="option_name" placeholder="내용">
+					<input type="number" style="width: 98%" class="option_price" placeholder="가격"></div>
 					<input type="button" onclick='addOption()' class="option-add" 
 					id="e_option">
 				</div>
@@ -87,15 +87,15 @@ input.option-add {
 		
 		<tr>
 			<td>예약가능일</td>
-			<td><div id="e_reserveDateDiv1"><input type="number" id="e_reservedate1" value="${event.e_reservedate}" readonly></div>
-				<div id="e_reserveDateDiv2"><input type="number" id="e_reservedate2" ></div>
+			<td><div id="e_reserveDateDiv1"><input type="number" style="width: 98%" id="e_reservedate1" value="${event.e_reservedate}" readonly></div>
+				<div id="e_reserveDateDiv2"><input type="number" style="width: 98%" id="e_reservedate2" ></div>
 			</td>
 			<td><button class='button_base b01_simple_rollover'onclick="e_reserveDateModify()">예약가능일 수정</button></td>
 		</tr>		
 		<tr>
 			<td>환불가능일</td>
-			<td><div id="e_refundDateDiv1"><input type="number" id="e_refunddate1" value="${event.e_refunddate}" readonly></div>
-				<div id="e_refundDateDiv2"><input type="number" id="e_refunddate2" ></div>
+			<td><div id="e_refundDateDiv1"><input type="number" style="width: 98%" id="e_refunddate1" value="${event.e_refunddate}" readonly></div>
+				<div id="e_refundDateDiv2"><input type="number" style="width: 98%" id="e_refunddate2" ></div>
 			</td>
 			<td><button class='button_base b01_simple_rollover'onclick="e_refundDateModify()">환불가능일 수정</button></td>
 		</tr>	
@@ -124,8 +124,8 @@ input.option-add {
 		</tr>
 		<tr>
 			<td>글 내용</td>
-			<td><div id="e_contentsDiv1"><textarea name="e_contents" id="e_contents1" rows="20" readonly>${event.e_contents}</textarea></div>
-				<div id="e_contentsDiv2"><textarea name="e_contents" id="e_contents2" rows="20"></textarea></div>
+			<td><div id="e_contentsDiv1"><textarea name="e_contents" style="width: 98%" id="e_contents1" rows="5" readonly>${event.e_contents}</textarea></div>
+				<div id="e_contentsDiv2"><textarea name="e_contents" style="width: 98%" id="e_contents2" rows="5"></textarea></div>
 			</td>
 			<td><button class='button_base b01_simple_rollover'onclick="e_contentsModify()">글내용 수정</button></td>
 		</tr>	

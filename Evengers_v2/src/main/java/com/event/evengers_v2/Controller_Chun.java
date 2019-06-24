@@ -140,7 +140,6 @@ public class Controller_Chun {
 		System.out.println("pwMo1"+pwMo1);
 		System.out.println("pwMo2"+pwMo2);
 		String msg= mm.pwChange(id,pwMo1,pwMo2);
-			 
 		return msg;
 	}
 
@@ -156,7 +155,6 @@ public class Controller_Chun {
 	public ModelAndView memberMyPage() {
 		mav = new ModelAndView();
 		String id= (String) session.getAttribute("id");
-		mav.addObject("id",id);
 		String view= null;
 		id=mm.memberMyPageChk(id);
 		if(id==null) {
@@ -169,6 +167,7 @@ public class Controller_Chun {
 		}else {
 		view="memberViews/memberMyPage";
 		}
+		mav.addObject("id",id);
 		mav.setViewName(view);
 		return mav;
 	}
@@ -248,6 +247,7 @@ public class Controller_Chun {
 		}else {
 		view="ceoViews/ceoMyPage";
 		}
+		mav.addObject("id",id);
 		mav.setViewName(view);
 		return mav;
 	}
@@ -275,7 +275,7 @@ public class Controller_Chun {
 	@RequestMapping(value = "/sellInfo", method = RequestMethod.GET)
 	public ModelAndView sellInfo() {
 		mav = new ModelAndView();
-		mav.setViewName("ceoViews/sellInfo");
+		mav = pm.sellInfo();
 		return mav;
 	}
 	@RequestMapping(value = "/ceoRefundList", method = RequestMethod.GET)

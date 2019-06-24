@@ -251,7 +251,17 @@ public String memberTest(String testcode) {
 			System.out.println("11111111111"+mDao.memEmailSameChk(email,id));
 			System.out.println("22222222222"+email);
 			if(mDao.memEmailSameChk(email,id).equals(email)) {
-				
+				if (pw.length() < 20) {
+					pw = pwdEncoder.encode(pw);
+					System.out.println(pw);
+					if (mDao.modifyMemInfo(id, pw, name, tel, email, area)) {
+						str = "변경 완료";
+					}
+				}
+				System.out.println(pw);
+				if (mDao.modifyMemInfo(id, pw, name, tel, email, area)) {
+					str = "변경 완료";
+				}
 			}else {
 				str = "등록된 이메일 입니다.";
 			}

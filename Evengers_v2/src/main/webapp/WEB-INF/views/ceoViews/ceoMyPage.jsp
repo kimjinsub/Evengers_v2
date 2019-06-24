@@ -24,7 +24,15 @@
 <link
 	href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css"
 	rel="stylesheet">
+<style >
+#user{
+margin-right: 15px;
+margin-top: 30px;
+color:#8A0829;
+font-size: medium;
 
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -66,7 +74,7 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-						<div id="ceoRefundList" onclick="Ajax_forward('ceoRefundList')">
+						<div id="sellInfo" onclick="Ajax_forward('sellInfo')">
 							<a class="collapse-item" href="#">이벤트 판매 내역</a>
 						</div>
 						<div id="estSellPage" onclick="Ajax_forward('estSellPage')">
@@ -154,6 +162,7 @@
 									</div>
 								</form>
 							</div></li>
+							 <h2 id="user" align="center">${id}님 안녕하세요</h2>
 						<div class="topbar-divider d-none d-sm-block"></div>
 						<li class="nav-item"><a class="nav-link" href="./"><span
 								class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로 가기</span></a></li>

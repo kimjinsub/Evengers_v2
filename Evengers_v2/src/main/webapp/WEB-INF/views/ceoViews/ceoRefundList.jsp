@@ -43,13 +43,57 @@ table.type08 td {
 	color:red;
 	text-align: center;
 }
+
+.refundBtn {
+	-moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+	-webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+	background:-moz-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:-webkit-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:-o-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:-ms-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e',GradientType=0);
+	background-color:#7892c2;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:19px;
+	padding:8px 30px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+.refundBtn:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
+	background:-moz-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:-webkit-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:-o-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:-ms-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2',GradientType=0);
+	background-color:#476e9e;
+}
+.refundBtn:active {
+	position:relative;
+	top:1px;
+}
+.table table-striped{
+   display:table-cell;
+   vertical-align:middle;
+}
 </style>
 </head>
 <body>
 <h1>환불 요청 페이지</h1>
 <div >
 	<div id="eList2" style="width:10%; float: left;">
-		<table border="1" class="type08" style="width: 100%;">
+		<table border="1" class='table table-striped' style="width: 100%;">
 			<thead>
 			<tr align="center">
 				<th>상품이름</th>
@@ -57,8 +101,8 @@ table.type08 td {
 			</thead>
 		 <tbody>
 			<c:forEach var="event" items="${eList2}">
-				<tr align="center"class="type08">
-					<td height="50px">${event.e_name }</td>
+				<tr align="center"height="60px">
+					<td height="70px">${event.e_name }</td>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -66,7 +110,7 @@ table.type08 td {
 	</div>
 
 	<div id="epList2" style="width: 35%; float: left;">
-		<table border="1" class="type08" style="width: 100%;">
+		<table border="1" class='table table-striped' style="width: 100%;">
 			<thead>
 				<tr align="center">
 					<th >구매자</th>
@@ -81,16 +125,15 @@ table.type08 td {
 					pattern="yyyy-MM-dd" />
 				<fmt:formatDate var="dday" value="${eventpay.ep_dday }"
 					pattern="yyyy-MM-dd" />
-				<tr align="center">
-					<td  height="50px">${eventpay.m_id }</td>
-					<td  height="50px">${eventpay.ep_total }
+				<tr align="center" height="60px">
+					<td  height="70px">${eventpay.m_id }</td>
+					<td  height="70px">${eventpay.ep_total }
 					<input type="hidden" value="${eventpay.ep_total }"id="${eventpay.ep_code }"/>
 					</td>
-					<td height="50px">${payday }</td>
-					<td height="50px">${dday }
+					<td height="70px">${payday }</td>
+					<td height="70px">${dday }
 					<input type="hidden"class="dday"value="${dday}"name="${eventpay.ep_code }"></td>
 				</tr>
-				
 			</c:forEach>
 			</tbody>
 		</table>
@@ -98,9 +141,9 @@ table.type08 td {
 
 
 	<div id="erList" style="width: 55%; float: right;">
-		<table border="1" class="type08"style="width: 100%;">
+		<table border="1" class='table table-striped' style="width: 100%;">
 			<thead>
-				<tr align="center">
+				<tr align="center" >
 					<th >환불요청일자</th>
 					<th >몇일전</th>
 					<th>위약금(%)</th>
@@ -112,17 +155,17 @@ table.type08 td {
 			<c:forEach var="eventrefund" items="${erList}">
 				<fmt:formatDate var="refunddate"
 					value="${eventrefund.er_refunddate}" pattern="yyyy-MM-dd" />
-					<tr align="center">
-					<td  height="50px">${refunddate}<textarea
+					<tr align="center" height="60px">
+					<td  height="70px">${refunddate}<textarea
 							id="${eventrefund.ep_code}" name="${refunddate}" class="textarea"></textarea></td>
 					<td ><div id="${eventrefund.ep_code}"></div></td>
-					<td  height="50px"><input class="er_panalty"
+					<td  height="70px"><input class="er_panalty"
 						type="number" min="0" max="100" value="0"
 						id="${eventrefund.ep_code}"></td>
 
-					<td  height="50px"><input class="er_total"
+					<td  height="70px"><input class="er_total"
 						type="number" name="${eventrefund.ep_code}" readonly></td>
-					<td  height="50px"><button class="refundBtn"
+					<td  height="70px"><button class="refundBtn"
 							name="${eventrefund.ep_code}">완료</button></td>
 				</tr>
 				<textarea class="hiddenclass" name="${eventrefund.ep_code}"></textarea>
@@ -130,7 +173,7 @@ table.type08 td {
 			</tbody>
 		</table>
 	</div>
-</div><br><h6><strong id="span" > <  위약금 소수점자리 이하는 버림입니다. ></strong></h6>	
+</div>
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script >

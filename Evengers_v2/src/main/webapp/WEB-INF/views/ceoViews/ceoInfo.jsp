@@ -20,7 +20,7 @@ table.type09 thead th {
     border-bottom: 3px solid #036;
 }
 table.type09 tbody th {
-    width: 200px;
+    width: 180px;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
@@ -30,7 +30,7 @@ table.type09 tbody th {
     font-size: 20px;
 }
 table.type09 td {
-    width: 350px;
+    width: 300px;
     padding: 10px;
     vertical-align: top;
     border-bottom: 1px solid #ccc;
@@ -43,19 +43,17 @@ table.type09 td {
 <table border="1" class="type09">
 <thead><tr><th colspan="2"><h3>사업가 정보</h3></th></tr></thead>
 <tbody>
-<tr><th>아이디 :</th><td>${ceo.c_id}</td></tr>
-<tr><th>사업자 등록 번호 :</th><td>${ceo.c_rn}</td></tr>
-<tr><th>회사명 :</th><td>${ceo.c_name}</td></tr>
+<tr><th>아이디 </th><td>${ceo.c_id}</td></tr>
+<tr><th>사업자 등록 번호 </th><td>${ceo.c_rn}</td></tr>
+<tr><th>회사명 </th><td>${ceo.c_name}</td></tr>
 </tbody>
 </table>
-<br>
 <hr>
-<br>
 <table border="1" class="type09">
 <thead><tr><th colspan="2"><h3>연락처 정보</h3></th></tr></thead>
 <tbody>
-<tr><th>회사 전화 번호 :</th><td>${ceo.c_tel}</td></tr>
-<tr><th>이메일:</th><td>${ceo.c_email}</td></tr>
+<tr><th>회사 전화 번호 </th><td>${ceo.c_tel}</td></tr>
+<tr><th>이메일</th><td>${ceo.c_email}</td></tr>
 </tbody>
 </table>
 </body>

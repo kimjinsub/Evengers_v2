@@ -2,6 +2,7 @@ package com.event.evengers_v2.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -9,6 +10,7 @@ import com.event.evengers_v2.bean.BuySelectedOption;
 import com.event.evengers_v2.bean.EstimatePay;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventBuy;
+import com.event.evengers_v2.bean.EventOption;
 import com.event.evengers_v2.bean.EventPay;
 import com.event.evengers_v2.bean.EventPaySelectedOption;
 import com.event.evengers_v2.bean.EventRefund;
@@ -95,5 +97,13 @@ public interface PayDao {
 	boolean ceoRefundBtnEstp(@Param("estp_code")String estp_code, @Param("estp_penalty")int estp_penalty);
 
 	boolean updateEstpRefundState(@Param("estp_code")String estp_code, @Param("estp_refundstate")int estp_refundstate);
+
+	List<Event> myEvtList(@Param("c_id")String id);
+
+	ArrayList<EventPaySelectedOption> epsList(@Param("ep_code")String ep_code);
+
+	EventOption eoList(@Param("eo_code")String eo_code);
+
+	ArrayList< EventPay> epOneList(String e_code);
 
 }
