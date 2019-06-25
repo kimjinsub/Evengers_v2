@@ -45,14 +45,16 @@ public class PayMM {
       String m_id=session.getAttribute("id").toString();
       eb.setM_id(m_id);
       eb.setEb_total(Integer.parseInt(request.getParameter("eb_total")));
-      String dday=request.getParameter("eb_dday").replace("T", " ");
+      //String dday=request.getParameter("eb_dday").replace("T", " ");
+      String dday=request.getParameter("eb_dday");
       boolean buy=false;
       try {
          eb.setEb_dday(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dday));
          Event e=eDao.getEvtInfo(request.getParameter("e_code"));
          SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-         Date selected_dday= format1.parse(request.getParameter("eb_dday")
-               .substring(0, request.getParameter("eb_dday").indexOf("T")));
+         //Date selected_dday= format1.parse(request.getParameter("eb_dday")
+         //		.substring(0, request.getParameter("eb_dday").indexOf("T")));
+         Date selected_dday= format1.parse(request.getParameter("eb_dday"));
          Date today = new Date();
          today=format1.parse(format1.format(today));
          long diff=selected_dday.getTime()-today.getTime();

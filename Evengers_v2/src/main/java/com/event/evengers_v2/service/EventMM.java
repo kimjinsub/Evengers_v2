@@ -325,7 +325,8 @@ public class EventMM {
 		try {
 			Event e=eDao.getEvtInfo(e_code);
 			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-			Date selected_dday= format1.parse(dday.substring(0, dday.indexOf("T")));
+			//Date selected_dday= format1.parse(dday.substring(0, dday.indexOf("T")));
+			Date selected_dday= format1.parse(dday);
 			Date today = new Date();
 			today=format1.parse(format1.format(today));
 			long diff=selected_dday.getTime()-today.getTime();
@@ -619,6 +620,14 @@ public class EventMM {
 		String c_id=e.getC_id();
 		Ceo c=mDao.ceoInfo(c_id);
 		HashMap <String,Object> result=new HashMap<String, Object>();
+		int reviewCount=eDao.getReviewCount(e_code);
+		if(reviewCount>0) {
+			DecimalFormat format = new DecimalFormat(".#");
+			float starAverage=eDao.getStarAverage(e_code);
+			String starAvg = format.format(starAverage);
+			result.put("starAverage",starAvg);
+			result.put("reviewCount",reviewCount);
+		}
 		result.put("event", e);
 		result.put("ceo", c);
 		return new Gson().toJson(result);

@@ -179,4 +179,7 @@
 		resultType="eventimage">
 		SELECT * FROM EI WHERE E_CODE=#{e_code}
 	</select>
+	<select id="getReviewCount" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM RE WHERE E_CODE=#{e_code}
+	</select>
 </mapper>

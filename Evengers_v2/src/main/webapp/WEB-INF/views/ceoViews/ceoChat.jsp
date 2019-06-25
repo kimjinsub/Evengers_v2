@@ -47,7 +47,8 @@ input[type=button]{
 <hr>
 <h2>상담요청자 ID:<span></span></h2>
 <textarea id="monitor" rows="20" disabled="disabled"></textarea><br/>
-<input id="msg" type="text" placeholder="메세지를 입력하세요"/><br/>
+<input id="msg" type="text" placeholder="메세지를 입력하세요"
+	onkeypress="enterKey()"/><br/>
 <div id="connected">
 	<input type="button" value="전송" onclick="sendMsg()"/>
 	<input type="button" value="현재상담종료" onclick="ceoDisConnMsg()"/>
@@ -55,6 +56,11 @@ input[type=button]{
 <input type="button" value="상담  끝내기" onclick="finishChat()"/>
 </body>
 <script>
+function enterKey(){
+	if(window.event.keyCode==13){
+		sendMsg();
+	}
+}
 var sock = new SockJS("webSocket")
 var content = document.getElementById("monitor");
 var receiver="";

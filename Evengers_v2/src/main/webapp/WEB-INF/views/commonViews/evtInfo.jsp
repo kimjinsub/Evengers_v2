@@ -314,7 +314,7 @@ margin: auto; height:50px; text-align: center; position: absolute;
 						</tr>
 						<tr>
 							<td>이벤트날짜</td>
-							<td><input type="datetime-local" /><span id="dateMsg"></span></td>
+							<td><div id="datepicker"></div><span id="dateMsg"></span></td>
 							<!-- 2019-12-31T12:59 형식으로 받아짐-->
 						</tr>
 						<tr>
@@ -399,6 +399,21 @@ margin: auto; height:50px; text-align: center; position: absolute;
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+datePicker();
+function datePicker(){
+var date = new Date();
+$.ajax({
+	url:"datePicker",
+	data:{date:date,type:"yyyyMMddhhmm"},
+	dataType:"text",
+	success:function(result){
+		$("#datepicker").html(result);
+	},
+	error:function(error){
+		console.log(error);
+	}
+})
+}
 function memberChat(receiver){
 	$.ajax({
 		url:"checkDoubleChat",
@@ -459,13 +474,17 @@ function memberChat(receiver){
 			}
 		})
 	}
-	$("input[type=datetime-local]").change(function() {
+	$("#datepicker").change(function() {
 		effectiveness();
 	})
 	function effectiveness() {
-		var dday = $("input[type=datetime-local]").val();
-		console.log("dday=", dday);
-		console.log("e_code", "${eb.e_code}");
+		//var dday = $("input[type=datetime-local]").val();
+		var yyyy=$("#datepicker #yyyy").val();
+		var MM=$("#datepicker #MM").val();
+		var dd=$("#datepicker #dd").val();
+		var hh=$("#datepicker #hh").val();
+		var mm=$("#datepicker #mm").val();
+		var dday=(yyyy+"-"+MM+"-"+dd+" "+hh+":"+mm);
 		$.ajax({
 			url : "effectiveness",
 			data : {
@@ -485,7 +504,13 @@ function memberChat(receiver){
 		var evtBuy = new FormData;
 		evtBuy.append("e_code", "${eb.e_code}");
 		evtBuy.append("eb_total", $("#totalPrice").val());
-		evtBuy.append("eb_dday", $("input[type=datetime-local]").val());
+		//evtBuy.append("eb_dday", $("input[type=datetime-local]").val());
+		var yyyy=$("#datepicker #yyyy").val();
+		var MM=$("#datepicker #MM").val();
+		var dd=$("#datepicker #dd").val();
+		var hh=$("#datepicker #hh").val();
+		var mm=$("#datepicker #mm").val();
+		evtBuy.append("eb_dday", yyyy+"-"+MM+"-"+dd+" "+hh+":"+mm);
 		if (!jQuery.isEmptyObject(getSelectedOptions())) {
 			//옵션을 선택하지 않았다면(배열이 비었으면) true지만 !라서 false,,
 			evtBuy.append("eo_code", getSelectedOptions());

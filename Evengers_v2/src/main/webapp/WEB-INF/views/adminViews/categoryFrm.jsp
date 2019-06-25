@@ -11,7 +11,6 @@
 <meta charset="UTF-8">
 <style>
 .deleteCategory{
-	border: 1px solid black;
 	cursor: pointer;
 	size: 3px;
 }
@@ -22,65 +21,39 @@
 	overflow: auto; text-align:center;
     top:50%; left:50%;
     transform: translate(-50%, -50%);
+	font-family: "Nanum Gothic", sans-serif; font-size: 30px;
 }
-body{
-	font-family: "Nanum Gothic", sans-serif; font-size: 23px;
+#categories{
+	font-family: "Nanum Gothic", sans-serif; font-size: 20px;
+	text-align: center; vertical-align: middle;
 }
-#categorySetting,#categorySetting *,.font{
-	font-family: "Nanum Gothic", sans-serif; font-size: 23px;
+input[type=text]{
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: "Nanum Gothic", sans-serif; font-size: 20px;
 }
-/* #datepicker select{
-	width:60px;
+#addCategory{
+	padding:15px 15px;
 }
-#datepicker select[id=yyyy]{
-	width:75px;
-} */
 </style>
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
 <div id="categorySetting">
-	<h2 style="text-decoration: underline; margin-bottom: 5%;">카테고리 설정</h2>
-	<div class="fontSetting" id="categories"></div>
-	<input type="text" id="inserted"/><button class="addBtn glyphicon" id="addCategory"><p class="font">카테고리 추가</p></button>
-	<!-- <div id="selectZone"></div> -->
+	<h2 style="margin-bottom: 5%;">카테고리 설정</h2>
+	<table class="table table-condensed" id="categories"></table>
+	<input type="text" class="" id="inserted"/>
+	<button class="btn btn-success" id="addCategory">카테고리 추가</button>
 </div>
-<div id="datepicker" style="border:1px solid black; width:300px; height:300px;
-position:fixed;top:70%;left:70%;"></div>
-
 </body>
 <script>
-function test(){
-	var yyyy=$("#datepicker #yyyy").val();
-	console.log("yyyy:",yyyy);
-	var MM=$("#datepicker #MM").val();
-	console.log("MM:",MM);
-	var dd=$("#datepicker #dd").val();
-	console.log("dd:",dd);
-	var hh=$("#datepicker #hh").val();
-	console.log("hh:",hh);
-	var mm=$("#datepicker #mm").val();
-	console.log("mm:",mm);
-}
-function datePicker(){
-	var date = new Date();
-	$.ajax({
-		url:"datePicker",
-		data:{date:date,type:"yyyyMMddhhmm"},
-		dataType:"text",
-		success:function(result){
-			$("#datepicker").html(result);
-			$("#datepicker").append("<button onclick='test()'>확인하기</button>");
-		},
-		error:function(error){
-			console.log(error);
-		}
-	})
-}
 $(document).ready(function(){
 	getCategoryList();
-	datePicker();
-	//selectCategory();
 });
 function getCategoryList(){
 	$.ajax({
@@ -89,9 +62,13 @@ function getCategoryList(){
 		success:function(result){
 			var str="";
 			for(var i in result){
-				str+="<div>"+result[i].ec_name
-					+"<button class='deleteCategory'"
-					+" onclick='deleteCategory(\""+result[i].ec_name+"\")'>삭제</button></div>";
+				str+="<tr>"
+					+"	<td>"+result[i].ec_name+"</td>"
+					+"	<td>"
+					+"		<button class='deleteCategory btn btn-danger' "
+					+"		onclick='deleteCategory(\""+result[i].ec_name+"\")'>삭제</button>"
+					+"	</td>";
+					+"</tr>";
 			}
 			$("#categories").html(str);
 		},

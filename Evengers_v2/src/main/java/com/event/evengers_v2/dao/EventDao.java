@@ -97,4 +97,6 @@ public interface EventDao {
 	
 	public List<EventImage> getEvtImg(String e_code);
 
+	public int getReviewCount(String e_code);
+
 }
