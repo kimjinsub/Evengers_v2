@@ -43,7 +43,7 @@ table.type09 td {
 <body>
     
 <h1>내정보</h1><br>
-<table border="1" class="type09">
+<table  class="type09">
 <thead><tr><th colspan="2"><h3>-  프로필</h3></th></tr></thead>
 <tbody>
 <tr><th>이름 </th><td>${mb.m_id}</td></tr>
@@ -52,7 +52,7 @@ table.type09 td {
 </tbody>
 </table>
 <hr>
-<table border="1" class="type09">
+<table  class="type09">
 <thead><tr><th colspan="2"><h3>-  연락처 정보</h3></th></tr></thead>
 <tbody>
 <tr><th>이메일 </th><td>${mb.m_email}</td></tr>

@@ -466,4 +466,11 @@ public class Controller_Chun {
 		String json_briefInfo = em.briefInfo(e_code);
 		return json_briefInfo;
 	}
+	@RequestMapping(value = "/epOption",produces = "application/json; charset=utf8")
+	public @ResponseBody String epOption(String ep_code) {
+		
+		String json_epOption =pm.epOption(ep_code);
+		
+		return json_epOption;
+	}
 }

@@ -67,7 +67,7 @@ public interface EventDao {
 
 	public Event myEvtModify(String e_code);
 
-	public String ei_sysFileName(String e_code);
+	public List<String> ei_sysFileName(String e_code);
 
 	public boolean noFiNoOpModify(Event eb);
 

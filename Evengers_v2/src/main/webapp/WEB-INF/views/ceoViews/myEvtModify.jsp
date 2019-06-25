@@ -47,9 +47,9 @@ input.option-add {
 </head>
 <body>
    
-   <table  width="700" align="center"class='table table-striped'>
+   <table width="700" align="center"class='table table-striped'>
 		<tr>
-			<td colspan="3" align="center"><h4>이벤트 상품 등록</h4></td>
+			<td colspan="3" align="center"><h4>이벤트 상품 수정</h4></td>
 		</tr>
 		<tr>
 			<td>상품명</td>
@@ -76,8 +76,8 @@ input.option-add {
 			<td>옵션</td>
 			<td><div id="option1">${evtOption}</div>
 				<div id="option2">
-					<div id="add"><input type="text" style="width: 98%" class="option_name" placeholder="내용">
-					<input type="number" style="width: 98%" class="option_price" placeholder="가격"></div>
+					<div id="add"><input type="text"  class="option_name" placeholder="내용">
+					<input type="number"  class="option_price" placeholder="가격"></div>
 					<input type="button" onclick='addOption()' class="option-add" 
 					id="e_option">
 				</div>
@@ -113,8 +113,12 @@ input.option-add {
 		</tr>
 		<tr>
 			<td>이벤트 첨부 사진</td>
-			<td><div id="ei_sysFileNameDiv1"><img src="upload/eventImage/${ei_sysFileName}" / width="100"
-				height="100"></div>
+			<td><div id="ei_sysFileNameDiv1">
+			<c:forEach var="ei_sysFileName" items="${ei_sysFileName}">
+			<img src="upload/eventImage/${ei_sysFileName}" / width="100"
+				height="100">
+			</c:forEach>
+				</div>
 				<div id="ei_sysFileNameDiv2">
 					<input type="file" name="ei_files" id="ei_files" 
 						onchange="fileChk(this)" multiple/>
@@ -124,8 +128,8 @@ input.option-add {
 		</tr>
 		<tr>
 			<td>글 내용</td>
-			<td><div id="e_contentsDiv1"><textarea name="e_contents" style="width: 98%" id="e_contents1" rows="5" readonly>${event.e_contents}</textarea></div>
-				<div id="e_contentsDiv2"><textarea name="e_contents" style="width: 98%" id="e_contents2" rows="5"></textarea></div>
+			<td><div id="e_contentsDiv1"><textarea name="e_contents" style="width: 98%" id="e_contents1" rows="10" readonly>${event.e_contents}</textarea></div>
+				<div id="e_contentsDiv2"><textarea name="e_contents" style="width: 98%" id="e_contents2" rows="10"></textarea></div>
 			</td>
 			<td><button class='button_base b01_simple_rollover'onclick="e_contentsModify()">글내용 수정</button></td>
 		</tr>	
@@ -280,7 +284,8 @@ input.option-add {
 		console.log("환불가능일:" + e_refunddate);
 
 		if ($("#e_contents2").val() == "") {
-			var e_contents = "${event.e_contents}";
+			var e_contents = $('#e_contents1').val();
+
 		} else {
 			e_contents = $("#e_contents2").val();
 		}

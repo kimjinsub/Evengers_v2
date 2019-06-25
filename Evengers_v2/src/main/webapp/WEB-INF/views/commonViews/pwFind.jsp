@@ -101,10 +101,21 @@ function pwChange(){
 		data:{id:id,pwMo1:pwMo1,pwMo2:pwMo2},
 		dataType:"text",
 		success:function(data){
-			/* $('#com').text(data); */
-			alert(data);
-			if(pwMo1==pwMo2){
-				location.href="./";
+			if(data=="비밀번호가 일치 하지않습니다."){
+				swal({
+					title: "Warning!",
+					text:  data,
+					icon: "warning",
+				})
+			}else{
+				swal({
+					title: "Success!",
+					text:  data,
+					icon: "success",
+				})
+				. then (function () { 
+					window.location.href = "./";
+				});
 			}
 			
 		},
@@ -114,4 +125,6 @@ function pwChange(){
 	});
 }
 </script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </html>

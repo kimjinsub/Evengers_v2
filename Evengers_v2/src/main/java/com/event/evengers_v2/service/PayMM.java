@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -506,50 +508,76 @@ public class PayMM {
       return msg;
    }
    public ModelAndView sellInfo() {
-      mav = new ModelAndView();
-      String view = null;
-      String id= (String) session.getAttribute("id");
-      List<Event> eList= new ArrayList<Event>();
-      ArrayList<EventPay> epList = new ArrayList<EventPay>();
-      ArrayList<EventPaySelectedOption> epsList = new ArrayList<EventPaySelectedOption>();
-      ArrayList<EventOption> eoList = new ArrayList<EventOption>();
-      if (eDao.ceoEvtList2(id) != null) {
-         eList = eDao.ceoEvtList2(id);
+	      mav = new ModelAndView();
+	      String view = null;
+	      String id= (String) session.getAttribute("id");
+	      List<Event> eList= new ArrayList<Event>();
+	      ArrayList<EventPay> epList = new ArrayList<EventPay>();
+	      ArrayList<EventPaySelectedOption> epsList = new ArrayList<EventPaySelectedOption>();
+	      ArrayList<EventOption> eoList = new ArrayList<EventOption>();
+	      if (eDao.ceoEvtList2(id) != null) {
+	         eList = eDao.ceoEvtList2(id);
 
-         for (int i = 0; i < eList.size(); i++) {
-            Event e = eList.get(i);
-            String e_code = e.getE_code();
-            if (payDao.epOneList(e_code) != null) {
-               epList.addAll(payDao.epOneList(e_code));
-            }
-         }
-      }
-      for (int j = 0; j < epList.size(); j++) {
-         EventPay ep = epList.get(j);
-         System.out.println("ep: " + ep);
-         String ep_code = ep.getEp_code();
-         if (payDao.epsList(ep_code) != null) {
-            epsList.addAll(payDao.epsList(ep_code));
-         }
-      }
-      for (int k = 0; k < epsList.size(); k++) {
-         EventPaySelectedOption eps = epsList.get(k);
-         System.out.println("eps: " + eps);
-         String eo_code = eps.getEo_code();
-         if (payDao.eoList(eo_code) != null) {
-            eoList.add(payDao.eoList(eo_code));
-         }
-      }
-      System.out.println("=============================");
-      System.out.println("eList: "+eList.size());
-      System.out.println("epList: "+epList.size());
-      System.out.println("epsList: "+epsList.size());
-      System.out.println("eoList: "+eoList.size());
-      System.out.println("=============================");
-      mav.addObject("epList", epList);
-      mav.addObject("epsList", epsList);
-      mav.addObject("eoList", eoList);
-      mav.setViewName("ceoViews/sellInfo");
-      return mav;
-   }
-}
+	         for (int i = 0; i < eList.size(); i++) {
+	            Event e = eList.get(i);
+	            String e_code = e.getE_code();
+	            if (payDao.epOneList(e_code) != null) {
+	               epList.addAll(payDao.epOneList(e_code));
+	            }
+	         }
+	      }
+	      for (int j = 0; j < epList.size(); j++) {
+	         EventPay ep = epList.get(j);
+	         System.out.println("ep: " + ep);
+	         String ep_code = ep.getEp_code();
+	         if (payDao.epsList(ep_code) != null) {
+	            epsList.addAll(payDao.epsList(ep_code));
+	         }
+	      }
+	      for (int k = 0; k < epsList.size(); k++) {
+	         EventPaySelectedOption eps = epsList.get(k);
+	         System.out.println("eps: " + eps);
+	         String eo_code = eps.getEo_code();
+	         if (payDao.eoList(eo_code) != null) {
+	            eoList.add(payDao.eoList(eo_code));
+	         }
+	      }
+	      System.out.println("=============================");
+	      System.out.println("eList: "+eList.size());
+	      System.out.println("epList: "+epList.size());
+	      System.out.println("epsList: "+epsList.size());
+	      System.out.println("eoList: "+eoList.size());
+	      System.out.println("=============================");
+	      mav.addObject("epList", epList);
+	      mav.addObject("epsList", epsList);
+	      mav.addObject("eoList", eoList);
+	      Map<String,Object> resultMap= new HashMap<String, Object>();
+	      resultMap.put("epList",epList );
+	      resultMap.put("epsList",epsList );
+	      resultMap.put("eoList",eoList );
+	      mav.addObject("resultMap", resultMap);
+	      mav.setViewName("ceoViews/sellInfo");
+	      return mav;
+	   }
+
+		public String epOption(String ep_code) {
+			String json_result = "";
+			ArrayList<EventPaySelectedOption> epsList = new ArrayList<EventPaySelectedOption>();
+			ArrayList<EventOption> eoList = new ArrayList<EventOption>();
+			if (payDao.epsList(ep_code) != null) {
+				epsList.addAll(payDao.epsList(ep_code));
+			}
+			for (int k = 0; k < epsList.size(); k++) {
+		         EventPaySelectedOption eps = epsList.get(k);
+		         System.out.println("eps: " + eps);
+		         String eo_code = eps.getEo_code();
+		         if (payDao.eoList(eo_code) != null) {
+		            eoList.add(payDao.eoList(eo_code));
+		         }
+		      }
+			System.out.println(eoList);
+			Gson gson = new Gson();
+			json_result = gson.toJson(eoList);
+			return json_result;
+		}
+	}

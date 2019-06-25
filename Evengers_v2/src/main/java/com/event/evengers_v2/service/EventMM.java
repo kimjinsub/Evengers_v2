@@ -370,7 +370,7 @@ public class EventMM {
 		mav = new ModelAndView();
 		String view = null;
 		Event event = eDao.myEvtModify(e_code);
-		String ei_sysFileName =eDao.ei_sysFileName(e_code);
+		List<String> ei_sysFileName =eDao.ei_sysFileName(e_code);
 		System.out.println("ei_sysFileName"+ei_sysFileName);
 		List<EventOption> evtOption=new ArrayList<EventOption>();
 		evtOption= eDao.getOption(e_code);

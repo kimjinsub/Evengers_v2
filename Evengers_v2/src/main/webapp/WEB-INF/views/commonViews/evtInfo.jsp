@@ -341,11 +341,11 @@ margin: auto; height:50px; text-align: center; position: absolute;
 						<h3 class="card-title">- 상세정보</h3>
 					</div>
 					<div class="card-body">
-						<c:forEach var="ei" items="${eiList}">
+						<div><c:forEach var="ei" items="${eiList}">
 							<img src="upload/eventImage/${ei.ei_sysfilename}" / width="250"
 								height="250">
-						</c:forEach>
-						${eb.e_contents}
+						</c:forEach></div>
+						<div style="">${eb.e_contents}</div>
 
 
 					</div>
@@ -643,7 +643,7 @@ function memberChat(receiver){
 			dataType : "text",
 			success : function(result) {
 				console.log(result);
-				if(result=="이미 등록된 리뷰가 있습니다."){
+				if(result=="이미 등록된 리뷰가 있습니다."||result=="구매 회원만 작성 가능합니다."){
 					swal({
 						title: "Warning!",
 						text:  result,

@@ -54,7 +54,7 @@ img {
   padding: 1em 2em;
   text-transform: inherit;
   transition: color 1s;
-   $color: #eea163;
+  $color: #eea163;
   color: $color;
   
   &:hover {

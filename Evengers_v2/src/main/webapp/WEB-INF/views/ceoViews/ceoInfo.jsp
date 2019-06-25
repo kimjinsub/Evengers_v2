@@ -42,7 +42,7 @@ table.type09 td {
 </head>
 <body>
 <h1>사업가 정보</h1><br>
-<table border="1" class="type09">
+<table  class="type09">
 <thead><tr><th colspan="2"><h3>사업가 정보</h3></th></tr></thead>
 <tbody>
 <tr><th>아이디 </th><td>${ceo.c_id}</td></tr>
@@ -51,7 +51,7 @@ table.type09 td {
 </tbody>
 </table>
 <hr>
-<table border="1" class="type09">
+<table  class="type09">
 <thead><tr><th colspan="2"><h3>연락처 정보</h3></th></tr></thead>
 <tbody>
 <tr><th>회사 전화 번호 </th><td>${ceo.c_tel}</td></tr>
