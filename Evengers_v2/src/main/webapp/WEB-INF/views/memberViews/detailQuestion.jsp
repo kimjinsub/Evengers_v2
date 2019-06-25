@@ -13,9 +13,6 @@
 #q_delete{
 cursor: pointer;
 }
-#listBody{
-margin-left: 100px;
-}
 #pageDown {
 	text-align: right;
 	float: right;
@@ -34,7 +31,7 @@ text-align: center;
 <div id="pageDown"  onclick="reset()">X</div>
 	<h3>문의 내용</h3>
 <div id="listBody">
-	<table border='1'>
+	<table class='table table-striped'>
 		<tr height="40">
 			<td bgcolor="black" style="color: white" align="center">글번호</td>
 			<td colspan="5">${question.q_code}</td>

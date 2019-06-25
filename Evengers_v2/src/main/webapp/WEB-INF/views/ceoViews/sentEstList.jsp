@@ -60,7 +60,7 @@ text-align: center;
 				var estList = data['estList'];
 				var reqList = data['reqList'];
 				//var paging =result['paging'];
-				var str = "<table id='et' class='table table-striped' border='1' align='center'><th scope='cols'>견적자 ID</th><th scope='cols'>견적제목</th><th scope='cols'>문의자아이디</th>";
+				var str = "<table id='et' class='table table-striped' align='center'><th scope='cols'>견적자 ID</th><th scope='cols'>견적제목</th><th scope='cols'>문의자아이디</th>";
 
 				for ( var i in estList) {
 					str += "<tr><td>" + estList[i].c_id + "</td><td>"

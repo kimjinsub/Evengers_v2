@@ -5,7 +5,7 @@
 <html>
 <head>
 <style>
-	#detail {
+#detail {
 	position:fixed;
 	top: 30px;
 	left: 35%;
@@ -15,18 +15,18 @@
 	margin-top:-30px;
 	margin-left: -150px;
 	float:left;
-	border: dashed;
+	border:groove;
 	 z-index: 101;
 	display: none;
 	overflow: auto;
 	overflow: scroll;
-	background-color: #FFFFFF;
-	margin-top: 30px;
-	}
+	background-color:buttonhighlight;
+}
 
-	#detail.open {
-		display: block;
-	}
+
+#detail.open {
+	display: block;
+}
 	
 table.reqList {
     border-collapse: separate;
@@ -106,7 +106,7 @@ function getReqList(pageNum,listCount) {	//기본적으로 보이는
 		success:function(result) {
 		var rList = result['rList'];
 		var paging =result['paging'];
-		var str = "<table class='table table-striped' id='reqList' border='1' align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
+		var str = "<table class='table table-striped' id='reqList'align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
 		for ( var i in rList) {
 			str += "<tr><td>" + rList[i].req_code + "</td><td>"
 						+ "<a href='#' onclick=evtReqInfo('"
