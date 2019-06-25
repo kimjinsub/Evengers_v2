@@ -30,7 +30,10 @@
 
 #estList{
 }
-
+.img{
+width:100px;
+height:100px;
+}
 </style>
 <body>
 	<h2 align="center">받은 견적 내역</h2>
@@ -50,14 +53,17 @@ function getRecivedEstList(pageNum,listCount) {
 		dataType : 'json',
 		data : {pageNum : pageNum ,listCount : listCount},
 		success : function(data) {
+			console.log(data.estiList);
 			console.log(data.estList);
 			var estList = data['estList'];
 			var reqList = data['reqList'];
+			var estiList = data['estiList'];
 			var paging =data['paging'];
-			var str = "<table class='table table-striped' id='et'  align='center'><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
+			var str = "<table class='table table-striped' id='et'  align='center'><th>이미지</th><th>견적자 ID</th><th>견적제목</th><th>총가격</th>";
 
-			for ( var i in estList) {
-				str += "<tr><td>" + estList[i].c_id + "</td><td>"
+			for ( var i in estiList) {
+				str += "<tr><td><img class='img' src='upload/estimateImage/"+estiList[i].esti_sysfilename+"'/>"
+				         + "<td>" + estList[i].c_id + "</td><td>"
 						+ "<a href='#' onclick=getDetailE('"
 						+ estList[i].est_code + "')>"
 						+ reqList[i].req_title+"</a></td><td>"
@@ -74,7 +80,7 @@ function getRecivedEstList(pageNum,listCount) {
 		}
 	})
 }
-
+//<td><img class='card-img-top img-fluid src='upload/estimateImage/'"+estiList[i].esti_sysfilename+"''/>
  function getDetailE(est_code){
 		$("#detail").addClass("open");
 		//$("#detail").click('#goCart',function(){

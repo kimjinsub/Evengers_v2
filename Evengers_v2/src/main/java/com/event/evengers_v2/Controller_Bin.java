@@ -134,6 +134,18 @@ public class Controller_Bin {
 		params.put("response",response);
 		rm.download1(params);
 	}
+	
+	@RequestMapping(value = "/download4", method = RequestMethod.GET) // get,post 모두 가능
+	public void download1(
+			@RequestParam Map<String,Object> params,
+			HttpServletResponse response ,HttpServletRequest req) throws Exception { // int를 쓰면 null값이 올 수 없기 때문에
+		System.out.println("of = " + params.get("oriFileName"));
+		System.out.println("sf = " + params.get("sysFileName"));
+		
+		params.put("root", req.getSession().getServletContext().getRealPath("/"));
+		params.put("response",response);
+		qm.download(params);
+	}
 	@RequestMapping(value = "/estPageFrm", produces = "application/json; charset=utf8")
 	public ModelAndView estPageFrm(HttpServletRequest req) {
 		String req_code=req.getParameter("req_code");
@@ -206,6 +218,7 @@ public class Controller_Bin {
 		params.put("response",response);
 		rm.download3(params);
 	}
+	
 	@RequestMapping(value = "/estpRefundRequest",method = RequestMethod.GET)
 	public ModelAndView estpRefundRequest(HttpServletRequest req) {
 		mav=new ModelAndView();

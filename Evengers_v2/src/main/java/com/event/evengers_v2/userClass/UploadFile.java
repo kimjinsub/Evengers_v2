@@ -121,6 +121,7 @@ public class UploadFile {
 			root = multi.getSession().getServletContext().getRealPath("/");
 			System.out.println("root=" + root);
 			path = root + "upload/questionImage/"; // 클린하면 폴더가 사라질수도 있어서 2번 실행
+			System.out.println("path="+path);
 			dir = new File(path);
 			if (!dir.isDirectory()) { // upload폴더 없다면
 				dir.mkdirs(); // upload폴더 생성

@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
 #detail {
-	position: fixed;
+	position:fixed;
 	top: 30px;
 	left: 35%;
 	width: 750px;
 	height: 650px;
 	padding: 2px;
-	margin-top: -30px;
+	margin-top:-30px;
 	margin-left: -150px;
-	float: left;
+	float:left;
 	border:groove;
 	 z-index: 101;
 	display: none;
@@ -24,30 +24,28 @@
 	margin-top: 30px;
 }
 
+
 #detail.open {
 	display: block;
 }
-
+	
 table.reqList {
-	border-collapse: separate;
-	border-spacing: 1px;
-	text-align: center;
-	line-height: 1.5;
-	margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 10px;
 }
-
 table.reqList th {
-	width: 155px;
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	color: #444444;
-	background: #ce4869;
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #444444;
+    background: #ce4869 ;
 }
 
-table {
-	float: left;
-}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -58,16 +56,15 @@ table {
 <body>
 
 	<h1 align="center">의뢰요청 목록</h1>
-
+	
 	<div align="center">
-		제목검색 : <input type="text" id="searchword" name="searchword"
-			onkeyup="searchajax(this.value)" /> <input type="button"
-			onclick=location.href= "./" value='홈으로'>
+		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
+		<input type="button" onclick=location.href="./" value='홈으로'>
 
-		<div id="list"></div>
-		<div id="detail"></div>
-		<div id="paging" align="center"></div>
-
+	<div id="list"></div>
+	<div id="detail"></div>
+	<div id="paging" align="center"></div>
+	
 	</div>
 </body>
 

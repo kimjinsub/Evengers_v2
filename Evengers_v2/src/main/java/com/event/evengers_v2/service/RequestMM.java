@@ -422,6 +422,7 @@ public class RequestMM {
 		ArrayList<Estimate> estList = new ArrayList<Estimate>();
 		ArrayList<Request> reqList = new ArrayList<Request>();
 		ArrayList<Request> reqList1 = new ArrayList<Request>();
+		ArrayList<EstimateImage> estiList= new ArrayList<EstimateImage>();
 		String id=session.getAttribute("id").toString();
 		int maxNum = rDao.getReceivedEstCount(id);
 	
@@ -441,9 +442,12 @@ public class RequestMM {
 		for(int i=0;i<estList.size();i++) {
 			Estimate est=new Estimate();
 			est=estList.get(i);
+			String est_code=est.getEst_code();
 			reqList1.add(rDao.getReqTitle(est));
+			estiList.add(rDao.getEstimateImage(est_code));
 		}
-		
+		 while (estiList.remove(null));
+		 System.out.println(estiList);
 		int pageCount = 2; // 그룹당 페이지 수
 		String boardName = "getRecivedEstList"; // 게시판이 여러개 일떄
 
@@ -452,6 +456,7 @@ public class RequestMM {
 		System.out.println("estList="+estList);
 		//reqList = rDao.getReqList();
 		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("estiList",estiList);
 		map1.put("estList", estList);
 		map1.put("reqList", reqList1);
 		map1.put("paging", paging);
@@ -703,12 +708,11 @@ public class RequestMM {
 			System.out.println("listtCount =" + listCount);	//10
 			
 			esList = rDao.getEstSell(map);
-		/*
-		 * for(int a=0 ; a<esList.size();a++) {
-		 * 
-		 * imgList.addAll(rDao.estSellImageList(esList.get(a))); //
-		 * System.out.println(imgList.get(a)); }
-		 */
+			for(int a=0 ; a<esList.size();a++) {
+				
+				imgList.addAll(rDao.estSellImageList(esList.get(a)));
+			//	System.out.println(imgList.get(a));
+			}
 			int pageCount = 2; // 그룹당 페이지 수
 			String boardName = "getEstpList"; // 게시판이 여러개 일떄
 

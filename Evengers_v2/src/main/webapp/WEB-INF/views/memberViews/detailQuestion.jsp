@@ -59,7 +59,7 @@ text-align: center;
 			</c:if> 
 			<c:if test="${!empty file}">
 				<c:forEach var="file" items="${qfList}">
-						<a href="download?oriFileName=${file.q_orifilename}
+						<a href="download4?oriFileName=${file.q_orifilename}
 										&sysFileName=${file.q_sysfilename}">
 							${file.q_orifilename}
 						</a>
