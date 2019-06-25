@@ -35,17 +35,21 @@
 				</h4>
 			</div>
 			<form name="perform" method="post" enctype="multipart/form-data" style="color: #757575;">
-  				<div class="input-group">
-  				<div class="input-group-prepend">
-    			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-  					</div>
-  				<div class="custom-file">
-    				<input type="file" name="emp_orifilename" id="emp_orifilename"
-							onchange="fileChk(this)" class="custom-file-input"
-							aria-describedby="inputGroupFileAddon01">
-    				<label class="custom-file-label" for="emp_orifilename">Choose file</label> 
-  					</div>
-				</div>
+			<div class="input-group">
+			<div class="input-group-prepend">
+      			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      			</div>
+			<input type="file" id="emp_orifilename" name="emp_orifilename" onchange="fileChk(this)" class="form-control"> 
+			</div>
+  				<!-- <div class="input-group">
+      			<div class="input-group-prepend">
+      			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      			</div>
+    			<div class="custom-file">
+      			<input type="file" id="emp_orifilename"  onchange="fileChk(this)" name="emp_orifilename" class="custom-file-input" >
+				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
+    			</div>
+     			</div> -->
 
 				<div class="md-form mt-3">
 					이름:<input type="text" name="emp_name" id="emp_name"

@@ -23,6 +23,9 @@
     margin-bottom: 0em;
     font-family: Montserrat, sans-serif;
 }
+#btnSearch{
+	height: 39px;
+}
 .input-group{
 	margin: auto;
 }
@@ -49,14 +52,17 @@
 </head>
 <jsp:include page="header.jsp"></jsp:include>
 <!-- jumbotron -->
-<div class="jumbotron text-center">
+ <div class="jumbotron text-center">
     <div class="input-group col-lg-4">
       <input type="text" class="form-control" size="50" onkeyup="enterkey();" placeholder="원하는 이벤트를 찾아보세요" name="evtSearch" id="evtSearch"required>
       <div class="input-group-btn">
-        <button type="button" class="btn btn-danger" name="btnSearch" id="btnSearch" onclick="searchEvt()" >검색</button>
+        <button type="button" class="btn btn-danger" name="btnSearch" id="btnSearch" onclick="searchEvt()" ><i class="fas fa-search" aria-hidden="true"></i></button>
       </div>
     </div>
 </div>
+
+
+
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#d1d1d1">

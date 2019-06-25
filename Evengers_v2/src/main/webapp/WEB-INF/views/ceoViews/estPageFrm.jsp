@@ -7,61 +7,72 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <style>
 #estTable{
 	align-content: center;
 	margin-top: 100px;
 }
+.form-control{
+	width:30%;
+}
+#h2{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+.card{
+	margin: auto;
+	width:30%;
+}
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/all.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/all.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/all.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
   <jsp:include page="../header.jsp"/>
-  
+  <div class="card">
+		<div class="card-body px-lg-5 pt-0">
   <form action="/" name="estFrm" id="estFrm" method="post" enctype="multipart/form-data" onsubmit="return est()">
   <div id="estTable">
-  <h1 align="center">견적 작성</h1>
-  <table border="1" align="center">
-  <tr>
-  <th>견적제목</th>
-  <td><input type="text" id="est_title" name="est_title" value="${request.req_title}"></td>
-  </tr>
-  <tr>
-  <th>견적내용</th>
-  <td><textarea rows="15" cols="30" id="est_contents" name="est_contents"></textarea></td>
-  </tr>
-  <tr>
-  <th>파일첨부</th> 
-  <td><input type="file" name="est_files" id="est_files" multiple>
-  </td></tr>
-  <tr>
-  <th>총 가격</th>
-  <td><input type="number" name="est_total" id="est_total"></td>
-  </tr>
-  <tr>
-  <th>승인 가능일</th>
-  <td><input type="number" name="est_okDate" id="est_okDate"></td>
-  </tr>
-  <tr>
-  <th>환불 가능일</th>
-  <td><input type="number" name="est_refundDate" id="est_refundDate">
-  </td>
-  </tr>
-  </table>
+  <h2 align="center" id="h2"><i class="fas fa-edit"></i>견적 작성</h2>
+  <div class="md-form mt-3">
+		견적제목:<input type="text" name="est_title" id="est_title"
+		value="${request.req_title}" class="form-control">
+  </div>
+  <div class="md-form mt-3">
+		견적내용:<textarea rows="15" cols="30" name="est_contents" id="est_contents" class="form-control"></textarea>
+  </div>
+  <div class="input-group">
+   	<div class="input-group-prepend">
+   	<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+   	</div>
+   	<div class="custom-file">
+   	<input type="file" name="est_files" id="est_files" multiple class="form-control">
+    </div>
+  </div>
+  <div class="md-form mt-3">
+		총가격:<input type="number" name="est_total" id="est_total" class="form-control">
+  </div>
+  <div class="md-form mt-3">
+		승인가능일:<input type="number" name="est_okDate" id="est_okDate" class="form-control">
+  </div>
+  <div class="md-form mt-3">
+		환불가능일:<input type="number" name="est_refundDate" id="est_refundDate" class="form-control">
+  </div>
   </div><br>
   <div align="center">
-  <input type="button" onclick="formData()" value="견적서 보내기">
- <input type="reset" id="rs" value="취소">
+  <input type="button" onclick="formData()" value="견적서 보내기" class="btn btn-outline-primary btn-rounded waves-effect">
+ <input type="reset" id="rs" value="취소" class="btn btn-outline-primary btn-rounded waves-effect">
  </div>
   </form>
-  
+  </div>
+  </div>
 </body>
 <script>
 $("#est_okDate").change(function() {

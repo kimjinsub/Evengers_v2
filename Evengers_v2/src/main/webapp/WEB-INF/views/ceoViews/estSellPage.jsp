@@ -65,7 +65,7 @@ function getEstpList(pageNum,listCount) {
 					//+ "사진 : <img src='upload/estimateImage/" + imgList[i].estpi_sysfilename + "'><br></td></tr>"
 					
 					}
-			str += "<input type='button' onclick=location.href='./' value='홈으로'></table>"
+			str += "<input type='button' onclick=location.href='./' value='홈으로' class='btn btn-outline-primary btn-rounded waves-effect'></table>"
 			$("#list").html(str);
 			$("#paging").html(paging);
 			

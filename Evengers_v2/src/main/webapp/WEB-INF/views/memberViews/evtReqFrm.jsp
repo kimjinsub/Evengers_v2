@@ -5,9 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/all.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/all.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+
 <style>
 #pageDown {
 	text-align: right;
@@ -17,11 +26,9 @@
 	font-size: x-large;
 	cursor: pointer;
 }
-
 #hh {
 	margin-top: 30px;
 }
-
 table.type08 {
 	border-collapse: collapse;
 	text-align: left;
@@ -76,37 +83,41 @@ table.type08 td {
 #articleView-layer.open{
 	display: block;
 }
+#h2{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+#wrap{
+	font-family: 'Nanum Gothic', sans-serif;
+}
 </style>
 
 </head>
-<body>
+<body id="wrap">
 	<div id="hh">
 		<div id="pageDown"  onclick="reset()">X</div>
-		<h1 id="hh" align="center">의뢰신청서</h1>
+		<h2 id="hh" align="center"><i class="fas fa-edit"></i>의뢰신청서</h2>
 	</div>
-	<form name="evtReqFrm" action="/" method="post"
-		enctype="multipart/form-data" onsubmit="return confirm()">
-		<table border="1" align="center" class="type08">
-			<tr>
-				<td scope="row">제목</td>
-				<td><input type="text" name="req_title" id="req_title"
-					placeholder="제목"></td>
-			</tr>
-
-			<tr>
-				<td scope="row">이벤트 카테고리</td>
-				<td><div id="selectZone"></div></td>
-			</tr>
-
-			<tr>
-				<td scope="row">사진첨부</td>
-				<td><input type="file" name="reqi_orifilename"
-					id="reqi_orifilename"></td>
-			</tr>
-
-			<tr>
-				<td scope="row">희망지역</td>
-				<td><select name="req_hopearea" id="req_hopearea">
+<div class="card">
+	<div class="card-body px-lg-5 pt-0">
+	<form name="evtReqFrm" action="/" method="post" enctype="multipart/form-data" onsubmit="return confirm()">
+		<div class="md-form mt-3">
+		제목:<input type="text" name="req_title" id="req_title"
+		placeholder="제목" class="form-control">
+  		</div>
+		<div class="md-form mt-3">
+		이벤트 카테고리:<div id="selectZone"></div>
+  		</div>
+  		<br>
+  		<div class="input-group">
+   			<div class="input-group-prepend">
+   			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+   			</div>
+   			<div class="custom-file">
+   			<input type="file" name="reqi_orifilename" id="reqi_orifilename" multiple class="form-control">
+    		</div>
+  		</div>
+		<div class="md-form mt-3">
+		희망지역:<select name="req_hopearea" id="req_hopearea" class="form-control">
 						<option selected="selected">선택하세요</option>
 						<option value="서울">서울</option>
 						<option value="인천">인천</option>
@@ -124,35 +135,24 @@ table.type08 td {
 						<option value="경남">경남</option>
 						<option value="경북">경북</option>
 						<option value="제주">제주</option>
-				</select></td>
-			</tr>
-
-			<tr>
-				<td scope="row">상세주소</td>
-				<td><input type="text" name="req_hopeaddr" id="req_hopeaddr"
-					placeholder="직접입력"></td>
-			</tr>
-
-			<tr>
-				<td scope="row">의뢰 날짜 및 시간</td>
-				<td scope="row"><input type="datetime-local"
-					name="req_hopedate" id="req_hopedate"></td>
-			</tr>
-
-
-			<tr>
-				<td scope="row">글내용</td>
-				<td id="1"><textarea name="req_contents" id="req_contents"
-						rows="15" cols="50"></textarea></td>
-			</tr>
-		</table>
-		<input type="button" onclick="formData()" value="의뢰신청하기"> <input
-			type="button" onclick="location.href='./'" value="홈으로"> <input
-			type="reset" id="rs" value="다시작성">
+				</select>
+  		</div>
+  		<div class="md-form mt-3">
+		상세주소:<input type="text" id="req_hopeaddr" name="req_hopeaddr" placeholder="직접입력" class="form-control">
+  		</div>
+  		<div class="md-form mt-3">
+		의뢰 날짜 및 시간:<input type="datetime-local" id="req_hopedate" name="req_hopedate" class="form-control">
+  		</div>
+  		<div class="md-form mt-3">
+		글내용:<textarea rows="15" cols="50" name="req_contents" id="req_contents" class="form-control"></textarea>
+  		</div>
+		<input type="button" onclick="formData()" value="의뢰신청하기" class="btn btn-outline-primary btn-rounded waves-effect"> 
+		<input type="button" onclick="location.href='./'" value="홈으로" class="btn btn-outline-primary btn-rounded waves-effect"> 
+		<input type="reset" id="rs" value="다시작성" class="btn btn-outline-primary btn-rounded waves-effect">
 	</form>
-
+	</div>
+	</div>
 	<div id="articleView-layer"></div>
-
 </body>
 
 <script>
@@ -190,7 +190,7 @@ table.type08 td {
 					success : function(result) {
 						console.log(result);
 						var str = "";
-						str += "<select name='e_category' id='e_category'><option selected='selected'>선택하세요</option>";
+						str += "<select name='e_category' id='e_category' class='form-control'><option selected='selected' >선택하세요</option>";
 						for ( var i in result) {
 							str += "<option value='"+result[i].ec_name+"'>"
 									+ result[i].ec_name + "</option>";
