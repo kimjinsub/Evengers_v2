@@ -93,6 +93,8 @@ public class Controller_Bin {
 	@RequestMapping(value = "/questionList")
 	public ModelAndView questionList() {
 		mav = new ModelAndView();
+		String id=session.getAttribute("id").toString();
+		mav.addObject("id",id);
 		mav.setViewName("memberViews/questionList");
 		return mav;
 	}

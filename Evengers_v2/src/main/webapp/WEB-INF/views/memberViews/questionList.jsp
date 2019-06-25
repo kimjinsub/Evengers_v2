@@ -73,7 +73,7 @@ margin-top:65px;
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
- <%-- <div id="member"><jsp:include page="../header.jsp"/></div> --%>
+  <div id="member"><jsp:include page="../header.jsp"/></div> 
 
 	<div id="header">1:1 문의내역</div>
 	<div id="list"></div>
@@ -83,7 +83,7 @@ margin-top:65px;
 <script>
 	$(document).ready(function() {
 		getQuestionList(1,10);
-		
+		checkAdmin();
 	});
 	
 	function getQuestionList(pageNum,listCount) {
@@ -150,5 +150,10 @@ margin-top:65px;
 			$layerWindows.removeClass('open');
 		}
 	});
+	function checkAdmin(){
+	if("${id}"!="admin"){
+	("#member").hide();	
+	}
+	}
 </script>
 </html>

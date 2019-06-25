@@ -8,6 +8,69 @@
 <title>Insert title here</title>
 </head>
 <style>
+
+.ok {
+	background: #1AAB8A;
+	color: #fff;
+	border: none;
+	position: relative;
+	height: 60px;
+	font-size: 1.6em;
+	padding: 0 2em;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
+}
+
+.ok:hover {
+	background: #fff;
+	color: #1AAB8A;
+}
+
+.ok:before, .ok:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #1AAB8A;
+	transition: 400ms ease all;
+}
+
+.ok:after {
+	right: inherit;
+	top: inherit;
+	left: 0;
+	bottom: 0;
+}
+
+.ok:hover:before, .ok:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
+}
+
+.button_base {
+	margin: 0;
+	border: 0;
+	font-size: 18px;
+	width: 180px;
+	height: 40px;
+	text-align: center;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+.button_base:hover {
+	cursor: pointer;
+}
+#member{
+margin-left: 180px;
+}
+
 #pageDown {
 	text-align: right;
 	float: right;
@@ -67,16 +130,22 @@ h3 {
 				</c:if></td>
 				<td style="color:black;" >${msg}</td>
 		</tr>
-		 
-		<tr id="member">
-			<td><input type="button" value="승인" 
-				onclick="location.href='estPay?est_code=${estimate.est_code}'"></td>
-			<td><input type="button" value="거절" 
-				onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'"></td>
+		
 			
-		</tr>
-		<tr>
 	</table>
+	
+		 <div id="member">
+			<button class="ok" value="승인" onclick="location.href='estPay?est_code=${estimate.est_code}'">승인</button>
+			<button class="ok" value="거절" onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'">거절</button>
+		</div>
+		
+	
+	
+		<%--  <div id="member">
+			<input type="button" class="ok" value="승인" onclick="location.href='estPay?est_code=${estimate.est_code}'">
+			<input type="button" value="거절" onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'">
+		</div> --%>
+		
 	
 
 </body>

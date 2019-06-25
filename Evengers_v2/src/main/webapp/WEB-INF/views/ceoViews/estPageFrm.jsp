@@ -98,7 +98,11 @@ function refundEffectiveness() {
 		dataType : "text",
 		success : function(result) {
 			if(result!="가능"){
-				alert("불가능합니다");
+				swal({
+		            title: "No!",
+		             text: "가능한 날짜가 아닙니다!",
+		             icon: "warning",
+		  });
 				var input = document.getElementById("est_refundDate");
 				input.value = null;
 			}
@@ -113,7 +117,11 @@ function effectiveness() {
 	var okDate = $("#est_okDate").val();
 	var refundDate = $("#est_refundDate").val();
 	if(okDate<0){
-		alert("불가능합니다");
+		swal({
+            title: "No!",
+             text: "가능한 날짜가 아닙니다!",
+             icon: "warning",
+  });
 		var input = document.getElementById("est_okDate");
 		input.value = null;
 	}
@@ -127,7 +135,11 @@ function effectiveness() {
 		success : function(result) {
 			$("#msg").html(result);
 			if(result!="가능"){
-				alert("불가능합니다");
+				swal({
+		            title: "No!",
+		             text: "가능한 날짜가 아닙니다!",
+		             icon: "warning",
+		  });
 				var input = document.getElementById("est_okDate");
 				input.value = null;
 			}
