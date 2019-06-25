@@ -8,14 +8,17 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link type="text/css" rel="stylesheet" 
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <style>
 table th{background-color: #96a9aa;}
 #schedule, #scheduleEst, #calendar{display: inline-block;}
 #insertEsFrm,#insertEstsFrm{
+	padding: 40px 10px 40px 10px;
 	border: 2px solid black;
-	width: 300px; height: 300px;
-	margin: auto; visibility: hidden;
-	position: fixed; top:10%; left: 40%;
+	width: 300px;/*  height: 300px; */
+	visibility: hidden;
+	position: fixed; top:50%; left: 50%;
+	transform: translate(-50%, -50%);
 	background-color: white;
 }
 #insertEsFrm.show,#insertEstsFrm.show{
@@ -32,11 +35,16 @@ table th{background-color: #96a9aa;}
 #est_assign,#est_noAssign{
 	/* display: inline-block; width: 80%; */
 }
+#closer{position:absolute; top:0%; right: 5%;}
 #Wrap{margin: auto;}
+#selectDept,#selectEstsDept{width:60%; display: inline-block;}
 #dayWrap,#deptWrap{margin: auto; display: inline-block;}
 #dayWrap *{margin: auto; display: inline-block;}
 #year{background: white;}
 #past,#future{cursor: pointer;}
+#estpInfo,#epInfo{
+	font-family: "Nanum Gothic", sans-serif;/*  font-size: 20px; */
+}
 </style>
 <title>일정관리</title>
 </head>
@@ -48,10 +56,10 @@ ${evtMsg}
 	${makeHtml_EpList}
 		<div id="insertEsFrm">
 			<p id="epInfo"></p>
-			부서 선택:<select id="selectDept"></select>
-			<button onclick="confirmDept()">선택완료</button>
-			<button onclick="rejectEvtPay()">이벤트 거절(100%환불)</button>
-			<p onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;">닫기</p>
+			<select class="form-control" id="selectDept"></select>
+			<button class="btn btn-success" onclick="confirmDept()">부서결정</button>
+			<button class="btn btn-warning" onclick="rejectEvtPay()">이벤트 거절(100%환불)</button>
+			<div id="closer" onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;"> X </div>
 		</div>
 	</div>
 </div>
@@ -63,10 +71,10 @@ ${estMsg}
 	${makeHtml_EstpList}
 		<div id="insertEstsFrm">
 			<p id="estpInfo"></p>
-			부서 선택:<select id="selectEstsDept"></select>
-			<button onclick="confirmEstsDept()">선택완료</button>
-			<button onclick="rejectEstPay()">이벤트(견적) 거절(100%환불)</button>
-			<p onclick="hideInsertEstsFrm()" style="cursor:pointer;color: red;">닫기</p>
+			<select class="form-control" id="selectEstsDept"></select>
+			<button class="btn btn-success" onclick="confirmEstsDept()">부서결정</button>
+			<button class="btn btn-warning" onclick="rejectEstPay()">이벤트(견적) 거절(100%환불)</button>
+			<div id="closer" onclick="hideInsertEstsFrm()" style="cursor:pointer;color: red;"> X </div>
 		</div>
 	</div>
 </div>
@@ -79,6 +87,7 @@ ${estMsg}
 </div>
 <div id="calendar"></div>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 console.log("estpList","${estpList}");
 console.log("estsList","${estsList}");
@@ -121,7 +130,17 @@ function rejectEvtPay(){
 		data:{ep_code:ep_code},
 		dataType:"text",
 		success:function(result){
-			alert(result);
+			if(result=="환불되었습니다"){
+				swal({
+					title : result,
+					icon : "success",
+				});
+			}else{
+				swal({
+					title : result,
+					icon : "warning",
+				});
+			}
 			location.href="javascript:Ajax_forward('scheduleManage')";
 		},
 		error:function(error){
@@ -136,7 +155,17 @@ function rejectEstPay(){
 		data:{estp_code:estp_code},
 		dataType:"text",
 		success:function(result){
-			alert(result);
+			if(result=="환불되었습니다"){
+				swal({
+					title : result,
+					icon : "success",
+				});
+			}else{
+				swal({
+					title : result,
+					icon : "warning",
+				});
+			}
 			location.href="javascript:Ajax_forward('scheduleManage')";
 		},
 		error:function(error){

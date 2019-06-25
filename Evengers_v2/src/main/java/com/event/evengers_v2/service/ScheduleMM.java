@@ -505,7 +505,8 @@ public class ScheduleMM {
 					+ "</tr>");
 		}
 		sb.append("</table>");
-		sb.append("<p style='text-align:right;' onclick='hideScheduleToday()'>[닫기]</p>");
+		sb.append("<p style='text-align:right;cursor:pointer;color:red;' "
+					+"onclick='hideScheduleToday()'>[닫기]</p>");
 		return sb.toString();
 	}
 }

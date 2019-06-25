@@ -333,16 +333,21 @@ public class EventMM {
 			long diffDays=diff/(24*60*60*1000);
 			System.out.println("날짜차이:"+diffDays+"일");
 			System.out.println("누가먼저?:"+selected_dday.compareTo(today));
+			
+			long diffAble=today.getTime()+(e.getE_reservedate()*(24*60*60*1000));
+			//long diffAbleDays=diffAble/(24*60*60*1000);
 			if(selected_dday.compareTo(today)>=1) {
 				//입력날짜(selected_dday)가 현재(today)보다 미래면 +1 과거면 -1 같으면0
 				if(diffDays>=e.getE_reservedate()) {
 					msg="<p id='possible'>가능한 날짜입니다</p>";
 				}
 				else {
-					msg="<p id='impossible'>불가능한 날짜입니다</p>";
+					msg="<p id='impossible'>불가능한 날짜입니다</p>"
+						+"<p>"+format1.format(diffAble)+"일 이후에 가능합니다.</p>";
 				}
 			}else {
-				msg="<p id='impossible'>불가능한 날짜입니다</p>";
+				msg="<p id='impossible'>불가능한 날짜입니다</p>"
+						+"<p>"+format1.format(diffAble)+"일 이후에 가능합니다.</p>";
 			}
 		} catch (ParseException e1) {
 			e1.printStackTrace();

@@ -14,42 +14,67 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <style>
-#font{
-	font-size: 20px
+/* #font{
+	font-family: "Nanum Gothic", sans-serif; font-size: 20px;
+	width:100%;
 }
 .max-small {
     width: auto; height: auto;
     max-width: 300px;
     max-height: 300px;
 }
+*/
 #pageDown {
 	position:absolute;
-	bottom:50%;
-	float: right;
-	font-size: x-large;
+	top:0%;right:0%;
+}
+.img-thumbnail{
+    width: auto; height: auto;
+    max-width: 350px;
+    /* max-height: 300px; */
+}
+#payInfo{
+	width:100%;
+}
+#wrap{
+	font-family: "Nanum Gothic", sans-serif; font-size: 20px;
 }
 </style>
 </head>
 <body>
-<div id="font">
-<div id="payImg">
-<img class='max-small'src="upload/thumbnail/${e.e_sysfilename}" >
-</div>
-<br/>
-<div id="pageDown"  onclick="reset()">X</div>
-<div>상품명:${e.e_name}</div>
-<div>기본가:${e.e_price}원</div>
-<div>결제코드:${ep.ep_code}</div>
-<div>총결제액:${ep.ep_total}원</div>
-<div id="epsList"></div>
-<div>결제일:${ep_payday}</div>
-<div>이벤트일:${ep_dday}</div>
-<div>환불가능일:~${refundAble}까지</div>
-<button id="exit">마이페이지 가기</button>
+<div id="wrap">
+<h2 style="font-size: 30px;">결제 완료 내역</h2>
+<table class="table table-condensed" id="payInfo">
+	<tr>
+		<td rowspan="3" width="350">
+			<img class='img-thumbnail' src="upload/thumbnail/${e.e_sysfilename}"/>
+		</td>
+		<td>${e.e_name}(결제일:${ep_payday})</td>
+	</tr>
+	<tr>
+		<td>
+		${ep.ep_total}원
+		<c:if test="${eoList!=null}">
+			<div id="epsList"></div>
+		</c:if>
+		</td>
+	</tr>
+	<tr>
+		<td>이벤트당일:${ep_dday}<br/>(~${refundAble}까지 환불가능)</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<button class="btn btn-primary" id="exit">마이페이지 가기</button>
+		</td>
+	</tr>
+</table>
+<div id="pageDown" onclick="reset()"><img src="img/closer.png" width="30"/> </div>
 </div>
 </body>
 <script>
+console.log("eoList:",${eoList});
 $(document).ready(function(){
 	showEpsList();
 });
@@ -58,10 +83,13 @@ function showEpsList(){
 	var eoList=${eoList};
 	console.log("eoList=",eoList);
 	for(var i in eoList){
-		str+="선택한 옵션"+":"+eoList[i]['eo_name']+"/(+"+eoList[i]['eo_price']+"원)<br/>"
+		str+="옵션"+":"+eoList[i]['eo_name']+"/(+"+eoList[i]['eo_price']+"원)<br/>"
 	}
 	$("#epsList").html(str);
 };
+
+
+
 $("#exit").click(function() {
 	location.href ="memberMyPage";
 });

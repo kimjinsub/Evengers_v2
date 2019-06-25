@@ -76,7 +76,8 @@ function memberEvtPay(ep_code){
 				text:  "구매 되었습니다.",
 				icon: "success",
 			});
-			$("#ebInfo").html(result);
+			$("#ebInfoZone").html(result);
+			//$("#ebInfo").html(result);
 		},
 		error:function(error){
 			console.log(error);

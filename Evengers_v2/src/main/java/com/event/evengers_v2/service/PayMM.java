@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.event.evengers_v2.bean.BuySelectedOption;
 import com.event.evengers_v2.bean.Event;
 import com.event.evengers_v2.bean.EventBuy;
+import com.event.evengers_v2.bean.EventImage;
 import com.event.evengers_v2.bean.EventOption;
 import com.event.evengers_v2.bean.EventPay;
 import com.event.evengers_v2.bean.EventPaySelectedOption;
@@ -479,7 +480,11 @@ public class PayMM {
       System.out.println("ep_code"+ep_code);
       if(payDao.refundInsert(ep_code)) {
          if(payDao.ceoRefundBtn(ep_code, 0)){
-            msg="환불되었습니다";
+        	if(payDao.refundEvt(ep_code, payDao.getEpInfo(ep_code).getM_id())) {
+        		msg="환불되었습니다";
+        	}else {
+        		msg="환불에 실패했습니다";
+        	}
          }else {
             msg="환불에 실패했습니다";
          }

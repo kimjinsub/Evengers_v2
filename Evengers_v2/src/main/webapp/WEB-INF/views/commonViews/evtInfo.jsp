@@ -295,7 +295,7 @@ margin: auto; height:50px; text-align: center; position: absolute;
 					<div class="card-body">
 						<h3 class="card-title">상품명: ${eb.e_name}</h3>
 					</div>
-					<table  style="text-align: center;" class="table table-hover">
+					<table  style="text-align: center;" class="table table-bordered table-hover">
 						<tr>
 							<td>상품명</td>
 							<td>${eb.e_name}</td>
@@ -319,12 +319,9 @@ margin: auto; height:50px; text-align: center; position: absolute;
 							<!-- 2019-12-31T12:59 형식으로 받아짐-->
 						</tr>
 						<tr>
-							<td>별점 평균</td>
-							<td><div id="starAverage">${starAverage}/5</div></td>
-						</tr>
-						<tr>
-							<td colspan="2" ><button class="myButton"onclick="evtBuy()">구매하기</button>
-							
+							<td>별점 평균	<div id="starAverage">${starAverage}/5</div></td>
+							<td>
+								<button class="myButton"onclick="evtBuy()">구매하기</button>
 								<button class="myButton"id="choice" onclick="choice()">찜하기</button>
 								<button class="myButton"id="choiceDelete" onclick="choiceDelete()">찜삭제하기</button>
 								<button class="myButton" onclick="javascript:memberChat('${eb.c_id}')">실시간상담요청</button>
@@ -409,6 +406,7 @@ $.ajax({
 	dataType:"text",
 	success:function(result){
 		$("#datepicker").html(result);
+		effectiveness();
 	},
 	error:function(error){
 		console.log(error);
@@ -855,15 +853,15 @@ function memberChat(receiver){
 						var str = "";
 						console.log(result);
 						for ( var i in result) {
-							str += '<div class="col-lg-8 col-md-8 col-8" onmouseenter="briefInfo(this.id)"onmouseout="briefInfoOut(this.id)" id="'
-									+ result[i].e_code
-									+ '">'
-									+ '<a href="evtInfo?e_code='
-									+ result[i].e_code
-									+ '" class="d-block mb-4 h-100">'
-									+ '<img class="img-fluid img-thumbnail"'
-						+'src="upload/thumbnail/'+result[i].e_sysfilename+'"style=" width: auto; height: auto;max-width: 550px;max-height: 550px;">'
-									+ '</a></div><br>'
+							str += '<a href="evtInfo?e_code='+ result[i].e_code+'" '
+								+ 'style="margin:10px;">'
+								+ '<img class="img-fluid img-thumbnail" '
+								+ 'onmouseenter="briefInfo(this.id)" '
+								+ 'onmouseout="briefInfoOut(this.id)" '
+								+ 'id="'+ result[i].e_code+'" '
+								+ 'src="upload/thumbnail/'+result[i].e_sysfilename+'" '
+								+ 'style=" width: 350px; height: 350px;"/>'
+								+ '</a>'
 						}
 
 						$("#eMain").html(str);
