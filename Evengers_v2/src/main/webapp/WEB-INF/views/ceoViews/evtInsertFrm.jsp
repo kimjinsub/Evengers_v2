@@ -30,14 +30,17 @@ input.option-add {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/all.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css"> --%>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/webfonts/fa-solid-900.woff2" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/webfonts/fa-solid-900.woff" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/webfonts/fa-solid-900.ttf" rel="stylesheet">
 
 <body id="wrap">
 	<jsp:include page="../header.jsp" />
@@ -45,16 +48,16 @@ input.option-add {
 		<div class="card-body px-lg-5 pt-0">
 			<div class="card-header info-color white-text text-center py-4">
 				<h4 class="title">
-					 이벤트 상품 등록
+				<i class="far fa-smile-beam fa-spin"></i>	 이벤트 상품 등록
 				</h4>
 			</div>
 	<form name="evtInsertFrm" action="/" method="post" enctype="multipart/form-data" onsubmit="return confirm()" >
 			<div class="md-form mt-3">
-				상품명:<input type="text" name="상품명" id="e_name"
+				상품명:<input type="text" name="e_name" id="e_name"
 					placeholder="상품명을 입력하세요" class="form-control">
 			</div>
 			<div class="md-form mt-3">
-				가격:<input type="number" name="가격" id="e_price"
+				가격:<input type="number" name="e_price" id="e_price"
 					placeholder="가격을 입력하세요" class="form-control"><br>
 			</div>				
 			<div id="selectZone"></div>
@@ -64,10 +67,10 @@ input.option-add {
 			</div> 
 				<input type="button" onclick='addOption()' class="option-add" id="e_option">
 			<div class="md-form mt-3">
-				예약가능일:<input type="number" name="예약가능일" id="e_reservedate" class="form-control">
+				예약가능일:<input type="number" name="e_reservedate" id="e_reservedate" class="form-control">
 			</div>
 			<div class="md-form mt-3">
-				환불가능일:<input type="number" name="환불가능일" id="e_refunddate" class="form-control"><br>
+				환불가능일:<input type="number" name="e_refunddate" id="e_refunddate" class="form-control"><br>
 			</div>
 			
 			<div class="input-group">
@@ -75,7 +78,7 @@ input.option-add {
       			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
       			</div>
     			<div class="custom-file">
-      			<input type="file" id="e_orifilename"  onchange="fileChk(this)" name="썸네일 사진" class="form-control">
+      			<input type="file" id="e_orifilename"  onchange="fileChk(this)" name="e_orifilename" class="form-control">
 				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
     			</div>
      		</div>
@@ -84,13 +87,13 @@ input.option-add {
       			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
       			</div>
     			<div class="custom-file">
-      			<input type="file" name="이벤트 첨부 사진" id="ei_files"
+      			<input type="file" name="ei_files" id="ei_files"
 					onchange="fileChk(this)" multiple class="form-control">
 				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
     			</div>
     			</div>
 				<div class="md-form mt-3">
-				글 내용:<textarea name="글 내용" id="e_contents" rows="20" class="form-control"></textarea> 
+				글 내용:<textarea name="e_contents" id="e_contents" rows="20" class="form-control"></textarea> 
 				</div>
 			<div class="md-form mt-3">
 				<input type="button" onclick="formData()" value="이벤트등록하기" class="btn btn-outline-primary btn-rounded waves-effect"> 
@@ -219,9 +222,8 @@ input.option-add {
 			dataType : "html",//html은 생략가능
 			success : function(data) {
 				swal({
-					/* text:"정보를 입력하세요!", */
 					title : "Yes!",
-					text : "이벤트를 등록했습니다!",
+					text : "이벤트 등록 성공!",
 					icon : "success",
 				});
 				location.href = "./";

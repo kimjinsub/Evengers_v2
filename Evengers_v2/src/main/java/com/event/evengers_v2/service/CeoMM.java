@@ -30,6 +30,9 @@ public class CeoMM {
 		cb.setC_pw(pwEncoder.encode(cb.getC_pw()));
 		cb.setC_email(cb.getC_email()+cb.getC_email1());
 		
+		System.out.println("왜?"+cb.getC_pw());
+		System.out.println("왜?"+cb.getC_pw().toString());
+		
 		if (cDao.ceoInsert(cb)) {
 			view = "index";
 			mav.addObject("check", 1); //회원가입 성공

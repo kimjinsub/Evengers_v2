@@ -185,7 +185,11 @@ function calculate() {
 		},
 		dataType : "html",
 		success : function(data) {
-			alert("정산 등록 성공");
+			swal({
+				title : "Success!",
+				text : "정산 입력 성공하였습니다!",
+				icon : "success",
+			});
 			getCalList();
 			allShowCal();
 			$("#wrap").html(data);

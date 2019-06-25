@@ -40,10 +40,12 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
-  
 
   <!-- Plugin CSS -->
   <link href="${pageContext.request.contextPath}/ces/magnific-popup.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/webfonts/fa-solid-900.woff2" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/webfonts/fa-solid-900.woff" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/webfonts/fa-solid-900.ttf" rel="stylesheet">
 
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="${pageContext.request.contextPath}/ces/creative.min.css" rel="stylesheet">
@@ -106,14 +108,13 @@
           <p class="text-white-75 font-weight-light mb-5">냉혹한 현대사회에 웃음꽃을 피우기 위해 현대인들은 많은 이벤트를  합니다. 하지만 막상 이벤트를 준비하려면 많은 시간과 노력을 필요로 하기 때문에 바쁜 현대사회에서 쉽지가 않습니다. 
 따라서 이벤트 대행업체를 이용할 때  보다 쉽게 업체를 고르며 이벤트를 선택할 수 있는 사이트 입니다.
 또한 직접 이벤트를 의뢰하며 자신만의 이벤트를 만들 수 있습니다.</p>
-          <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
         </div>
       </div>
     </div>
   </header>
 
   <!-- About Section -->
-  <section class="page-section bg-primary" id="about">
+  <section class="page-section" style="background-color: #e65100;" id="about">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
@@ -134,28 +135,29 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-gem text-primary mb-4"></i>
+            <i class="fas fa-4x fa-gem  mb-4"></i>
             <h3 class="h4 mb-2">프로포즈/웨딩</h3>
             <p class="text-muted mb-0">Propose/Wedding</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
+            <i class="fas fa-4x fa-laptop-code mb-4"></i>
             <h3 class="h4 mb-2">출장뷔페</h3>
             <p class="text-muted mb-0">Business Buffet</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-globe text-primary mb-4"></i>
+            <i class="fas fa-4x fa-globe  mb-4"></i>
             <h3 class="h4 mb-2">행사MC</h3>
             <p class="text-muted mb-0">Event MC</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-heart text-primary mb-4"></i>
+            <!-- <i class="fas fa-4x fa-heart  mb-4"></i> -->
+          <i class="fas fa-birthday-cake fa-4x green-text pr-3 mb-4" aria-hidden="true"></i>
             <h3 class="h4 mb-2">파티/행사기획</h3>
             <p class="text-muted mb-0">Party/Event Planning</p>
           </div>
@@ -182,7 +184,7 @@
           <h2 class="mt-0">이벤트를 만들어 볼 기회!</h2>
           <hr class="divider my-4">
           <p class="text-muted mb-5">직접 원하는 이벤트를 기획하면서 자신만의 이벤트를 만들어 보세요.</p>
-          <a class="btn btn-primary btn-xl js-scroll-trigger" href="./evtReqFrm">Create Event!</a>
+          <!-- <a class="btn btn-deep-orange" href="./evtReqFrm">Create Event!</a> -->
         </div>
       </div>
       <div class="row">
@@ -193,7 +195,7 @@
         <div class="col-lg-4 mr-auto text-center">
           <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
           <!-- Make sure to change the email address in anchor text AND the link below! -->
-          <a class="d-block" href="mailto:contact@yourwebsite.com">icia@naver.com</a>
+         <div>icia@naver.com</div>
         </div>
       </div>
     </div>

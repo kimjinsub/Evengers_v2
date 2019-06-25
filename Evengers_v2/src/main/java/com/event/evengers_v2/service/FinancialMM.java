@@ -209,10 +209,13 @@ public class FinancialMM {
 
 	private Object makeHtml_input(ArrayList<Employee> empList) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div id='inputbtn'><button onclick='inputSalary()'>입력</button></div>");
-		sb.append("<table border='1'><tr><th>사번</th><th>성명</th><th>직책</th><th>급여</th></tr>");
+		int i = 0;
+		sb.append("<div id='inputbtn'><button onclick='inputSalary()' class='btn btn-outline-primary btn-rounded waves-effect'>입력</button></div>");
+		sb.append("<table class='table table-striped' id='input'><tr><th>#</th><th>사번</th><th>성명</th><th>직책</th><th>급여</th></tr>");
 		for (Employee emp : empList) {
-			sb.append("<tr><td>" + emp.getEmp_code() + "</td>" 
+			i += 1;
+			sb.append("<tr><td>"+i+"</td>"
+					    + "<td>" + emp.getEmp_code() + "</td>" 
 						+ "<td>" + emp.getEmp_name() + "</td>" 
 						+ "<td>"+ pDao.getPositionInfo(emp.getP_code()).getP_name() + "</td>" 
 						+ "<td>"+ pDao.getPositionInfo(emp.getP_code()).getP_salary() + "</td></tr>");

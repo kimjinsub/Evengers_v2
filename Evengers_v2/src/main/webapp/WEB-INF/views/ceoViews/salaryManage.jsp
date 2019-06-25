@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 #inputSalary.open{
 	visibility: visible;
@@ -70,7 +71,11 @@ function inputSalary(){
 		data:{date:date},
 		dataType:"html",
 		success:function(result){
-			alert("급여 입력 성공");
+			swal({
+				title : "Success!",
+				text : "급여를 입력하였습니다.",
+				icon : "success",
+			});
 			selectSalary();
 		},
 		error:function(error){

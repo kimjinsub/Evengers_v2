@@ -205,7 +205,7 @@
 			if(frm[i].value=="" || frm[i].value==null){
 				swal({
 					title : "No!",
-					text : frm[i].name + "을(를) 입력하세요!",
+					text : "정보를 모두 입력하세요!",
 					icon : "warning",
 				});
 				frm[i].focus();

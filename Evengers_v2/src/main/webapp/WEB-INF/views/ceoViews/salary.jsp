@@ -17,11 +17,16 @@
 	font-size: 13px;
 	font-family: 'Nanum Gothic', sans-serif;
 }
+#input{
+	width: 60%;
+	font-size: 13px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
 </style>
 </head>
 <body>
 	<div id="msg">${msg}</div>
 	<div id="salary">${makeHtml_salary}</div>
-	${makeHtml_input}
+	<div id="input">${makeHtml_input}</div>
 </body>
 </html>

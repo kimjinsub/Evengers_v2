@@ -35,26 +35,29 @@ body {
 #h5{
 	font-family: 'Nanum Gothic', sans-serif;
 	color : white;
+	margin-top: 5%;
 }
-#img{
-	width:40px;
-	height: 40px;
+#footer{
+	margin-top: 50%;
 }
 </style>
 
 </head>
 <body>
-
-	<h5 class="card-header info-color white-text text-center py-4" id="h5">
-        <img id="img" src="img/padlock.png">&nbsp<strong>ID & PW FIND</strong>
+	<h5 id="h5" align="center">
+		<i class="far fa-hand-point-right" ></i>&nbsp<strong>ID & PW FIND</strong>
     </h5>
 
    <div id="find">
 										
 		<div class="btn btn-outline-primary btn-rounded waves-effect" id="idFind" >아이디 찾기</div>
 		<div class="btn btn-outline-primary btn-rounded waves-effect" id="pwFind" >비밀번호 찾기</div><br>
-		<div id="find_main">
-		</div>
+		<div id="find_main"></div>
+		
+		<div class="modal-footer mx-5 pt-3 mb-1" id="footer">
+          <p class="font-small grey-text d-flex justify-content-end"><a href="./loginFrm" class="blue-text ml-1">
+            <i class="fas fa-sign-in-alt"></i>  Sign In</a></p>
+        </div>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
