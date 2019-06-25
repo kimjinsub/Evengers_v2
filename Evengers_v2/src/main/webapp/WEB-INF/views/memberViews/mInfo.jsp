@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 <style>
 table.type09 {
+	position:relative;
+	left:30%;
 	background-color:white;	
     border-collapse: collapse;
     text-align: left;

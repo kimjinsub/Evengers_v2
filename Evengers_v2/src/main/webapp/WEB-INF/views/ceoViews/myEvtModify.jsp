@@ -47,7 +47,7 @@ input.option-add {
 </head>
 <body>
    
-   <table border="1" width="700" align="center"class='table table-striped'>
+   <table  width="700" align="center"class='table table-striped'>
 		<tr>
 			<td colspan="3" align="center"><h4>이벤트 상품 등록</h4></td>
 		</tr>

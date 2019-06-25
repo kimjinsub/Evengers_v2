@@ -110,7 +110,7 @@
 	<div id="ceoInfoPwCheck">
 			<br><br>비밀번호를 입력해주세요.<br>
 		<input type="password" id="pwCheck" name="pwCheck">
-		<button id="pwCheckBtn"onclick="ceoModifyMainSee()">보내기</button>
+		<button id="pwCheckBtn"onclick="ceoModifyMainSee()">입력</button>
 	</div>
 	<div id="ceoModifyMain"></div>
 </div>
@@ -172,23 +172,23 @@
 					str += "<tr><td>비밀번호</td>"
 					str += "<td><div id='d_ceo_pw1'><input type='password' id='ceo_pw1' name='ceo_pw1' value='*******' readonly></div>"
 					str += "<div id='d_ceo_pw2'><input type='password' id='ceo_pw2' name='ceo_pw2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_pwchk()'>비밀번호 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_pwchk()'>수정</button></td></tr>"
 
 					str += "<tr><td>회사명</td>"
 					str += "<td><div id='d_ceo_name1'><input type='text' id='ceo_name1' name='ceo_name1' value='"+result[0]['c_name'] +"' readonly></div>"
 					str += "<div id='d_ceo_name2'><input type='text' id='ceo_name2' name='ceo_name2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_namechk()'>회사명 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_namechk()'>수정</button></td></tr>"
 					
 					
 					str += "<tr><td>회사전화번호</td>"
 					str += "<td><div id='d_ceo_tel1'><input type='text' id='ceo_tel1' name='ceo_tel1' value='"+result[0]['c_tel'] +"' readonly></div>"
 					str += "<div id='d_ceo_tel2'><input type='text' id='ceo_tel2' name='ceo_tel2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_telchk()'>회사전화번호 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_telchk()'>수정</button></td></tr>"
 					
 					str += "<tr><td>이메일</td>"
 					str += "<td><div id='d_ceo_email1'><input type='text' id='ceo_email1' name='ceo_email1' value='"+result[0]['c_email'] +"' readonly></div>"
 					str += "<div id='d_ceo_email2'><input type='text' id='ceo_email2' name='ceo_email2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_emailchk()'>이메일 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='ceo_emailchk()'>수정</button></td></tr>"
 
 					str += "</table>"
 					str += "<button class='button_base b01_simple_rollover'onclick='ceoModifyInfo()'>저장하기</button> <button class='button_base b01_simple_rollover'onclick='ceoDelete()'>탈퇴하기</button>"

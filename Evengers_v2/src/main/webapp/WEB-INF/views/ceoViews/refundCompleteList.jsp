@@ -9,18 +9,13 @@
 <title>Insert title here</title>
 <style >
 table.type08 {
-    border-collapse: collapse;
     text-align: left;
     line-height: 1.5;
-    border-left: 1px solid #ccc;
 }
 
 table.type08 thead th {
     padding: 10px;
     font-weight: bold;
-    border-top: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 2px solid #c00;
     background: #dcdcd1;
 }
 table.type08 tbody th {
@@ -28,16 +23,12 @@ table.type08 tbody th {
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
     background: #ececec;
 }
 table.type08 td {
     width: 350px;
     padding: 10px;
     vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
 }
 </style>
 </head>
@@ -45,7 +36,7 @@ table.type08 td {
 <h1>환불 내역 페이지</h1>
 <div>
 	<div id="eList2" style="width:10%;; float: left;">
-		<table border="1" class='table table-striped' style="width: 100%;">
+		<table  class='table table-striped' style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th >상품이름</th>
@@ -62,7 +53,7 @@ table.type08 td {
 	</div>
 
 	<div id="epList2" style="width: 35%;; float: left;">
-		<table border="1" class='table table-striped' style="width: 100%;">
+		<table class='table table-striped' style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th >구매자</th>
@@ -79,7 +70,7 @@ table.type08 td {
 					pattern="yyyy-MM-dd" />
 				<tr align="center" height="60px">
 					<td   height="50px">${eventpay.m_id }</td>
-					<td height="50px">${eventpay.ep_total }
+					<td height="50px">${eventpay.ep_total }원
 					<input type="hidden" value="${eventpay.ep_total }"id="${eventpay.ep_code }"/>
 					</td>
 					<td  height="50px">${payday }</td>
@@ -93,7 +84,7 @@ table.type08 td {
 	</div>
 
 	<div id="erList" style="width: 55%; float: left;">
-		<table border="1" class='table table-striped' style="width: 100%;">
+		<table  class='table table-striped' style="width: 100%;">
 		<thead>
 			<tr align="center">
 				<th>환불요청일자</th>

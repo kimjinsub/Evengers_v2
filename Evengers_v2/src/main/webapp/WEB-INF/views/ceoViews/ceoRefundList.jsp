@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 <style >
 table.type08 {
-    border-collapse: collapse;
     text-align: left;
     line-height: 1.5;
 }
@@ -17,9 +16,6 @@ table.type08 {
 table.type08 thead th {
     padding: 10px;
     font-weight: bold;
-    border-top: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 2px solid #c00;
     background: #dcdcd1;
 }
 table.type08 tbody th {
@@ -27,16 +23,12 @@ table.type08 tbody th {
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
     background: #ececec;
 }
 table.type08 td {
     width: 350px;
     padding: 10px;
     vertical-align: top;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
 }
 #span{
 	float: right;
@@ -56,10 +48,6 @@ table.type08 td {
 	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e',GradientType=0);
 	background-color:#7892c2;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	border-radius:10px;
-	border:1px solid #4e6096;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -93,7 +81,7 @@ table.type08 td {
 <h1>환불 요청 페이지</h1>
 <div >
 	<div id="eList2" style="width:10%; float: left;">
-		<table border="1" class='table table-striped' style="width: 100%;">
+		<table  class='table table-striped' style="width: 100%;">
 			<thead>
 			<tr align="center">
 				<th>상품이름</th>
@@ -110,7 +98,7 @@ table.type08 td {
 	</div>
 
 	<div id="epList2" style="width: 35%; float: left;">
-		<table border="1" class='table table-striped' style="width: 100%;">
+		<table  class='table table-striped' style="width: 100%;">
 			<thead>
 				<tr align="center">
 					<th >구매자</th>
@@ -127,7 +115,7 @@ table.type08 td {
 					pattern="yyyy-MM-dd" />
 				<tr align="center" height="60px">
 					<td  height="70px">${eventpay.m_id }</td>
-					<td  height="70px">${eventpay.ep_total }
+					<td  height="70px">${eventpay.ep_total }원
 					<input type="hidden" value="${eventpay.ep_total }"id="${eventpay.ep_code }"/>
 					</td>
 					<td height="70px">${payday }</td>
@@ -141,13 +129,13 @@ table.type08 td {
 
 
 	<div id="erList" style="width: 55%; float: right;">
-		<table border="1" class='table table-striped' style="width: 100%;">
+		<table  class='table table-striped' style="width: 100%;">
 			<thead>
 				<tr align="center" >
 					<th >환불요청일자</th>
 					<th >몇일전</th>
 					<th>위약금(%)</th>
-					<th >환불금액</th>
+					<th >환불금액(원)</th>
 					<th >버튼</th>
 				</tr>
 			</thead>

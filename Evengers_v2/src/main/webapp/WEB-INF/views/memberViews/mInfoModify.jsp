@@ -112,7 +112,7 @@
 	<div id="mInfoPwCheck">
 			<br><br>비밀번호를 입력해주세요.<br>
 		<input type="password" id="pwCheck" name="pwCheck">
-		<button id="pwCheckBtn" onclick="mModifyMainSee()">보내기</button>
+		<button id="pwCheckBtn" onclick="mModifyMainSee()">입력</button>
 	</div>
 	<div id="mModifyMain"></div>
 </div>
@@ -175,29 +175,29 @@
 					str += "<tr><td>비밀번호 : </td>"
 					str += "<td><div id='d_m_pw1'><input type='password' id='m_pw1' name='m_pw1' value='*******' readonly></div>"
 					str += "<div id='d_m_pw2'><input type='password' id='m_pw2' name='m_pw2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover' onclick='m_pwchk()'>비밀번호 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover' onclick='m_pwchk()'>수정</button></td></tr>"
 					/* str += "<td>" +result[0]['m_pw'] + "</td></tr>" */
 
 					str += "<tr><td>이름 : </td>"
 					str += "<td><div id='d_m_name1'><input type='text' id='m_name1' name='m_name1' value='"+result[0]['m_name'] +"' readonly></div>"
 					str += "<div id='d_m_name2'><input type='text' id='m_name2' name='m_name2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_namechk()'>이름 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_namechk()'>수정</button></td></tr>"
 					
 					
 					str += "<tr><td>전화번호 : </td>"
 					str += "<td><div id='d_m_tel1'><input type='text' id='m_tel1' name='m_tel1' value='"+result[0]['m_tel'] +"' readonly></div>"
 					str += "<div id='d_m_tel2'><input type='text' id='m_tel2' name='m_tel2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_telchk()'>전화번호 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_telchk()'>수정</button></td></tr>"
 					
 					str += "<tr><td>이메일 : </td>"
 					str += "<td><div id='d_m_email1'><input type='text' id='m_email1' name='m_email1' value='"+result[0]['m_email'] +"' readonly></div>"
 					str += "<div id='d_m_email2'><input type='text' id='m_email2' name='m_email2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_emailchk()'>이메일 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_emailchk()'>수정</button></td></tr>"
 
 					str += "<tr><td>지역 : </td>"
 					str += "<td><div id='d_m_area1'><input type='text' id='m_area1' name='m_area1' value='"+result[0]['m_area'] +"' readonly></div>"
 					str += "<div id='d_m_area2'><input type='text' id='m_area2' name='m_area2'></div></td>"
-					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_areachk()'>지역 수정</button></td></tr>"
+					str += "<td> <button class='button_base b01_simple_rollover'onclick='m_areachk()'>수정</button></td></tr>"
 	
 					str += "</table><hr><br>"
 					str += "<button class='button_base b01_simple_rollover'onclick='modifyMemInfo()'>저장하기</button><button class='button_base b01_simple_rollover'onclick='memberDelete()'>탈퇴하기</button>"

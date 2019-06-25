@@ -50,14 +50,11 @@
 	white-space: normal;
 	overflow: scroll;
 	font-size: 16px;
-	border: #000 solid 1px;
 }
 .eList{
 	float: left;
 	margin: 50px;
-	border-style: double;
 	text-align: center;
-	border-top: 30px;
 	background-color: white;
 	
 	
@@ -72,13 +69,10 @@
   font-weight: 500;
   color: #000;
   background-color: #fff;
-  border: none;
-  border-radius: 45px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
-  border: 1px solid #555;
   }
 
 .e_code:hover,.evtDel_code:hover
@@ -107,16 +101,16 @@
 					<td class="td">상품 이름</td> <td class="td2">${event.e_name}</td>
 				</tr>
 				<tr>
-					<td class="td"> 상품 가격</td> <td class="td2">${event.e_price}</td>
+					<td class="td"> 상품 가격</td> <td class="td2">${event.e_price} 원</td>
 				</tr>
 				<tr>
 					<td class="td">상품 카테고리</td><td class="td2"> ${event.e_category}</td>
 				</tr>
 				<tr>
-					<td class="td">상품 예약가능일</td><td class="td2"> ${event.e_reservedate}</td>
+					<td class="td">상품 예약가능일</td><td class="td2"> ${event.e_reservedate} 일</td>
 				</tr>
 				<tr>
-					<td class="td">상품 환불가능일</td><td class="td2"> ${event.e_refunddate}</td>
+					<td class="td">상품 환불가능일</td><td class="td2"> ${event.e_refunddate} 일</td>
 				</tr>
 				<tr>
 					<td class="td">상품 설명</td><td class="td2">${event.e_contents}</td>
