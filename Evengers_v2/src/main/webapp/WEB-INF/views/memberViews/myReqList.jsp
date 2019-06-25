@@ -54,13 +54,13 @@ table.reqList th {
 <title>Insert title here</title>
 </head>
 <body>
-
+	<div id="pageDown"  onclick="reset()">X</div>
 	<h1 align="center">의뢰요청 목록</h1>
 	
 	<div align="center">
 		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
 		<input type="button" onclick=location.href="./" value='홈으로'>
-
+	
 	<div id="list"></div>
 	<div id="detail"></div>
 	<div id="paging" align="center"></div>
@@ -77,8 +77,8 @@ function searchajax(keyword){
 		dataType:'json',
 		success: function(result){
 				var rList = result['rList'];
-				var str = "<div id='pageDown' float='right' onclick='reset()'>X</div>"
-				str += "<table class='table table-striped' id='reqList'  align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
+				//var str = "<div id='pageDown' float='right' onclick='reset()'>X</div>"
+				var str = "<table class='table table-striped' id='reqList'  align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
 				for ( var i in rList) {
 				str += "<tr><td>" + rList[i].req_code + "</td><td>"
 							+ "<a href='#' onclick=evtReqInfo('"
@@ -108,8 +108,8 @@ function getReqList(pageNum,listCount) {	//기본적으로 보이는
 		success:function(result) {
 		var rList = result['rList'];
 		var paging =result['paging'];
-		var str = "<div id='pageDown' float='right' onclick='reset()'>X</div>"
-		str += "<table class='table table-striped' id='reqList'  align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
+		//var str = "<div id='pageDown' float='right' onclick='reset()'>X</div>"
+		var str = "<table class='table table-striped' id='reqList'  align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
 		for ( var i in rList) {
 			str += "<tr><td>" + rList[i].req_code + "</td><td>"
 						+ "<a href='#' onclick=evtReqInfo('"

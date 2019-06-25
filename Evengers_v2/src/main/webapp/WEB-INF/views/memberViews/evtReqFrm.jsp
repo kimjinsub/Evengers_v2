@@ -18,6 +18,14 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 
 <style>
+
+#impossible {
+	color: red;
+}
+
+#possible {
+	color: green;
+}
 #pageDown {
 	text-align: right;
 	float: right;
@@ -26,9 +34,11 @@
 	font-size: x-large;
 	cursor: pointer;
 }
+
 #hh {
 	margin-top: 30px;
 }
+
 table.type08 {
 	border-collapse: collapse;
 	text-align: left;
@@ -142,6 +152,7 @@ table.type08 td {
   		</div>
   		<div class="md-form mt-3">
 		의뢰 날짜 및 시간:<input type="datetime-local" id="req_hopedate" name="req_hopedate" class="form-control">
+  		<span id="dateMsg"></span>
   		</div>
   		<div class="md-form mt-3">
 		글내용:<textarea rows="15" cols="50" name="req_contents" id="req_contents" class="form-control"></textarea>
@@ -153,31 +164,37 @@ table.type08 td {
 	</div>
 	</div>
 	<div id="articleView-layer"></div>
+
 </body>
 
 <script>
-	//document.getElementById('req_hopedate').value= new Date().toISOString().slice(0, -1);
-
+	$("input[type=datetime-local]").change(function() {
+		dateChk();
+	})
+	function dateChk() {
+		var date = $("input[type=datetime-local]").val();
+		console.log("date=", date);
+		$.ajax({
+			url : "dateChk",
+			data : {date : date	},
+			dataType : "text",
+			success : function(result) {
+			$("#dateMsg").html(result);
+			},
+			error : function(error) {
+			console.log(error);
+			}
+		})
+	}
 	function reset() {
 		if ($layerWindows.hasClass('open')) {
 			$layerWindows.removeClass('open');
 		}
 	}
 
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth() + 1; //January is 0!
-	var yyyy = today.getFullYear();
-	if (dd < 10) {
-		dd = '0' + dd
-	}
-	if (mm < 10) {
-		mm = '0' + mm
-	}
 
-	today = yyyy + '-' + mm + '-' + dd;
-	document.getElementById('req_hopedate').setAttribute("max", today);
-
+	document.getElementById('req_hopedate').min= new Date().toISOString().slice(0, -1);
+	
 	$(document).ready(function() {
 		selectCategory();
 	});
@@ -190,7 +207,7 @@ table.type08 td {
 					success : function(result) {
 						console.log(result);
 						var str = "";
-						str += "<select name='e_category' id='e_category' class='form-control'><option selected='selected' >선택하세요</option>";
+						str += "<select name='e_category' id='e_category'><option selected='selected'>선택하세요</option>";
 						for ( var i in result) {
 							str += "<option value='"+result[i].ec_name+"'>"
 									+ result[i].ec_name + "</option>";

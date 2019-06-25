@@ -24,7 +24,6 @@
 </style>
 </head>
 <body>
-	<div id="pageDown"  onclick="reset()">X</div>
 	<a href="myReqDelete?req_code=${request.req_code}">삭제</a>
 	<h3>요청 내용 상세보기</h3>
 	<table class='table table-striped'>

@@ -901,6 +901,34 @@ public class RequestMM {
 			}
 			return msg;
 		}
+		public String dateChk(String date) {
+			String msg ="";
+			System.out.println("date!!" + date);
+			date = date.replace('T', ' ');
+			
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			Date dday;
+			try {
+				dday = format1.parse(date);
+				format1.format(dday);
+
+				System.out.println("dday:" + format1.format(dday));
+				Date today = new Date();
+				
+				long ddday = dday.getTime();
+				
+				if(ddday >= today.getTime()) {
+					msg="<p id='possible'>가능한 날짜입니다</p>";
+				}else msg="<p id='impossible'>불가능한 날짜입니다</p>";
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return msg;
+		}
 		}
 		
 

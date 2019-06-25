@@ -231,4 +231,9 @@ public class Controller_Sung {
 		return map;
 	}
 	
+	@RequestMapping(value = "/dateChk",produces = "application/json; charset=utf-8;")
+	public @ResponseBody String dateChk(String date) {
+		return rm.dateChk(date);
+	}
+	
 }
