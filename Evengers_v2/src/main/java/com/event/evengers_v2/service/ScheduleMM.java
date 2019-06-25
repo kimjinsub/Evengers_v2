@@ -405,7 +405,7 @@ public class ScheduleMM {
 			//정렬되고 환불 제거한 결제 리스트 dept와 날짜로 또 추출함
 			ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
 			ArrayList<EstimateSchedule> estsList=new ArrayList<>();
-			if(assigned_estp_codes!=null) {
+			if(assigned_estp_codes.size()!=0) {
 				ArrayList<String> checked_assigned_estp_codes=sDao.dateCheckEstp(assigned_estp_codes,calDate);
 				for(String estp_code:checked_assigned_estp_codes) {
 					EstimateSchedule ests=sDao.howManyEstSchedule(dept_code,estp_code);
