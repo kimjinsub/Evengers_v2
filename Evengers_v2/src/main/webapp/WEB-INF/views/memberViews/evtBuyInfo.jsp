@@ -9,13 +9,40 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style >
-body{
-font-size: 20px
+
+.btn {
+	position: relative;
+	bottom:;
+	display: block;
+	width: 200px;
+	height: 40px;
+	border: 1px #3399dd solid;;
+	margin: 15px auto;
+	background-color: #66aaff;
+	text-align: center;
+	cursor: pointer;
+	color: #333;
+	transition: all 0.9s, color 0.3;
+}
+
+.btn:hover {
+	color: #fff;
+}
+
+.hover3:hover {
+	box-shadow: 0 80px 0 0 rgba(0, 0, 0, 0.25) inset, 0 -80px 0 0
+		rgba(0, 0, 0, 0.25) inset;
+}
+#eb_Info{
+	position: relative;
+	left:50%;
+	bottom:50%;
+	float: left;
+	font-size: 28px;
 }
 </style>
 </head>
 <body>
-
 ${makeHtml_evtBuyInfo}
 </body>
 <script>

@@ -114,25 +114,25 @@ public class PayMM {
    }
    private String makeHtml_evtBuyInfo(Event e, EventBuy eb, ArrayList<BuySelectedOption> bsList) {
       StringBuilder sb = new StringBuilder();
-      sb.append("<div class='col-lg-6' id='ebInfo'>"
-            + "      <img src='upload/thumbnail/"+e.getE_sysfilename()
-            +"         'height='250' width='250'/>"
-            + "      <h2>"+e.getE_name()+"</h2>"
-            + "      <p>총가격:"+eb.getEb_total()+"원</p>");
+      sb.append("<div  id='ebInfo'>"
+            + "      <table ><tr ><td rowspan='2'><img src='upload/thumbnail/"+e.getE_sysfilename()
+            + "         'height='450' width='450'/></td>"
+            + "      <td width='950px'style='text-align: center;'><strong><h2>"+e.getE_name()+"</h2></strong><hr>"
+            + "      <p><strong>총가격:</strong>"+eb.getEb_total()+"원</p>");
       int i=1;
-      if(bsList!=null) {
+      if(bsList!=null) { 
          for(BuySelectedOption bs:bsList) {
             EventOption eo=new EventOption();
             eo=eDao.getEoInfo(bs.getEo_code());
-            sb.append("   <p>옵션"+i+":"+eo.getEo_name()
-            +"("+eo.getEo_price()+")</p>");
+            sb.append("   <p><strong>옵션"+i+":</strong>"+eo.getEo_name()
+            +"("+eo.getEo_price()+")원</p>");
             i++;
          }
       }
-      sb.append("      <p>상세정보:"+e.getE_contents()+"</p>"
-            + "<button id='payBtn'>결제하기</button>"
-            + "<button id='rejectBtn'>구매취소</button>"
-            + "</div>");
+      sb.append("      <p><strong>상세정보:</strong>"+e.getE_contents()+"</p></td></tr>"
+            + "<tr><td ><button id='payBtn'class='btn hover3'><strong>결제하기</strong></button>"
+            + "<button id='rejectBtn'class='btn hover3'><strong>구매취소</strong></button></td></tr>"
+            + "</table></div>");
             
       return sb.toString();
    }

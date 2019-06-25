@@ -167,11 +167,12 @@ a.button2:hover {
 #articleView_layer2 {
 	display: none;
 	position: fixed;
-	position: absolute;
 	top: 0;
-	left: 0;
+	left: 31%;
 	width: 100%;
-	height: 100%
+	height: 100%;
+	z-index: 2000;
+	
 }
 
 #articleView_layer2.open {
@@ -935,44 +936,46 @@ function memberChat(receiver){
 					}
 				})
 	}
-	function briefInfo(e_code) {
-		console.log(e_code);
-
+	function briefInfo(e_code){
+		//console.log(e_code);
 		$.ajax({
-			url : "briefInfo",
-			data : {
-				e_code : e_code
-			},
-			dataType : "json",
-			success : function(data) {
-				console.log(data);
-				var e = data['event'];
-				var c = data['ceo'];
-				console.log("e", e);
-				console.log("c", c);
-				str = "";
-				str += "<div>" + "이벤트명:" + e.e_name + "<br>사업자명:" + c.c_name
-						+ "<br>가격:" + e.e_price + "<br>신청 가능일:이벤트 당일  "
-						+ e.e_reservedate + "일  전까지" + "<br>환불 가능일:이벤트 당일"
-						+ e.e_refunddate + "일 전까지" + "<br>상품 설명:"
-						+ e.e_contents + "</div>";
-				$('#brief').html(str);
-				$('#brief').show();
-			},
-			error : function(error) {
+			url:"briefInfo",
+			data:{e_code:e_code},
+			dataType:"json",
+			success:function(data){
+				//console.log(data);
+				var e=data['event'];
+				var c=data['ceo'];
+				var reviewCount=data['reviewCount'];
+				var starAverage=data['starAverage'];
+				//console.log("e",e);
+				//console.log("c",c);
+				str="";
+				str+="<div style='text-align:center;'>"
+					+e.e_name+"<br/>"
+					+e.e_contents+"<br/>"
+					+"가격:"+e.e_price+"원<br/>";
+				if(reviewCount!=undefined){
+					str+="리뷰 "+reviewCount+"개  "
+						+"평점 "+starAverage
+				}
+					//+"<tr><td>사업자명:"+c.c_name+"</td></tr>"
+					//+"<tr><td>신청 가능일:이벤트 당일  "+e.e_reservedate+"일  전까지</td></tr>"
+					//+"<tr><td>환불 가능일:이벤트 당일"+e.e_refunddate+"일 전까지</td></tr>"
+					+"</div>";
+				$('#brief').html(str);  
+				$('#brief').show();  
+			},error:function(error){
 				console.log(error);
 			}
 		})//ajax
-		document.addEventListener("mousemove", function(e) {
-			$("#brief").css({
-				"top" : e.screenY - 50,
-				"left" : e.screenX - 50
-			});
+		document.addEventListener("mousemove",function(e){
+			$("#brief").css({"top":e.screenY-50,"left":e.screenX-50});
 		})
-	}
-	function briefInfoOut(e_code) {
-		$('#brief').hide();
-	}
+	} 
+	 function briefInfoOut(e_code){
+		 $('#brief').hide();
+	} 
 </script>
 
 </html>
