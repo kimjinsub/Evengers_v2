@@ -59,8 +59,8 @@ input.option-add {
 			</div>				
 			<div id="selectZone"></div>
 			<div id="add" class="md-form mt-3">
-				옵션:<input type="text" id="option_name" placeholder="내용" name="옵션" class="form-control">
-				<input type="number" id="option_price" placeholder="가격" class="form-control">
+				옵션:<input type="text" class="option_name form-control" placeholder="내용" name="옵션">
+				<input type="number" class="option_price form-control" placeholder="가격">
 			</div> 
 				<input type="button" onclick='addOption()' class="option-add" id="e_option">
 			<div class="md-form mt-3">
@@ -124,21 +124,20 @@ input.option-add {
 	var i = 1;
 	function addOption() {
 		var str = "";
-		str += "<div><input type='text' id='option_name' placeholder='내용' class='form-control' >"
-				+ "<input type='number' id='option_price' placeholder='가격' class='form-control'></div>";
+		str += "<div><input type='text' class='option_name form-control' placeholder='내용'>"
+				+ "<input type='number' class='option_price form-control' placeholder='가격'></div>";
 		$('#add').append(str);
 	};
 	function confirm() { //옵션 보내기
 		var str = "";
 		var num = "";
-		$("#option_name").each(function() {
+		$(".option_name").each(function() {
 			str += $(this).val() + ",";
 		})
-		$("#option_price").each(function() {
+		$(".option_price").each(function() {
 			num += $(this).val() + ",";
 		})
-		$("#add")
-				.append('<input type="hidden" name="eo_name" id="eo_name"/>'
+		$("#add").append('<input type="hidden" name="eo_name" id="eo_name"/>'
 						+ '<input type="hidden" name="eo_price" id="eo_price"/>');
 		$("input[name=eo_name]").val(str);
 		$("input[name=eo_price]").val(num);
@@ -219,8 +218,12 @@ input.option-add {
 			//contentType:"application/json" json 쓸때 이렇게 했던거 처럼 multipart의 경우 false로 해야됨
 			dataType : "html",//html은 생략가능
 			success : function(data) {
-				alert("성공");
-				console.log(data);
+				swal({
+					/* text:"정보를 입력하세요!", */
+					title : "Yes!",
+					text : "이벤트를 등록했습니다!",
+					icon : "success",
+				});
 				location.href = "./";
 			},
 			error : function(error) {

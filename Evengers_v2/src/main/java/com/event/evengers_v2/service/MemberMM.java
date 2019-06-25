@@ -390,6 +390,7 @@ public String memberTest(String testcode) {
 	}
 
 	public ModelAndView myEvtManagement(String id) {
+		mav=new ModelAndView();
 		if(eDao.myEvtManagement(id)!=null) {
 			List<Event> eList = eDao.myEvtManagement(id);
 			System.out.println("eList"+eList);
