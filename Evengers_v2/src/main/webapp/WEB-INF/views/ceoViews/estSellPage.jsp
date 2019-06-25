@@ -55,7 +55,7 @@ function getEstpList(pageNum,listCount) {
 		var esList = result['esList'];
 		var paging = result['paging'];
 		var imgList = result['imgList'];
-		var str = "<table class='table table-striped'id='esList' border='1' align='center'>";
+		var str = "<table class='table table-striped'id='esList' align='center'>";
 		for ( var i in esList) {
 			str += "<tr><td>" + "견적 결제 코드 : " + esList[i].estp_code + "<br>"
 					+ "총가격 : " + esList[i].estp_total + "<br>"

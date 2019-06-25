@@ -68,7 +68,7 @@ function insertPenalty(){
 			var estpList=data['estpList'];
 			var reqList=data['reqList'];
 			var estrList=data['estrList'];
-			var str = "<table id='et' class='table table-striped' border='1'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>버튼</th>";
+			var str = "<table id='et' class='table table-striped'><th>상품제목</th><th>구매자아이디</th><th>총가격</th><th>판매자아이디</th><th>구매날짜</th><th>환불 요청한 날짜</th><th>위약금</th><th>버튼</th>";
 
 			for ( var i in estpList) {
 				str += "<tr><td>"

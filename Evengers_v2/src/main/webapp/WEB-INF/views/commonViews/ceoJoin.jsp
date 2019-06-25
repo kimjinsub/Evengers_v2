@@ -81,7 +81,7 @@
           <div class="md-form">
           <label for="m_email" class="active">Your email</label>
           <input type="text" id="c_email" name="c_email" placeholder="이메일주소" class="form-control">
-          <select id="m_email1" name="m_email1" class="form-control">
+          <select id="c_email1" name="c_email1" class="form-control">
 						<option selected="selected">선택하세요</option>
 						<option value="@naver.com">@naver.com</option>
 						<option value="@yahoo.co.kr">@yahoo.co.kr</option>

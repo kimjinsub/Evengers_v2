@@ -1,50 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
 #detail {
-	position:fixed;
+	position: fixed;
 	top: 30px;
 	left: 35%;
 	width: 750px;
 	height: 650px;
 	padding: 2px;
-	margin-top:-30px;
+	margin-top: -30px;
 	margin-left: -150px;
-	float:left;
+	float: left;
 	border:groove;
 	 z-index: 101;
 	display: none;
 	overflow: auto;
 	overflow: scroll;
 	background-color:buttonhighlight;
+	margin-top: 30px;
 }
-
 
 #detail.open {
 	display: block;
 }
-	
+
 table.reqList {
-    border-collapse: separate;
-    border-spacing: 1px;
-    text-align: center;
-    line-height: 1.5;
-    margin-top: 10px;
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: center;
+	line-height: 1.5;
+	margin-top: 10px;
 }
+
 table.reqList th {
-    width: 155px;
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    color: #444444;
-    background: #ce4869 ;
+	width: 155px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #444444;
+	background: #ce4869;
 }
 
-
+table {
+	float: left;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -55,15 +58,16 @@ table.reqList th {
 <body>
 
 	<h1 align="center">의뢰요청 목록</h1>
-	
-	<div align="center">
-		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
-		<input type="button" onclick=location.href="./" value='홈으로'>
 
-	<div id="list"></div>
-	<div id="detail"></div>
-	<div id="paging" align="center"></div>
-	
+	<div align="center">
+		제목검색 : <input type="text" id="searchword" name="searchword"
+			onkeyup="searchajax(this.value)" /> <input type="button"
+			onclick=location.href= "./" value='홈으로'>
+
+		<div id="list"></div>
+		<div id="detail"></div>
+		<div id="paging" align="center"></div>
+
 	</div>
 </body>
 
@@ -75,9 +79,10 @@ function searchajax(keyword){
 		url : 'reqSearch',
 		dataType:'json',
 		success: function(result){
-			var rList = result['rList'];
-			var str = "<table id='reqList' class='table table-striped' border='1' align='center'><th>요청코드</th><th>요청제목</th><th>작성자</th><th>희망날짜</th><th>희망지역</th>";
-			for ( var i in rList) {
+				var rList = result['rList'];
+				var str = "<div id='pageDown' float='right' onclick='reset()'>X</div>"
+				str += "<table class='table table-striped' id='reqList'  align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
+				for ( var i in rList) {
 				str += "<tr><td>" + rList[i].req_code + "</td><td>"
 							+ "<a href='#' onclick=evtReqInfo('"
 							+ rList[i].req_code + "')>"
@@ -106,7 +111,8 @@ function getReqList(pageNum,listCount) {	//기본적으로 보이는
 		success:function(result) {
 		var rList = result['rList'];
 		var paging =result['paging'];
-		var str = "<table class='table table-striped' id='reqList'align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
+		var str = "<div id='pageDown' float='right' onclick='reset()'>X</div>"
+		str += "<table class='table table-striped' id='reqList'  align='center'><th scope='cols'>요청코드</th><th scope='cols'>요청제목</th><th>작성자</th><th scope='cols'>희망날짜</th><th scope='cols'>희망지역</th>";
 		for ( var i in rList) {
 			str += "<tr><td>" + rList[i].req_code + "</td><td>"
 						+ "<a href='#' onclick=evtReqInfo('"
@@ -141,6 +147,12 @@ function evtReqInfo(req_code) {
 			console.log(error);
 		}
 	});
+}
+
+function reset() {
+	if ($layerWindows.hasClass('open')) {
+		$layerWindows.removeClass('open');
+	}
 }
 
 
