@@ -58,29 +58,29 @@
         
 		 <div class="md-form">
           <label for="m_id" class="active">Business Number</label>
-          <input type="text" id = "c_rn" name="사업자 번호" maxlength="14" placeholder="사업자번호(최대14자)" class="form-control">
+          <input type="text" id = "c_rn" name="c_rn" maxlength="14" placeholder="사업자번호(최대14자)" class="form-control">
 		  <input type="button" id="btn2" value= "인증" class="btn btn-outline-primary btn-rounded waves-effect">
         </div>
 
           <div class="md-form">
             <label for="m_pw">ID</label>
-            <input type="text" id = "c_id" name="아이디" maxlength="20" placeholder="아이디(최대20자)" class="form-control">
+            <input type="text" id = "c_id" name="c_id" maxlength="20" placeholder="아이디(최대20자)" class="form-control">
             <input type="button" id="btn1" value= "중복확인" class="btn btn-outline-primary btn-rounded waves-effect">
           </div>
           
           <div class="md-form">
             <label for="m_tel">Password</label>
-            <input type="password" name="비밀번호" placeholder="비밀번호" class="form-control">
+            <input type="password" name="c_pw" placeholder="비밀번호" class="form-control">
           </div>
           
           <div class="md-form">
             <label for="m_rrn">Company PhoneNumber</label>
-            <input type="text" name="회사 번호" maxlength="13" placeholder="회사전화번호(최대13자)" class="form-control">
+            <input type="text" name="c_tel" maxlength="13" placeholder="회사전화번호(최대13자)" class="form-control">
           </div>
           
           <div class="md-form">
           <label for="m_email" class="active">Your email</label>
-          <input type="text" id="c_email" name="이메일" placeholder="이메일주소" class="form-control">
+          <input type="text" id="c_email" name="c_email" placeholder="이메일주소" class="form-control">
           <select id="m_email1" name="m_email1" class="form-control">
 						<option selected="selected">선택하세요</option>
 						<option value="@naver.com">@naver.com</option>
@@ -180,7 +180,7 @@
 						swal({
 							title : "Yes!",
 							text : "가입이 가능합니다!",
-							icon : "warning",
+							icon : "success",
 						});
 						$("#submit").removeAttr("disabled");
 					} else {

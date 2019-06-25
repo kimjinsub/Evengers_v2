@@ -53,33 +53,33 @@
           
 		 <div class="md-form">
           <label for="m_name" class="active">Name</label>
-          <input type="text" name="이름" placeholder="이름" id="m_name" class="form-control">
+          <input type="text" name="m_name" placeholder="이름" id="m_name" class="form-control">
         </div>
         
 		 <div class="md-form">
           <label for="m_id" class="active">ID</label>
-          <input type="text" id = "m_id" name="아이디" maxlength="20" placeholder="아이디(최대20자)" class="form-control">
+          <input type="text" id = "m_id" name="m_id" maxlength="20" placeholder="아이디(최대20자)" class="form-control">
           <input type="button" id="btn1" value= "중복확인" class="btn btn-outline-primary btn-rounded waves-effect">
         </div>
 
           <div class="md-form">
             <label for="m_pw">Password</label>
-            <input type="password" name="비밀번호" placeholder="비밀번호" class="form-control" id="m_pw">
+            <input type="password" name="m_pw" placeholder="비밀번호" class="form-control" id="m_pw">
           </div>
           
           <div class="md-form">
             <label for="m_tel">PhoneNumber</label>
-             <input type="text" name="전화번호" id="m_tel" maxlength="13" placeholder="휴대폰번호(최대13자)" class="form-control">
+             <input type="text" name="m_tel" id="m_tel" maxlength="13" placeholder="휴대폰번호(최대13자)" class="form-control">
           </div>
           
           <div class="md-form">
             <label for="m_rrn">RRN</label>
-            <input type="text" name="주민등록번호" id="m_rrn" placeholder="주민번호" class="form-control">
+            <input type="text" name="m_rrn" id="m_rrn" placeholder="주민번호" class="form-control">
           </div>
           
           <div class="md-form">
           <label for="m_email" class="active">Your email</label>
-          <input type="text" id="m_email" name="이메일" placeholder="이메일주소" class="form-control">
+          <input type="text" id="m_email" name="m_email" placeholder="이메일주소" class="form-control">
           <select id="m_email1" name="m_email1" class="form-control">
 						<option selected="selected">선택하세요</option>
 						<option value="@naver.com">@naver.com</option>
@@ -92,7 +92,7 @@
 			
 		  <div class="md-form" >
           <label for="m_area" class="active">Area</label>
-		   <select name="지역" id="m_area" class="form-control">
+		   <select name="m_area" id="m_area" class="form-control">
 						<option value="서울">서울</option>
 						<option value="인천">인천</option>
 		  </select><br>
@@ -139,7 +139,7 @@
 						swal({
 							title : "Yes!",
 							text : "사용가능한 아이디 입니다!",
-							icon : "warning",
+							icon : "success",
 						});
 						$("#submit").removeAttr("disabled");
 					}else {
