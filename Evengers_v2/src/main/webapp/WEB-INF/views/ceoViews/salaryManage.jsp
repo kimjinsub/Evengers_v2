@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <style>
 #inputSalary.open{
 	visibility: visible;
@@ -13,17 +14,23 @@
 .form-control{
 	width:30%;
 }
+#h2{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
 </style>
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>급여관리</h2>
+<div id="wrap" align="center">
+	<h2 id="h2">급여관리</h2>
 	<div class="md-form">
   <label for="inputMDEx">Choose your date</label>
   <input type="month" id="choicedate" name="choicedate" class="form-control">
 	</div><br>
 	<div id="salaryList"></div>
 	<div id="success"></div>
+</div>
 </body>
 <script>
  $(document).ready(function(){

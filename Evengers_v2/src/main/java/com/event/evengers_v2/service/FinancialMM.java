@@ -101,12 +101,12 @@ public class FinancialMM {
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM");
 		choice = format.format(choicedate);
 		calList = fDao.getCalList(choice, c_id);
-		if(fDao.getTotalCount(choice, c_id)==0) {
-			mav.addObject("msg", "<p>정산할 금액이 없습니다</p>");
-			mav.setViewName("ceoViews/calList");
-			return mav;
-		}
-		Total = fDao.getTotalPrice(choice, c_id);
+	    if(fDao.getTotalCount(choice, c_id) == 0) {
+	         mav.addObject("msg", "<p>정산할 금액이 없습니다</p>");
+	         mav.setViewName("ceoViews/calList");
+	         return mav;
+	      }
+	    Total = fDao.getTotalPrice(choice, c_id);
 		mav.addObject("Total", Total);
 		mav.addObject("calList", calList);
 		mav.addObject("makeHtml_getCalList", makeHtml_getCalList(calList, choice, Total));
@@ -116,9 +116,8 @@ public class FinancialMM {
 
 	private String makeHtml_getCalList(ArrayList<String> calList, String choice, int Total) {
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("<br>정산 금액  (총 금액=" + Total + ")<br>");
-		sb.append("<table border='1' id='getCal'>");
+		sb.append("<br><div><b>정산 금액  (총 금액=" + Total + ")</b><div><br>");
+		sb.append("<table id='getCal' class='table table-striped'>");
 		sb.append("<tr>");
 		sb.append("<td>금액</td><td>사용</td></tr>");
 		for (int i = 0; i < calList.size(); i++) {
@@ -140,9 +139,9 @@ public class FinancialMM {
 		choice = format.format(choicedate);
 		allCalList = fDao.getAllCal(choice, c_id);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy년MM월");
-		sb.append("<h1>" + format1.format(choicedate) + "</h1>");
-		sb.append("<input type='button' onclick='reset()' value='닫기'>");
-		sb.append("<table border='1' id='calTable' ><tr><th>날짜</th><th>카테고리</th><th>내용</th><th>가격</th>");
+		sb.append("<h3 id='choicedate'>" + format1.format(choicedate) + "</h3>");
+		sb.append("<input type='button' onclick='reset()' value='닫기'class='btn btn-outline-primary btn-rounded waves-effect'><br>");
+		sb.append("<table id='calTable' class='table table-striped'><tr><th>날짜</th><th>카테고리</th><th>내용</th><th>가격</th>");
 
 		for (Calculate cal : allCalList) {
 			Date receipt = cal.getCal_receiptdate();
@@ -363,7 +362,7 @@ public class FinancialMM {
 		System.out.println("totalCal="+totalCal);
 		
 		sb.append("<div>");
-		sb.append("<table class='table table-hover'><tr bgcolor='blue' align ='center'><p><td colspan = '3' span style='color:white'>이번달 수입/지출</td></p></tr>");
+		sb.append("<table class='table table-hover'><tr bgcolor='skyblue' align ='center'><p><td colspan = '3' span style='color:white'>이번달 수입/지출</td></p></tr>");
 		sb.append("<tr><th>내용</th><th>지출</th><th>수입</th>");
 	    
 		for(int i=0;i<evtReList.size();i++) {
@@ -415,8 +414,8 @@ public class FinancialMM {
 
 		revenue = allestp_total + allevt_total + totalMonth + totalCal +evtRe_total;
 		
-		sb.append("<tr><td>순이익</td>"
-				+ "<td colspan='2'>"+revenue+"</td></tr>");
+		sb.append("<tr><td><b>순이익</b></td>"
+				+ "<td colspan='2'><b>"+revenue+"</b></td></tr>");
 		
 		sb.append("</table></div>"); 
 		return sb.toString();

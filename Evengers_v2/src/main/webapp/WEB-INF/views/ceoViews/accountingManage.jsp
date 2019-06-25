@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <style>
 input[type="month"]::-webkit-calendar-picker-indicator,
 input[type="month"]::-webkit-inner-spin-button {
@@ -25,65 +27,82 @@ input[type="month"]::-webkit-inner-spin-button {
 	display: none;
 }
 #getCal{
-	width: 13%;
-	float: left;
+	width: 30%;
+	/* float: left; */
 }
 #calTable{
-	width: 35%;
+	width: 40%;
 	float: inherit;
-
 }
 #allshow.open {
 	display: block;
 }
+.form-control{
+	width:30%;
+}
+.custom-select{
+	width:30%;
+}
+#h2{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+#choicedate{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+.card{
+	margin-top : 2%;
+}
+
+
 </style>
 </head>
-<body>
-	<div id="wrap">
-		<h2>일일 정산</h2>
+<body id="wrap">
+<div class="card" align="center">
+<div class="card-body px-lg-5 pt-0" >
+		<h2 id="h2">일일 정산</h2>
 		<form name="accountingManage" action="accountingManage" method="post"
-			onsubmit="return check()">
-			<table border="1">
-				<tr>
-					<td>날짜</td>
-					<td><input type="date" id="cal_receiptdate"
-						name="cal_receiptdate" name="cal_receiptdate"><span
-						id="dateMsg"></span></td>
-				</tr>
-				<tr>
-					<td>카테고리</td>
-					<td><select name="cal_category" id="cal_category"
-						name="cal_category">
+			onsubmit="return check()" >
+			<div class="md-form mt-3"">
+			<label for="inputMDEx">Choose your date</label>
+			<input type="date" id="cal_receiptdate" name="cal_receiptdate" name="cal_receiptdate" class="form-control">
+			<span id="dateMsg"></span>
+			</div>
+			<div class="md-form mt-3">
+					<label for="inputMDEx">카테고리</label><br>
+					<select name="cal_category" id="cal_category" name="cal_category" class='custom-select'>
 							<option value="선택하세요">선택하세요</option>
 							<option value="기름값">기름값</option>
 							<option value="식대">식대</option>
 							<option value="재료값">재료값</option>
 							<option value="기타">기타</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td><input type="text" id="cal_contents" name="cal_contents"></td>
-				</tr>
-				<tr>
-					<td>금액</td>
-					<td><input type="number" id="cal_price" name="cal_price"></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center"><input type="button"
-						onclick="calculate()" value="확인"> <input type="reset"
-						value="취소"></td>
-				</tr>
-			</table>
+					</select>
+				</div>
+				<div class="md-form mt-3">
+					내용<input type="text" id="cal_contents" name="cal_contents" class="form-control">
+				</div>
+				<div class="md-form mt-3">
+					금액<input type="number" id="cal_price" name="cal_price" class="form-control">
+				</div>
+				<div class="md-form mt-3">
+					<input type="button" onclick="calculate()" value="확인" class="btn btn-outline-primary btn-rounded waves-effect">
+				    <input type="reset"	value="취소" class="btn btn-outline-primary btn-rounded waves-effect">
+				</div>
 		</form>
-
+		</div>
+</div>
+<div class="card" align="center">
+<div class="card-body px-lg-5 pt-0">
 		<div id="monthCalculate">
-		<h2>한달 정산</h2>
-			<input type="month" id="choicedate" name="choicedate">
+		<div id="wrap">
+		<h2 id="h2">한달 정산</h2>
+		  <label for="inputMDEx">Choose your date</label>
+			<input type="month" id="choicedate" name="choicedate" class="form-control">
+			<button onclick="allShowCal()" class="btn btn-outline-primary btn-rounded waves-effect">상세보기</button>
 			<div id="calList"></div>
-			<button onclick="allShowCal()">상세보기</button>
 			<div id="allshow">${allShowCal}</div>
 		</div>
+		</div>
+</div>
 </div>
 </body>
 <script type="text/javascript">
@@ -172,7 +191,7 @@ function calculate() {
 			$("#wrap").html(data);
 		},
 		error : function(error) {
-			alert("정산 입력 실패");
+			check();
 			console.log(error)
 		}
 	})
@@ -181,6 +200,22 @@ $("input[type=date]").change(function() {
 	validation();
 	getCalList();
 })
+function check() {
+		var frm = document.accountingManage;
+		var length = frm.length - 1;
+		for (var i = 0; i < length; i++) {
+			if (frm[i].value == "" || frm[i].value == null) {
+				swal({
+					title : "No!",
+					text : "정보를 입력하세요!",
+					icon : "warning",
+				});
+				frm[i].focus();
+				return false; //실패
+			}
+		}
+			return true;
+		}
 function validation() {
 	getCalList();
 	var day = $("input[type=date]").val();

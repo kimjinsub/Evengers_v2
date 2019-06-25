@@ -10,22 +10,27 @@
 .btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 {
         margin: 100px 0px;
 }
+#idEmail{
+	color :red;
+}
 </style>
 </head>
 <body>
-<input type="text" id="id" name="id" placeholder="아이디를 입력하세요"style="width:90%; height:40px;border-radius:25px;"class="form-control">
+<br>
 
-<input type="text" id="email" name="email" placeholder="이메일을 입력하세요"style="width:90%; height:40px;border-radius:25px;"class="form-control"><br>
-<button onclick="sendNumber()"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"style="background-color: red;width:45%; height:40px;text-align: center; line-height: 20px;">인증번호 발송</button>
+<input type="text" id="id" name="id" placeholder="아이디를 입력하세요"style: "width:90%; height:50px;" class="form-control">
+
+<input type="text" id="email" name="email" placeholder="이메일을 입력하세요"style: "width:90%; height:50px;" class="form-control"><br>
+<button onclick="sendNumber()"class="btn btn-outline-primary btn-rounded waves-effect"style=""width:45%; height:40px;text-align: center; line-height: 20px;">인증번호 발송</button>
 <div id="idEmail"></div>
 <hr>	
-<input type="text"id="matchNum" name="matchNum" placeholder="인증번호" style="width:40%; height:40px;border-radius:25px;display: inline;"class="form-control">
-<button onclick="matchNum()"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"style="background-color: red;width:20%; height:40px;float: right;position: relative;top: 25px;right: 115px;line-height: 20px;">확인</button>
+<input type="text"id="matchNum" name="matchNum" placeholder="인증번호" style="width:40%; height:40px;display: inline;"class="form-control">
+<button onclick="matchNum()"class="btn btn-outline-primary btn-rounded waves-effect">확인</button>
 <div id="pwChange">
 <hr>	
 <input type="password" id="pwMo1" name="pwMo2" placeholder="비밀번호를 입력하세요"style="width:90%; height:40px;border-radius:25px;"class="form-control">
 <input type="password" id="pwMo2" name="pwMo2" placeholder="비밀번호를 확인하세요"style="width:90%; height:40px;border-radius:25px;"class="form-control"><br>
-<button onclick="pwChange()"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"style="background-color: red;width:50%; height:40px;line-height: 20px;">비밀번호 변경</button>
+<button onclick="pwChange()"class="btn btn-outline-primary btn-rounded waves-effect"style="width:50%; height:40px;line-height: 20px;">비밀번호 변경</button>
 
 </div>
 <div id="com">

@@ -5,19 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style >
+<style>
+#emailInput{
+	color:red;
+}
 </style>
 </head>
 <body>
-
-	<input type="text" id="email" name="email" placeholder="이메일를 입력하세요" style="border-radius:25px;width:90%; height:50px;	"class="form-control">
+	<br>
+	<input type="text" id="email" name="email" placeholder="이메일를 입력하세요" style: "width:90%; height:50px;" class="form-control">
 	<br>
 	<div id="emailInput"></div>
 	<br>
-	<button onclick="sendId()"class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"style="background-color: red;"> 아이디 찾기</button>
-	
+	<button onclick="sendId()" class="btn btn-outline-primary btn-rounded waves-effect" style="width:90%; height:50px;"> 아이디 찾기</button>
 	<hr>
-
 	<div id="hiddenId"></div>
 </body>
 <script>

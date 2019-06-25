@@ -12,6 +12,7 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <style>
 body {
   background: #007bff;
@@ -31,19 +32,30 @@ body {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+#h5{
+	font-family: 'Nanum Gothic', sans-serif;
+	color : white;
+}
+#img{
+	width:40px;
+	height: 40px;
+}
 </style>
 
 </head>
 <body>
-<jsp:include page="../header.jsp"></jsp:include>
-	<div id="find">
+
+	<h5 class="card-header info-color white-text text-center py-4" id="h5">
+        <img id="img" src="img/padlock.png">&nbsp<strong>ID & PW FIND</strong>
+    </h5>
+
+   <div id="find">
 										
-		<div class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="idFind" style="width: 40%;float: left;display:inline;position: relative;top:15px;left: 7px">아이디 찾기</div>
-		<div class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="pwFind" style="width: 50%;float: right;display:inline;position: relative;top: 7px;right: 10px">비밀번호 찾기</div>
-		<div id="find_main"style="display:inline;position: relative;top:25px;">
+		<div class="btn btn-outline-primary btn-rounded waves-effect" id="idFind" >아이디 찾기</div>
+		<div class="btn btn-outline-primary btn-rounded waves-effect" id="pwFind" >비밀번호 찾기</div><br>
+		<div id="find_main">
 		</div>
 	</div>
-
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>

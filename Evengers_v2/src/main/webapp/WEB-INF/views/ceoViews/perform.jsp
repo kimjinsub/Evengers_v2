@@ -22,7 +22,7 @@
 }
 .card{
 	margin:auto;
-	width:70%;
+	width:90%;
 }
 </style>
 </head>
@@ -35,18 +35,18 @@
 				</h4>
 			</div>
 			<form name="perform" method="post" enctype="multipart/form-data" style="color: #757575;">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-					</div>
-					<div class="custom-file">
-						<input type="file" name="emp_orifilename" id="emp_orifilename"
+  				<div class="input-group">
+  				<div class="input-group-prepend">
+    			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+  					</div>
+  				<div class="custom-file">
+    				<input type="file" name="emp_orifilename" id="emp_orifilename"
 							onchange="fileChk(this)" class="custom-file-input"
-							aria-describedby="inputGroupFileAddon01"><br /> <label
-							class="custom-file-label" for="inputGroupFile01">Choose
-							file</label>
-					</div>
+							aria-describedby="inputGroupFileAddon01">
+    				<label class="custom-file-label" for="emp_orifilename">Choose file</label> 
+  					</div>
 				</div>
+
 				<div class="md-form mt-3">
 					이름:<input type="text" name="emp_name" id="emp_name"
 						placeholder="이름을 입력하세요" class="form-control">
@@ -251,7 +251,12 @@
 			contentType : false,
 			dataType : "html",
 			success : function(data) {
-				alert("인사카드 등록성공");
+				swal({
+					title:"Yes!",
+					text: "등록 성공",
+					icon:"success"
+				});
+				/* alert("인사카드 등록성공"); */
 				console.log(data);
 				location.href = "./";
 			},

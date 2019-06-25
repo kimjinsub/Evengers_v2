@@ -7,16 +7,24 @@
 <title>이벤트 상품 등록</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	
 <style type="text/css">
 input.option-add {
 	background-image: url("img/plus.png");
 	width: 25px;
 	height: 25px;
 }
-
 #evtTable {
 	margin-top: 100px;
 }
+.card{
+	margin:auto;
+	width:50%;
+}
+#wrap{
+	margin-top: 5%;
+}
+
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -30,69 +38,68 @@ input.option-add {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<body>
+
+<body id="wrap">
 	<jsp:include page="../header.jsp" />
-	<form name="evtInsertFrm" action="/" method="post"
-		enctype="multipart/form-data" onsubmit="return confirm()">
-		<table border="1" width="400" align="center" id="evtTable">
-			<tr>
-				<td colspan="2" align="center">이벤트 상품 등록</td>
-			</tr>
-			<tr>
-				<td>상품명</td>
-				<td><input type="text" name="상품명" id="e_name"></td>
-			</tr>
-			<tr>
-				<td>가격</td>
-				<td><input type="number" name="가격" id="e_price"></td>
-			</tr>
-			<tr>
-				<td>이벤트 카테고리</td>
-				<td><div id="selectZone"></div></td>
-			</tr>
-			<tr>
-				<td>옵션</td>
-				<td><div id="add">
-						<input type="text" class="option_name" placeholder="내용" name="옵션">
-						<input type="number" class="option_price" placeholder="가격">
-					</div> <input type="button" onclick='addOption()' class="option-add"
-					id="e_option"></td>
-			</tr>
-
-			<tr>
-				<td>예약가능일</td>
-				<td><input type="number" name="예약가능일" id="e_reservedate"></td>
-			</tr>
-			<tr>
-				<td>환불가능일</td>
-				<td><input type="number" name="환불가능일" id="e_refunddate"></td>
-			</tr>
-			<tr>
-				<td>썸네일사진</td>
-				<td>
-					<input type="file" name="썸네일 사진" id="e_orifilename"
-				onchange="fileChk(this)"/>
+	<div class="card">
+		<div class="card-body px-lg-5 pt-0">
+			<div class="card-header info-color white-text text-center py-4">
+				<h4 class="title">
+					 이벤트 상품 등록
+				</h4>
+			</div>
+	<form name="evtInsertFrm" action="/" method="post" enctype="multipart/form-data" onsubmit="return confirm()" >
+			<div class="md-form mt-3">
+				상품명:<input type="text" name="상품명" id="e_name"
+					placeholder="상품명을 입력하세요" class="form-control">
+			</div>
+			<div class="md-form mt-3">
+				가격:<input type="number" name="가격" id="e_price"
+					placeholder="가격을 입력하세요" class="form-control"><br>
+			</div>				
+			<div id="selectZone"></div>
+			<div id="add" class="md-form mt-3">
+				옵션:<input type="text" id="option_name" placeholder="내용" name="옵션" class="form-control">
+				<input type="number" id="option_price" placeholder="가격" class="form-control">
+			</div> 
+				<input type="button" onclick='addOption()' class="option-add" id="e_option">
+			<div class="md-form mt-3">
+				예약가능일:<input type="number" name="예약가능일" id="e_reservedate" class="form-control">
+			</div>
+			<div class="md-form mt-3">
+				환불가능일:<input type="number" name="환불가능일" id="e_refunddate" class="form-control"><br>
+			</div>
+			
+			<div class="input-group">
+      			<div class="input-group-prepend">
+      			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      			</div>
+    			<div class="custom-file">
+      			<input type="file" id="e_orifilename"  onchange="fileChk(this)" name="썸네일 사진" class="form-control">
 				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
-				</td>
-			</tr>
-			<tr>
-				<td>이벤트 첨부 사진</td>
-				<td><input type="file" name="이벤트 첨부 사진" id="ei_files"
-					onchange="fileChk(this)" multiple /></td>
-			</tr>
-			<tr>
-				<td>글 내용</td>
-				<td><textarea name="글 내용" id="e_contents" rows="20"></textarea></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center"><input type="button"
-					onclick="formData()" value="이벤트등록하기"> <input type="button"
-					onclick="location.href='./'" value="홈으로"> <input
-					type="reset" id="rs" value="다시작성"></td>
-			</tr>
-		</table>
-	</form>
-
+    			</div>
+     		</div>
+     		<div class="input-group">
+      			<div class="input-group-prepend">
+      			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      			</div>
+    			<div class="custom-file">
+      			<input type="file" name="이벤트 첨부 사진" id="ei_files"
+					onchange="fileChk(this)" multiple class="form-control">
+				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
+    			</div>
+    			</div>
+				<div class="md-form mt-3">
+				글 내용:<textarea name="글 내용" id="e_contents" rows="20" class="form-control"></textarea> 
+				</div>
+			<div class="md-form mt-3">
+				<input type="button" onclick="formData()" value="이벤트등록하기" class="btn btn-outline-primary btn-rounded waves-effect"> 
+				<input type="button" onclick="location.href='./'" value="홈으로" class="btn btn-outline-primary btn-rounded waves-effect"> 
+				<input type="reset" id="rs" value="다시작성" class="btn btn-outline-primary btn-rounded waves-effect">
+			</div>
+		</form>
+	</div>
+</div>
 </body>
 <script>
 	$(document).ready(function() {
@@ -117,23 +124,22 @@ input.option-add {
 	var i = 1;
 	function addOption() {
 		var str = "";
-		str += "<div><input type='text' class='option_name' placeholder='내용'>"
-				+ "<input type='number' class='option_price' placeholder='가격'></div>";
+		str += "<div><input type='text' id='option_name' placeholder='내용' class='form-control' >"
+				+ "<input type='number' id='option_price' placeholder='가격' class='form-control'></div>";
 		$('#add').append(str);
 	};
 	function confirm() { //옵션 보내기
 		var str = "";
 		var num = "";
-		$(".option_name").each(function() {
+		$("#option_name").each(function() {
 			str += $(this).val() + ",";
 		})
-		$(".option_price").each(function() {
+		$("#option_price").each(function() {
 			num += $(this).val() + ",";
 		})
 		$("#add")
-				.append(
-						'<input type="hidden" name="eo_name" id="eo_name"/>'
-								+ '<input type="hidden" name="eo_price" id="eo_price"/>');
+				.append('<input type="hidden" name="eo_name" id="eo_name"/>'
+						+ '<input type="hidden" name="eo_price" id="eo_price"/>');
 		$("input[name=eo_name]").val(str);
 		$("input[name=eo_price]").val(num);
 		console.log("eo_name", $("input[name=eo_name]").val());
@@ -152,7 +158,7 @@ input.option-add {
 			success : function(result) {
 				console.log(result);
 				var str = "";
-				str += "<select name='e_category' id='e_category'>"
+				str += "이벤트 카테고리 : <select name='e_category' id='e_category' class='custom-select'>"
 						+ "<option selected='selected'>선택하세요</option>";
 				for ( var i in result) {
 					str += "<option value='"+result[i].ec_name+"'>"

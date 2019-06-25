@@ -5,10 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+#msg{
+	color:red;
+}
+</style>
 </head>
 <body>
 <div id="makeHtml_cal">
-	${msg}
+	<div id="msg">${msg}</div>
 	${makeHtml_getCalList}
 </div>
 </body>

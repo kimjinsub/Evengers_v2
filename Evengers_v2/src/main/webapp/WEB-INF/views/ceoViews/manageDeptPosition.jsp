@@ -5,6 +5,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <style>
 /* #wrap{	
@@ -34,7 +35,7 @@
 	position: absolute;
 	overflow: auto;
 	text-align: center;
-	top: 30%;
+	top: 40%;
 	left: 35%;
 	transform: translate(0%, 0%);
 }
@@ -47,7 +48,7 @@
 	position: absolute;
 	overflow: auto;
 	text-align: center;
-	top: 10%;
+	top: 14%;
 	left: 65%;
 	transform: translate(0%, 0%);
 }
@@ -62,8 +63,15 @@
 
 #addDeptFrm {
 	visibility: hidden;
-	vertical-align: middle;
 	margin: auto;
+	display: inline-block;
+	/* width: 80%; height: 80%; */
+	position: absolute;
+	overflow: auto;
+	text-align: center;
+	top: 20%;
+	left: 35%;
+	transform: translate(0%, 0%);
 }
 
 #addDeptFrm.shown {
@@ -73,16 +81,20 @@
 #removeDeptFrm {
 	cursor: pointer;
 }
+#h2{
+	margin-top:2%;
+	font-family: 'Nanum Gothic', sans-serif;
+}
 </style>
 <title>manageDeptPosition</title>
 </head>
 <body>
+		<h2 id="h2" align="center">부서 및 직책 관리</h2>
 	<!-- <div id="positionPartWrap"> -->
-	<div class="row wow fadeIn"
-		style="visibility: visible; animation-name: fadeIn;">
+	<div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
 		<div class="card" id="positionPartWrap">
 			<div class="card-body">
-				<table  id="positionPart" class='table table-striped'>
+				<table  id="positionPart" class="table table-bordered">
 					<thead class="blue-grey lighten-4">
 					</thead>
 				</table>
@@ -91,7 +103,7 @@
 			</div>
 		<div class="card" id="addPositionFrm">
 			<div class="card-body">
-				<table border="1" class='table table-striped'>
+				<table border="1" class="table table-bordered">
 					<thead class="blue-grey lighten-4">
 						<tr>
 							<td><label for="inputMDEx">직책명:</label></td>
@@ -104,14 +116,15 @@
 					</thead>
 				</table>
 				<button onclick="addPosition()" class="btn btn-outline-primary btn-rounded waves-effect">완료</button>
-				<div id="removePositionFrm" onclick="hideAddPositionFrm()" >닫기</div>
+				<!-- <div id="removePositionFrm" onclick="hideAddPositionFrm()"  >닫기</div> -->
+				<button id="removePositionFrm" onclick="hideAddPositionFrm()" class="btn btn-outline-primary btn-rounded waves-effect">닫기</button>
 			</div>
 		</div>
 	
 	<!-- <div id="deptPartWrap">	 -->
 		<div class="card" id="deptPartWrap">
 			<div class="card-body">
-				<table  id="deptPart" class='table table-striped'> 
+				<table  id="deptPart" class="table table-bordered"> 
 					<thead class="blue-grey lighten-4">
 					</thead>
 				</table>
@@ -120,7 +133,7 @@
 		</div>
 		<div class="card" id="addDeptFrm">
 			<div class="card-body">
-				<table border="1" class='table table-striped'>
+				<table border="1" class="table table-bordered">
 					<thead class="blue-grey lighten-4">
 						<tr>
 							<td>부서명</td>
@@ -129,7 +142,8 @@
 					</thead>
 				</table>
 				<button onclick="addDept()" class="btn btn-outline-primary btn-rounded waves-effect">완료</button>
-				<div id="removeDeptFrm" onclick="hideAddDeptFrm()">닫기</div>
+				<!-- <div id="removeDeptFrm" onclick="hideAddDeptFrm()">닫기</div> -->
+				<button id="removeDeptFrm" onclick="hideAddDeptFrm()" class="btn btn-outline-primary btn-rounded waves-effect">닫기</button>
 			</div>
 		</div>
 		</div>
