@@ -30,9 +30,30 @@
 }
 
 
+#detail.open {
+	display: block;
+}
+
+#detail {
+	position:fixed;
+	top: 30px;
+	left: 35%;
+	width: 750px;
+	height: 650px;
+	padding: 2px;
+	margin-left: -150px;
+	float:left;
+	z-index: 101;
+	display: none;
+	overflow:scroll;
+	background-color: white;
+}
+
+
 #frm.open {
 	display: block;
 }
+
 
 #pageDown {
    text-align: right;
@@ -151,7 +172,7 @@
 		</div>
 	</div>
 </nav>
-
+<div id="detail"></div>
 <div id="frm"></div>
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
