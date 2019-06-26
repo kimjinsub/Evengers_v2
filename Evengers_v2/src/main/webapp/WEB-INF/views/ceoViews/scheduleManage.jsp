@@ -48,7 +48,8 @@ table th{background-color: #96a9aa;}
 </style>
 <title>일정관리</title>
 </head>
-<body>
+<body id="scheduleBody">
+<br/><br/>
 <div id='evtArea'>
 	<div id='schedule'>
 	<h2>이벤트결제</h2>

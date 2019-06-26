@@ -480,7 +480,7 @@ public class ScheduleMM {
 		StringBuilder sb=new StringBuilder();
 		sb.append("<table id='schedule_table' "
 				+ "class='table table table-condensed table-bordered'>"
-				+ "<tr><th>시간</th><th>이벤트명</th><th>옵션</th><th>의뢰자</th><th>핸드폰번호</th></tr>");
+				+ "<tr><th></th><th>이벤트정보</th><th>구매자정보</th></tr>");
 		for(EventSchedule es:esList) {
 			EventPay ep=payDao.getEpInfo(es.getEp_code());
 			Calendar c=Calendar.getInstance();
@@ -492,13 +492,23 @@ public class ScheduleMM {
 			Member mb=mDao.mInfo(ep.getM_id());
 			Event e=eDao.getEvtInfo(ep.getE_code());
 			sb.append("<tr class='evt'>"
-					+ "		<td>"+hour+"시"+minute+"분</td>"
-					+ "		<td>[이벤트구매]\n"+e.getE_name()+"</td><td>");
+					+ "		<td><img src='upload/thumbnail/"+e.getE_sysfilename()+"' width='100%' height='auto'/></td>"
+					+ "		<td>"
+					+ "			<p>[이벤트구매]</p>"
+					+ "			<p>"+hour+"시"+minute+"분</p>"
+					+ "			<p>"+e.getE_name()+"</p>"
+					+ "			<p>");
+			int i=1;
 			for(EventPaySelectedOption eps:epsList) {
-				sb.append(eDao.getEoInfo(eps.getEo_code()).getEo_name() +"<br/>");
+				sb.append("옵션"+i+" : "+eDao.getEoInfo(eps.getEo_code()).getEo_name() +"<br/>");
+				i++;
 			}
-			sb.append("</td><td>"+mb.getM_name()+"</td>"
-					+ "		<td>"+mb.getM_tel()+"</td>"
+			sb.append("			</p>"
+					+ "		</td>"
+					+ "		<td>"
+					+ "			<p>"+mb.getM_name()+"</p>"
+					+ "			<p>"+mb.getM_tel()+"</p>"
+					+ "		</td>"
 					+ "</tr>");
 		}
 		for(EstimateSchedule ests:estsList) {
@@ -516,12 +526,20 @@ public class ScheduleMM {
 			Member mb = mDao.mInfo(req.getM_id());
 			int hour=c.get(Calendar.HOUR);
 			int minute=c.get(Calendar.MINUTE);
+			String sysfilename=rDao.getEstpiImage(estp.getEstp_code())
+					.getEstpi_sysfilename(); 
 			sb.append("<tr class='est'>"
-					+ "		<td>"+hour+"시"+minute+"분</td>"
-					+ "		<td>[의뢰견적구매]\n"+req.getReq_title() +"</td>"
-					+ "		<td></td>");
-			sb.append("		<td>"+mb.getM_name()+"<br/>"
-					+ "		<td>"+mb.getM_tel()+"</td>"
+					+ "		<td><img src='upload/estimateImage/"+sysfilename+"' width='100%' height='auto'/></td>"
+					+ "		<td>"
+					+ "			<p>[의뢰견적구매]</p>"
+					+ "			<p>"+req.getReq_title()+"</p>"
+					+ "			<p>"+hour+"시"+minute+"분</p>"
+					+ "			<p>["+req.getReq_hopearea()+"]"+req.getReq_hopeaddr()+"</p>"
+					+ "		</td>"
+					+ "		<td>"
+					+ "			<p>"+mb.getM_name()+"</p>"
+					+ "			<p>"+mb.getM_tel()+"</p>"
+					+ "		</td>"
 					+ "</tr>");
 		}
 		sb.append("</table>");
