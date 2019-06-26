@@ -343,8 +343,8 @@ margin: auto; height:50px; text-align: center; position: absolute;
 					</div>
 					<div class="card-body">
 						<div><c:forEach var="ei" items="${eiList}">
-							<img src="upload/eventImage/${ei.ei_sysfilename}" / width="250"
-								height="250">
+							<img src="upload/eventImage/${ei.ei_sysfilename}" / width="100%"
+								height="auto">
 						</c:forEach></div>
 						<div style="">${eb.e_contents}</div>
 
