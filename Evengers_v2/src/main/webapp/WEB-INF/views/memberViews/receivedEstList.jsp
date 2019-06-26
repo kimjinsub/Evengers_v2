@@ -7,6 +7,14 @@
 <title>Insert title here</title>
 </head>
 <style>
+#paging{margin: auto; height:50px; text-align: center;}
+#paging div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 30px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
+}
+
 #detail {
 	position:fixed;
 	top: 30px;
