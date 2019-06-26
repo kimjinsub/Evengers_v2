@@ -399,19 +399,19 @@ margin: auto; height:50px; text-align: center; position: absolute;
 <script>
 datePicker();
 function datePicker(){
-var date = new Date();
-$.ajax({
-	url:"datePicker",
-	data:{date:date,type:"yyyyMMddhhmm"},
-	dataType:"text",
-	success:function(result){
-		$("#datepicker").html(result);
-		effectiveness();
-	},
-	error:function(error){
-		console.log(error);
-	}
-})
+	var date = new Date();
+	$.ajax({
+		url:"datePicker",
+		data:{date:date,type:"yyyyMMddhhmm"},
+		dataType:"text",
+		success:function(result){
+			$("#datepicker").html(result);
+			effectiveness();
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})
 }
 function memberChat(receiver){
 	$.ajax({

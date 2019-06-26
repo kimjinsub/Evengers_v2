@@ -180,8 +180,13 @@ function rejectEstPay(){
 }
 function confirmDept(){
 	var dept_code=$("#selectDept").val();
-	console.log("dept=",dept_code);
-	console.log("ep_code=",ep_code);
+	if(dept_code==""){
+		swal({
+			title : "부서코드를 선택해주세요",
+			icon : "warning",
+		});
+		return;
+	}
 	$.ajax({
 		url:"insertEvtSchedule",
 		data:{dept_code:dept_code,ep_code:ep_code},
@@ -209,8 +214,13 @@ function confirmDept(){
 }
 function confirmEstsDept(){
 	var dept_code=$("#selectEstsDept").val();
-	console.log("dept=",dept_code);
-	console.log("estp_code=",estp_code);
+	if(dept_code==""){
+		swal({
+			title : "부서코드를 선택해주세요",
+			icon : "warning",
+		});
+		return;
+	}
 	$.ajax({
 		url:"insertEstSchedule",
 		data:{dept_code:dept_code,estp_code:estp_code},
