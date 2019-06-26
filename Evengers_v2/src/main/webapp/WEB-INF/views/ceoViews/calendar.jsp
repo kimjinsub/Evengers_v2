@@ -17,10 +17,13 @@
 	
 }
 #calendar_table td{
-	width: 200px; height: 100px;background-color: #FAFAFA;
-	padding: 0;
+	width: 200px; height: 100px;background-color: #FAFAFA; padding: 0;
+	font-family: "Nanum Gothic", sans-serif; font-size: 20px;
 }
-#calendar_table th{width: 200px; height: 50px;background-color: #96a9aa;text-align: center;}
+#calendar_table th{
+	width: 200px; height: 50px;background-color: #96a9aa;text-align: center;
+	font-family: "Nanum Gothic", sans-serif; font-size: 25px;
+}
 #scheduleToday{
 	position: fixed; /* border: 1em solid black; */
 	top:50%; left: 50%;
@@ -29,10 +32,17 @@
 	display: none; background-color: white;
 	margin: auto; z-index: 101;
 	padding: 50px; border-radius:10%;
+	
 }
 #scheduleToday.show{display: inline;}
-#schedule_table td{width: 200px; height: 100px;}
-#schedule_table th{width: 200px; height: 50px;background-color: #96a9aa;text-align: center;}
+#schedule_table td{
+	width: 200px; height: 100px;
+	font-family: "Nanum Gothic", sans-serif; font-size: 17px;
+}
+#schedule_table th{
+	width: 200px; height: 50px;background-color: #96a9aa;text-align: center;
+	font-family: "Nanum Gothic", sans-serif; font-size: 25px;
+}
 #bg-shadow{
 	display:none;
 	position: fixed; 
