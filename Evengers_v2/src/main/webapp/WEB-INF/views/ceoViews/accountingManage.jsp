@@ -62,13 +62,13 @@ input[type="month"]::-webkit-inner-spin-button {
 		<h2 id="h2">일일 정산</h2>
 		<form name="accountingManage" action="accountingManage" method="post"
 			onsubmit="return check()" >
-			<div class="md-form mt-3"">
-			<label for="inputMDEx">Choose your date</label>
-			<input type="date" id="cal_receiptdate" name="cal_receiptdate" name="cal_receiptdate" class="form-control">
+			<div class="md-form mt-3">
+			<i class="fas fa-barcode"></i>&nbsp<label for="inputMDEx">Choose your date</label>
+			<input type="date" id="cal_receiptdate"  name="cal_receiptdate" class="form-control">
 			<span id="dateMsg"></span>
 			</div>
 			<div class="md-form mt-3">
-					<label for="inputMDEx">카테고리</label><br>
+					<i class="far fa-file-alt"></i>&nbsp<label for="inputMDEx">카테고리</label><br>
 					<select name="cal_category" id="cal_category" name="cal_category" class='custom-select'>
 							<option value="선택하세요">선택하세요</option>
 							<option value="기름값">기름값</option>
@@ -78,10 +78,10 @@ input[type="month"]::-webkit-inner-spin-button {
 					</select>
 				</div>
 				<div class="md-form mt-3">
-					내용<input type="text" id="cal_contents" name="cal_contents" class="form-control">
+					<i class="fas fa-comments"></i>&nbsp내용<input type="text" id="cal_contents" name="cal_contents" class="form-control">
 				</div>
 				<div class="md-form mt-3">
-					금액<input type="number" id="cal_price" name="cal_price" class="form-control">
+					<i class="fas fa-dollar-sign"></i>&nbsp금액<input type="number" id="cal_price" name="cal_price" class="form-control">
 				</div>
 				<div class="md-form mt-3">
 					<input type="button" onclick="calculate()" value="확인" class="btn btn-outline-primary btn-rounded waves-effect">
@@ -95,7 +95,7 @@ input[type="month"]::-webkit-inner-spin-button {
 		<div id="monthCalculate">
 		<div id="wrap">
 		<h2 id="h2">한달 정산</h2>
-		  <label for="inputMDEx">Choose your date</label>
+		  <i class="fas fa-barcode"></i>&nbsp<label for="inputMDEx">Choose your date</label>
 			<input type="month" id="choicedate" name="choicedate" class="form-control">
 			<button onclick="allShowCal()" class="btn btn-outline-primary btn-rounded waves-effect">상세보기</button>
 			<div id="calList"></div>
@@ -139,8 +139,6 @@ function allShowCal(){
 	
 	var choicedate = $("input[type=month]").val();
 	choicedate = new Date(choicedate);
-	
-	console.log("여기choicedate2=" + choicedate);
 		$.ajax({
 			url:"allShowCal",
 			data:{choicedate:choicedate},
@@ -191,8 +189,14 @@ function calculate() {
 				icon : "success",
 			});
 			getCalList();
-			allShowCal();
-			$("#wrap").html(data);
+			$('form input[type!=button] form input[type!=reset]').val('');
+			$('form select').val('');
+			$('form input[type=text]').val('');
+			$('form input[type=number]').val('');
+			$('form input[type=date]').val('');
+			
+			/* allShowCal(); */
+			/* $("#wrap").html(data); */
 		},
 		error : function(error) {
 			check();

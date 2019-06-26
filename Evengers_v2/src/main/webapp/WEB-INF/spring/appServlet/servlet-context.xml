@@ -30,6 +30,7 @@
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/fonts/**" location="/resources/fonts/" />
 	<resources mapping="/admin/**" location="/resources/admin/" />
+	<resources mapping="/webfonts/**" location="/resources/webfonts/" />
 	<resources mapping="/upload/**" location="/upload/" />
 	<resources mapping="/shop/**" location="/resources/shop/" />
 	
