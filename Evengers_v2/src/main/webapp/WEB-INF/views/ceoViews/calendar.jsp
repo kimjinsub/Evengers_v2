@@ -24,16 +24,33 @@
 	transform: translate(-40%, -40%);
 	width: 80%; text-align: center;
 	display: none; background-color: white;
-	margin: auto;
+	margin: auto; z-index: 101;
+	padding: 50px; border-radius:10%;
 }
 #scheduleToday.show{display: inline;}
 #schedule_table td{width: 200px; height: 100px;}
 #schedule_table th{width: 200px; height: 50px;background-color: #96a9aa;text-align: center;}
+#bg-shadow{
+	display:none;
+	position: fixed; 
+	top:0%; left:0%;
+	width: 100%; height: 100%;
+	z-index: 100; background-color: gray;
+	opacity: 0.6;
+}
+#bg-shadow.show{
+	display:inline;
+}
+#closerToday{
+	text-align:right;cursor:pointer;color:red;
+	position: absolute; top:0%;right:0%;
+}
 </style>
 </head>
 <body>
 ${calendar}
 <div id="scheduleToday"></div>
+<div id="bg-shadow"></div>
 </body>
 <script>
 function Ajax_showScheduleToday(esList,estsList,calDate){
@@ -51,6 +68,7 @@ function Ajax_showScheduleToday(esList,estsList,calDate){
 		success:function(result){
 			$("#scheduleToday").html(result);
 			$("#scheduleToday").addClass("show");
+			$("#bg-shadow").addClass("show");
 		},
 		error:function(error){
 			console.log(error);
@@ -59,6 +77,7 @@ function Ajax_showScheduleToday(esList,estsList,calDate){
 }
 function hideScheduleToday(){
 	$("#scheduleToday").removeClass("show");
+	$("#bg-shadow").removeClass("show");
 }
 </script>
 </html>
