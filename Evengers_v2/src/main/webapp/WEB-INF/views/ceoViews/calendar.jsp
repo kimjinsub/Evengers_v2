@@ -16,7 +16,10 @@
 	text-align: center; color: black; margin:auto;
 	
 }
-#calendar_table td{width: 200px; height: 100px;background-color: #FAFAFA;}
+#calendar_table td{
+	width: 200px; height: 100px;background-color: #FAFAFA;
+	padding: 0;
+}
 #calendar_table th{width: 200px; height: 50px;background-color: #96a9aa;text-align: center;}
 #scheduleToday{
 	position: fixed; /* border: 1em solid black; */
@@ -44,6 +47,9 @@
 #closerToday{
 	text-align:right;cursor:pointer;color:red;
 	position: absolute; top:0%;right:0%;
+}
+.forMakeTdLine{
+	width:100%; background-color: #F3AD45; text-align: center;
 }
 </style>
 </head>

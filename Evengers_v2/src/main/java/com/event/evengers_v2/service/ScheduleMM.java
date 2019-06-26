@@ -438,9 +438,11 @@ public class ScheduleMM {
 			String json_estsList=new Gson().toJson(estsList);//json으로 넘겨도 jsp에서 배열로 받음 
 			if(esList.size()>0||estsList.size()>0) {
 				sb.append("<td id='"+calDate+"'>"+i+"<br/>"
+						+ "<p class='forMakeTdLine'>"
 						+ "<a href='javascript:Ajax_showScheduleToday("+json_esList+","+json_estsList+","+calDate+")' "
 						+ "class='scheduleAtag' "
 						+ ">"+(esList.size()+estsList.size())+"건</a>"
+						+ "</p>"
 						+ "</td>");
 			}else {
 				sb.append("<td id='"+calDate+"'>"+i+"</td>");
