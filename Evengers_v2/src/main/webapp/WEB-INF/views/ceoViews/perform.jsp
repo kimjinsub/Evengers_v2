@@ -259,10 +259,11 @@
 					title:"Yes!",
 					text: "등록 성공",
 					icon:"success"
+				})
+				. then (function () { 
+					window.location.href = "./erpIndex";
 				});
 				/* alert("인사카드 등록성공"); */
-				console.log(data);
-				location.href = "./";
 			},
 			error : function(error) {
 				check();

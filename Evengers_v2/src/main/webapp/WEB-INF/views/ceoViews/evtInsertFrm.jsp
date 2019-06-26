@@ -225,8 +225,10 @@ input.option-add {
 					title : "Yes!",
 					text : "이벤트 등록 성공!",
 					icon : "success",
+				})
+				. then (function () { 
+					window.location.href = "./";
 				});
-				location.href = "./";
 			},
 			error : function(error) {
 				check();
