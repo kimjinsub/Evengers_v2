@@ -198,7 +198,7 @@ function getCategories(){
 			}
 			$("#navbarResponsive2 ul").append(str);
 			//$("#navbarResponsive2 ul li:first").addClass("active");
-			getEvtList(result[0].ec_name,1,12);
+			getEvtList(result[0].ec_name,1,8);
 		},
 		error:function(error){
 			console.log(error);
