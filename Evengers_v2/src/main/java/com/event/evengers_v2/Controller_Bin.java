@@ -99,6 +99,14 @@ public class Controller_Bin {
 		return mav;
 	}
 
+	@RequestMapping(value = "/allQuestionList")
+	public ModelAndView allQuestionList() {
+		mav = new ModelAndView();
+		String id=session.getAttribute("id").toString();
+		mav.addObject("id",id);
+		mav.setViewName("adminViews/allQuestionList");
+		return mav;
+	}
 	@RequestMapping(value = "/getQuestionList", produces = "application/json; charset=utf8")
 	public @ResponseBody Map<String, Object> getQuestionList(Integer pageNum,Integer listCount) {
 		Map<String, Object> map1 = qm.getQuestionList(pageNum,listCount);

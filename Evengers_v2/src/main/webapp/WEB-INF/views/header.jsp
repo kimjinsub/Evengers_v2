@@ -124,7 +124,7 @@
 				</a></li>
 			 	<li class="nav-item active"><a class="nav-link" href="./introduce">소개</a></li>
 			 	<li class="nav-item active"><a class="nav-link" href="./categoryFrm">카테고리 관리</a></li>
-			 	<li class="nav-item active"><a class="nav-link" href="./questionList">문의 보기</a></li>
+			 	<li class="nav-item active"><a class="nav-link" href="./allQuestionList">문의 보기</a></li>
 				<li class="nav-item active"><a class="nav-link" href="./logout">로그아웃</a></li>
 			</ul>
 		</div>

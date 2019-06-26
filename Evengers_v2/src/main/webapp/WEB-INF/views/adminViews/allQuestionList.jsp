@@ -73,7 +73,7 @@ margin-top:65px;
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-   <%--  <div id="member"><jsp:include page="../header.jsp"/></div> --%>
+     <div id="member"><jsp:include page="../header.jsp"/></div> 
 
 
 	<div id="header">1:1 문의내역</div>
