@@ -43,31 +43,6 @@
    cursor: pointer;
 }
 
-#detail {
-	position:fixed;
-	top: 30px;
-	left: 35%;
-	width: 750px;
-	height: 650px;
-	padding: 2px;
-	margin-top:-30px;
-	margin-left: -150px;
-	float:left;
-	border: dashed;
-	 z-index: 101;
-	display: none;
-	overflow: auto;
-	overflow: scroll;
-	background-color: #FFFFFF;
-	margin-top: 30px;
-	}
-
-
-	#detail.open {
-		display: block;
-	}
-	
-
 #member,#ceo,#admin,#common{
 	visibility: hidden; font-size: 20px;
 }
@@ -177,7 +152,6 @@
 	</div>
 </nav>
 
-<div id="detail"></div>
 <div id="frm"></div>
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

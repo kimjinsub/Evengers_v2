@@ -73,7 +73,7 @@ visibility: visible;
 				첨부된 파일이 없습니다.
 			</c:if> 
 			<c:if test="${!empty file}">
-						<a href="download3?oriFileName=${file.estpi_orifilename}
+						<a href="download2?oriFileName=${file.estpi_orifilename}
 										&sysFileName=${file.estpi_sysfilename}">
 							${file.estpi_orifilename}
 						</a>

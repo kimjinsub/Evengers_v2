@@ -133,19 +133,19 @@ h3 {
 		
 			
 	</table>
-	
+	<%-- 
 		 <div id="member">
+			<button class="ok" value="승인" onclick="estPay(${estimate.est_code})">승인</button>
+			<button class="ok" value="거절" onclick="receivedEstDenial(${estimate.est_code})">거절</button>
+		</div>
+		
+		 --%>
+		  <div id="member">
 			<button class="ok" value="승인" onclick="location.href='estPay?est_code=${estimate.est_code}'">승인</button>
 			<button class="ok" value="거절" onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'">거절</button>
 		</div>
-		
+		 
 	
-	
-		<%--  <div id="member">
-			<input type="button" class="ok" value="승인" onclick="location.href='estPay?est_code=${estimate.est_code}'">
-			<input type="button" value="거절" onclick="location.href='receivedEstDenial?est_code=${estimate.est_code}'">
-		</div> --%>
-		
 	
 
 </body>
@@ -173,8 +173,6 @@ h3 {
 			$layerWindows.removeClass('open');
 		}
 	}
-
-	
 	
 </script>
 

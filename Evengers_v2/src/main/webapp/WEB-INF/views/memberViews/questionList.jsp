@@ -51,13 +51,13 @@ table.type08 {
     padding-left: 100px;
      
 }
-#paging{
-   position:relative;
-   margin-top:200px;
-   padding-left: 250px;
-   margin-left: 350px;
-   display: inline-block;
-   float: left;
+
+#paging{margin: auto; height:50px; text-align: center;}
+#paging div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 30px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
 }
 
 #header{
@@ -73,7 +73,7 @@ margin-top:65px;
 	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-  <div id="member"><jsp:include page="../header.jsp"/></div> 
+   <%--  <div id="member"><jsp:include page="../header.jsp"/></div> --%>
 
 	<div id="header">1:1 문의내역</div>
 	<div id="list"></div>
@@ -83,7 +83,7 @@ margin-top:65px;
 <script>
 	$(document).ready(function() {
 		getQuestionList(1,10);
-		checkAdmin();
+	/* 	checkAdmin();  */
 	});
 	
 	function getQuestionList(pageNum,listCount) {

@@ -120,7 +120,7 @@ public class Controller_Bin {
 	}
 	
 	@RequestMapping(value = "/questionDelete", method = RequestMethod.GET) // get,post 모두 가능
-	public String questionDelete(String q_code) throws DBException{
+	public @ResponseBody String questionDelete(String q_code) throws DBException{
 		String msg = qm.questionDelete(q_code);
 		System.out.println("q_code="+q_code);
 		return msg;

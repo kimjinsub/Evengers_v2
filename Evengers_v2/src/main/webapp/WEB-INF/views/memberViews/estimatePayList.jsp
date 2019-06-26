@@ -36,9 +36,14 @@ margin-right: 200px;
 #estPayList {
 margin-left: 165px;
 }
-#paging{
-position: relative; 
+#paging{margin: auto; height:50px; text-align: center;}
+#paging div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 30px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
 }
+
 #refundState{
 color:red;
 }

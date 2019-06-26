@@ -151,7 +151,7 @@ function qDelete(q_code){
 	             text: "삭제를 성공하였습니다",
 	             icon: "success",
 	  });
-	             location.href="javascript:Ajax_forward('questionList')";
+			location.href="javascript:Ajax_forward('questionList')";
 		},
 		error:function(error){
 			swal({
@@ -159,6 +159,7 @@ function qDelete(q_code){
 	             text: "삭제를 실패하였습니다",
 	             icon: "warning",
 	  });
+			
 			location.href="javascript:Ajax_forward('questionList')";
 	}
 	})

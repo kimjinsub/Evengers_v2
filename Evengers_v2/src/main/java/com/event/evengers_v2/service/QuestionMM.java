@@ -145,17 +145,27 @@ public class QuestionMM {
 		return json_qrList;
 	}
     
-		@Transactional
+		@Transactional(rollbackFor = Exception.class)
 		public String questionDelete(String q_code) throws DBException {
 			String msg="";
-			boolean b = qDao.qfDelete(q_code);
-			boolean r = qDao.replyDelete(q_code); // 댓글
-			boolean a = qDao.questionDelete(q_code); // 원글 1000번 째 롤백확인
+			boolean b=true;
+			boolean r=true;
+			boolean a=true;
+			int fi=qDao.getQuestionFileList(q_code).size();
+			int re =qDao.getReplyList(q_code).size();
+			System.out.println("fe:"+fi);
+			System.out.println("re:"+re);
+			if(fi>0) {
+			 b = qDao.qfDelete(q_code);}
+			if(re>0) {
+			 r = qDao.replyDelete(q_code);}
+			// 댓글
+			 a = qDao.questionDelete(q_code); // 원글 1000번 째 롤백확인
 			System.out.println(b);
 			System.out.println(r);
 			System.out.println(a);
 		
-		  if (a == false) { throw new DBException(); }
+		 // if (a == false) { throw new DBException(); }
 		 
 			if (r && a) {
 				System.out.println("삭제 트랜잭션 성공");
