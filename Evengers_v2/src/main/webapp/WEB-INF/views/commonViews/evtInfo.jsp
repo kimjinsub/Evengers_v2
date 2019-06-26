@@ -280,13 +280,16 @@ margin: auto; height:50px; text-align: center; position: absolute;
 	<!-- Page Content -->
 	<div class="container">
 		<div class="row">
+	
 			<div class="col-lg-3"style="float: left;">
+				<hr>
 				<h1 class="my-4">카테고리</h1>
 				<div class="list-group" id="category">
 				</div>
 			</div>
 			<div class="col-lg-9">
 			<div id="brief"></div>
+			<hr>
 			<div id="eMain">
 				<div class="card mt-4">
 					<!-- 썸네일 사진 -->
