@@ -104,9 +104,6 @@ public class ScheduleMM {
 		
 		/////////////견적결제 리스트..
 		//해당ceo의 견적결제된 것들중에 환불안된 estp코드들을 추출
-		
-		
-		
 		ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
 		if(assigned_estp_codes==null) {
 			mav.addObject("estMsg", "예약된 이벤트가 없습니다");
@@ -334,11 +331,19 @@ public class ScheduleMM {
 		//c_id에 해당하는 ep_code를 전부 가져옴
 		ArrayList<String> ep_codes=getEpCodeListByCeo();//**처음사용자면 null일수 있다
 		//일정에 있는 (수락된) 결제코드들을 뽑음
-		if(ep_codes.size()==0) {return "<p style='font:italic'>해당 부서에 등록된 결제가 없습니다.</p>";}
-		ArrayList<String> assigned_codes=getAssigned_codes(ep_codes);
-		if(assigned_codes.size()==0) {return "<p style='font:italic'>해당 부서에 수락된 일정이 없습니다.</p>";}
-		
-		
+		ArrayList<String> assigned_codes=new ArrayList<String>();
+		if(ep_codes.size()!=0) {
+			assigned_codes=getAssigned_codes(ep_codes);
+		}
+		ArrayList<String> assigned_estp_codes=new ArrayList<String>();
+		assigned_estp_codes=getEstpCodeListByCeo();
+		if(assigned_codes==null &&assigned_estp_codes==null) {
+			return "<p style='font:italic'>해당 부서에 수락된 일정이 없습니다.</p>";
+		}
+		System.out.println("dept_code:"+dept_code);
+		if(dept_code==null||dept_code=="") {
+			return "<p style='font:italic'>등록된 부서가 없습니다. 부서를 등록해주세요.</p>";
+		}
 		
 		//그 날짜의 첫번째 달 firstDay 구하기
 		SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM");
@@ -408,7 +413,7 @@ public class ScheduleMM {
 			
 			//일정에 있는 (수락된) 결제코드들로 일정리스트를 뽑음 -> esList
 			ArrayList<EventSchedule> esList=new ArrayList<>();
-			if(assigned_codes!=null) {
+			if(assigned_codes.size()!=0) {
 				ArrayList<String> checked_assigned_codes=sDao.dateCheck(assigned_codes,calDate);
 				for(String ep_code:checked_assigned_codes) {
 					EventSchedule es=sDao.howManyEvtSchedule(dept_code,ep_code);
@@ -418,7 +423,7 @@ public class ScheduleMM {
 				}
 			}
 			//정렬되고 환불 제거한 결제 리스트 dept와 날짜로 또 추출함
-			ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
+			//ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
 			ArrayList<EstimateSchedule> estsList=new ArrayList<>();
 			if(assigned_estp_codes.size()!=0) {
 				ArrayList<String> checked_assigned_estp_codes=sDao.dateCheckEstp(assigned_estp_codes,calDate);

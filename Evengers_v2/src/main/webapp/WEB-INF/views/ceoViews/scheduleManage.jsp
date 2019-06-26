@@ -50,9 +50,9 @@ table th{background-color: #96a9aa;}
 </head>
 <body>
 <div id='evtArea'>
-${evtMsg}
 	<div id='schedule'>
 	<h2>이벤트결제</h2>
+	${evtMsg}
 	${makeHtml_EpList}
 		<div id="insertEsFrm">
 			<p id="epInfo"></p>
@@ -67,9 +67,9 @@ ${evtMsg}
 </div>
 
 <div id='estArea'>
-${estMsg}
 	<div id='scheduleEst'>
 	<h2>견적결제</h2>
+	${estMsg}
 	${makeHtml_EstpList}
 		<div id="insertEstsFrm">
 			<p id="estpInfo"></p>
@@ -180,7 +180,8 @@ function rejectEstPay(){
 }
 function confirmDept(){
 	var dept_code=$("#selectDept").val();
-	if(dept_code==""){
+	console.log("dept_code",dept_code);
+	if(dept_code==null||dept_code==""||dept_code==undefined){
 		swal({
 			title : "부서코드를 선택해주세요",
 			icon : "warning",
@@ -214,7 +215,7 @@ function confirmDept(){
 }
 function confirmEstsDept(){
 	var dept_code=$("#selectEstsDept").val();
-	if(dept_code==""){
+	if(dept_code==null||dept_code==""||dept_code==undefined){
 		swal({
 			title : "부서코드를 선택해주세요",
 			icon : "warning",
