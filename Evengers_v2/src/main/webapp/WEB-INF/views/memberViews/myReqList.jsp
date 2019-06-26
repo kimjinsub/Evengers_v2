@@ -44,6 +44,13 @@ table.reqList th {
     color: #444444;
     background: #ce4869 ;
 }
+#paging{margin: auto; height:50px; text-align: center;}
+#paging div{
+	width: 50px; height: 30px; display: inline-block;
+	font-size: 18px;
+	text-align: center; margin: auto;;
+	margin-bottom: 50px;
+}
 
 
 </style>

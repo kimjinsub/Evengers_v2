@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<style>
-#detail {
+ <style>
+#detailQ{
 	position:fixed;
 	top: 30px;
 	left: 35%;
@@ -29,7 +29,7 @@
 }
 
 
-#detail.open {
+#detailQ.open {
 	display: block;
 }
 
@@ -79,12 +79,11 @@ margin-top:65px;
 	<div id="header">1:1 문의내역</div>
 	<div id="list"></div>
 	<div id="paging"></div>
-	<div id="detail"></div>
+	<div id="detailQ"></div>
 </body>
 <script>
 	$(document).ready(function() {
 		getQuestionList(1,10);
-	/* 	checkAdmin();  */
 	});
 	
 	function getQuestionList(pageNum,listCount) {
@@ -116,12 +115,12 @@ margin-top:65px;
 	}
 
 	function getDetailQ(q_code) {
-		$("#detail").addClass("open");
+		console.log(q_code);
+	
+		$("#detailQ").addClass("open");
 		//$("#detail").click('#goCart',function(){
 		//(라이트박스), MODAL BOX : 떠있는동안 모든 제어권을 통제하는 박스, 모달리스
 		//$('#detail').css('top', $(window).scrollTop() + -100 + 'px');
-		$('#detail').show();
-		$('#detail-shadow').show();
 		$.ajax({
 			url : 'showQuestion', //'ajaxDetail?p_code='+pCode (쿼리스트링)
 			type : 'get',
@@ -131,7 +130,7 @@ margin-top:65px;
 			dataType : 'html',
 			success : function(data) {
 
-				$("#detail").html(data);
+				$("#detailQ").html(data);
 			},
 			error : function(error) {
 				console.log(error);
@@ -139,7 +138,7 @@ margin-top:65px;
 		});//AND AJAX
 	}//F 
 	//esc키로  해제
-	var $layerWindows = $('#detail'); //jquery 객체는 변수에 $ 붙혀서 가독성 좋게!
+	var $layerWindows = $('#detailQ'); //jquery 객체는 변수에 $ 붙혀서 가독성 좋게!
    $layerWindows.find('#detail-shadow').on('mousedown',function(event){
 	console.log(event);
 	$layerWindows.removeClass('open');
@@ -151,10 +150,6 @@ margin-top:65px;
 			$layerWindows.removeClass('open');
 		}
 	});
-	function checkAdmin(){
-	if("${id}"!="admin"){
-	("#member").hide();	
-	}
-	}
+	
 </script>
 </html>
