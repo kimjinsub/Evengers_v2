@@ -157,7 +157,7 @@ table.type08 td {
   		<div class="md-form mt-3">
 		글내용:<textarea rows="15" cols="50" name="req_contents" id="req_contents" class="form-control"></textarea>
   		</div>
-		<input type="button" onclick="formData()" value="의뢰신청하기" class="btn btn-outline-primary btn-rounded waves-effect"> 
+		<input type="button" onclick="formData()" value="의뢰신청하기" id="submit" disabled="disabled" class="btn btn-outline-primary btn-rounded waves-effect"> 
 		<input type="button" onclick="location.href='./'" value="홈으로" class="btn btn-outline-primary btn-rounded waves-effect"> 
 		<input type="reset" id="rs" value="다시작성" class="btn btn-outline-primary btn-rounded waves-effect">
 	</form>
@@ -173,13 +173,19 @@ table.type08 td {
 	})
 	function dateChk() {
 		var date = $("input[type=datetime-local]").val();
-		console.log("date=", date);
+		console.log("date="+ date);
 		$.ajax({
 			url : "dateChk",
 			data : {date : date	},
 			dataType : "text",
 			success : function(result) {
-			$("#dateMsg").html(result);
+			if(result == "<p id='possible'>가능한 날짜입니다</p>"){	//
+				$("#dateMsg").html(result);
+				$("#submit").removeAttr("disabled");
+			}else {
+				$("#dateMsg").html(result);
+				$("#submit").attr("disabled", "disabled");
+			}
 			},
 			error : function(error) {
 			console.log(error);
@@ -193,7 +199,7 @@ table.type08 td {
 	}
 
 
-	document.getElementById('req_hopedate').min= new Date().toISOString().slice(0, -1);
+	/* document.getElementById('req_hopedate').min= new Date().toISOString().slice(0, -1); */
 	
 	$(document).ready(function() {
 		selectCategory();

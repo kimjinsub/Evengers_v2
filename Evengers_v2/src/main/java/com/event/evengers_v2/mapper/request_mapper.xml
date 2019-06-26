@@ -7,7 +7,7 @@
 
 	<insert id="evtReqInsert" parameterType="request">
 		INSERT INTO REQ VALUES('REQ'||LPAD(REQ_SEQ.NEXTVAL,4,0),#{m_id},#{ec_name},
-      		#{req_title},#{req_contents},TO_DATE(#{req_hopedate},'YYYY-MM-DDHH24:MI:SS'),#{req_hopearea},#{req_hopeaddr})
+      		#{req_title},#{req_contents},TO_DATE(#{req_hopedate},'YYYY-MM-DD HH24:MI:SS'),#{req_hopearea},#{req_hopeaddr})
    </insert>
    
    <select id="getReqCode" parameterType="String" resultType="String">

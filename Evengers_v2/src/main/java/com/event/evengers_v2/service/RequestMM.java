@@ -75,7 +75,8 @@ public class RequestMM {
 
 			Request rq = new Request(); // 빈
 			RequestImage ri = new RequestImage(); // 빈
-
+			
+			
 			rq.setEc_name(ec_name);
 			rq.setM_id(m_id);
 			rq.setReq_title(req_title);
@@ -89,7 +90,9 @@ public class RequestMM {
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 			Date hopedate1 = format1.parse(req_hopedate);
 			format1.format(hopedate1);
-
+			
+			
+			
 			System.out.println("hopedate1:" + format1.format(hopedate1));
 			Date today = new Date();
 

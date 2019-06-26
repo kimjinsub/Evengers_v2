@@ -86,6 +86,9 @@
 						<option value="@naver.com">@naver.com</option>
 						<option value="@yahoo.co.kr">@yahoo.co.kr</option>
 						<option value="@gmail.com">@gmail.com</option>
+						<option value="@nate.com">@nate.com</option>
+						<option value="@hanmail.net">@hanmail.net</option>
+						
 		  </select>
           </div>
 			
@@ -94,8 +97,23 @@
 		  <div class="md-form" >
           <label for="m_area" class="active">Area</label>
 		   <select name=m_area id="m_area" class="form-control">
+						<option selected="selected">선택하세요</option>
 						<option value="서울">서울</option>
 						<option value="인천">인천</option>
+						<option value="대전">대전</option>
+						<option value="대구">대구</option>
+						<option value="부산">부산</option>
+						<option value="광주">광주</option>
+						<option value="울산">울산</option>
+						<option value="경기">경기</option>
+						<option value="강원">강원</option>
+						<option value="충남">충남</option>
+						<option value="충북">충북</option>
+						<option value="전남">전남</option>
+						<option value="전북">전북</option>
+						<option value="경남">경남</option>
+						<option value="경북">경북</option>
+						<option value="제주">제주</option>
 		  </select>
           </div>
 			
