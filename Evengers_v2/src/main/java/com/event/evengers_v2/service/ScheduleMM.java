@@ -49,6 +49,7 @@ public class ScheduleMM {
 	RequestDao rDao;
 	
 	public ModelAndView scheduleManage(Date date) {
+	//public ModelAndView scheduleManage(Date date,int pageNum,int listCount) {
 		if(date==null) {date=new Date();}
 		mav=new ModelAndView();
 		//c_id에 해당하는 ep_code를 전부 가져옴
@@ -67,10 +68,24 @@ public class ScheduleMM {
 		}
 		//일정에 없는(미수락된) 결제코드들의 eventpay들을 모음 -> epAllList
 		ArrayList<EventPay> epAllList=new ArrayList<>();
-			for(String ep_code:ep_codes) {
-				EventPay ep = payDao.getEpInfo(ep_code);
-				epAllList.add(ep);
-			}
+		for(String ep_code:ep_codes) {
+			EventPay ep = payDao.getEpInfo(ep_code);
+			epAllList.add(ep);
+		}
+		/*여기부터
+		SimpleDateFormat fm=new SimpleDateFormat("yyyyMMdd");
+		Date today=new Date();
+		try {
+			today=fm.parse(fm.format(today));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int pageNum =1;
+		int listCount=5;
+		ArrayList<EventPay> epAllList2=new ArrayList<>();
+		epAllList2=sDao.notScheduledEpList(ep_codes,today,pageNum,listCount);
+		mav.addObject("epAllList2", epAllList2);
+		*///여기까지는 페이징연습
 		//일정에 있는 (수락된) 결제코드들로 일정리스트를 뽑음 -> esList
 		ArrayList<EventSchedule> esList=new ArrayList<>();
 		if(assigned_codes!=null) {
@@ -79,6 +94,7 @@ public class ScheduleMM {
 				esList.add(es);
 			}
 		}
+		
 		mav.addObject("ep_codes", ep_codes);
 		mav.addObject("epAllList", epAllList);
 		mav.addObject("year", makeHtml_year(date));
@@ -94,7 +110,6 @@ public class ScheduleMM {
 		ArrayList<String> assigned_estp_codes=getEstpCodeListByCeo();
 		if(assigned_estp_codes==null) {
 			mav.addObject("estMsg", "예약된 이벤트가 없습니다");
-			mav.setViewName("ceoViews/scheduleManage");
 			return mav;
 		}
 		

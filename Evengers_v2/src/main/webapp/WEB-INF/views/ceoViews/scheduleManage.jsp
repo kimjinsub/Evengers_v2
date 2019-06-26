@@ -35,7 +35,7 @@ table th{background-color: #96a9aa;}
 #est_assign,#est_noAssign{
 	/* display: inline-block; width: 80%; */
 }
-#closer{position:absolute; top:0%; right: 5%;}
+#closer{position:absolute; top:0%; right: 0%;}
 #Wrap{margin: auto;}
 #selectDept,#selectEstsDept{width:60%; display: inline-block;}
 #dayWrap,#deptWrap{margin: auto; display: inline-block;}
@@ -59,7 +59,9 @@ ${evtMsg}
 			<select class="form-control" id="selectDept"></select>
 			<button class="btn btn-success" onclick="confirmDept()">부서결정</button>
 			<button class="btn btn-warning" onclick="rejectEvtPay()">이벤트 거절(100%환불)</button>
-			<div id="closer" onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;"> X </div>
+			<div id="closer" onclick="hideInsertEsFrm()" style="cursor:pointer;color: red;">
+				<img src="img/closer.png" width="30"/>
+			</div>
 		</div>
 	</div>
 </div>
@@ -74,7 +76,9 @@ ${estMsg}
 			<select class="form-control" id="selectEstsDept"></select>
 			<button class="btn btn-success" onclick="confirmEstsDept()">부서결정</button>
 			<button class="btn btn-warning" onclick="rejectEstPay()">이벤트(견적) 거절(100%환불)</button>
-			<div id="closer" onclick="hideInsertEstsFrm()" style="cursor:pointer;color: red;"> X </div>
+			<div id="closer" onclick="hideInsertEstsFrm()" style="cursor:pointer;color: red;">
+				<img src="img/closer.png" width="30"/>
+			</div>
 		</div>
 	</div>
 </div>
@@ -89,8 +93,9 @@ ${estMsg}
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-console.log("estpList","${estpList}");
-console.log("estsList","${estsList}");
+//console.log("estpList","${estpList}");
+//console.log("estsList","${estsList}");")
+//console.log("epAllList2","${epAllList2}");//연습
 function hideInsertEsFrm(){
 	$("#insertEsFrm").removeClass("show");
 }
@@ -182,8 +187,17 @@ function confirmDept(){
 		data:{dept_code:dept_code,ep_code:ep_code},
 		dataType:"text",
 		success:function(result){
-			console.log(result);
-			alert(result);
+			if(result=="등록되었습니다"){
+				swal({
+					title : result,
+					icon : "success",
+				});
+			}else{
+				swal({
+					title : result,
+					icon : "warning",
+				});
+			}
 			$("#insertEsFrm").html("");
 			$("#insertEsFrm").removeClass("show");
 			location.href="javascript:Ajax_forward('scheduleManage')";
@@ -202,8 +216,17 @@ function confirmEstsDept(){
 		data:{dept_code:dept_code,estp_code:estp_code},
 		dataType:"text",
 		success:function(result){
-			console.log(result);
-			alert(result);
+			if(result=="등록되었습니다"){
+				swal({
+					title : result,
+					icon : "success",
+				});
+			}else{
+				swal({
+					title : result,
+					icon : "warning",
+				});
+			}
 			$("#insertEstsFrm").html("");
 			$("#insertEstsFrm").removeClass("show");
 			location.href="javascript:Ajax_forward('scheduleManage')";
