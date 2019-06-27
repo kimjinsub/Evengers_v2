@@ -34,7 +34,7 @@ margin-right: 200px;
 }
 
 #estPayList {
-margin-left: 165px;
+margin-left:20px;
 }
 #paging{margin: auto; height:50px; text-align: center;}
 #paging div{
@@ -47,10 +47,16 @@ margin-left: 165px;
 #refundState{
 color:red;
 }
+.estpi{
+width:100px;
+height:100px;
+}
+
+
 </style>
 <body>
   <h3 align="center"> 견적 결제 구매 내역</h3>
-	<div id="estPayList"></div>
+	<div id="estPayList" style="width:90%;"></div>
 	<div id="paging" align="center"></div>
 	<div id="detail"></div>
 
@@ -71,9 +77,18 @@ color:red;
 						var reqList = data['reqList'];
 						var paging = data['paging'];
 						var statemsg = data['statemsg'];
-						var str = "<table id='et' class='table table-striped' align='center'><th scope='row'><b>구매코드</b></th><th scope='row'><b>상품제목</b></th><th scope='row'><b>총가격</b></th><th scope='row'><b>판매자아이디</b></th><th scope='row'><b>구매날짜</b></th><th scope='row'><b>상태</b></th>";
+						var estpiList = data['estpiList'];
+						console.log(estpiList);
+						console.log(reqList);
+						console.log(estpList);
+						var str = "<table id='et' class='table table-striped' align='center'><th scope='row'><b>이미지</b></th><th scope='row'><b>구매코드</b></th><th scope='row'><b>상품제목</b></th><th scope='row'><b>총가격</b></th><th scope='row'><b>판매자아이디</b></th><th scope='row'><b>구매날짜</b></th><th scope='row'><b>상태</b></th>";
 						for ( var i in estpList) {
-							str += "<tr><td>" + estpList[i].estp_code + "</td><td>"
+							if(estpiList[i]!=null){
+								str += "<tr><td><img class='estpi' src='upload/estimateImage/"+estpiList[i].estpi_sysfilename+"''></td><td>"
+							}else{
+								str += "<tr><td></td><td>"
+							}
+								str += estpList[i].estp_code + "</td><td>"
 									+ "<a href='#' onclick=getDetailEstp('"
 									+ estpList[i].estp_code + "')>"
 									+ reqList[i].req_title + "</a></td><td>"

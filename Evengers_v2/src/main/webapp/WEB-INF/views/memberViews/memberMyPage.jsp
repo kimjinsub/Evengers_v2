@@ -156,7 +156,7 @@ font-size: medium;
 									</div>
 								</form>
 							</div></li> <li class="nav-item"><a class="nav-link" href="#"><span
-                        class="mr-2 d-none d-lg-inline text-gray-800 ">${id}님 안녕하세요</span></a></li>
+                        class="mr-2 d-none d-lg-inline text-gray-800 "></span></a></li>
 						<div class="topbar-divider d-none d-sm-block"></div>
 						<li class="nav-item"><a class="nav-link" href="./"><span
 								class="mr-2 d-none d-lg-inline text-gray-800 ">홈으로가기</span></a></li>

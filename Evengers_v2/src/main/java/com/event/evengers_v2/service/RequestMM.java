@@ -569,6 +569,7 @@ public class RequestMM {
 			ArrayList<Request> reqList=new ArrayList<Request>();
 			ArrayList<Request> reqList1=new ArrayList<Request>();
 			ArrayList<EstimatePay> estpList=new ArrayList<EstimatePay>();
+			ArrayList<EstimatePayImage> estpiList=new ArrayList<EstimatePayImage>();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", id);
 			reqList=rDao.getReqCodes(id);
@@ -587,6 +588,8 @@ public class RequestMM {
 			for(int i=0;i<estpList.size();i++) {
 				EstimatePay estp=new EstimatePay();
 				estp=estpList.get(i);
+				String estp_code=estp.getEstp_code();
+				estpiList.add(rDao.getEstpiImage(estp_code));
 				if(estp.getEstp_refundstate()==0) {
 		               String statemsg="결제완료";
 		               rs.add(statemsg);}
@@ -601,10 +604,10 @@ public class RequestMM {
 				reqList1.add(rDao.getReqTitle1(estp));
 			}
 			
-			
 			ArrayList<EstimatePay> estpList1=new ArrayList<EstimatePay>();
 		    // estpList1=rDao.getPageEstpList(pageNum);
 			  while (estpList.remove(null));
+			  System.out.println("estpiList:"+estpiList);
 			  System.out.println("estpList.size="+estpList.size());
 			  
 			  String paging=new Paging(estpList.size(), pageNum, listCount,2,"getEstPayList").makeHtmlAjaxPaging();
@@ -613,6 +616,7 @@ public class RequestMM {
 			
 			 System.out.println("estpList:"+estpList);
 			Map<String, Object> map1 = new HashMap<String, Object>(); 
+			map1.put("estpiList",estpiList);
 			map1.put("estpList", estpList);
 			map1.put("reqList", reqList1);
 			map1.put("paging",paging);
