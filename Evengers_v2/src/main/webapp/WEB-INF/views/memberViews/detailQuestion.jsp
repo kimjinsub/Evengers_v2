@@ -7,19 +7,26 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/all.css">
+<%-- <link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css"> --%>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" /></script>
+	
 <meta charset="UTF-8">
-
 <title>Insert title here</title>
 <style>
 #q_delete{
 cursor: pointer;
 }
-.pageDown {
-   width:20px;
-   height:20px;
-   position: fixed;
-   margin-left: 700px;
-   cursor: pointer;
+#pageDown {
+	text-align: right;
+	float: right;
+	position: fixed;
+	margin-left: 710px;
+	font-size: x-large;
+	cursor: pointer;
 }
 h3{
 text-align: center;
@@ -28,7 +35,7 @@ text-align: center;
 </head>
 <body>
 <div id="q_delete" onclick="qDelete('${question.q_code}')">삭제</div>
-<img class="pageDown" src="./img/closer.png"  onclick="reset()">
+<div id="pageDown"  onclick="reset()">X</div>
 	<h3>문의 내용</h3>
 <div id="listBody">
 	<table class='table table-striped'>
@@ -48,25 +55,25 @@ text-align: center;
 		</tr>
 		<tr height="230">
 			<td bgcolor="black" style="color: white" align="center">내용</td>
-			<td colspan="5">${question.q_contents}</td>
+			<td colspan="5"> ${question.q_contents}</td>
 		</tr>
 		<tr>
 			<tr>
-			<td bgcolor="black" style="color:white;">첨부파일</td>
-			<td width="200"><c:set var="file" value="${qfList}" /> 
-				<c:if test="${empty file}">
-				첨부된 파일이 없습니다.
-			</c:if> 
-			<c:if test="${!empty file}">
-				<c:forEach var="file" items="${qfList}">
-						<a href="download4?oriFileName=${file.q_orifilename}
-										&sysFileName=${file.q_sysfilename}">
-							${file.q_orifilename}
-						</a>
-				</c:forEach>
-			</c:if>
-			</td>
-		</tr>
+         <td bgcolor="black" style="color:white;">첨부파일</td>
+         <td width="200"><c:set var="file" value="${qfList}" /> 
+            <c:if test="${empty file}">
+            첨부된 파일이 없습니다.
+         </c:if> 
+         <c:if test="${!empty file}">
+            <c:forEach var="file" items="${qfList}">
+                  <a href="download4?oriFileName=${file.q_orifilename}
+                              &sysFileName=${file.q_sysfilename}">
+                     ${file.q_orifilename}
+                  </a>
+            </c:forEach>
+         </c:if>
+         </td>
+      </tr>
 	</table>
 	<form name="rFrm" id="rFrm">
 		<table>
@@ -79,11 +86,11 @@ text-align: center;
 			</tr>
 		</table>
 	</form>
-	<table class='table table-striped' >
-		<tr  bgcolor="black" align="center" height="30">
-			<td bgcolor="black"  width="120" style="color:white;">댓글작성자</td>
-			<td bgcolor="black" width="210" style="color:white;">내용</td>
-			<td bgcolor="black"  width="210" style="color:white;">댓글작성날짜</td>
+	<table class="table table-striped">
+		<tr bgcolor="black" align="center" height="30">
+			<td width="120"  bgcolor="black" style="color:white;">댓글작성자</td>
+			<td width="210"  bgcolor="black" style="color:white;">내용</td>
+			<td width="210"  bgcolor="black" style="color:white;">댓글작성날짜</td>
 		</tr>
 	</table>
 	<table id="qrTable">
