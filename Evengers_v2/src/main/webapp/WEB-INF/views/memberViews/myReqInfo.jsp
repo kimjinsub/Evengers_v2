@@ -12,19 +12,19 @@
 <title>Insert title here</title>
 <style>
 
-#pageDown {
-	text-align: right;
-	float: right;
-	position: fixed;
-	margin-left: 710px;
-	font-size: x-large;
-	cursor: pointer;
+.pageDown {
+   width:20px;
+   height:20px;
+   position: fixed;
+   margin-left: 335px;
+   cursor: pointer;
 }
+
 
 </style>
 </head>
 <body>
-	<a href="myReqDelete?req_code=${request.req_code}">삭제</a>
+<img class="pageDown" src="./img/closer.png"  onclick="reset()">
 	<h3>요청 내용 상세보기</h3>
 	<table class='table table-striped'>
 		<tr height="40">

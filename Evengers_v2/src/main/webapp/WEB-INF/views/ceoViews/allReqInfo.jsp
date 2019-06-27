@@ -8,13 +8,21 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-
+<style>
+#pageDown {
+	text-align: right;
+	float: right;
+	position: fixed;
+	margin-left: 710px;
+	font-size: x-large;
+	cursor: pointer;
+}
+</style>
 
 <title>Insert title here</title>
 </head>
 <body>
 	<div id="pageDown"  onclick="reset()">X</div>
-	<a href="myReqDelete?req_code=${request.req_code}">삭제</a>
 	<h3>요청 내용 상세보기</h3>
 	<table border='1' class='table table-striped'>
 		<tr height="40">

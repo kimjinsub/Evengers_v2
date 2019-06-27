@@ -8,18 +8,18 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <style>
 #q_delete{
 cursor: pointer;
 }
-#pageDown {
-	text-align: right;
-	float: right;
-	position: fixed;
-	margin-left: 710px;
-	font-size: x-large;
-	cursor: pointer;
+.pageDown {
+   width:20px;
+   height:20px;
+   position: fixed;
+   margin-left: 700px;
+   cursor: pointer;
 }
 h3{
 text-align: center;
@@ -28,7 +28,7 @@ text-align: center;
 </head>
 <body>
 <div id="q_delete" onclick="qDelete('${question.q_code}')">삭제</div>
-<div id="pageDown"  onclick="reset()">X</div>
+<img class="pageDown" src="./img/closer.png"  onclick="reset()">
 	<h3>문의 내용</h3>
 <div id="listBody">
 	<table class='table table-striped'>
