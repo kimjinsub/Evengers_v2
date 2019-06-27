@@ -35,4 +35,14 @@ public interface PersonnelDao {
 
 	ArrayList<Position> getSalaryP(@Param("c_id") String c_id);
 
+	Employee myPerModify(String emp_code);
+
+	String emp_sysfilename(String emp_code);
+
+	Employee getEmpInfo(String emp_code);
+
+	boolean p_codeUpdate(@Param("emp_code")String emp_code, @Param("p_code")String p_code);
+
+	boolean dept_codeUpdate(@Param("emp_code")String emp_code,@Param("dept_code") String dept_code);
+
 }

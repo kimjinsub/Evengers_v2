@@ -191,5 +191,17 @@ public class Controller_Eunseo {
 		mav.setViewName("ceoViews/revenue");
 		return mav;
 	}
-
+	@RequestMapping(value = "/myPerModify",produces = "application/json; charset=utf8")
+	public ModelAndView myPerModify(String emp_code) {
+		mav=pm.myPerModify(emp_code);
+		return mav;
+	}
+	@RequestMapping(value = "/performUpdate",produces = "application/json; charset=utf8")
+	public @ResponseBody String performUpdate(String p_name,String dept_name,String emp_code) {
+		System.out.println("p_name?"+p_name);
+		System.out.println("dept_name?"+dept_name);
+		System.out.println("emp_code?"+emp_code);
+		String str = pm.performUpdate(p_name,dept_name,emp_code);
+		return str;
+	}
 }

@@ -46,7 +46,7 @@
 		INSERT INTO EMP VALUES('EMP'||LPAD(EMP_SEQ.NEXTVAL,4,0),#{emp_name},#{c_id},#{p_code},#{dept_code},#{emp_rrn},#{emp_enterdate},#{emp_tel},#{emp_addr},#{emp_email},#{emp_bank},#{emp_acnumber},#{emp_orifilename},#{emp_sysfilename})	
 	</insert>
 	<select id="getEmpList" parameterType="String" resultType="employee">
-		SELECT * FROM EMP WHERE C_ID=#{c_id}
+		SELECT * FROM EMP WHERE C_ID=#{c_id} ORDER BY EMP_NAME
 	</select>
 	<select id="getPositionInfo" parameterType="String" resultType="position">
 		SELECT * FROM P WHERE P_CODE=#{p_code}
@@ -54,5 +54,22 @@
 	<select id="getDeptInfo" parameterType="String" resultType="department">
 		SELECT * FROM DEPT WHERE DEPT_CODE=#{dept_code}
 	</select>
-	
+	<select id="myPerModify" parameterType="String"
+		resultType="Event">
+		SELECT * FROM EMP WHERE EMP_CODE=#{emp_code}
+	</select>
+	<select id="emp_sysfilename" parameterType="String"
+		resultType="String">
+		SELECT EMP_SYSFILENAME FROM EMP WHERE EMP_CODE=#{emp_code}
+	</select>
+	<update id="p_codeUpdate">
+		UPDATE EMP SET P_CODE=#{p_code} WHERE EMP_CODE=#{emp_code}
+	</update>
+	<update id="dept_codeUpdate">
+		UPDATE EMP SET DEPT_CODE=#{dept_code} WHERE EMP_CODE=#{emp_code}
+	</update>
+	<select id="getEmpInfo" parameterType="String"
+		resultType="employee">
+		SELECT * FROM EMP WHERE EMP_CODE=#{emp_code}
+	</select>
 </mapper>

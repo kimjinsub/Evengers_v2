@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -145,7 +146,7 @@ public class PersonnelMM {
 		StringBuilder sb = new StringBuilder();
 		int i=0;
 		sb.append("<div align='center'>");
-		sb.append("<table class='table table-striped' align='center' ><tr><th>#</th><th>사번</th><th>성명</th><th>주소</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th>");
+		sb.append("<table class='table table-striped' align='center' ><tr><th>#</th><th>사번</th><th>성명</th><th>주소</th><th>입사일자</th><th>이메일</th><th>직책</th><th>부서</th><th></th>");
 		for(Employee emp:empList) {
 			i += 1;
 			Date enterdate = emp.getEmp_enterdate();
@@ -163,10 +164,81 @@ public class PersonnelMM {
 					+ "<td>"+emp_enterdate+"</td>"
 					 + "<td>"+emp.getEmp_email()+"</td>" 
 					+ "<td>"+p_name+"</td>"
-					+ "<td>"+dept_name+"</td></tr>");
+					+ "<td>"+dept_name+"</td>"
+					+ "<td><button class='emp_code btn btn-outline-primary btn-rounded waves-effect' name="+emp.getEmp_code()+">수정</button></td></tr>");
 		}
 		sb.append("</table></div>");
 		
 		return sb.toString();
+	}
+	public ModelAndView myPerModify(String emp_code) {
+		mav = new ModelAndView();
+		String c_id = session.getAttribute("id").toString();
+		String view = null;
+		Employee emp = pDao.myPerModify(emp_code);
+		System.out.println("emp2="+emp);
+		String emp_sysfilename = pDao.emp_sysfilename(emp_code);
+		System.out.println("emp_sysfilename2="+emp_sysfilename);
+		
+		Position p = new Position();
+		p = pDao.getPositionInfo(emp.getP_code());
+		String p_name = p.getP_name();
+		Department dept = new Department();
+		dept = pDao.getDeptInfo(emp.getDept_code());
+		String dept_name = dept.getDept_name();
+		
+		mav.addObject("emp", emp);
+		mav.addObject("emp_sysfilename", emp_sysfilename);
+		mav.addObject("p_name", p_name);
+		mav.addObject("dept_name", dept_name);
+		
+		view = "ceoViews/myPerModify";
+		mav.setViewName(view);
+		return mav;
+	}
+	/*
+	 * public String myPerModifyBtn(MultipartHttpServletRequest multi) { mav = new
+	 * ModelAndView(); String str=""; String emp_name =
+	 * multi.getParameter("emp_name");
+	 * 
+	 * } return null;
+	 */
+	public String performUpdate(String p_name, String dept_name,String emp_code) {
+		String str = "";
+		
+		String c_id = session.getAttribute("id").toString();
+		
+		Employee emp = new Employee();
+		Position p = new Position();
+		Department dept = new Department();
+		
+		emp = pDao.getEmpInfo(emp_code);
+		
+		String p_code = pDao.getPCode(c_id, p_name);
+		String dept_code = pDao.getDeptCode(c_id, dept_name);
+		
+		
+		boolean position = true;
+		boolean d = true;
+		
+		if(!emp.getP_code().equals(p_code)) {
+			position = false;
+			if(position=pDao.p_codeUpdate(emp_code,p_code)) {
+				
+			}
+		}
+		if(!emp.getDept_code().equals(dept_code)) {
+			d=false;
+			if(d = pDao.dept_codeUpdate(emp_code,dept_code)) {
+				
+			}
+		}
+		
+		if(position && d ) {
+			str = "수정되었습니다.";
+		}else {
+			str = "수정 실패.";
+		}
+		return str;
 	}
 }
