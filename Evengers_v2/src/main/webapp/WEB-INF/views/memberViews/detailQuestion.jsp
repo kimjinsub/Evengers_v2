@@ -8,6 +8,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <style>
 #q_delete{
@@ -69,7 +70,7 @@ text-align: center;
 		</tr>
 	</table>
 	<form name="rFrm" id="rFrm">
-		<table>
+		<table >
 			<tr>
 				<td><textarea rows="2" cols="85" name="qr_contents"
 						id="qr_contents"></textarea></td>
@@ -79,11 +80,11 @@ text-align: center;
 			</tr>
 		</table>
 	</form>
-	<table class='table table-striped'>
-		<tr bgcolor="black" align="center" height="30">
-			<td width="120"  bgcolor="black" style="color:white;">댓글작성자</td>
-			<td width="210"  bgcolor="black" style="color:white;">내용</td>
-			<td width="210"  bgcolor="black" style="color:white;">댓글작성날짜</td>
+	<table class='table table-striped' >
+		<tr  bgcolor="black" align="center" height="30">
+			<td bgcolor="black"  width="120" style="color:white;">댓글작성자</td>
+			<td bgcolor="black" width="210" style="color:white;">내용</td>
+			<td bgcolor="black"  width="210" style="color:white;">댓글작성날짜</td>
 		</tr>
 	</table>
 	<table id="qrTable">

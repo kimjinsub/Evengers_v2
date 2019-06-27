@@ -118,7 +118,7 @@ public class QuestionMM {
 		
 		
 		
-		mav.setViewName("adminViews/detailQuestion1");
+		mav.setViewName("memberViews/detailQuestion");
 		
 		return mav;
 	}
