@@ -8,7 +8,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <meta charset="UTF-8">
-
 <title>Insert title here</title>
 <style>
 #q_delete{
@@ -70,7 +69,7 @@ text-align: center;
 		</tr>
 	</table>
 	<form name="rFrm" id="rFrm">
-		<table >
+		<table>
 			<tr>
 				<td><textarea rows="2" cols="85" name="qr_contents"
 						id="qr_contents"></textarea></td>

@@ -11,7 +11,7 @@
 #perform{
 	margin-top: 4%;
 	width: 100%;
-	font-size: 13px;
+	font-size: 15px;
 }
 #h2{
 	margin-top: 2%;

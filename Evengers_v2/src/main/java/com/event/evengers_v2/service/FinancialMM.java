@@ -194,6 +194,7 @@ public class FinancialMM {
 		StringBuilder sb = new StringBuilder();
 		int i=0;
 		sb.append("<div>");
+		sb.append("<h3><i class='far fa-calendar-check'></i>&nbsp"+choice+"</h3>");
 		sb.append("<table class='table table-striped'><tr><th>#</th><th>사번</th><th>성명</th><th>직책</th><th>급여</th>");
 		for (MonthlySalary ms : msList) {
 			i += 1;

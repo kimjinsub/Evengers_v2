@@ -73,6 +73,7 @@ input.option-add {
 				환불가능일:<input type="number" name="e_refunddate" id="e_refunddate" class="form-control"><br>
 			</div>
 			
+			썸네일
 			<div class="input-group">
       			<div class="input-group-prepend">
       			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -82,6 +83,7 @@ input.option-add {
 				<input type="hidden" id="fileCheck" value="0" name="fileCheck"/>
     			</div>
      		</div>
+     		이벤트 첨부 사진
      		<div class="input-group">
       			<div class="input-group-prepend">
       			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>

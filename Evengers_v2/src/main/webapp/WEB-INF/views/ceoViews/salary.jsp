@@ -14,12 +14,12 @@
 #salary{
 	/* table-layout :auto; */
 	width: 40%;
-	font-size: 13px;
+	font-size: 15px;
 	font-family: 'Nanum Gothic', sans-serif;
 }
 #input{
 	width: 60%;
-	font-size: 13px;
+	font-size: 15px;
 	font-family: 'Nanum Gothic', sans-serif;
 }
 </style>
