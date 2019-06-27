@@ -47,7 +47,7 @@ table.reqList th {
 #paging{margin: auto; height:50px; text-align: center;}
 #paging div{
 	width: 50px; height: 30px; display: inline-block;
-	font-size: 18px;
+	font-size: 20px;
 	text-align: center; margin: auto;;
 	margin-bottom: 50px;
 }
@@ -66,7 +66,7 @@ table.reqList th {
 	
 	<div align="center">
 		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
-		<input type="button" onclick=location.href="./" value='홈으로'>
+		<input type="button" class="btn btn-outline-primary btn-rounded waves-effect" onclick=location.href="./" value='홈으로'>
 	
 	<div id="list"></div>
 	<div id="detail"></div>

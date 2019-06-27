@@ -71,28 +71,28 @@ text-align: center;
 	<form name="rFrm" id="rFrm">
 		<table>
 			<tr>
-				<td><textarea rows="2" cols="70" name="qr_contents"
+				<td><textarea rows="2" cols="85" name="qr_contents"
 						id="qr_contents"></textarea></td>
-				<td><input type="button"  value="댓글입력"
+				<td><input type="button" class="btn btn-outline-primary btn-rounded waves-effect"  value="댓글입력"
 					onclick="replyInsert('${question.q_code}')"
 					style="width: 85px; height: 50px"></td>
 			</tr>
 		</table>
 	</form>
-	<table>
+	<table class='table table-striped'>
 		<tr bgcolor="black" align="center" height="30">
-			<td width="120" style="color:white;">댓글작성자</td>
-			<td width="210" style="color:white;">내용</td>
-			<td width="210" style="color:white;">댓글작성날짜</td>
+			<td width="120"  bgcolor="black" style="color:white;">댓글작성자</td>
+			<td width="210"  bgcolor="black" style="color:white;">내용</td>
+			<td width="210"  bgcolor="black" style="color:white;">댓글작성날짜</td>
 		</tr>
 	</table>
 	<table id="qrTable">
 		<!-- Ajax결과 여기에 쓰기 -->
 		<c:forEach items="${qrList}" var="reply">
 			<tr height="25" align="center">
-				<td width="120">${reply.m_id}</td>
-				<td width="210">${reply.qr_contents}</td>
-				<td width="210">${reply.qr_date}</td>
+				<td width="160">${reply.m_id}</td>
+				<td width="270">${reply.qr_contents}</td>
+				<td width="270">${reply.qr_date}</td>
 			</tr>
 		</c:forEach>
 	</table>

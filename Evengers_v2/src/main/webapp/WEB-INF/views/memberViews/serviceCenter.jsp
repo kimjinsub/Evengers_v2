@@ -58,14 +58,14 @@ table.type03 td {
   </tr>
   <tr>
   <th scope="row">파일첨부</th> 
-  <td><input type="file" name="q_files" id="q_files" multiple>
+  <td><input type="file" class="btn btn-outline-primary btn-rounded waves-effect" name="q_files" id="q_files" multiple>
 
   </td>
   </tr>
   </table>
   </div><br>
-  <input type="button" onclick="formData()" value="문의하기" style="margin-left: 310px;">
- <input type="reset" id="rs" value="취소">
+  <input type="button" class="btn btn-outline-primary btn-rounded waves-effect" onclick="formData()" value="문의하기" style="margin-left: 310px;">
+ <input type="reset" class="btn btn-outline-primary btn-rounded waves-effect" id="rs" value="취소">
   </form>
   
 </body>
