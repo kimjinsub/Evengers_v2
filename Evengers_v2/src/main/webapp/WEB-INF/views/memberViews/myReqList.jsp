@@ -66,7 +66,7 @@ table.reqList th {
 	
 	<div align="center">
 		제목검색 : <input type="text" id="searchword" name="searchword" onkeyup="searchajax(this.value)"/>
-		<input type="button" class="btn btn-outline-primary btn-rounded waves-effect" onclick=location.href= "./" value='홈으로'>
+		<input type="button" class="btn btn-outline-primary btn-rounded waves-effect" onclick=location.href="./" value='홈으로'>
 	
 	<div id="list"></div>
 	<div id="detail"></div>

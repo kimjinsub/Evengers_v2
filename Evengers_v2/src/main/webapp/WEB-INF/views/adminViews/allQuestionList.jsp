@@ -17,7 +17,7 @@
 	width: 750px;
 	height: 650px;
 	padding: 2px;
-	margin-top:-30px;
+	margin-top:20px;
 	margin-left: -150px;
 	float:left;
 	border:groove;
@@ -62,6 +62,9 @@ table.type08 {
 
 #header{
 margin-top:65px;
+}
+#member{
+ z-index: 100;
 }
 </style>
 </head>
