@@ -26,13 +26,12 @@
 #possible {
 	color: green;
 }
-#pageDown {
-	text-align: right;
-	float: right;
-	position: fixed;
-	margin-left: 710px;
-	font-size: x-large;
-	cursor: pointer;
+.pageDown {
+   width:20px;
+   height:20px;
+   position: fixed;
+   margin-left: 700px;
+   cursor: pointer;
 }
 
 #hh {
@@ -104,7 +103,7 @@ table.type08 td {
 </head>
 <body id="wrap">
 	<div id="hh">
-		<div id="pageDown"  onclick="reset()">X</div>
+		<img class="pageDown" src="./img/closer.png"  onclick="reset()">
 		<h2 id="hh" align="center"><i class="fas fa-edit"></i>의뢰신청서</h2>
 	</div>
 <div class="card">

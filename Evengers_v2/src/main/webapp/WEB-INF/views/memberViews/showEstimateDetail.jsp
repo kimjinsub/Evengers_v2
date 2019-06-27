@@ -8,14 +8,14 @@
 <title>Insert title here</title>
 </head>
 <style>
-#pageDown {
-	text-align: right;
-	float: right;
-	position: fixed;
-	margin-left: 710px;
-	font-size: x-large;
-	cursor: pointer;
+.pageDown {
+   width:20px;
+   height:20px;
+   position: fixed;
+   margin-left: 700px;
+   cursor: pointer;
 }
+
 #msg{
 color:red;
 font-size: x-large;
@@ -37,7 +37,7 @@ visibility: visible;
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body>
-<div id="pageDown"  onclick="reset()">X</div>
+<img class="pageDown" src="./img/closer.png"  onclick="reset()">
 <h3>견적 결제 상세 내용</h3>
 	<table class='table table-striped' border= '1'>
 		<tr height="40">

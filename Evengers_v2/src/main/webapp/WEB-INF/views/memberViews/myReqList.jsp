@@ -61,7 +61,7 @@ table.reqList th {
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="pageDown"  onclick="reset()">X</div>
+
 	<h1 align="center">의뢰요청 목록</h1>
 	
 	<div align="center">

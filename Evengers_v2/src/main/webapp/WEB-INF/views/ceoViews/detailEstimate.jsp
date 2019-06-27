@@ -71,13 +71,12 @@
 margin-left: 180px;
 }
 
-#pageDown {
-	text-align: right;
-	float: right;
-	position: fixed;
-	margin-left: 710px;
-	font-size: x-large;
-	cursor: pointer;
+.pageDown {
+   width:20px;
+   height:20px;
+   position: fixed;
+   margin-left: 700px;
+   cursor: pointer;
 }
 h3 {
 	text-align: center;
@@ -88,7 +87,7 @@ h3 {
 
 
 <body>
-<div id="pageDown"  onclick="reset()">X</div>
+<img class="pageDown" src="./img/closer.png"  onclick="reset()">
 	<a href="EstimateDelete?est_code=${estimate.est_code}">삭제</a>
 	<h3>상세 견적서</h3>
 	<table class='table table-striped' >
