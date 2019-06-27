@@ -42,6 +42,32 @@
 	text-decoration:none;
 	text-shadow:0px -1px 0px #2b665e;
 }
+.myButton2 {
+	-moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	-webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 14px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+}
 .myButton:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
 	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
@@ -337,7 +363,7 @@ margin: auto; height:50px; text-align: center; position: absolute;
 					<div class="container-fluid" id="ebInfoZone"></div>
 					</div>
 				</div>
-				<div class="card card-outline-secondary my-4">
+				<div class="card card-outline-secondary my-6" style="width: 900px">
 					<div class="card-header">
 						<h3 class="card-title">- 상세정보</h3>
 					</div>
@@ -363,7 +389,7 @@ margin: auto; height:50px; text-align: center; position: absolute;
 										</p>
 									</td>
 									<td><textarea rows="3" cols="50" name="r_contents"
-											id="r_contents"></textarea></td>
+											id="r_contents" style="width: 500px;"></textarea></td>
 									<td>
 									<td><input class="myButton"type="button" value="댓글전송" onclick="review()"
 										style="width: 100px; height: 50px"></td>
@@ -377,14 +403,7 @@ margin: auto; height:50px; text-align: center; position: absolute;
 							</p>
 						</div>
 						<div id="seeShow2"></div>
-						<table>
-							<tr bgcolor="skyblue" align="center" height="30">
-								<td width="100">WRITER</td>
-								<td width="200">CONTENTS</td>
-								<td width="200">STARS</td>
-								<td width="200">DATE</td>
-							</tr>
-						</table>
+						
 					</div>
 					<div class="card-body" id="rList">
 					</div>
@@ -897,7 +916,12 @@ function memberChat(receiver){
 						console.log("result: " + result);
 						console.log("paging: " + paging);
 						var str = "";
-						str += "<table>";
+						
+						str += "<table><tr bgcolor='skyblue' align='center' height='30'>"
+						str += "<td width='100'>WRITER</td>"
+						str += "<td width='200'>CONTENTS</td>"
+						str += "<td width='200'>STARS</td>"
+						str += "<td width='200'>DATE</td></tr>"
 						for ( var i in result) {
 							str += "<tr><td align='center' width='100'>"
 									+ result[i].m_id + "</td>"
@@ -921,8 +945,7 @@ function memberChat(receiver){
 							str += "<td align='center' width='200'>"
 									+ result[i].re_writedate + "</td>";
 							if (id == result[i].m_id) {
-								str += "<td><button class='myButton'onclick='reviewModify()'>수정</button></td>"
-										+ "<td><button class='myButton'onclick='reviewDelete()'>삭제</button></td>"
+								str += "<td><button class='myButton2'onclick='reviewModify()'>수정</button><button class='myButton2'onclick='reviewDelete()'>삭제</button></td>"
 										+ "<input type='hidden' id='myReviewStar'value='"+result[i].re_stars+"'>"
 										+ "<input type='hidden' id='myReviewContents'value='"+result[i].re_contents+"'>";
 							}
