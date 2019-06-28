@@ -22,9 +22,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<br><br>
 	<div id="pageDown"  onclick="reset()">X</div>
-	<h3>요청 내용 상세보기</h3>
-	<table border='1' class='table table-striped'>
+	<h3 align="center">요청 내용 상세보기</h3>
+	<table class='table table-striped'>
 		<tr height="40">
 			<td  align="center">요청코드</td>
 			<td colspan="5">${request.req_code}</td>
