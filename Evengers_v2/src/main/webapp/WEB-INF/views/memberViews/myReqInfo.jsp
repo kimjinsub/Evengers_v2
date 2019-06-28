@@ -25,7 +25,7 @@
 </head>
 <body>
 <img class="pageDown" src="./img/closer.png"  onclick="reset()">
-	<h3>요청 내용 상세보기</h3>
+	<h3 align="center">요청 내용 상세보기</h3>
 	<table class='table table-striped'>
 		<tr height="40">
 			<td  bgcolor="black" style="color: white" align="center">요청코드</td>

@@ -24,36 +24,36 @@
 <body>
 	<br><br>
 	<div id="pageDown"  onclick="reset()">X</div>
-	<h3 align="center">요청 내용 상세보기</h3>
+	<h3 align="center" >요청 내용 상세보기</h3>
 	<table class='table table-striped'>
 		<tr height="40">
-			<td  align="center">요청코드</td>
-			<td colspan="5">${request.req_code}</td>
+			<td bgcolor="black" style="color: white" align="center">요청코드</td>
+			<td style="color:black"colspan="5">${request.req_code}</td>
 		</tr>
 		<tr height="40">
-			<td  align="center">작성자</td>
-			<td width="200">${request.m_id}</td>
-			<td  align="center">희망날짜</td>
-			<td width="200">${request.req_hopedate}</td>
+			<td bgcolor="black" style="color: white" align="center">작성자</td>
+			<td style="color:black" width="200">${request.m_id}</td>
+			<td bgcolor="black" style="color: white" align="center">희망날짜</td>
+			<td style="color:black" width="200">${request.req_hopedate}</td>
 		</tr>
 		<tr height="40">
-			<td  align="center">희망지역</td>
-			<td width="200">${request.req_hopearea}</td>
-			<td  align="center">상세주소</td>
-			<td width="200">${request.req_hopeaddr}</td>
+			<td bgcolor="black" style="color: white" align="center">희망지역</td>
+			<td style="color:black" width="200">${request.req_hopearea}</td>
+			<td bgcolor="black" style="color: white" align="center">상세주소</td>
+			<td style="color:black" width="200">${request.req_hopeaddr}</td>
 		</tr>
 		<tr height="40">
-			<td  align="center">제목</td>
-			<td colspan="5">${request.req_title}</td>
+			<td bgcolor="black" style="color: white" align="center">제목</td>
+			<td style="color:black" colspan="5">${request.req_title}</td>
 		</tr>
 		<tr height="230">
-			<td  align="center">내용</td>
-			<td colspan="5">${request.req_contents}</td>
+			<td bgcolor="black" style="color: white" align="center">내용</td>
+			<td style="color:black" colspan="5">${request.req_contents}</td>
 		</tr>
 		<tr>
 		<tr>
-			<th>첨부파일</th>
-			<td><c:set var="file" value="${rfList}" /> <c:if
+			<th bgcolor="black" style="color: white">첨부파일</th>
+			<td style="color:black"><c:set var="file" value="${rfList}" /> <c:if
 					test="${empty file}">
 				첨부된 파일이 없습니다.
 			</c:if> <c:if test="${!empty file}">
