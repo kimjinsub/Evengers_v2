@@ -180,12 +180,14 @@ function formData(){
 		dataType:"html",//html은 생략가능
 		success:function(data){
 			console.log(data);
-			location.href="./";
 			swal({
 	            title: "Good!",
 	             text: "견적서 전송 완료!",
 	             icon: "success",
-	  });
+	  })
+			   . then (function () { 
+	               window.location.href = "./";
+	            });
 		},
 		error:function(error){
 			swal({

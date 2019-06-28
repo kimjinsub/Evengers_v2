@@ -35,6 +35,7 @@ import com.event.evengers_v2.dao.RequestDao;
 import com.event.evengers_v2.userClass.DBException;
 import com.event.evengers_v2.userClass.Paging;
 import com.event.evengers_v2.userClass.UploadFile;
+import com.sun.mail.iap.Response;
 
 @Service
 public class RequestMM {
@@ -51,6 +52,7 @@ public class RequestMM {
 	
 	@Autowired
 	private HttpSession session;
+	
 
 	@Transactional(rollbackFor = Exception.class)
 	public ModelAndView evtReqInsert(MultipartHttpServletRequest multi){
@@ -548,7 +550,7 @@ public class RequestMM {
 			mav.addObject("msg", 2);
 		}
 
-		mav.setViewName("memberViews/memberMyPage");
+		mav.setViewName("./index");
 
 		return mav;
 	}
@@ -562,7 +564,7 @@ public class RequestMM {
 		}else {
 			System.out.println("실패");
 		}
-		mav.setViewName("memberViews/memberMyPage");
+		mav.setViewName("./index");
 		return mav;
 	}
 		public Map<String, Object> getEstPayList(String id, int pageNum, int listCount) {
@@ -615,6 +617,7 @@ public class RequestMM {
 			 
 			
 			 System.out.println("estpList:"+estpList);
+			 
 			Map<String, Object> map1 = new HashMap<String, Object>(); 
 			map1.put("estpiList",estpiList);
 			map1.put("estpList", estpList);
