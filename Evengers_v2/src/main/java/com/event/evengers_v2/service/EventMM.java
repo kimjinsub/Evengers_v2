@@ -56,7 +56,6 @@ public class EventMM {
 	
 	public String getCategoryList() {
 		String json_categories="";
-		System.out.println("gggg");
 		ArrayList<Category> categoryList=eDao.getCategories();
 		System.out.println("categoryList="+categoryList);
 		Gson gson = new Gson();

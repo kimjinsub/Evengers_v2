@@ -7,7 +7,11 @@
       INSERT INTO EC VALUES(#{ec_name})
    </insert>
    <select id="getCategories" resultType="eventcategory">
-      SELECT * FROM EC
+		SELECT EC.EC_NAME
+		FROM EC,E
+		WHERE EC.EC_NAME=E.E_CATEGORY
+		GROUP BY EC.EC_NAME
+		ORDER BY COUNT(*) DESC
    </select>
    <delete id="deleteCategory" parameterType="String">
       DELETE FROM EC WHERE EC_NAME=#{ec_name}
