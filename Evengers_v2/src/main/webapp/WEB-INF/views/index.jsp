@@ -52,7 +52,7 @@
 </head>
 <jsp:include page="header.jsp"></jsp:include>
 <!-- jumbotron -->
- <div class="jumbotron text-center">
+ <div class="jumbotron text-center fense">
     <div class="input-group col-lg-4">
       <input type="text" class="form-control" size="50" onkeyup="enterkey();" placeholder="원하는 이벤트를 찾아보세요" name="evtSearch" id="evtSearch"required>
       <div class="input-group-btn">
@@ -65,7 +65,7 @@
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#d1d1d1">
+<nav class="navbar navbar-expand-lg navbar-light fense" style="background-color:#d1d1d1">
 	<div class="container">
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -243,8 +243,13 @@ function briefInfo(e_code){
 		$("#brief").css({"top":e.screenY-50,"left":e.screenX-50});
 	})
 } 
- function briefInfoOut(e_code){
+function briefInfoOut(e_code){
 	 $('#brief').hide();
-} 
+}
+$(".fense").each(function(){
+	$(this).mouseenter(function(){
+		$('#brief').hide();
+	})
+})
 </script>
 </html>
