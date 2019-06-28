@@ -237,4 +237,12 @@ public class Controller_Jinsub {
 	public @ResponseBody String checkDoubleChat() {
 		return mm.checkDoubleChat();
 	}
+	@RequestMapping(value = "/deletePosition",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String deletePosition(String p_code) {
+		return pm.deletePosition(p_code);
+	}
+	@RequestMapping(value = "/deleteDept",produces = "application/json;charset=utf-8;")
+	public @ResponseBody String deleteDept(String dept_code) {
+		return pm.deleteDept(dept_code);
+	}
 }

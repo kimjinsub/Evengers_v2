@@ -160,11 +160,14 @@
 			dataType : "json",
 			success : function(result) {
 				console.log(result);
-				var str = "<tr><td>부서명</td><td>부서코드</td></tr>";
+				var str = "<tr><td>부서명</td><td>부서코드</td><td>삭제</tr></tr>";
 				//+"<td><button onclick='showAddDeptFrm()'>부서추가</button></td></tr>";
 				for ( var i in result) {
-					str += "<tr><td>" + result[i].dept_name + "</td>" + "<td>"
-							+ result[i].dept_code + "</td></tr>"
+					str += "<tr>"
+						+"		<td>" + result[i].dept_name + "</td>" 
+						+"		<td>" + result[i].dept_code + "</td>"
+						+"		<td onclick='deleteDept(\""+result[i].dept_code+"\")'> X </td>"
+						+"</tr>"
 					//		+"<td><button onclick='deleteDept("+result[i].dept_code+")'>삭제</button></td></tr>"
 				}
 				if (result == "") {
@@ -234,11 +237,14 @@
 			dataType : "json",
 			success : function(result) {
 				console.log(result);
-				var str = "<tr><td>직책명</td><td>직책코드</td><td>기본급</td></tr>";
+				var str = "<tr><td>직책명</td><td>직책코드</td><td>기본급</td><td>삭제</td></tr>";
 				for ( var i in result) {
-					str += "<tr><td>" + result[i].p_name + "</td>" + "<td>"
-							+ result[i].p_code + "</td>" + "<td>"
-							+ result[i].p_salary + "원</td></tr>"
+					str += "<tr>" 
+						+ "<td>" + result[i].p_name + "</td>" 
+						+ "<td>" + result[i].p_code + "</td>" 
+						+ "<td>" + result[i].p_salary + "원</td>"
+						+ "<td onclick='deletePosition(\""+result[i].p_code+"\")'> X </td>"
+						+"</tr>"
 				}
 				if (result == "") {
 					str = "<p id='positionSign'>첫 직책을 등록해보세요</p>";
@@ -253,6 +259,59 @@
 			}
 		})
 	};
+	function deletePosition(p_code){
+		$.ajax({
+			url : "deletePosition",
+			data : {
+				p_code : p_code,
+			},
+			dataType : "text",
+			success : function(result) {
+				if(result=="yes"){
+					swal({
+						title : "삭제완료!",
+						icon : "success",
+					})	
+				}else{
+					swal({
+						title : "삭제실패!",
+						icon : "warning",
+					})
+				}
+				getPositionList();
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		})
+	}
+	function deleteDept(dept_code){
+		$.ajax({
+			url : "deleteDept",
+			data : {
+				dept_code : dept_code,
+			},
+			dataType : "text",
+			success : function(result) {
+				if(result=="yes"){
+					swal({
+						title : "삭제완료!",
+						icon : "success",
+					})	
+				}else{
+					swal({
+						title : "삭제실패!",
+						icon : "warning",
+					})
+				}
+				getPositionList();
+				getDeptList();
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		})
+	}
 	function addPosition() {
 		var p_name = $("#addPositionFrm :input[type=text]").val();
 		var p_salary = $("#addPositionFrm :input[type=number]").val();

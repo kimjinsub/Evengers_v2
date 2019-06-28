@@ -72,4 +72,10 @@
 		resultType="employee">
 		SELECT * FROM EMP WHERE EMP_CODE=#{emp_code}
 	</select>
+	<delete id="deletePosition">
+		DELETE FROM POSITION WHERE P_CODE=#{p_code}
+	</delete>
+	<delete id="deleteDept">
+		DELETE FROM DEPT WHERE DEPT_CODE=#{dept_code}
+	</delete>
 </mapper>

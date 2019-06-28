@@ -45,4 +45,8 @@ public interface PersonnelDao {
 
 	boolean dept_codeUpdate(@Param("emp_code")String emp_code,@Param("dept_code") String dept_code);
 
+	boolean deletePosition(String p_code);
+
+	boolean deleteDept(String dept_code);
+
 }

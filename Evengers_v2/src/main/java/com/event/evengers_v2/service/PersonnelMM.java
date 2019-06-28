@@ -241,4 +241,18 @@ public class PersonnelMM {
 		}
 		return str;
 	}
+	public String deletePosition(String p_code) {
+		if(pDao.deletePosition(p_code)) {
+			return "yes";
+		}else {
+			return "no";
+		}
+	}
+	public String deleteDept(String dept_code) {
+		if(pDao.deleteDept(dept_code)) {
+			return "yes";
+		}else {
+			return "no";
+		}
+	}
 }
