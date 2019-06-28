@@ -193,7 +193,8 @@ function getCategories(){
 			for(var i in result){
 				str+='<li class="nav-item active" style="font-size:20px;">'
 						+'<a class="nav-link" id="'+result[i].ec_name
-						+'" onclick="getEvtList(this.id,1,8)">'
+						+'" onclick="getEvtList(this.id,1,8)" '
+						+'style="cursor:pointer;">'
 						+result[i].ec_name+'</a></li>';
 			}
 			$("#navbarResponsive2 ul").append(str);
