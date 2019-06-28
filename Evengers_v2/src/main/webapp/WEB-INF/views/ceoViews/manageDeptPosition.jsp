@@ -166,7 +166,8 @@
 					str += "<tr>"
 						+"		<td>" + result[i].dept_name + "</td>" 
 						+"		<td>" + result[i].dept_code + "</td>"
-						+"		<td onclick='deleteDept(\""+result[i].dept_code+"\")'> X </td>"
+						+"		<td onclick='deleteDept(\""+result[i].dept_code+"\")' "
+						+ "style='cursor:pointer; color:red;'> X </td>"
 						+"</tr>"
 					//		+"<td><button onclick='deleteDept("+result[i].dept_code+")'>삭제</button></td></tr>"
 				}
@@ -243,8 +244,9 @@
 						+ "<td>" + result[i].p_name + "</td>" 
 						+ "<td>" + result[i].p_code + "</td>" 
 						+ "<td>" + result[i].p_salary + "원</td>"
-						+ "<td onclick='deletePosition(\""+result[i].p_code+"\")'> X </td>"
-						+"</tr>"
+						+ "<td onclick='deletePosition(\""+result[i].p_code+"\")' "
+						+ "style='cursor:pointer; color:red;'> X </td>"
+						+ "</tr>"
 				}
 				if (result == "") {
 					str = "<p id='positionSign'>첫 직책을 등록해보세요</p>";
