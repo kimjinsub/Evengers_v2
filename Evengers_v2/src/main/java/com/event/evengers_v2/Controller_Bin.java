@@ -114,12 +114,13 @@ public class Controller_Bin {
 	}
 
 	@RequestMapping(value = "/showQuestion", produces = "application/json; charset=utf8")
-	public ModelAndView showQuestion(String q_Code) {
-		mav=new ModelAndView();
-		String q_code=q_Code;
-        mav = qm.showQuestion(q_code);
-		return mav;
-	}
+	   public ModelAndView showQuestion(String q_Code) {
+	      mav=new ModelAndView();
+	      String q_code=q_Code;
+	        mav = qm.showQuestion(q_code);
+	      return mav;
+	   }
+	
 	@RequestMapping(value = "/replyInsert", produces = "application/json; charset=utf8")
 	public @ResponseBody String replyInsert(QuestionReply qr) {
 		String m_id=session.getAttribute("id").toString();

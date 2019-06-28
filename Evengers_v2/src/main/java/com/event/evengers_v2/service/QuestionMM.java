@@ -104,24 +104,25 @@ public class QuestionMM {
 	
 
 	public ModelAndView showQuestion(String q_code) {
-		mav=new ModelAndView();
-		Question question=qDao.getDetailQuestion(q_code);
-		mav.addObject("question",question);
-		
-		List<QuestionImage> qfList = qDao.getQuestionFileList(q_code);
-		System.out.println("size = " + qfList.size());
-		mav.addObject("qfList", qfList);
-		
-		List<QuestionReply> qrList = qDao.getReplyList(q_code);
-		mav.addObject("qrList",qrList);
-		
-		
-		
-		
-		mav.setViewName("memberViews/detailQuestion");
-		
-		return mav;
-	}
+	      mav=new ModelAndView();
+	      Question question=qDao.getDetailQuestion(q_code);
+	      mav.addObject("question",question);
+	      
+	      List<QuestionImage> qfList = qDao.getQuestionFileList(q_code);
+	      System.out.println("size = " + qfList.size());
+	      System.out.println("qfList"+qfList);
+	      mav.addObject("qfList", qfList);
+	      
+	      List<QuestionReply> qrList = qDao.getReplyList(q_code);
+	      mav.addObject("qrList",qrList);
+	      
+	      
+	      
+	      
+	      mav.setViewName("memberViews/detailQuestion");
+	      
+	      return mav;
+	   }
 
 	//public Map<String, List<QuestionReply>> replyInsert(QuestionReply qr) {
 	public String replyInsert(QuestionReply qr) {
