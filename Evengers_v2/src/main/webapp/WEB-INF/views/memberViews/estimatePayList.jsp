@@ -57,7 +57,7 @@ height:100px;
 <body>
   <h3 align="center"> 견적 결제 구매 내역</h3>
 	<div id="estPayList" style="width:90%;"></div>
-	<div id="paging" align="center"></div>
+<!-- 	<div id="paging" align="center"></div> -->
 	<div id="detail"></div>
 
 </body>

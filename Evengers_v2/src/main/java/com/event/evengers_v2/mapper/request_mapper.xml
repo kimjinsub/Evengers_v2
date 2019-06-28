@@ -148,7 +148,7 @@
    </insert>
    
    <select id="getReqCodes" parameterType="string" resultType="request">
-   SELECT * FROM REQ WHERE M_ID=#{m_id} 
+   SELECT * FROM REQ WHERE M_ID=#{m_id} ORDER BY REQ_CODE DESC
    </select>
    
      <!--  <select id='getEstPayList' parameterType="map" resultType="estimatepay">
@@ -165,6 +165,7 @@
         WHERE REQ_CODE=#{req_code}
         AND ROWNUM<=#{pageNum}*#{listCount}) 
         WHERE RN>((#{pageNum}-1)*#{listCount})
+        ORDER BY ESTP_PAYDAY DESC
         ]]>
     </select>
     
