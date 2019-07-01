@@ -129,7 +129,8 @@ function searchEvt(){
 				str+='<div class="col-lg-3 col-md-4 col-6" onmouseenter="briefInfo(this.id)"onmouseout="briefInfoOut(this.id)" id="'+result[i].e_code+'">'
 					+'<a href="evtInfo?e_code='+result[i].e_code+'" class="d-block mb-4 h-100">' 
 					+'<img class="img-fluid img-thumbnail" '
-					+'src="upload/thumbnail/'+result[i].e_sysfilename+'">'
+					+'src="upload/thumbnail/'+result[i].e_sysfilename+'" '
+					+'width="100%" height="100%">'
 					+'</a></div>'
 			}
 			$("#evtList2").html(str);

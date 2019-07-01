@@ -71,7 +71,7 @@ text-align: center;
    <form name="rFrm" id="rFrm">
       <table>
          <tr>
-            <td><textarea rows="2" cols="85" name="qr_contents"
+            <td><textarea rows="2" cols="78" name="qr_contents"
                   id="qr_contents"></textarea></td>
             <td><input type="button" class="btn btn-outline-primary btn-rounded waves-effect"  value="댓글입력"
                onclick="replyInsert('${question.q_code}')"
